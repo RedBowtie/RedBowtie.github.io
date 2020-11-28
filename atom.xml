@@ -84,6 +84,31 @@
   </entry>
   
   <entry>
+    <title>Intercultural Communication</title>
+    <link href="http://example.com/2020/11/28/InterCommu/"/>
+    <id>http://example.com/2020/11/28/InterCommu/</id>
+    <published>2020-11-28T12:32:00.000Z</published>
+    <updated>2020-11-28T13:08:56.017Z</updated>
+    
+    <content type="html"><![CDATA[<p>TBC</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;TBC&lt;/p&gt;
+</summary>
+      
+    
+    
+    
+    <category term="Term3" scheme="http://example.com/categories/Term3/"/>
+    
+    
+    <category term="Culture" scheme="http://example.com/tags/Culture/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Records</title>
     <link href="http://example.com/2020/11/22/Rec/"/>
     <id>http://example.com/2020/11/22/Rec/</id>

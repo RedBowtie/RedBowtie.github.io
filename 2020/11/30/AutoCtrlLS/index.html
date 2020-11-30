@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Amaurot Ch.">
-    <title>Automatic Control Linear Systems - Amaurot Ch.</title>
+    <title>Automatic Control Linear Systems PART I - Amaurot Ch.</title>
     <meta name="author" content="Press RB">
     
     
@@ -17,40 +17,47 @@
             <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
         
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Press RB","sameAs":["https://github.com/","http://stackoverflow.com/users"],"image":"https://zaima-1300059928.cos.ap-shanghai.myqcloud.com/At/kkk.png"},"articleBody":"Seems good, so far.\nLec 1 What is it about.\nI.    Basic physical exapmles\nSimple PendulumSimple CartDC MotorLR-Circuit(with intention, it becomes LCS)Solar system(a little over simplified, dynamic, nonlinear)\n\nII.    Differential equations arise from physics1.    Pendulum(downward position, with friction)Harmonic form(left), for small angle makes it linearized. Mass is concentrated on one end.\nWhat if the friction doesn’t exist? \nHere the coefficient of k is wrong, which should be divided by ml^2\n\n\n2.    Pendulum(upright position, with friction)Basically the same. Note that the equation stays true in the condition of small θ.\n\n3.    LR-circuitMagnetic flux is L * I, electromotive force is derived from Faraday law.\n\n4.    DC motor\n5.    Cart|with(out) frictionNote the coefficient here is wrong again\n\n\nComparing these equations, systems have inputs and outputs\nIII.    Inputs and OutputsDerivatives in equation makes the the speed of outputs changes.\n\nIV.    Feedback\n1.    Our goalsStudy how linear system behave on their own, without any input.\nStudy how linear system respond to different inputs.\nLearn to design feedback controllers and state observers\nLec 2 Linear differential equations and their solutionsAt first, we will study how linear systems move when there is no control input.\n\nThese systems can be called as autonomous systems.\n*In mathematics, an autonomous system or autonomous differential equation is a system of ordinary differential equations which does not explicitly depend on the independent variable. When the variable is time, they are also called time-invariant systems.\nI.    Mathematical background1.    Solution for homogeneous linear ordinary differential equations with constant coefficientsStep1 Characteristic Equation\nSimply rewrite the eq into algebraic eq. It doesn’t lose information.\nStep 2 Find algebraic rootsStep 3 Find corresponding Modes*Modes are simple functions from which solutions of a differential equation are combined. Linearly independent.\n\nEach next multiplicity of root give you next (set of) mode multiplied by t.\nStep 4 Obtain a  general solution as a linear combinition of modes with unkown coefficients\nStep 5 Obtain the particular solution from the given initial conditions\n2.    Stability of modesTwo different situations.\n\n\n\n\n\n\n\nAsymptotically is similar to gradually,, but have a tendency to a straight line.\nLyapunov - do not tend to zero.\n\nII.    Stability of a linear system1.    Definition Linear system is asymptotically stable if all roots of characteristic equations have negative real parts. It means that y(t) tends to 0 for all initial conditions.\n\nWhich means that you can start the system with big initial values, and it will stop.\n\nLinear system is Lyapunov stable if all roots of characteristic equations have either negative or zero real parts, and roots that gave zero real parts are simple (not repeated). It means taht y(t) is bounded for all initial conditions.\n\nIt’s a weaker stability, all asymptotically stable is Lyapunov stable (negative real part), but the latter (zero real parts) may not be the former.\n\nLinear system is unable otherwise. It means taht y(t) is unbounded for some initial conditions.\n2.    Examples1.    Pendulum downwards without friction\n\n2.    Pendulum downwards with friction\n\n3.    Pendulum upwards\n\n4.    Repeated roots\n\nIII.    Hurwitz criterionHow can we check that a given system is stable or unstable without calculating roots of its characteristic equation.\n","dateCreated":"2020-11-30T20:32:00+08:00","dateModified":"2020-11-30T19:16:26+08:00","datePublished":"2020-11-30T20:32:00+08:00","description":"Seems good, so far.","headline":"Automatic Control Linear Systems","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2020/11/30/AutoCtrlLS/"},"publisher":{"@type":"Organization","name":"Press RB","sameAs":["https://github.com/","http://stackoverflow.com/users"],"image":"https://zaima-1300059928.cos.ap-shanghai.myqcloud.com/At/kkk.png","logo":{"@type":"ImageObject","url":"https://zaima-1300059928.cos.ap-shanghai.myqcloud.com/At/kkk.png"}},"url":"http://example.com/2020/11/30/AutoCtrlLS/","keywords":"Control, Linear System"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Press RB","sameAs":["https://github.com/","http://stackoverflow.com/users"],"image":"https://zaima-1300059928.cos.ap-shanghai.myqcloud.com/At/kkk.png"},"articleBody":"Seems good, so far.\nLec 1 What is it about.\nI.    Basic physical exapmles\nSimple PendulumSimple CartDC MotorLR-Circuit(with intention, it becomes LCS)Solar system(a little over simplified, dynamic, nonlinear)\n\nII.    Differential equations arise from physics1.    Pendulum(downward position, with friction)Harmonic form(left), for small angle makes it linearized. Mass is concentrated on one end.\nWhat if the friction doesn’t exist? \nHere the coefficient of k is wrong, which should be divided by ml^2\n\n\n2.    Pendulum(upright position, with friction)Basically the same. Note that the equation stays true in the condition of small θ.\n\n3.    LR-circuitMagnetic flux is L * I, electromotive force is derived from Faraday law.\n\n4.    DC motor\n5.    Cart|with(out) frictionNote the coefficient here is wrong again\n\n\nComparing these equations, systems have inputs and outputs\nIII.    Inputs and OutputsDerivatives in equation makes the the speed of outputs changes.\n\nIV.    Feedback\n1.    Our goalsStudy how linear system behave on their own, without any input.\nStudy how linear system respond to different inputs.\nLearn to design feedback controllers and state observers\nLec 2 Linear differential equations and their solutions\nAt first, we will study how linear systems move when there is no control input.\n\nThese systems can be called as autonomous systems.\n*In mathematics, an autonomous system or autonomous differential equation is a system of ordinary differential equations which does not explicitly depend on the independent variable. When the variable is time, they are also called time-invariant systems.\nI.    Mathematical background1.    Solution for homogeneous linear ordinary differential equations with constant coefficientsStep1 Characteristic Equation\nSimply rewrite the eq into algebraic eq. It doesn’t lose information.\nStep 2 Find algebraic rootsStep 3 Find corresponding Modes*Modes are simple functions from which solutions of a differential equation are combined. Linearly independent.\n\nEach next multiplicity of root give you next (set of) mode multiplied by t.\nStep 4 Obtain a  general solution as a linear combinition of modes with unkown coefficients\nStep 5 Obtain the particular solution from the given initial conditions\n2.    Stability of modesTwo different situations.\n\n\n\n\n\n\n\nAsymptotically is similar to gradually,, but have a tendency to a straight line.\n\nLyapunov - do not tend to zero.\n\n\nII.    Stability of a linear system1.    Definition Linear system is asymptotically stable if all roots of characteristic equations have negative real parts. It means that y(t) tends to 0 for all initial conditions.\n\nWhich means that you can start the system with big initial values, and it will stop.\n\nLinear system is Lyapunov stable if all roots of characteristic equations have either negative or zero real parts, and roots that gave zero real parts are simple (not repeated). It means taht y(t) is bounded for all initial conditions.\n\nIt’s a weaker stability, all asymptotically stable is Lyapunov stable (negative real part), but the latter (zero real parts) may not be the former.\n\nLinear system is unable otherwise. It means taht y(t) is unbounded for some initial conditions.\n2.    Examplesa.    Pendulum downwards without friction\n\nb.    Pendulum downwards with friction\n\nc.    Pendulum upwards\n\nd.    Repeated roots\n\n\n\nIII.    Hurwitz criterionHow can we check that a given system is stable or unstable without calculating roots of its characteristic equation.\n1.    Explanation\n2. Simple corollaries\nThey could have oscillations, or not.\nIV.    Basic of controller design1.    No control\nIt will move in one direction with constant speed.\n2.    P-Controller\nThe cart oscillates around x=0 with constant amplitude.\n3.    PD-Controllera.    Type one\nThe cart oscillates around x=0 with decaying amplitide.\nb.    Type two\nThe cart slides to x=0 without oscillations.\nc.    Check\n","dateCreated":"2020-11-30T20:32:00+08:00","dateModified":"2020-11-30T20:15:19+08:00","datePublished":"2020-11-30T20:32:00+08:00","description":"Seems good, so far.","headline":"Automatic Control Linear Systems PART I","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2020/11/30/AutoCtrlLS/"},"publisher":{"@type":"Organization","name":"Press RB","sameAs":["https://github.com/","http://stackoverflow.com/users"],"image":"https://zaima-1300059928.cos.ap-shanghai.myqcloud.com/At/kkk.png","logo":{"@type":"ImageObject","url":"https://zaima-1300059928.cos.ap-shanghai.myqcloud.com/At/kkk.png"}},"url":"http://example.com/2020/11/30/AutoCtrlLS/","keywords":"Control, Linear System"}</script>
     <meta name="description" content="Seems good, so far.">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="Automatic Control Linear Systems">
+<meta property="og:title" content="Automatic Control Linear Systems PART I">
 <meta property="og:url" content="http://example.com/2020/11/30/AutoCtrlLS/index.html">
 <meta property="og:site_name" content="Amaurot Ch.">
 <meta property="og:description" content="Seems good, so far.">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2020/11/30/images/ALCS/1/Pen2.png">
-<meta property="og:image" content="http://example.com/2020/11/30/images/ALCS/1/RevPen.png">
-<meta property="og:image" content="http://example.com/2020/11/30/images/ALCS/1/LR.png">
-<meta property="og:image" content="http://example.com/2020/11/30/images/ALCS/1/dcm.png">
-<meta property="og:image" content="http://example.com/2020/11/30/images/ALCS/1/cart.png">
-<meta property="og:image" content="http://example.com/2020/11/30/images/ALCS/1/io.png">
-<meta property="og:image" content="http://example.com/2020/11/30/images/ALCS/1/fb.png">
-<meta property="og:image" content="http://example.com/2020/11/30/images/ALCS/2/diffEq.png">
-<meta property="og:image" content="http://example.com/2020/11/30/images/ALCS/2/diff.png">
-<meta property="og:image" content="http://example.com/2020/11/30/images/ALCS/2/modes.png">
-<meta property="og:image" content="http://example.com/2020/11/30/images/ALCS/2/s4.png">
-<meta property="og:image" content="http://example.com/2020/11/30/images/ALCS/2/S5.png">
-<meta property="og:image" content="http://example.com/2020/11/30/images/ALCS/2/real.png">
-<meta property="og:image" content="http://example.com/2020/11/30/images/ALCS/2/pima.png">
-<meta property="og:image" content="http://example.com/2020/11/30/images/ALCS/2/complex.png">
-<meta property="og:image" content="http://example.com/2020/11/30/images/ALCS/2/PenDown.png">
-<meta property="og:image" content="http://example.com/2020/11/30/images/ALCS/2/PenDown_f.png">
-<meta property="og:image" content="http://example.com/2020/11/30/images/ALCS/2/PenUp.png">
-<meta property="og:image" content="http://example.com/2020/11/30/images/ALCS/2/repRt.png">
+<meta property="og:image" content="http://example.com/images/ALCS/1/Pen2.png">
+<meta property="og:image" content="http://example.com/images/ALCS/1/RevPen.png">
+<meta property="og:image" content="http://example.com/images/ALCS/1/LR.png">
+<meta property="og:image" content="http://example.com/images/ALCS/1/dcm.png">
+<meta property="og:image" content="http://example.com/images/ALCS/1/cart.png">
+<meta property="og:image" content="http://example.com/images/ALCS/1/io.png">
+<meta property="og:image" content="http://example.com/images/ALCS/1/fb.png">
+<meta property="og:image" content="http://example.com/images/ALCS/2/diffEq.png">
+<meta property="og:image" content="http://example.com/images/ALCS/2/diff.png">
+<meta property="og:image" content="http://example.com/images/ALCS/2/modes.png">
+<meta property="og:image" content="http://example.com/images/ALCS/2/s4.png">
+<meta property="og:image" content="http://example.com/images/ALCS/2/S5.png">
+<meta property="og:image" content="http://example.com/images/ALCS/2/real.png">
+<meta property="og:image" content="http://example.com/images/ALCS/2/pima.png">
+<meta property="og:image" content="http://example.com/images/ALCS/2/complex.png">
+<meta property="og:image" content="http://example.com/images/ALCS/2/PenDown.png">
+<meta property="og:image" content="http://example.com/images/ALCS/2/PenDown_f.png">
+<meta property="og:image" content="http://example.com/images/ALCS/2/PenUp.png">
+<meta property="og:image" content="http://example.com/images/ALCS/2/repRt.png">
+<meta property="og:image" content="http://example.com/images/ALCS/2/HC_1.png">
+<meta property="og:image" content="http://example.com/images/ALCS/2/sc.png">
+<meta property="og:image" content="http://example.com/images/ALCS/2/eg1.png">
+<meta property="og:image" content="http://example.com/images/ALCS/2/eg2.png">
+<meta property="og:image" content="http://example.com/images/ALCS/2/eg3.png">
+<meta property="og:image" content="http://example.com/images/ALCS/2/eg4.png">
+<meta property="og:image" content="http://example.com/images/ALCS/2/check.png">
 <meta property="article:published_time" content="2020-11-30T12:32:00.000Z">
-<meta property="article:modified_time" content="2020-11-30T11:16:26.749Z">
+<meta property="article:modified_time" content="2020-11-30T12:15:19.571Z">
 <meta property="article:author" content="Press RB">
 <meta property="article:tag" content="Control">
 <meta property="article:tag" content="Linear System">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2020/11/30/images/ALCS/1/Pen2.png">
+<meta name="twitter:image" content="http://example.com/images/ALCS/1/Pen2.png">
     
     
         
@@ -289,7 +296,7 @@
         <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
-            Automatic Control Linear Systems
+            Automatic Control Linear Systems PART I
         </h1>
     
     
@@ -323,43 +330,46 @@
 <p>What if the friction doesn’t exist? </p>
 <div style="color:red">Here the coefficient of k is wrong, which should be divided by ml^2</div>
 
-<p><img src="../images/ALCS/1/Pen2.png" alt="Pendulum"></p>
+<p><img src="/images/ALCS/1/Pen2.png" alt="Pendulum"></p>
 <h4 id="2-Pendulum-upright-position-with-friction"><a href="#2-Pendulum-upright-position-with-friction" class="headerlink" title="2.    Pendulum(upright position, with friction)"></a>2.    Pendulum(upright position, with friction)</h4><p>Basically the same. Note that the equation stays true in the condition of small θ.</p>
-<p><img src="../images/ALCS/1/RevPen.png" alt="RevPen"></p>
+<p><img src="/images/ALCS/1/RevPen.png" alt="RevPen"></p>
 <h4 id="3-LR-circuit"><a href="#3-LR-circuit" class="headerlink" title="3.    LR-circuit"></a>3.    LR-circuit</h4><p>Magnetic flux is L * I, electromotive force is derived from Faraday law.</p>
-<p><img src="../images/ALCS/1/LR.png" alt="LR"></p>
-<h4 id="4-DC-motor"><a href="#4-DC-motor" class="headerlink" title="4.    DC motor"></a>4.    DC motor</h4><p><img src="../images/ALCS/1/dcm.png" alt="dcm"></p>
+<p><img src="/images/ALCS/1/LR.png" alt="LR"></p>
+<h4 id="4-DC-motor"><a href="#4-DC-motor" class="headerlink" title="4.    DC motor"></a>4.    DC motor</h4><p><img src="/images/ALCS/1/dcm.png" alt="dcm"></p>
 <h4 id="5-Cart-with-out-friction"><a href="#5-Cart-with-out-friction" class="headerlink" title="5.    Cart|with(out) friction"></a>5.    Cart|with(out) friction</h4><div style="color:red">Note the coefficient here is wrong again</div>
 
-<p><img src="../images/ALCS/1/cart.png" alt="cart"></p>
+<p><img src="/images/ALCS/1/cart.png" alt="cart"></p>
 <p>Comparing these equations, systems have <font color=red>inputs</font> and <font color=green>outputs</font></p>
 <h3 id="III-Inputs-and-Outputs"><a href="#III-Inputs-and-Outputs" class="headerlink" title="III.    Inputs and Outputs"></a>III.    Inputs and Outputs</h3><p>Derivatives in equation makes the the speed of outputs changes.</p>
-<p><img src="../images/ALCS/1/io.png" alt="io"></p>
-<h3 id="IV-Feedback"><a href="#IV-Feedback" class="headerlink" title="IV.    Feedback"></a>IV.    Feedback</h3><p><img src="../images/ALCS/1/fb.png" alt="fb"></p>
+<p><img src="/images/ALCS/1/io.png" alt="io"></p>
+<h3 id="IV-Feedback"><a href="#IV-Feedback" class="headerlink" title="IV.    Feedback"></a>IV.    Feedback</h3><p><img src="/images/ALCS/1/fb.png" alt="fb"></p>
 <h4 id="1-Our-goals"><a href="#1-Our-goals" class="headerlink" title="1.    Our goals"></a>1.    Our goals</h4><p>Study how linear system behave <font color=brown>on their own</font>, without any input.</p>
 <p>Study how linear system <font color=red>respond</font> to different inputs.</p>
 <p>Learn to design <font color=green>feedback controllers</font> and <font color=purple>state observers</font></p>
-<h2 id="Lec-2-Linear-differential-equations-and-their-solutions"><a href="#Lec-2-Linear-differential-equations-and-their-solutions" class="headerlink" title="Lec 2 Linear differential equations and their solutions"></a>Lec 2 Linear differential equations and their solutions</h2><p>At first, we will study how linear systems move when there is no <font color=red>control input</font>.</p>
-<p><img src="../images/ALCS/2/diffEq.png" alt="diffEq"></p>
+<h2 id="Lec-2-Linear-differential-equations-and-their-solutions"><a href="#Lec-2-Linear-differential-equations-and-their-solutions" class="headerlink" title="Lec 2 Linear differential equations and their solutions"></a>Lec 2 Linear differential equations and their solutions</h2><hr>
+<p>At first, we will study how linear systems move when there is no <font color=red>control input</font>.</p>
+<p><img src="/images/ALCS/2/diffEq.png" alt="diffEq"></p>
 <p>These systems can be called as autonomous systems.</p>
 <p>*In <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Mathematics">mathematics</a>, an <strong>autonomous system</strong> or <strong>autonomous differential equation</strong> is a <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Simultaneous_equations">system</a> of <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Ordinary_differential_equation">ordinary differential equations</a> which does not explicitly depend on the <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Independent_variable">independent variable</a>. When the variable is time, they are also called <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Time-invariant_system">time-invariant systems</a>.</p>
-<h3 id="I-Mathematical-background"><a href="#I-Mathematical-background" class="headerlink" title="I.    Mathematical background"></a>I.    Mathematical background</h3><h4 id="1-Solution-for-homogeneous-linear-ordinary-differential-equations-with-constant-coefficients"><a href="#1-Solution-for-homogeneous-linear-ordinary-differential-equations-with-constant-coefficients" class="headerlink" title="1.    Solution for homogeneous linear ordinary differential equations with constant coefficients"></a>1.    Solution for homogeneous linear ordinary differential equations with constant coefficients</h4><h5 id="Step1-Characteristic-Equation"><a href="#Step1-Characteristic-Equation" class="headerlink" title="Step1 Characteristic Equation"></a>Step1 Characteristic Equation</h5><p><img src="../images/ALCS/2/diff.png" alt="diff"></p>
+<h3 id="I-Mathematical-background"><a href="#I-Mathematical-background" class="headerlink" title="I.    Mathematical background"></a>I.    Mathematical background</h3><h4 id="1-Solution-for-homogeneous-linear-ordinary-differential-equations-with-constant-coefficients"><a href="#1-Solution-for-homogeneous-linear-ordinary-differential-equations-with-constant-coefficients" class="headerlink" title="1.    Solution for homogeneous linear ordinary differential equations with constant coefficients"></a>1.    Solution for homogeneous linear ordinary differential equations with constant coefficients</h4><h5 id="Step1-Characteristic-Equation"><a href="#Step1-Characteristic-Equation" class="headerlink" title="Step1 Characteristic Equation"></a>Step1 Characteristic Equation</h5><p><img src="/images/ALCS/2/diff.png" alt="diff"></p>
 <p>Simply rewrite the eq into algebraic eq. It doesn’t lose information.</p>
 <h5 id="Step-2-Find-algebraic-roots"><a href="#Step-2-Find-algebraic-roots" class="headerlink" title="Step 2 Find algebraic roots"></a><strong>Step 2 Find algebraic roots</strong></h5><h5 id="Step-3-Find-corresponding-Modes"><a href="#Step-3-Find-corresponding-Modes" class="headerlink" title="Step 3 Find corresponding Modes"></a><strong>Step 3 Find corresponding <em>Modes</em></strong></h5><p>*<font color=red>Modes</font> are simple functions from which solutions of a differential equation are combined. Linearly independent.</p>
-<p><img src="../images/ALCS/2/modes.png" alt="modes"></p>
+<p><img src="/images/ALCS/2/modes.png" alt="modes"></p>
 <p>Each next multiplicity of root give you next (set of) mode multiplied by t.</p>
-<h5 id="Step-4-Obtain-a-general-solution-as-a-linear-combinition-of-modes-with-unkown-coefficients"><a href="#Step-4-Obtain-a-general-solution-as-a-linear-combinition-of-modes-with-unkown-coefficients" class="headerlink" title="Step 4 Obtain a  general solution as a linear combinition of modes with unkown coefficients"></a>Step 4 Obtain a <font color=orange> general solution</font> as a linear combinition of modes with unkown coefficients</h5><p><img src="../images/ALCS/2/s4.png" alt="Step4"></p>
-<h5 id="Step-5-Obtain-the-particular-solution-from-the-given-initial-conditions"><a href="#Step-5-Obtain-the-particular-solution-from-the-given-initial-conditions" class="headerlink" title="Step 5 Obtain the particular solution from the given initial conditions"></a>Step 5 Obtain the <font color=orange>particular solution </font>from the given <font color=green>initial conditions</font></h5><p><img src="../images/ALCS/2/S5.png" alt="Step5"></p>
+<h5 id="Step-4-Obtain-a-general-solution-as-a-linear-combinition-of-modes-with-unkown-coefficients"><a href="#Step-4-Obtain-a-general-solution-as-a-linear-combinition-of-modes-with-unkown-coefficients" class="headerlink" title="Step 4 Obtain a  general solution as a linear combinition of modes with unkown coefficients"></a>Step 4 Obtain a <font color=orange> general solution</font> as a linear combinition of modes with unkown coefficients</h5><p><img src="/images/ALCS/2/s4.png" alt="Step4"></p>
+<h5 id="Step-5-Obtain-the-particular-solution-from-the-given-initial-conditions"><a href="#Step-5-Obtain-the-particular-solution-from-the-given-initial-conditions" class="headerlink" title="Step 5 Obtain the particular solution from the given initial conditions"></a>Step 5 Obtain the <font color=orange>particular solution </font>from the given <font color=green>initial conditions</font></h5><p><img src="/images/ALCS/2/S5.png" alt="Step5"></p>
 <h4 id="2-Stability-of-modes"><a href="#2-Stability-of-modes" class="headerlink" title="2.    Stability of modes"></a>2.    Stability of modes</h4><p>Two different situations.</p>
-<img src="../images/ALCS/2/real.png" alt="real " style="zoom:67%;" />
+<img src="/images/ALCS/2/real.png" alt="real " style="zoom:67%;" />
 
-<img src="../images/ALCS/2/pima.png" alt="pure imaginary" style="zoom:67%;" />
+<img src="/images/ALCS/2/pima.png" alt="pure imaginary" style="zoom:67%;" />
 
-<img src="../images/ALCS/2/complex.png" alt="complex " style="zoom:67%;" />
+<img src="/images/ALCS/2/complex.png" alt="complex " style="zoom:67%;" />
 
 <ul>
-<li>Asymptotically is similar to gradually,, but have a tendency to a straight line.</li>
-<li>Lyapunov - do not tend to zero.</li>
+<li><p>Asymptotically is similar to gradually,, but have a tendency to a straight line.</p>
+</li>
+<li><p>Lyapunov - do not tend to zero.</p>
+</li>
 </ul>
 <h3 id="II-Stability-of-a-linear-system"><a href="#II-Stability-of-a-linear-system" class="headerlink" title="II.    Stability of a linear system"></a>II.    Stability of a linear system</h3><h4 id="1-Definition"><a href="#1-Definition" class="headerlink" title="1.    Definition"></a>1.    Definition</h4><p> Linear system is <font color=green>asymptotically stable</font> if all roots of characteristic equations have negative real parts. It means that <font color=green>y(t) tends to 0</font> for all initial conditions.</p>
 <ul>
@@ -370,15 +380,29 @@
 <li>It’s a weaker stability, all asymptotically stable is Lyapunov stable (negative real part), but the latter (zero real parts) may not be the former.</li>
 </ul>
 <p>Linear system is <font color=red>unable otherwise</font>. It means taht <font color=red>y(t) is unbounded</font> for some initial conditions.</p>
-<h4 id="2-Examples"><a href="#2-Examples" class="headerlink" title="2.    Examples"></a>2.    Examples</h4><h5 id="1-Pendulum-downwards-without-friction"><a href="#1-Pendulum-downwards-without-friction" class="headerlink" title="1.    Pendulum downwards without friction"></a>1.    Pendulum downwards without friction</h5><img src="../images/ALCS/2/PenDown.png" alt="PenDown " style="zoom:80%;" />
+<h4 id="2-Examples"><a href="#2-Examples" class="headerlink" title="2.    Examples"></a>2.    Examples</h4><h5 id="a-Pendulum-downwards-without-friction"><a href="#a-Pendulum-downwards-without-friction" class="headerlink" title="a.    Pendulum downwards without friction"></a>a.    Pendulum downwards without friction</h5><img src="/images/ALCS/2/PenDown.png" alt="PenDown " style="zoom:80%;" />
 
-<h5 id="2-Pendulum-downwards-with-friction"><a href="#2-Pendulum-downwards-with-friction" class="headerlink" title="2.    Pendulum downwards with friction"></a>2.    Pendulum downwards with friction</h5><img src="../images/ALCS/2/PenDown_f.png" alt="PenDown_f " style="zoom:80%;" />
+<h5 id="b-Pendulum-downwards-with-friction"><a href="#b-Pendulum-downwards-with-friction" class="headerlink" title="b.    Pendulum downwards with friction"></a>b.    Pendulum downwards with friction</h5><img src="/images/ALCS/2/PenDown_f.png" alt="PenDown_f " style="zoom:80%;" />
 
-<h5 id="3-Pendulum-upwards"><a href="#3-Pendulum-upwards" class="headerlink" title="3.    Pendulum upwards"></a>3.    Pendulum upwards</h5><img src="../images/ALCS/2/PenUp.png" alt="PenUp " style="zoom:80%;" />
+<h5 id="c-Pendulum-upwards"><a href="#c-Pendulum-upwards" class="headerlink" title="c.    Pendulum upwards"></a>c.    Pendulum upwards</h5><img src="/images/ALCS/2/PenUp.png" alt="PenUp " style="zoom:80%;" />
 
-<h5 id="4-Repeated-roots"><a href="#4-Repeated-roots" class="headerlink" title="4.    Repeated roots"></a>4.    Repeated roots</h5><img src="../images/ALCS/2/repRt.png" alt="repRt " style="zoom:80%;" />
+<h5 id="d-Repeated-roots"><a href="#d-Repeated-roots" class="headerlink" title="d.    Repeated roots"></a>d.    Repeated roots</h5><img src="/images/ALCS/2/repRt.png" alt="repRt " style="zoom:80%;" />
+
+
 
 <h3 id="III-Hurwitz-criterion"><a href="#III-Hurwitz-criterion" class="headerlink" title="III.    Hurwitz criterion"></a>III.    Hurwitz criterion</h3><p>How can we <font color=red>check</font> that a given system is stable or unstable <font color=red>without calculating roots</font> of its characteristic equation.</p>
+<h5 id="1-Explanation"><a href="#1-Explanation" class="headerlink" title="1.    Explanation"></a>1.    Explanation</h5><p><img src="/images/ALCS/2/HC_1.png" alt="HC_1"></p>
+<h5 id="2-Simple-corollaries"><a href="#2-Simple-corollaries" class="headerlink" title="2. Simple corollaries"></a>2. Simple corollaries</h5><p><img src="/images/ALCS/2/sc.png" alt="sc"></p>
+<p>They could have oscillations, or not.</p>
+<h3 id="IV-Basic-of-controller-design"><a href="#IV-Basic-of-controller-design" class="headerlink" title="IV.    Basic of controller design"></a>IV.    Basic of controller design</h3><h4 id="1-No-control"><a href="#1-No-control" class="headerlink" title="1.    No control"></a>1.    No control</h4><p><img src="/images/ALCS/2/eg1.png" alt="eg1"></p>
+<p>It will move<font color=orange> in one direction with constant speed.</font></p>
+<h4 id="2-P-Controller"><a href="#2-P-Controller" class="headerlink" title="2.    P-Controller"></a>2.    P-Controller</h4><p><img src="/images/ALCS/2/eg2.png" alt="eg2"></p>
+<p>The cart <font color=orange>oscillates around x=0 with constant amplitude.</font></p>
+<h4 id="3-PD-Controller"><a href="#3-PD-Controller" class="headerlink" title="3.    PD-Controller"></a>3.    PD-Controller</h4><h5 id="a-Type-one"><a href="#a-Type-one" class="headerlink" title="a.    Type one"></a>a.    Type one</h5><p><img src="/images/ALCS/2/eg3.png" alt="eg3"></p>
+<p>The cart <font color=orange>oscillates around x=0 with decaying amplitide.</font></p>
+<h5 id="b-Type-two"><a href="#b-Type-two" class="headerlink" title="b.    Type two"></a>b.    Type two</h5><p><img src="/images/ALCS/2/eg4.png" alt="eg4"></p>
+<p>The cart <font color=orange>slides to x=0 without oscillations.</font></p>
+<h5 id="c-Check"><a href="#c-Check" class="headerlink" title="c.    Check"></a>c.    Check</h5><p><img src="/images/ALCS/2/check.png" alt="check"></p>
 
             
 

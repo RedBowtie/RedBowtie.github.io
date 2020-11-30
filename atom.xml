@@ -34,6 +34,25 @@
   </entry>
   
   <entry>
+    <title>Automatic Control Linear Systems</title>
+    <link href="http://example.com/2020/11/30/AutoCtrlLS/"/>
+    <id>http://example.com/2020/11/30/AutoCtrlLS/</id>
+    <published>2020-11-30T12:32:00.000Z</published>
+    <updated>2020-11-30T06:54:23.337Z</updated>
+    
+    
+    
+    
+    <category term="Term3" scheme="http://example.com/categories/Term3/"/>
+    
+    
+    <category term="Control" scheme="http://example.com/tags/Control/"/>
+    
+    <category term="Linear System" scheme="http://example.com/tags/Linear-System/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Structural Material</title>
     <link href="http://example.com/2020/11/28/ConStrucMat/"/>
     <id>http://example.com/2020/11/28/ConStrucMat/</id>

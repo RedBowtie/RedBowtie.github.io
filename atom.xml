@@ -34,6 +34,29 @@
   </entry>
   
   <entry>
+    <title>Automatic Control Linear Systems PART V</title>
+    <link href="http://example.com/2020/12/16/AutoCtrlS_V/"/>
+    <id>http://example.com/2020/12/16/AutoCtrlS_V/</id>
+    <published>2020-12-16T10:32:00.000Z</published>
+    <updated>2020-12-16T13:11:11.761Z</updated>
+    
+    <content type="html"><![CDATA[<p>Back in the ___<a id="more"></a></p><h2 id="Lec-6-Solution-of-linear-dynamical-systems-System-stability"><a href="#Lec-6-Solution-of-linear-dynamical-systems-System-stability" class="headerlink" title="Lec 6 Solution of linear dynamical systems. System stability."></a>Lec 6 Solution of linear dynamical systems. System stability.</h2><hr><h3 id="I-Linear-Algebra-Recall"><a href="#I-Linear-Algebra-Recall" class="headerlink" title="I.    Linear Algebra Recall"></a>I.    Linear Algebra Recall</h3><h4 id="a-Definition"><a href="#a-Definition" class="headerlink" title="a.    Definition."></a>a.    Definition.</h4><p><img src="../images/ALCS/6/LA0.png" alt="LA0"></p><h4 id="b-Example"><a href="#b-Example" class="headerlink" title="b.    Example"></a>b.    Example</h4><p><img src="../images/ALCS/6/eg0.png" alt="eg0"></p><h4 id="c-Definition"><a href="#c-Definition" class="headerlink" title="c.    Definition"></a>c.    Definition</h4><p><img src="../images/ALCS/6/LA1.png" alt="LA1"></p><h4 id="d-Example"><a href="#d-Example" class="headerlink" title="d.    Example"></a>d.    Example</h4><p><img src="../images/ALCS/6/eg1.png" alt="eg1"></p><h4 id="e-Definition"><a href="#e-Definition" class="headerlink" title="e.    Definition"></a>e.    Definition</h4><p><img src="../images/ALCS/6/LA2.png" alt="LA2"></p><h4 id="f-Example"><a href="#f-Example" class="headerlink" title="f.    Example"></a>f.    Example</h4><p><img src="../images/ALCS/6/eg2.png" alt="eg2"></p><h4 id="g-Matlab-functions"><a href="#g-Matlab-functions" class="headerlink" title="g.    Matlab functions"></a>g.    Matlab functions</h4><p><img src="../images/ALCS/6/matlab0.png" alt="matlab0"></p><h3 id="II-Solution-of-linear-dynamical-systems"><a href="#II-Solution-of-linear-dynamical-systems" class="headerlink" title="II.    Solution of linear dynamical systems"></a>II.    Solution of linear dynamical systems</h3><h4 id="a-Definition-1"><a href="#a-Definition-1" class="headerlink" title="a.    Definition"></a>a.    Definition</h4><p>For sth there’s no input.</p><p><img src="../images/ALCS/6/sol0.png" alt="sol0"></p><h4 id="b-Example-1"><a href="#b-Example-1" class="headerlink" title="b.    Example"></a>b.    Example</h4><p><img src="../images/ALCS/6/eg3.png" alt="eg3"></p><h4 id="c-Definition-1"><a href="#c-Definition-1" class="headerlink" title="c.    Definition"></a>c.    Definition</h4><p>How do we derive the answer when input exists.</p><p><img src="../images/ALCS/6/sol1.png" alt="sol1"></p><h4 id="d-Lagrange’s-formula"><a href="#d-Lagrange’s-formula" class="headerlink" title="d.    Lagrange’s formula"></a>d.    Lagrange’s formula</h4><p><img src="../images/ALCS/6/lg0.png" alt="lg0"></p><p>Note that we have matrix exponential here.</p><p><img src="../images/ALCS/6/lg1.png" alt="lg1"></p><h4 id="e-Example"><a href="#e-Example" class="headerlink" title="e.    Example"></a>e.    Example</h4><p>Figure out a <strong>natural response</strong></p><p><img src="../images/ALCS/6/eg5.png" alt="eg5"></p><p><img src="../images/ALCS/6/eg4.png" alt="eg4"></p><h3 id="III-Stability"><a href="#III-Stability" class="headerlink" title="III.    Stability"></a>III.    Stability</h3><p>To determine if it’s stable or not without solving it. </p><p><img src="../images/ALCS/6/s0.png" alt="s0"></p><p>According to the eigenvalues, if there’s a positive 𝛌I, as time goes to infinity, this term goes to infinity as well. <strong>It would be unstable</strong></p><p>If all eigenvalues are negative, the system would be stable.</p><h4 id="a-Marginal-stability"><a href="#a-Marginal-stability" class="headerlink" title="a.    Marginal stability"></a>a.    Marginal stability</h4><h5 id="1-Neutral-Type"><a href="#1-Neutral-Type" class="headerlink" title="1.    Neutral Type"></a>1.    Neutral Type</h5><p><img src="../images/ALCS/6/ms0.png" alt="ms0"></p><h5 id="2-Oscillatory-Type"><a href="#2-Oscillatory-Type" class="headerlink" title="2.    Oscillatory Type"></a>2.    Oscillatory Type</h5><p><img src="../images/ALCS/6/ms1.png" alt="ms1"></p><h4 id="b-Asymptotic-stability"><a href="#b-Asymptotic-stability" class="headerlink" title="b.    Asymptotic stability"></a>b.    Asymptotic stability</h4><p><img src="../images/ALCS/6/as1.png" alt="as1"></p>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;Back in the ___</summary>
+    
+    
+    
+    <category term="Term3" scheme="http://example.com/categories/Term3/"/>
+    
+    
+    <category term="Control" scheme="http://example.com/tags/Control/"/>
+    
+    <category term="Linear System" scheme="http://example.com/tags/Linear-System/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Automatic Control Linear Systems PART IV</title>
     <link href="http://example.com/2020/12/14/AutoCtrlLs_IV/"/>
     <id>http://example.com/2020/12/14/AutoCtrlLs_IV/</id>
@@ -122,31 +145,6 @@
     <category term="Control" scheme="http://example.com/tags/Control/"/>
     
     <category term="Linear System" scheme="http://example.com/tags/Linear-System/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Structural Material</title>
-    <link href="http://example.com/2020/11/28/ConStrucMat/"/>
-    <id>http://example.com/2020/11/28/ConStrucMat/</id>
-    <published>2020-11-28T12:32:00.000Z</published>
-    <updated>2020-11-28T12:34:41.567Z</updated>
-    
-    <content type="html"><![CDATA[<p>TBC</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;TBC&lt;/p&gt;
-</summary>
-      
-    
-    
-    
-    <category term="Term3" scheme="http://example.com/categories/Term3/"/>
-    
-    
-    <category term="Material" scheme="http://example.com/tags/Material/"/>
     
   </entry>
   

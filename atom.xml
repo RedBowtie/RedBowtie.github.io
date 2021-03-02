@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-01-28T16:39:37.374Z</updated>
+  <updated>2021-03-02T07:45:26.630Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -17,16 +17,16 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Records V1</title>
-    <link href="http://example.com/2021/01/02/Rec_1/"/>
-    <id>http://example.com/2021/01/02/Rec_1/</id>
-    <published>2021-01-02T06:05:04.000Z</published>
-    <updated>2021-01-28T16:39:37.374Z</updated>
+    <title>Info</title>
+    <link href="http://example.com/2021/12/31/Info/"/>
+    <id>http://example.com/2021/12/31/Info/</id>
+    <published>2021-12-31T15:59:59.000Z</published>
+    <updated>2021-03-02T07:45:26.630Z</updated>
     
-    <content type="html"><![CDATA[<p>頼るが..いい?<a id="more"></a></p><p>Jan 1st.<br>    I think that’s bad news. Really really bad.<br>    So I’m here just doing nothing.<br>    Hatred grows, which never has been more.<br>    Why the hell that _ came in my way.<br>    Confession is useless, yet it takes time.<br>    There is a way.</p><p>Jan 16th.<br>    It’s hollowed.</p><p>Jan 29th.<br>    Will I be the same frank after four and more years of tourturing.<br>    This is not a kind of frank, I mean.</p>]]></content>
+    <content type="html"><![CDATA[<p>When?<a id="more"></a></p><blockquote><p>All those moments will be lost… in time.<br>Like tears… in rain.</p></blockquote>]]></content>
     
     
-    <summary type="html">&lt;p&gt;頼るが..いい?</summary>
+    <summary type="html">&lt;p&gt;When?</summary>
     
     
     
@@ -34,16 +34,16 @@
   </entry>
   
   <entry>
-    <title>Info</title>
-    <link href="http://example.com/2020/12/31/Info/"/>
-    <id>http://example.com/2020/12/31/Info/</id>
-    <published>2020-12-31T15:59:59.000Z</published>
-    <updated>2020-11-28T12:38:49.704Z</updated>
+    <title>Records V1</title>
+    <link href="http://example.com/2021/01/02/Rec_1/"/>
+    <id>http://example.com/2021/01/02/Rec_1/</id>
+    <published>2021-01-02T06:05:04.000Z</published>
+    <updated>2021-03-02T08:20:36.039Z</updated>
     
-    <content type="html"><![CDATA[<p>Wut?<a id="more"></a></p><blockquote><p>All those moments will be lost… in time.<br>Like tears… in rain.</p></blockquote>]]></content>
+    <content type="html"><![CDATA[<p>頼るが..いい?<a id="more"></a></p><p>March 2nd:<br>It’s a fresh start as long as I regard so. I don’t care.<br>In the following days, it would be the best if I may carry on with IRG stuff and consturct that fvking vote system, making some improvement with python and English.<br>And the circumstances is that I don’t quit.<br>Thinking too much is a bad thing.</p>]]></content>
     
     
-    <summary type="html">&lt;p&gt;Wut?</summary>
+    <summary type="html">&lt;p&gt;頼るが..いい?</summary>
     
     
     
@@ -110,27 +110,6 @@
     
     
     <category term="JS" scheme="http://example.com/tags/JS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Psychology　</title>
-    <link href="http://example.com/2020/12/23/Psychology/"/>
-    <id>http://example.com/2020/12/23/Psychology/</id>
-    <published>2020-12-23T01:32:00.000Z</published>
-    <updated>2020-12-23T01:29:12.686Z</updated>
-    
-    <content type="html"><![CDATA[<p>Basis.<a id="more"></a><br>同一性发展<br>    James Marcia提出青少年同一性发展的四种情形。它们是同一性达成（identity achievement）、同一性拒斥（identity foreclosure）、同一性分散（identity diffusion）、延期偿付（moratorium）。<br>　　同一性达成表明个体考虑了各种实际选项，做出了选择，并实践选择。在结束高中学习生活之前，似乎没有学生能够达到这种情形。跨入大学校门的学生也需要花一定的时间做出决定。对一些成人来说，在他们生命中的某一阶段，也许会达成稳固的自我同一性。之后，还可能放弃前一种同一性，而形成新的同一性。对某一个个体而言，自我同一性一旦达成，也不意味着一成不变。<br>　　同一性拒斥描述的是个体过早地将自我意象固定化，没有考虑各种选择的可能，而停止了同一性的探求。同一性拒斥的青少年往往缺乏主见，遵从他人的目标、价值观和生活方式。这里的他人包括父母、宗教群体等等。<br>　　同一性性分散是和同一性拒斥联系在一起的。个体很少”发现自己”，不知道自己是谁，不知道想做什么，没有明确的发展方向。经历着同一性分散的青少年无法成功地做出选择，或者他们会逃避思考问题。缺乏兴趣，孤独，对未来不抱希望，或者可能很叛逆。他们宁可塞着耳塞听音乐或睡觉，也不愿意接触父母和老师。<br>　　关于青少年在各种选择中的思想斗争过程，埃里克森用了一个”延期偿付”的词语来描述，表示青少年延迟做出个人生活或职业的选择和承诺。埃里克森认为，在一个复杂社会，在这个”延期偿付”的阶段，青少年势必会经历自我同一性危机。而今，这一阶段不再称为危机了，因为对大多数人来说，自我同一性的达成是一个逐渐缓慢的探索过程，而不是外在的急剧变化。延期选择很正常，而且是健康有益的。<br>　　延期偿付和自我同一性达成都被认为是健康的。青少年亲自去做一些试验，摒弃不适合的东西，发现适合自己的生活方式，寻找根源。这些是建立牢固自我同一性的重要部分。那些无法跨越同一性拒斥和同一性分散的青少年不能很好地适应。同一性分散的青少年经常放弃，把自己的生活归结为命运。和一大群人在一起，极可能吸毒。同一性拒斥的青少年很刻板，不宽容，独断，自我防御。学校为青少年提供的社区服务，工作实习和教师指导有助于自我同一性的形成。</p>]]></content>
-    
-    
-    <summary type="html">&lt;p&gt;Basis.</summary>
-    
-    
-    
-    <category term="Term3" scheme="http://example.com/categories/Term3/"/>
-    
-    
-    <category term="Psy" scheme="http://example.com/tags/Psy/"/>
     
   </entry>
   
@@ -311,23 +290,6 @@
     
     
     <category term="Culture" scheme="http://example.com/tags/Culture/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Records</title>
-    <link href="http://example.com/2020/11/22/Rec/"/>
-    <id>http://example.com/2020/11/22/Rec/</id>
-    <published>2020-11-22T14:35:04.000Z</published>
-    <updated>2020-12-29T00:23:53.732Z</updated>
-    
-    <content type="html"><![CDATA[<p>Hummmmm<a id="more"></a><br>Oct. 26th:<br>    It’s getting better now, which is good, and, surely not enough.<br>    Just can’t wait until the boxing day. Hope the latter communication will be pleasant and I still have my chance. Please.<br>    The overall progress is currently not delayed anymore. That’s good news. Gotta make use of more time.</p><p>Nov. 02nd:<br>    Group activities are fun. Feeling good to stay connected with others. With all that said, the more excitation, the more frustrated when the party ends. All I can do is to lessen the regrets I could possibly have made. The quality issue of the monitor is hard to avoid, but the loss is limited and acceptable, it’s just about one week’s off. Take control of more time is next topic I should focus on. Stupid nerd is always a nerd, as being replied could satisfies him, a lot. Just take it easy then, Things would get better.</p><p>Nov. 05th:<br>    Taking too long with things that I’m not familiar with. Indeed, I depend too much on my past experience. That influenced the acceptance. I need time to fix it. More and more time. Pities around, and yet not able to change. Try then. It has been too long.</p><p>Nov. 07th:<br>    The connection is not that deep though, It’s enough for me to be happier. I really like those moments. They are precious as they could not be easily rebuild. Left knee started to hurt again, maybe I should go to a doctor some day.</p><p>Nov. 10th:<br>    If there’s a way to get used to current status, it will be a good thing. Things come without notice, I gotta be ready for them. Not everything would give me time to make a full preparation. Hold on, my boy.</p><p>Nov. 22nd:</p><blockquote><p>I. Messy thoughts</p></blockquote><ul><li>That’s… cool, dude. Things got close to your expectation.</li><li>Yeah, but something’s going, wrong? I guess.</li></ul><p>They are probably busy with new relationships, or just completely forget. They will. It’s just a matter of time. Don’t wanna be remembered, don’t wanna exist in other ones’ memory. It’s better to leave nothing behind. That’s not a fresh start. I used to think so. According to the book, or not, it makes no use. Did I changed, did I managed to do so.<br>   Yes, but limited.</p><blockquote><p>Carry on my wayward son,<br>There’be peace when you are done.<br>Lay your weary head to rest<br>Don’t you cry no more.</p></blockquote><p>Roads ahead, don’t stop, at least not here.</p><blockquote><p>II. Books.</p></blockquote><p>I’ve been make mistakes. With all that said. I wanna storage precious things forever, yet forget these are rather important ones. I wasn’t mean to do that. On seeing those photo, past reveals again. Things what I long for, places where I wanna stay. Imperfection made them perfect in certain view.</p><blockquote><p>It was, and is, truly precious.</p></blockquote><p>The process never ends. That’s good.</p><p>Nov. 26th:<br>Bad mood.<br>Please don’t.</p><p>Dec. 4th:<br>Another course ended.<br>And again, I wanna review the text thoroughly. It’s not that bad, I mean, but it would be better if such feeling comes earlier rather than being some sort of regrets.<br>Whatever, just keep on.</p><blockquote><p>Be tough.</p></blockquote><p>Dec. 23rd:<br>Time goes really fast.<br>Same old bad habbits appered again. Good news is that it’s still under control. Usage seems to decrease, gotta make up for it.<br>There’re few things left to do. Like … IRG things, or that subject, and FE.<br>See what you are capabale of?</p><p>Dec. 28th<br>That’s end by now.<br>Other things won’t stop toubling me for now. Go ahead.</p>]]></content>
-    
-    
-    <summary type="html">&lt;p&gt;Hummmmm</summary>
-    
-    
-    
     
   </entry>
   

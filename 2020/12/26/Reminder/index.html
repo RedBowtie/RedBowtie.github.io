@@ -17,7 +17,7 @@
             <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
         
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Press RB","sameAs":["https://github.com/","http://stackoverflow.com/users"],"image":"https://zaima-1300059928.cos.ap-shanghai.myqcloud.com/At/kkk.png"},"articleBody":"Guess I would visit this often.\nI.    LatexI always forget those expressions  : |\nII.    Mount HDDCheck mount method\n12$ mount | grep ntfs&#x2F;dev&#x2F;disk2s1 on &#x2F;Volumes&#x2F;Untitled (ntfs, local, nodev, nosuid, read-only, noowners)\n\nunmount\n1$ sudo umount &#x2F;dev&#x2F;disk2s1\n\nRe-mount\n1$ sudo mount_ntfs -o rw,nobrowse &#x2F;dev&#x2F;disk2s1 ~&#x2F;Users&#x2F;xxx&#x2F;Downloads&#x2F;Dummy4Disk\n\n\n\nIII.    Markdown","dateCreated":"2020-12-26T21:32:00+08:00","dateModified":"2020-12-26T21:57:50+08:00","datePublished":"2020-12-26T21:32:00+08:00","description":"Guess I would visit this often.","headline":"Tools and Tricks","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2020/12/26/Reminder/"},"publisher":{"@type":"Organization","name":"Press RB","sameAs":["https://github.com/","http://stackoverflow.com/users"],"image":"https://zaima-1300059928.cos.ap-shanghai.myqcloud.com/At/kkk.png","logo":{"@type":"ImageObject","url":"https://zaima-1300059928.cos.ap-shanghai.myqcloud.com/At/kkk.png"}},"url":"http://example.com/2020/12/26/Reminder/","keywords":"NotUseful"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Press RB","sameAs":["https://github.com/","http://stackoverflow.com/users"],"image":"https://zaima-1300059928.cos.ap-shanghai.myqcloud.com/At/kkk.png"},"articleBody":"Guess I would visit this often.\nI.    LatexI always forget those expressions  : |\nII.    Mount HDD[Upd]Just use mounty, this method is no longer available due to some implementation changes.\nCheck mount method\n12$ mount | grep ntfs&#x2F;dev&#x2F;disk2s1 on &#x2F;Volumes&#x2F;Untitled (ntfs, local, nodev, nosuid, read-only, noowners)\n\nunmount\n1$ sudo umount &#x2F;dev&#x2F;disk2s1\n\nRe-mount\n1$ sudo mount_ntfs -o rw,nobrowse &#x2F;dev&#x2F;disk2s1 ~&#x2F;Users&#x2F;xxx&#x2F;Downloads&#x2F;Dummy4Disk\n\n\n\n\nIII.    Markdown","dateCreated":"2020-12-26T21:32:00+08:00","dateModified":"2021-04-26T10:04:44+08:00","datePublished":"2020-12-26T21:32:00+08:00","description":"Guess I would visit this often.","headline":"Tools and Tricks","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2020/12/26/Reminder/"},"publisher":{"@type":"Organization","name":"Press RB","sameAs":["https://github.com/","http://stackoverflow.com/users"],"image":"https://zaima-1300059928.cos.ap-shanghai.myqcloud.com/At/kkk.png","logo":{"@type":"ImageObject","url":"https://zaima-1300059928.cos.ap-shanghai.myqcloud.com/At/kkk.png"}},"url":"http://example.com/2020/12/26/Reminder/","keywords":"NotUseful"}</script>
     <meta name="description" content="Guess I would visit this often.">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="Tools and Tricks">
@@ -26,7 +26,7 @@
 <meta property="og:description" content="Guess I would visit this often.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-12-26T13:32:00.000Z">
-<meta property="article:modified_time" content="2020-12-26T13:57:50.283Z">
+<meta property="article:modified_time" content="2021-04-26T02:04:44.557Z">
 <meta property="article:author" content="Press RB">
 <meta property="article:tag" content="NotUseful">
 <meta name="twitter:card" content="summary">
@@ -289,7 +289,8 @@
         <div class="main-content-wrap">
             <p>Guess I would visit this often.<a id="more"></a></p>
 <h2 id="I-Latex"><a href="#I-Latex" class="headerlink" title="I.    Latex"></a>I.    Latex</h2><p>I always forget those expressions  : |</p>
-<h2 id="II-Mount-HDD"><a href="#II-Mount-HDD" class="headerlink" title="II.    Mount HDD"></a>II.    Mount HDD</h2><p>Check mount method</p>
+<h2 id="II-Mount-HDD"><a href="#II-Mount-HDD" class="headerlink" title="II.    Mount HDD"></a>II.    Mount HDD</h2><p><font color=red>[Upd]</font>Just use mounty, this method is no longer available due to some implementation changes.</p>
+<p>Check mount method</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ mount | grep ntfs</span><br><span class="line">&#x2F;dev&#x2F;disk2s1 on &#x2F;Volumes&#x2F;Untitled (ntfs, local, nodev, nosuid, read-only, noowners)</span><br></pre></td></tr></table></figure>
 
 <p>unmount</p>
@@ -297,6 +298,7 @@
 
 <p>Re-mount</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo mount_ntfs -o rw,nobrowse &#x2F;dev&#x2F;disk2s1 ~&#x2F;Users&#x2F;xxx&#x2F;Downloads&#x2F;Dummy4Disk</span><br></pre></td></tr></table></figure>
+
 
 
 

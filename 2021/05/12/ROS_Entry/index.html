@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Amaurot Ch.">
-    <title>Records V1 - Amaurot Ch.</title>
+    <title>Entry in Ros (Noetic) - Amaurot Ch.</title>
     <meta name="author" content="Press RB">
     
     
@@ -17,17 +17,19 @@
             <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
         
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Press RB","sameAs":["https://github.com/","http://stackoverflow.com/users"],"image":"https://zaima-1300059928.cos.ap-shanghai.myqcloud.com/At/kkk.png"},"articleBody":"頼るが..いい?\nMarch 2nd:It’s a fresh start as long as I regard so. I don’t care.In the following days, it would be the best if I may carry on with IRG stuff and consturct that fvking vote system, making some improvement in python and English.And the circumstances is that I don’t quit.Thinking too much is a bad thing.You’ve got a looot to learn. Don’t worry about which first and don’t be rush.\nMarch 13th:It sucks. Where have I been? I mean, the one who I was.I wanna spit it out. I don’t get it, what’s really the thing that’s so depressing.It’s painful. I’m keeping losing sanity which is not a good thing.Double-sided sword…   I hate this.I hate myself. \nMarch 16th:The debt is about to close now. Things do get better.On the other hand there’s need to improve efficiency. Fair trade, yet not sure I would be able to handle that.I’d better not go mad in the future.\nMarch 20th:\n\nDon’t stick to past. Look ahead.It’s ………. all right now.\n\nApr. 1st:I saw a sparrow, trapped in canteen.Wished it could managed to get out there. It might make its way through the gap under door curtains.IT KEPT HITTING THE WINDOWS.That felt like torture, but I heisitated.Good thing that a couple savd it.Somethings never changed. \nApr. 5th:Keep it up. Please. Do not stop.\nApr. 10th:\n\nYou cannot have proper respect for yourself until you know that you’re a monster.Because you won’t act carefully enough.\n\nApr. 12th:\n\nさあ　はじめよう僕らの未来を勝ち取るために\n\nImperfect\n\n\nApr. 22nd:Arrogance. Perhaps one of the things I hate most.Why ones kept doing this.Anyway, don’t do the same. Remind youself about it.Just need to find somewhere quiet to calm down a little bit.\nMay. 1st:Happened to see those letters again. It’s complicated,like mixing the odd with the old, sort of strange.Things fall, things on earth, and those falls is fallen.\nMay. 6th:Well, I don’t really mind to eat like that everyday, but there’s a limit on the income. That means no.No one “pushed” me there, it’s just me, myself.I presumed, that would be my place. I’m not supposed to be somewhere else, not yet. I need TIME.Unfortunately, not allowed.\n\nOne day, they will join you in the light.\n\nMay. 8th:Words of appreciation.I think the conversation is more or less helpful to me, which was jsut like last part of the jigsaw.Whatever, that should not be the thing I need to consider, just don’t think too much.Just, not again, is that all right?\nMay. 12th:Move, please, move your fking leg.There’s literally no time, dumb ass.It’s not sure that you can (not) advance. It’s uncertain for now.There is no time, neither here nor there.Like a dumb fish stranding on beach, finding cause does not solve the problem itself.I’ve been tired these days.Physical being has a limit, so just rest well.Then what about mental beings?Do I really need help?Direct ones are unnecessary I pressume.Maybe I should let out one last sigh, making one last CR LF.I doubt if that’s merely an impulsion, as what’s left behind for me is a projection to the past. Not now, which means there’s no help if I really did that.Just too late. “Terribly sad.”Why don’t you let it go? Do you really need such meaningless farewell? That could really trouble her for now.You would do it like all the other times, right?Admit it, you just did not let go and believe, deep down inside, there’s a chance, no matter how small it would be.Then you got to move. You’d better not stand here for any longer.Please, whoever for is fine.\nMay 15th:You can (not) be anyone you want yo be.That’s merely a dream of some else, not yours. Not now.But I may try.Not all “legacy” would be what you want. Admit it or not, they are there.\nMay 16th:Something is strange.Something out there, beneath those unseen.Gotta correct that.\n","dateCreated":"2021-01-02T14:05:04+08:00","dateModified":"2021-05-16T20:12:15+08:00","datePublished":"2021-01-02T14:05:04+08:00","description":"頼るが..いい?","headline":"Records V1","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2021/01/02/Rec_1/"},"publisher":{"@type":"Organization","name":"Press RB","sameAs":["https://github.com/","http://stackoverflow.com/users"],"image":"https://zaima-1300059928.cos.ap-shanghai.myqcloud.com/At/kkk.png","logo":{"@type":"ImageObject","url":"https://zaima-1300059928.cos.ap-shanghai.myqcloud.com/At/kkk.png"}},"url":"http://example.com/2021/01/02/Rec_1/"}</script>
-    <meta name="description" content="頼るが..いい?">
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Press RB","sameAs":["https://github.com/","http://stackoverflow.com/users"],"image":"https://zaima-1300059928.cos.ap-shanghai.myqcloud.com/At/kkk.png"},"articleBody":"Solidworks really sucks without a geforce card and I would really forget this part.\n| PREFACE\nEnvironmentOS: Ubuntu with KDE(the latter is personal interest)Only Fresh new OS.\n\nInstall ROS on Ubuntu is really convenient, comparing with do it on MACOS. Finding supported and alternative dependencies is hard, exactly what happens when you wanna make your own wheel to do something that’s not offically done.Literaly just type those commands in terminal and it’s done. DAMN, do you have any idea how long I’ve spent on tries to make that work on MACOS? Laziness brings problems, I deserved that.Well, I’ll do that again sooner or later. A nice guy made a script made that more easily to work with. Thumbs up on that one.\nSo currently FOXY is on MACOS, as it’s distribution of ROS2, I’ll get into that in another page. Gotta focus on this first.\n| NAV ROS FILE SYSIn short, it mainly mentions cmds below.\n1rospack find [package_name]\n\nit returns the file location of correspoding component.\n1roscd &lt;package-or-stack&gt;[/subdir]\n\nit swith current work directory to where the component, or its subfolder, exists.\n1rosls &lt;package-or-stack&gt;[/subdir]\n\nprint all files and folders in the exact folder.\nSo, intrinsically, it’s modified version of *nix cmd, pretty straightforward.\n| ROS PACKAGESA catkin package consists of \n\nCatkin compliant package.xml file\n\nwhich provide meta information about the package\n\n\nCMakeLists.txt which uses catkin\n\nIf it is a catkin metapackage, it must have the relevent boilerplate file.\n\n\nEach package is placed in its own folder\n\nno nested ones sharing the same directory.\n\n\n\n1catkin_create_pkg &lt;package_name&gt; [depend 1] [depend 2] ... [depend n]\n\nThis is how we create a new catkin package.\n1rospack depends1 &lt;package_name&gt; // &quot;depends&quot; without 1 to return dependencies recursively\n\nThis returns the first-order dependencies.\nWords in Description tag should be simplified, keep it short.\nMaintainer tag is required and really important. It let others know who to contact about the package.\nNormally, you may imagine that catkin_make combines the calls to cmake and make in the standard CMake workflow.\n123456# In a CMake project$ mkdir build$ cd build$ cmake ..$ make$ make install  # (optionally)\n\nThis process is run for each CMake project, while catkin projects ( those in the src folder ) can be built together in workspace.\n| ROS NODES","dateCreated":"2021-05-12T22:32:00+08:00","dateModified":"2021-05-16T21:51:31+08:00","datePublished":"2021-05-12T22:32:00+08:00","description":"Solidworks really sucks without a geforce card and I would really forget this part.","headline":"Entry in Ros (Noetic)","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2021/05/12/ROS_Entry/"},"publisher":{"@type":"Organization","name":"Press RB","sameAs":["https://github.com/","http://stackoverflow.com/users"],"image":"https://zaima-1300059928.cos.ap-shanghai.myqcloud.com/At/kkk.png","logo":{"@type":"ImageObject","url":"https://zaima-1300059928.cos.ap-shanghai.myqcloud.com/At/kkk.png"}},"url":"http://example.com/2021/05/12/ROS_Entry/","keywords":"Robot, ROS"}</script>
+    <meta name="description" content="Solidworks really sucks without a geforce card and I would really forget this part.">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="Records V1">
-<meta property="og:url" content="http://example.com/2021/01/02/Rec_1/index.html">
+<meta property="og:title" content="Entry in Ros (Noetic)">
+<meta property="og:url" content="http://example.com/2021/05/12/ROS_Entry/index.html">
 <meta property="og:site_name" content="Amaurot Ch.">
-<meta property="og:description" content="頼るが..いい?">
+<meta property="og:description" content="Solidworks really sucks without a geforce card and I would really forget this part.">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-01-02T06:05:04.000Z">
-<meta property="article:modified_time" content="2021-05-16T12:12:15.006Z">
+<meta property="article:published_time" content="2021-05-12T14:32:00.000Z">
+<meta property="article:modified_time" content="2021-05-16T13:51:31.234Z">
 <meta property="article:author" content="Press RB">
+<meta property="article:tag" content="Robot">
+<meta property="article:tag" content="ROS">
 <meta name="twitter:card" content="summary">
     
     
@@ -267,16 +269,22 @@
         <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
-            Records V1
+            Entry in Ros (Noetic)
         </h1>
     
     
         <div class="post-meta">
-    <time datetime="2021-01-02T14:05:04+08:00">
+    <time datetime="2021-05-12T22:32:00+08:00">
 	
-		    Jan 02, 2021
+		    May 12, 2021
     	
     </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/IRG/">IRG</a>
+
+
     
 </div>
 
@@ -286,44 +294,67 @@
     
     <div class="post-content markdown">
         <div class="main-content-wrap">
-            <p>頼るが..いい?<a id="more"></a></p>
-<p>March 2nd:<br>It’s a fresh start as long as I regard so. I don’t care.<br>In the following days, it would be the best if I may carry on with IRG stuff and consturct that fvking vote system, making some improvement in python and English.<br>And the circumstances is that I don’t quit.<br>Thinking too much is a bad thing.<br>You’ve got a looot to learn. Don’t worry about which first and don’t be rush.</p>
-<p>March 13th:<br>It sucks. Where have I been? I mean, the one who I was.<br>I wanna spit it out. I don’t get it, what’s really the thing that’s so depressing.<br>It’s painful. I’m keeping losing sanity which is not a good thing.<br>Double-sided sword…   I hate this.<br>I hate myself. </p>
-<p>March 16th:<br>The debt is about to close now. Things do get better.<br>On the other hand there’s need to improve efficiency. Fair trade, yet not sure I would be able to handle that.<br>I’d better not go mad in the future.</p>
-<p>March 20th:</p>
-<blockquote>
-<p>Don’t stick to past. Look ahead.<br>It’s ………. all right now.</p>
+            <p>Solidworks really sucks without a geforce card and I would really forget this part.<a id="more"></a></p>
+<h2 id="PREFACE"><a href="#PREFACE" class="headerlink" title="| PREFACE"></a>| PREFACE</h2><blockquote>
+<p>Environment<br>OS: Ubuntu with KDE(the latter is personal interest)<br>Only Fresh new OS.</p>
 </blockquote>
-<p>Apr. 1st:<br>I saw a sparrow, trapped in canteen.<br>Wished it could managed to get out there. It might make its way through the gap under door curtains.<br>IT KEPT HITTING THE WINDOWS.<br>That felt like torture, but I heisitated.<br>Good thing that a couple savd it.<br>Somethings never changed. </p>
-<p>Apr. 5th:<br>Keep it up. Please. Do not stop.</p>
-<p>Apr. 10th:</p>
-<blockquote>
-<p>You cannot have proper respect for yourself until you know that you’re a monster.<br>Because you won’t act carefully enough.</p>
-</blockquote>
-<p>Apr. 12th:</p>
-<blockquote>
-<p>さあ　はじめよう<br>僕らの未来を勝ち取るために</p>
-<ul>
-<li>Imperfect</li>
-</ul>
-</blockquote>
-<p>Apr. 22nd:<br>Arrogance. Perhaps one of the things I hate most.<br>Why ones kept doing this.<br>Anyway, don’t do the same. Remind youself about it.<br>Just need to find somewhere quiet to calm down a little bit.</p>
-<p>May. 1st:<br>Happened to see those letters again. It’s complicated,like mixing the odd with the old, sort of strange.<br>Things fall, things on earth, and those falls is fallen.</p>
-<p>May. 6th:<br>Well, I don’t really mind to eat like that everyday, but there’s a limit on the income. That means no.<br>No one “pushed” me there, it’s just me, myself.<br>I presumed, that would be my place. I’m not supposed to be somewhere else, not yet. I need <strong>TIME</strong>.<br>Unfortunately, not allowed.</p>
-<blockquote>
-<p>One day, they will join you in the light.</p>
-</blockquote>
-<p>May. 8th:<br>Words of appreciation.<br>I think the conversation is more or less helpful to me, which was jsut like last part of the jigsaw.<br>Whatever, that should not be the thing I need to consider, just don’t think too much.<br>Just, not again, is that all right?</p>
-<p>May. 12th:<br>Move, please, move your fking leg.<br>There’s literally no time, dumb ass.<br>It’s not sure that you can (not) advance. It’s uncertain for now.<br>There is no time, neither here nor there.<br>Like a dumb fish stranding on beach, finding cause does not solve the problem itself.<br>I’ve been tired these days.<br>Physical being has a limit, so just rest well.<br>Then what about mental beings?<br>Do I really need help?<br>Direct ones are unnecessary I pressume.<br>Maybe I should let out one last sigh, making one last CR LF.<br>I doubt if that’s merely an impulsion, as what’s left behind for me is a projection to the past. Not now, which means there’s no help if I really did that.<br>Just too late. “Terribly sad.”<br>Why don’t you let it go? Do you really need such meaningless farewell? That could really trouble her for now.<br>You would do it like all the other times, right?<br>Admit it, you just did not let go and believe, deep down inside, there’s a chance, no matter how small it would be.<br>Then you got to move. You’d better not stand here for any longer.<br>Please, whoever for is fine.</p>
-<p>May 15th:<br>You can (not) be anyone you want yo be.<br>That’s merely a dream of some else, not yours. Not now.<br>But I may try.<br>Not all “legacy” would be what you want. Admit it or not, they are there.</p>
-<p>May 16th:<br>Something is strange.<br>Something out there, beneath those unseen.<br>Gotta correct that.</p>
+<p>Install ROS on Ubuntu is really convenient, comparing with do it on MACOS. Finding supported and alternative dependencies is hard, exactly what happens when you wanna make your own wheel to do something that’s not offically done.<br>Literaly just type those commands in terminal and it’s done. <del>DAMN, do you have any idea how long I’ve spent on tries to make that work on MACOS?</del> Laziness brings problems, I deserved that.<br>Well, I’ll do that again sooner or later. A nice guy made a script made that more easily to work with. Thumbs up on that one.</p>
+<p>So currently <em>FOXY</em> is on MACOS, as it’s distribution of ROS2, I’ll get into that in another page. Gotta focus on this first.</p>
+<h2 id="NAV-ROS-FILE-SYS"><a href="#NAV-ROS-FILE-SYS" class="headerlink" title="| NAV ROS FILE SYS"></a>| NAV ROS FILE SYS</h2><p>In short, it mainly mentions cmds below.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rospack find [package_name]</span><br></pre></td></tr></table></figure>
 
+<p>it returns the file location of correspoding component.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">roscd &lt;package-<span class="keyword">or</span>-<span class="built_in">stack</span>&gt;[/subdir]</span><br></pre></td></tr></table></figure>
+
+<p>it swith current work directory to where the component, or its subfolder, exists.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rosls &lt;package-<span class="keyword">or</span>-<span class="built_in">stack</span>&gt;[/subdir]</span><br></pre></td></tr></table></figure>
+
+<p>print all files and folders in the exact folder.</p>
+<p>So, intrinsically, it’s modified version of *nix cmd, pretty straightforward.</p>
+<h2 id="ROS-PACKAGES"><a href="#ROS-PACKAGES" class="headerlink" title="| ROS PACKAGES"></a>| ROS PACKAGES</h2><p>A catkin package consists of </p>
+<ul>
+<li><p>Catkin compliant <strong>package.xml</strong> file</p>
+<ul>
+<li>which provide meta information about the package</li>
+</ul>
+</li>
+<li><p><strong>CMakeLists.txt</strong> which uses catkin</p>
+<ul>
+<li>If it is a catkin metapackage, it must have the relevent boilerplate file.</li>
+</ul>
+</li>
+<li><p>Each package is placed in its own folder</p>
+<ul>
+<li>no nested ones sharing the same directory.</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">catkin_create_pkg &lt;package_name&gt; [depend <span class="number">1</span>] [depend <span class="number">2</span>] ... [depend n]</span><br></pre></td></tr></table></figure>
+
+<p>This is how we create a new catkin package.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rospack depends1 &lt;package_name&gt; <span class="comment">// &quot;depends&quot; without 1 to return dependencies recursively</span></span><br></pre></td></tr></table></figure>
+
+<p>This returns the <strong>first-order</strong> dependencies.</p>
+<p>Words in <strong>Description tag</strong> should be simplified, keep it short.</p>
+<p><strong>Maintainer tag</strong> is required and really important. It let others know who to contact about the package.</p>
+<p>Normally, you may imagine that <strong>catkin_make</strong> combines the calls to <strong>cmake and make</strong> in the standard CMake workflow.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># In a CMake project</span><br><span class="line">$ mkdir build</span><br><span class="line">$ cd build</span><br><span class="line">$ cmake ..</span><br><span class="line">$ make</span><br><span class="line">$ make install  # (optionally)</span><br></pre></td></tr></table></figure>
+
+<p>This process is run for each CMake project, while catkin projects ( those in the <strong>src</strong> folder ) can be built together in workspace.</p>
+<h2 id="ROS-NODES"><a href="#ROS-NODES" class="headerlink" title="| ROS NODES"></a>| ROS NODES</h2>
             
 
 
         </div>
     </div>
     <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/ROS/" rel="tag">ROS</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Robot/" rel="tag">Robot</a>
+
+            </div>
         
         
             <div class="post-actions-wrap">
@@ -334,9 +365,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2021/05/12/ROS_Entry/"
-                    data-tooltip="Entry in Ros (Noetic)"
-                    aria-label="PREVIOUS: Entry in Ros (Noetic)"
+                    href="/2021/12/31/Info/"
+                    data-tooltip="It&#39;s on top."
+                    aria-label="PREVIOUS: It&#39;s on top."
                 >
                     
                         <i class="fa fa-angle-left" aria-hidden="true"></i>
@@ -348,9 +379,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2020/12/26/Reminder/"
-                    data-tooltip="Tools and Tricks"
-                    aria-label="NEXT: Tools and Tricks"
+                    href="/2021/01/02/Rec_1/"
+                    data-tooltip="Records V1"
+                    aria-label="NEXT: Records V1"
                 >
                     
                         <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
@@ -410,9 +441,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2021/05/12/ROS_Entry/"
-                    data-tooltip="Entry in Ros (Noetic)"
-                    aria-label="PREVIOUS: Entry in Ros (Noetic)"
+                    href="/2021/12/31/Info/"
+                    data-tooltip="It&#39;s on top."
+                    aria-label="PREVIOUS: It&#39;s on top."
                 >
                     
                         <i class="fa fa-angle-left" aria-hidden="true"></i>
@@ -424,9 +455,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2020/12/26/Reminder/"
-                    data-tooltip="Tools and Tricks"
-                    aria-label="NEXT: Tools and Tricks"
+                    href="/2021/01/02/Rec_1/"
+                    data-tooltip="Records V1"
+                    aria-label="NEXT: Records V1"
                 >
                     
                         <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>

@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-05-06T13:03:46.507Z</updated>
+  <updated>2021-05-18T03:29:08.032Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://example.com/2021/12/31/Info/"/>
     <id>http://example.com/2021/12/31/Info/</id>
     <published>2021-12-31T15:59:59.000Z</published>
-    <updated>2021-05-06T13:03:46.507Z</updated>
+    <updated>2021-05-18T03:29:08.032Z</updated>
     
     <content type="html"><![CDATA[<p>Thing like that, blah blah blah.<a id="more"></a><br>A hazy realm, forgotten, but not by me.<br>I suppose that’s enough.<br>How many times have I said that, does that really count?<br>So is written.</p><blockquote><p>All those moments will be lost… in time.<br>Like tears… in rain.</p></blockquote>]]></content>
     

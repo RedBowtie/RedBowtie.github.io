@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-05-18T03:29:08.032Z</updated>
+  <updated>2021-05-20T00:22:43.684Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -17,16 +17,16 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>It&#39;s on top.</title>
+    <title>A mess of words.</title>
     <link href="http://example.com/2021/12/31/Info/"/>
     <id>http://example.com/2021/12/31/Info/</id>
     <published>2021-12-31T15:59:59.000Z</published>
-    <updated>2021-05-18T03:29:08.032Z</updated>
+    <updated>2021-05-20T00:22:43.684Z</updated>
     
-    <content type="html"><![CDATA[<p>Thing like that, blah blah blah.<a id="more"></a><br>A hazy realm, forgotten, but not by me.<br>I suppose that’s enough.<br>How many times have I said that, does that really count?<br>So is written.</p><blockquote><p>All those moments will be lost… in time.<br>Like tears… in rain.</p></blockquote>]]></content>
+    <content type="html"><![CDATA[<p>Not likely.<a id="more"></a><br>A hazy realm, forgotten, but not by me.<br>I suppose that’s enough.<br>How many times have I said that, does that really count?<br>So is written.</p><blockquote><p>All those moments will be lost… in time.<br>Like tears… in rain.</p></blockquote>]]></content>
     
     
-    <summary type="html">&lt;p&gt;Thing like that, blah blah blah.</summary>
+    <summary type="html">&lt;p&gt;Not likely.</summary>
     
     
     

@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-05-20T00:22:43.684Z</updated>
+  <updated>2021-05-17T00:58:09.538Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,23 +15,6 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>A mess of words.</title>
-    <link href="http://example.com/2021/12/31/Info/"/>
-    <id>http://example.com/2021/12/31/Info/</id>
-    <published>2021-12-31T15:59:59.000Z</published>
-    <updated>2021-05-20T00:22:43.684Z</updated>
-    
-    <content type="html"><![CDATA[<p>Not likely.<a id="more"></a><br>A hazy realm, forgotten, but not by me.<br>I suppose that’s enough.<br>How many times have I said that, does that really count?<br>So is written.</p><blockquote><p>All those moments will be lost… in time.<br>Like tears… in rain.</p></blockquote>]]></content>
-    
-    
-    <summary type="html">&lt;p&gt;Not likely.</summary>
-    
-    
-    
-    
-  </entry>
   
   <entry>
     <title>Entry to Ros (Noetic)</title>
@@ -67,6 +50,23 @@
     
     
     <summary type="html">&lt;p&gt;頼るが..いい?</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>A mess of words.</title>
+    <link href="http://example.com/2021/01/01/Info/"/>
+    <id>http://example.com/2021/01/01/Info/</id>
+    <published>2021-01-01T15:59:59.000Z</published>
+    <updated>2021-05-20T00:30:24.729Z</updated>
+    
+    <content type="html"><![CDATA[<p>Not likely.<a id="more"></a><br>I suppose that’s enough.<br>How many times have I said that, does that really count?<br>So is written.</p><blockquote><p>All those moments will be lost… in time.<br>Like tears… in rain.</p></blockquote>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;Not likely.</summary>
     
     
     

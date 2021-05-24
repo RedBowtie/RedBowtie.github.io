@@ -17,7 +17,7 @@
             <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
         
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Estus","sameAs":["https://github.com/","http://stackoverflow.com/users"],"image":"/Ess/kkk.png"},"articleBody":"Solidworks really sucks without a geforce card and I would really forget this part.\n| PREFACE\nEnvironmentOS: Ubuntu with KDE(the latter is personal interest)Only Fresh new OS.\n\nInstall ROS on Ubuntu is really convenient, comparing with do it on MACOS. Finding supported and alternative dependencies is hard, exactly what happens when you wanna make your own wheel to do something that’s not offically done.Literaly just type those commands in terminal and it’s done. DAMN, do you have any idea how long I’ve spent on tries to make that work on MACOS? Laziness brings problems, I deserved that.Well, I’ll do that again sooner or later. A nice guy made a script made that more easily to work with. Thumbs up on that one.\nSo currently FOXY is on MACOS, as it’s distribution of ROS2, I’ll get into that in another page. Gotta focus on this first.\n| NAV ROS FILE SYSIn short, it mainly mentions cmds below.\n1rospack find [package_name]\n\nit returns the file location of correspoding component.\n1roscd &lt;package-or-stack&gt;[/subdir]\n\nit swith current work directory to where the component, or its subfolder, exists.\n1rosls &lt;package-or-stack&gt;[/subdir]\n\nprint all files and folders in the exact folder.\nSo, intrinsically, it’s modified version of *nix cmd, pretty straightforward.\n| ROS PACKAGESA catkin package consists of \n\nCatkin compliant package.xml file\n\nwhich provide meta information about the package\n\n\nCMakeLists.txt which uses catkin\n\nIf it is a catkin metapackage, it must have the relevent boilerplate file.\n\n\nEach package is placed in its own folder\n\nno nested ones sharing the same directory.\n\n\n\n1catkin_create_pkg &lt;package_name&gt; [depend 1] [depend 2] ... [depend n]\n\nThis is how we create a new catkin package.\n1rospack depends1 &lt;package_name&gt; // &quot;depends&quot; without 1 to return dependencies recursively\n\nThis returns the first-order dependencies.\nWords in Description tag should be simplified, keep it short.\nMaintainer tag is required and really important. It let others know who to contact about the package.\nNormally, you may imagine that catkin_make combines the calls to cmake and make in the standard CMake workflow.\n123456# In a CMake project$ mkdir build$ cd build$ cmake ..$ make$ make install  # (optionally)\n\nThis process is run for each CMake project, while catkin projects ( those in the src folder ) can be built together in workspace.\n| ROS NODES","dateCreated":"2021-05-12T22:32:00+08:00","dateModified":"2021-05-17T08:58:09+08:00","datePublished":"2021-05-12T22:32:00+08:00","description":"Solidworks really sucks without a geforce card and I would really forget this part.","headline":"Entry to Ros (Noetic)","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2021/05/12/ROS_Entry/"},"publisher":{"@type":"Organization","name":"Estus","sameAs":["https://github.com/","http://stackoverflow.com/users"],"image":"/Ess/kkk.png","logo":{"@type":"ImageObject","url":"/Ess/kkk.png"}},"url":"http://example.com/2021/05/12/ROS_Entry/","keywords":"Robot, ROS"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Estus","sameAs":["https://github.com/","http://stackoverflow.com/users"],"image":"/Ess/t.png"},"articleBody":"Solidworks really sucks without a geforce card and I would really forget this part.\n| PREFACE\nEnvironmentOS: Ubuntu with KDE(the latter is personal interest)Only Fresh new OS.\n\nInstall ROS on Ubuntu is really convenient, comparing with do it on MACOS. Finding supported and alternative dependencies is hard, exactly what happens when you wanna make your own wheel to do something that’s not offically done.Literaly just type those commands in terminal and it’s done. DAMN, do you have any idea how long I’ve spent on tries to make that work on MACOS? Laziness brings problems, I deserved that.Well, I’ll do that again sooner or later. A nice guy made a script made that more easily to work with. Thumbs up on that one.\nSo currently FOXY is on MACOS, as it’s distribution of ROS2, I’ll get into that in another page. Gotta focus on this first.\n| NAV ROS FILE SYSIn short, it mainly mentions cmds below.\n1rospack find [package_name]\n\nit returns the file location of correspoding component.\n1roscd &lt;package-or-stack&gt;[/subdir]\n\nit swith current work directory to where the component, or its subfolder, exists.\n1rosls &lt;package-or-stack&gt;[/subdir]\n\nprint all files and folders in the exact folder.\nSo, intrinsically, it’s modified version of *nix cmd, pretty straightforward.\n| ROS PACKAGESA catkin package consists of \n\nCatkin compliant package.xml file\n\nwhich provide meta information about the package\n\n\nCMakeLists.txt which uses catkin\n\nIf it is a catkin metapackage, it must have the relevent boilerplate file.\n\n\nEach package is placed in its own folder\n\nno nested ones sharing the same directory.\n\n\n\n1catkin_create_pkg &lt;package_name&gt; [depend 1] [depend 2] ... [depend n]\n\nThis is how we create a new catkin package.\n1rospack depends1 &lt;package_name&gt; // &quot;depends&quot; without 1 to return dependencies recursively\n\nThis returns the first-order dependencies.\nWords in Description tag should be simplified, keep it short.\nMaintainer tag is required and really important. It let others know who to contact about the package.\nNormally, you may imagine that catkin_make combines the calls to cmake and make in the standard CMake workflow.\n123456# In a CMake project$ mkdir build$ cd build$ cmake ..$ make$ make install  # (optionally)\n\nThis process is run for each CMake project, while catkin projects ( those in the src folder ) can be built together in workspace.\n| ROS NODES","dateCreated":"2021-05-12T22:32:00+08:00","dateModified":"2021-05-17T08:58:09+08:00","datePublished":"2021-05-12T22:32:00+08:00","description":"Solidworks really sucks without a geforce card and I would really forget this part.","headline":"Entry to Ros (Noetic)","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2021/05/12/ROS_Entry/"},"publisher":{"@type":"Organization","name":"Estus","sameAs":["https://github.com/","http://stackoverflow.com/users"],"image":"/Ess/t.png","logo":{"@type":"ImageObject","url":"/Ess/t.png"}},"url":"http://example.com/2021/05/12/ROS_Entry/","keywords":"Robot, ROS"}</script>
     <meta name="description" content="Solidworks really sucks without a geforce card and I would really forget this part.">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="Entry to Ros (Noetic)">
@@ -36,7 +36,7 @@
         
     
     
-        <meta property="og:image" content="http://example.com/assets/images/Ess/kkk.png"/>
+        <meta property="og:image" content="http://example.com/assets/images/Ess/t.png"/>
     
     
     
@@ -95,7 +95,7 @@
             >
         
         
-            <img class="header-picture" src="/assets/images/Ess/kkk.png" alt="Author&#39;s picture"/>
+            <img class="header-picture" src="/assets/images/Ess/t.png" alt="Author&#39;s picture"/>
         
         </a>
     
@@ -116,7 +116,7 @@
                     href="/#about"
                     aria-label="Read more about the author"
                 >
-                    <img class="sidebar-profile-picture" src="/assets/images/Ess/kkk.png" alt="Author&#39;s picture"/>
+                    <img class="sidebar-profile-picture" src="/assets/images/Ess/t.png" alt="Author&#39;s picture"/>
                 </a>
                 <h4 class="sidebar-profile-name">Estus</h4>
                 
@@ -503,7 +503,7 @@
             <i class="fa fa-times"></i>
         </div>
         
-            <img id="about-card-picture" src="/assets/images/Ess/kkk.png" alt="Author&#39;s picture"/>
+            <img id="about-card-picture" src="/assets/images/Ess/t.png" alt="Author&#39;s picture"/>
         
             <h4 id="about-card-name">Estus</h4>
         

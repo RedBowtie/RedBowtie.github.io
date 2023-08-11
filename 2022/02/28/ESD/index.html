@@ -1,0 +1,677 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Amaurot Ch.">
+    <title>Electromechanical Systems Dynamics - Amaurot Ch.</title>
+    <meta name="author" content="Estus">
+    
+    
+        <link rel="icon" href="https://upload.cc/i1/2021/05/18/lSCp1v.png">
+    
+    
+        
+            <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png"},"articleBody":"DingTalk’s stupid bug still exists, damn.\nLec 1. Introduction to system dynamicsBrief introduction, seems nothing special. Some phenomenon and corresponding results。Role of simulation in development work.Some modeling examples and life cycle stages.\nLec 2. Mathematic modelling of dynamic systemsStatic\nOutput determined only by current input, reacts instantaneouslyRelationship does not changeRelationship is represented by an algebraic equation\n\nDynamic\nOutput takes time to react;Relationship changes with time, depends on past inputs and initial conditions;Relationship is represented by a differential equation\n\nWays of modelling of dynamic systemsLinear and non linear, which can be transformed by linearization in some quilibirium points.\nRecall of Laplace transformationTransfer functionsLinear dynamic system has at least one input and at least one output which connected by linear differential equations.It is also called linear time invariant (LTI) system\nLec 3. Typical dynamic blocksState-space modelling\nA state-space model represents a system by a series of first-order differential state equation and algebraic output equations\nState-space models are numerically efficient to solve, can handle complex systems, allow for a more geometric understanding of dynamic systems and form the basis for much of modern control theory.\n\n(Followed by a lot of examples in slides. Remember to check them)\nLec 4. Mathematic modelling of electrical systems dynamicIt is more like a generalization and summary to the previous lecture.\nAlgo for getting the state-space model:\n\n\nWrite component equations\nWrite topological equations\nState-space model.\nSelect the required number of equations for the model\nExpress the remaining parameters in terms of the state vector parameters and substitute it to the equation.\nExpress the output vector in terms of the state vector and substitute input vector\nWrite the state-space model\n\n\nTransfer fucntion\nPerform Laplace transformation for the state-space model (zero initial conditions)\nExpress the output in terms of input\nWrite the transfer function\n\n\n\n\nLec 5. Mathematic modelling of mechanical systems dynamicIntroduction❖ Mechanical systems are modelled, basically, as systems with lumped-parameter elements;\n❖  From the energy point of view mechanical systems can be described with dissipative elements, potential energy storage elements, kinetic energy storage elements;\n❖  Forces and moments which drive mechanical system are typically applied by actuators but might represent other loads applied by the environment.\nBasic elements❖ Inertia elements\n\nMass moment of inertia\nEach inertia element with independent motion needs its own differential equation\nStores kinetic energy\n\n❖ Spring elements\n1. Force (toeque) is generated to resist deflection\n2. Translational and rotational springs\n3. Store potential energy\n❖ Damper elements\n\nForce (torque) is generated to resist motion\nDashpots, friction, wind drag\nDissipate energy\n\nBasic principles of mechanical model designing\nChoose coordinates and orientation\nDraw free-body diagrams for each inertia\nGenerate equations of motion using Newton’s 2nd law and Euler’s 2nd law\nDouble check.\n\nSome examplescheck them in slides.\nLec 6. Dynamical models of mechanical systemsTwo types of dynamical model of mechanical systemModel for control system analysisA model must correspond to the most of dynamical properties of real system\nModel for control system synthesisA model must correspond to dynamical properties of real system only in bandwidth of the control system \nSome examplesMainly about one-mass, two-mass and three-mass systems.\nResonant frequency.\n\n\\omega_{R1}=\\sqrt{\\frac{K_{12}(J_1+J_2)}{J_1J_2}}=\\sqrt{\\frac{K_{12}\\gamma}{J_2}}where $\\gamma=\\frac{J_1+J_2}{J_1}$ - mass ratio\nNote that only in laplace domain is the notation’s unit in $rad\\cdot s^{-1}$, while in real domain, it’s $\\frac{1}{s}$\nThe denominator is the resonant part of the system, while the numerator is the anti-resonant part.\nLec 7. Mechanical systems dynamic with nonlinearitiesNotations\nDead band\nSaturation zone\nDead band and Saturation zone\nIdeal relay\nIdeal replay with deadband zone\n\n\nRelay with delay\n\nDiscontinuous switching delay in switching \n\n\nRelay with delay and deadband zone\n\n\nFriction Nonlinearity\nStatic Friction\nDynamic Friction\nLimiting Friction\n\n\nThe coulomb friction force model\nBenson exponential friction model\nSmooth coulomb friction model\nVelocity-based friction model\nKarnopp friction model\nDahl friction model\nLuGre friction model\nElasto-plastic friction model\nStick-slip friction model\nGonthier friction model\n\n\nLec 8. Analysis and control of linear systemsIntroductionAutomatic control systems:\n•give new properties to technological equipment;\n•allow you to increase the speed of operating modes ;\n•saving consumables and electricity;\n•improving the quality of products due to the precision measuring subsystem;\n•reducing the number of service personnel and reducing the requirements for their qualifications ;\n•reducing the influence of subjective factors , in particular, the psychological characteristics of the operator;\n•payroll savings .\nBasic conceptsThe dimension of the vector x is the order of the object.\nTypes of control\nOpen loop control\nDisturbance control\nFeedback control\n\nCriteria for the quality of control systemsThe control system must be stable and also must have a certain quality of the transition process .\nErrors in steady state conditions should not exceed admissible values.\nNumerical characteristics are needed to evaluate the effectiveness of control systems.\nQuality criteria make it possible to quantify various automatic control systems.\nClassification of quality indicators•Direct indicators. Determined directly from the transient response of the process.\n•Root indicators. They are determined by the roots of the characteristic polynomial.\n•Frequency indicators. Determined by frequency characteristics.\n•Integral indicators. Obtained by integrating functions.\nDirect indicator\nabsolute error:\n\n$\\varepsilon(t)=g(t)-y(t)$\n\nrelative error:\n\n$\\delta\\varepsilon(t)=\\frac{g(t)-y(t)}{g(t)}$\nAlso, there is maximum version of this two value.\n\nRegulation error\n\nTransient time\n\n\n\nt_{tr}=t_1-t_0\\\\\nt_0=begining\\\\\nt_1=max(t),\\varepsilon(t_1)\\ge D\\\\\nD=0.05\\cdot\\abs{y_0-y_{ss}}\nOvershoot\n\n\\delta y_{max}=\\abs{\\frac{\\triangle y_{max}}{y_{ss}-y_0}}\nOscillation (fluctuation)\n\n\n\nM=\\frac{10^{(L(\\omega_c)-L(0))/20}}{10^{L(0)/20}}\nSteady-state error\n\nLimit value theorem：\n\n\\lim_{s\\rightarrow\\infty}(s\\cdot F(s))=\\lim_{s\\rightarrow0}(f(t))=f(0)\\\\\n\\lim_{s\\rightarrow0}(s\\cdot F(s))=\\lim_{s\\rightarrow\\infty}(f(t))=f(\\infty)\\\\\\\\\nE(s)=\\frac{1}{1+W_1(s)W_2(s)}G(s)-\\frac{W_2(s)}{1+W_1(s)W_2(s)}F(s)\\\\\\\\\nE_G(s)=W_G(s)G(s), \\ F(s)=0\\\\\\\\\n\\varepsilon_g(t)|_{t\\rightarrow\\infty}=\\lim_{s\\rightarrow0}(s\\cdot E_G(s))=c_{g0}\\cdot g_0\\\\\\\\\nc_{g0}=W_G(s)|_{s=0}The formulas are only valid if the stability condition is satisfied for F(s)\nPID regulators\nP\nu(t)=K_p\\cdot e(t)\\\\W_{reg}(s)=\\frac{U(s)}{E(s)}=K_p\n\nI\nu(t)=K_i\\int e(t)dt\\\\W_{reg}(s)=\\frac{U(s)}{E(s)}=K_i\\frac{1}{s}\n\n\nD\nu(t)=K_d\\frac{de(t)}{dt}\\\\W_{reg}(s)=\\frac{U(s)}{E(s)}=K_ds\\\\REAL\\ ONE:\\\\W_{reg}=K_d\\frac{s}{T_{\\mu r}s+1}\n\nZiegler-Nichols methodIn most cases, a properly tuned PID controller satisfies all system requirements. There are two methods.\n\nFin.","dateCreated":"2022-02-28T16:32:00+08:00","dateModified":"2022-04-14T19:47:03+08:00","datePublished":"2022-02-28T16:32:00+08:00","description":"DingTalk’s stupid bug still exists, damn.","headline":"Electromechanical Systems Dynamics","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://redbowtie.github.io/2022/02/28/ESD/"},"publisher":{"@type":"Organization","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png","logo":{"@type":"ImageObject","url":"/Ess/lh.png"}},"url":"https://redbowtie.github.io/2022/02/28/ESD/","keywords":"System, Modelling"}</script>
+    <meta name="description" content="DingTalk’s stupid bug still exists, damn.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Electromechanical Systems Dynamics">
+<meta property="og:url" content="https://redbowtie.github.io/2022/02/28/ESD/index.html">
+<meta property="og:site_name" content="Amaurot Ch.">
+<meta property="og:description" content="DingTalk’s stupid bug still exists, damn.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-02-28T08:32:00.000Z">
+<meta property="article:modified_time" content="2022-04-14T11:47:03.455Z">
+<meta property="article:author" content="Estus">
+<meta property="article:tag" content="System">
+<meta property="article:tag" content="Modelling">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://redbowtie.github.io/assets/images/Ess/lh.png"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-4a47lwukh8khnoqxgkjhofoety2rdykli5sq4vv9v7xmmtg07euhkbfahoe5.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/"
+            aria-label=""
+        >
+            Amaurot Ch.
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+            <img class="header-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a
+                    href="/#about"
+                    aria-label="Read more about the author"
+                >
+                    <img class="sidebar-profile-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Estus</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>Fun things <del>never</del> always stops.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/RedBowtie"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/atom.xml"
+                            
+                            rel="noopener"
+                            title="RSS"
+                        >
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/links"
+                            
+                            rel="noopener"
+                            title="Links"
+                        >
+                        <i class="sidebar-button-icon fa fa-sign" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Links</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            Electromechanical Systems Dynamics
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2022-02-28T16:32:00+08:00">
+	
+		    Feb 28, 2022
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Term6/">Term6</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>DingTalk’s stupid bug still exists, damn.<span id="more"></span></p>
+<h2 id="Lec-1-Introduction-to-system-dynamics"><a href="#Lec-1-Introduction-to-system-dynamics" class="headerlink" title="Lec 1. Introduction to system dynamics"></a>Lec 1. Introduction to system dynamics</h2><p>Brief introduction, seems nothing special. Some phenomenon and corresponding results。<br>Role of simulation in development work.<br>Some modeling examples and life cycle stages.</p>
+<h2 id="Lec-2-Mathematic-modelling-of-dynamic-systems"><a href="#Lec-2-Mathematic-modelling-of-dynamic-systems" class="headerlink" title="Lec 2. Mathematic modelling of dynamic systems"></a>Lec 2. Mathematic modelling of dynamic systems</h2><h4 id="Static"><a href="#Static" class="headerlink" title="Static"></a>Static</h4><blockquote>
+<p>Output determined only by current input, reacts instantaneously<br>Relationship does not change<br>Relationship is represented by an algebraic equation</p>
+</blockquote>
+<h4 id="Dynamic"><a href="#Dynamic" class="headerlink" title="Dynamic"></a>Dynamic</h4><blockquote>
+<p>Output takes time to react;<br>Relationship changes with time, depends on past inputs and initial conditions;<br>Relationship is represented by a differential equation</p>
+</blockquote>
+<h4 id="Ways-of-modelling-of-dynamic-systems"><a href="#Ways-of-modelling-of-dynamic-systems" class="headerlink" title="Ways of modelling of dynamic systems"></a>Ways of modelling of dynamic systems</h4><p>Linear and non linear, which can be transformed by linearization in some quilibirium points.</p>
+<h4 id="Recall-of-Laplace-transformation"><a href="#Recall-of-Laplace-transformation" class="headerlink" title="Recall of Laplace transformation"></a>Recall of Laplace transformation</h4><h4 id="Transfer-functions"><a href="#Transfer-functions" class="headerlink" title="Transfer functions"></a>Transfer functions</h4><p>Linear dynamic system has at least one input and at least one output which connected by linear differential equations.<br>It is also called linear time invariant (LTI) system</p>
+<h2 id="Lec-3-Typical-dynamic-blocks"><a href="#Lec-3-Typical-dynamic-blocks" class="headerlink" title="Lec 3. Typical dynamic blocks"></a>Lec 3. Typical dynamic blocks</h2><h4 id="State-space-modelling"><a href="#State-space-modelling" class="headerlink" title="State-space modelling"></a>State-space modelling</h4><ul>
+<li>A state-space model represents a system by a series of first-order differential state equation and algebraic output equations</li>
+<li>State-space models are numerically efficient to solve, can handle complex systems, allow for a more geometric understanding of dynamic systems and form the basis for much of modern control theory.</li>
+</ul>
+<p>(Followed by a lot of examples in slides. Remember to check them)</p>
+<h2 id="Lec-4-Mathematic-modelling-of-electrical-systems-dynamic"><a href="#Lec-4-Mathematic-modelling-of-electrical-systems-dynamic" class="headerlink" title="Lec 4. Mathematic modelling of electrical systems dynamic"></a>Lec 4. Mathematic modelling of electrical systems dynamic</h2><p>It is more like a generalization and summary to the previous lecture.</p>
+<p>Algo for getting the state-space model:</p>
+<blockquote>
+<ol>
+<li>Write component equations</li>
+<li>Write topological equations</li>
+<li>State-space model.<ol>
+<li>Select the required number of equations for the model</li>
+<li>Express the remaining parameters in terms of the state vector parameters and substitute it to the equation.</li>
+<li>Express the output vector in terms of the state vector and substitute input vector</li>
+<li>Write the state-space model</li>
+</ol>
+</li>
+<li>Transfer fucntion<ol>
+<li>Perform Laplace transformation for the state-space model (zero initial conditions)</li>
+<li>Express the output in terms of input</li>
+<li>Write the transfer function</li>
+</ol>
+</li>
+</ol>
+</blockquote>
+<h2 id="Lec-5-Mathematic-modelling-of-mechanical-systems-dynamic"><a href="#Lec-5-Mathematic-modelling-of-mechanical-systems-dynamic" class="headerlink" title="Lec 5. Mathematic modelling of mechanical systems dynamic"></a>Lec 5. Mathematic modelling of mechanical systems dynamic</h2><h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>❖ Mechanical systems are modelled, basically, as systems with lumped-parameter elements;</p>
+<p>❖  From the energy point of view mechanical systems can be described with dissipative elements, potential energy storage elements, kinetic energy storage elements;</p>
+<p>❖  Forces and moments which drive mechanical system are typically applied by actuators but might represent other loads applied by the environment.</p>
+<h3 id="Basic-elements"><a href="#Basic-elements" class="headerlink" title="Basic elements"></a>Basic elements</h3><p>❖ Inertia elements</p>
+<ol>
+<li>Mass moment of inertia</li>
+<li>Each inertia element with independent motion needs its own differential equation</li>
+<li>Stores kinetic energy</li>
+</ol>
+<p>❖ Spring elements</p>
+<pre><code>1. Force (toeque) is generated to resist deflection
+2. Translational and rotational springs
+3. Store potential energy
+</code></pre><p>❖ Damper elements</p>
+<ol>
+<li>Force (torque) is generated to resist motion</li>
+<li>Dashpots, friction, wind drag</li>
+<li>Dissipate energy</li>
+</ol>
+<h3 id="Basic-principles-of-mechanical-model-designing"><a href="#Basic-principles-of-mechanical-model-designing" class="headerlink" title="Basic principles of mechanical model designing"></a>Basic principles of mechanical model designing</h3><ol>
+<li>Choose coordinates and orientation</li>
+<li>Draw free-body diagrams for each inertia</li>
+<li>Generate equations of motion using Newton’s 2nd law and Euler’s 2nd law</li>
+<li>Double check.</li>
+</ol>
+<h4 id="Some-examples"><a href="#Some-examples" class="headerlink" title="Some examples"></a>Some examples</h4><p>check them in slides.</p>
+<h2 id="Lec-6-Dynamical-models-of-mechanical-systems"><a href="#Lec-6-Dynamical-models-of-mechanical-systems" class="headerlink" title="Lec 6. Dynamical models of mechanical systems"></a>Lec 6. Dynamical models of mechanical systems</h2><h3 id="Two-types-of-dynamical-model-of-mechanical-system"><a href="#Two-types-of-dynamical-model-of-mechanical-system" class="headerlink" title="Two types of dynamical model of mechanical system"></a>Two types of dynamical model of mechanical system</h3><h4 id="Model-for-control-system-analysis"><a href="#Model-for-control-system-analysis" class="headerlink" title="Model for control system analysis"></a>Model for control system analysis</h4><p>A model must correspond to the most of dynamical properties of <strong>real system</strong></p>
+<h4 id="Model-for-control-system-synthesis"><a href="#Model-for-control-system-synthesis" class="headerlink" title="Model for control system synthesis"></a>Model for control system synthesis</h4><p>A model must correspond to dynamical properties of real system only in <strong>bandwidth of the control system</strong> </p>
+<h3 id="Some-examples-1"><a href="#Some-examples-1" class="headerlink" title="Some examples"></a>Some examples</h3><p>Mainly about one-mass, two-mass and three-mass systems.</p>
+<p>Resonant frequency.</p>
+<script type="math/tex; mode=display">
+\omega_{R1}=\sqrt{\frac{K_{12}(J_1+J_2)}{J_1J_2}}=\sqrt{\frac{K_{12}\gamma}{J_2}}</script><p>where $\gamma=\frac{J_1+J_2}{J_1}$ - mass ratio</p>
+<p><strong>Note</strong> that only in laplace domain is the notation’s unit in $rad\cdot s^{-1}$, while in real domain, it’s $\frac{1}{s}$</p>
+<p>The denominator is the <strong>resonant part</strong> of the system, while the numerator is the <strong>anti-resonant part</strong>.</p>
+<h2 id="Lec-7-Mechanical-systems-dynamic-with-nonlinearities"><a href="#Lec-7-Mechanical-systems-dynamic-with-nonlinearities" class="headerlink" title="Lec 7. Mechanical systems dynamic with nonlinearities"></a>Lec 7. Mechanical systems dynamic with nonlinearities</h2><h3 id="Notations"><a href="#Notations" class="headerlink" title="Notations"></a>Notations</h3><ul>
+<li>Dead band</li>
+<li>Saturation zone</li>
+<li>Dead band and Saturation zone</li>
+<li>Ideal relay<ul>
+<li>Ideal replay with deadband zone</li>
+</ul>
+</li>
+<li><p>Relay with delay</p>
+<ul>
+<li>Discontinuous switching delay in switching </li>
+</ul>
+</li>
+<li><p>Relay with delay and deadband zone</p>
+</li>
+</ul>
+<h2 id="Friction-Nonlinearity"><a href="#Friction-Nonlinearity" class="headerlink" title="Friction Nonlinearity"></a>Friction Nonlinearity</h2><ol>
+<li>Static Friction</li>
+<li>Dynamic Friction</li>
+<li>Limiting Friction</li>
+</ol>
+<blockquote>
+<p>The coulomb friction force model</p>
+<p>Benson exponential friction model</p>
+<p>Smooth coulomb friction model</p>
+<p>Velocity-based friction model</p>
+<p>Karnopp friction model</p>
+<p>Dahl friction model</p>
+<p>LuGre friction model</p>
+<p>Elasto-plastic friction model</p>
+<p>Stick-slip friction model</p>
+<p>Gonthier friction model</p>
+</blockquote>
+<hr>
+<h2 id="Lec-8-Analysis-and-control-of-linear-systems"><a href="#Lec-8-Analysis-and-control-of-linear-systems" class="headerlink" title="Lec 8. Analysis and control of linear systems"></a>Lec 8. Analysis and control of linear systems</h2><h3 id="Introduction-1"><a href="#Introduction-1" class="headerlink" title="Introduction"></a>Introduction</h3><p>Automatic control systems:</p>
+<p>•give <strong>new properties</strong> to technological equipment;</p>
+<p>•allow you to increase <strong>the speed of operating modes</strong> ;</p>
+<p>•<strong>saving</strong> consumables and electricity;</p>
+<p>•improving the <strong>quality of products</strong> due to the precision measuring subsystem;</p>
+<p>•reducing the <strong>number of service personnel</strong> and reducing the requirements for their <strong>qualifications</strong> ;</p>
+<p>•reducing the influence of <strong>subjective factors</strong> , in particular, the psychological characteristics of the operator;</p>
+<p>•payroll <strong>savings .</strong></p>
+<h3 id="Basic-concepts"><a href="#Basic-concepts" class="headerlink" title="Basic concepts"></a>Basic concepts</h3><p>The dimension of the vector x is the order of the object.</p>
+<h4 id="Types-of-control"><a href="#Types-of-control" class="headerlink" title="Types of control"></a>Types of control</h4><ul>
+<li>Open loop control</li>
+<li>Disturbance control</li>
+<li>Feedback control</li>
+</ul>
+<h3 id="Criteria-for-the-quality-of-control-systems"><a href="#Criteria-for-the-quality-of-control-systems" class="headerlink" title="Criteria for the quality of control systems"></a>Criteria for the quality of control systems</h3><p>The control system must be <strong>stable </strong>and also must have a certain <strong>quality of</strong> <strong>the transition process</strong> .</p>
+<p>Errors in <strong>steady state conditions</strong> should not exceed admissible values.</p>
+<p><strong>Numerical characteristics are</strong> needed to evaluate the effectiveness of control systems.</p>
+<p><strong>Quality criteria</strong> make it possible to quantify various automatic control systems.</p>
+<h4 id="Classification-of-quality-indicators"><a href="#Classification-of-quality-indicators" class="headerlink" title="Classification of quality indicators"></a>Classification of quality indicators</h4><p>•<strong>Direct indicators.</strong> Determined directly from the transient response of the process.</p>
+<p>•<strong>Root indicators.</strong> They are determined by the roots of the characteristic polynomial.</p>
+<p>•<strong>Frequency indicators.</strong> Determined by frequency characteristics.</p>
+<p>•<strong>Integral indicators.</strong> Obtained by integrating functions.</p>
+<h4 id="Direct-indicator"><a href="#Direct-indicator" class="headerlink" title="Direct indicator"></a>Direct indicator</h4><ul>
+<li>absolute error:</li>
+</ul>
+<p>$\varepsilon(t)=g(t)-y(t)$</p>
+<ul>
+<li>relative error:</li>
+</ul>
+<p>$\delta\varepsilon(t)=\frac{g(t)-y(t)}{g(t)}$</p>
+<p>Also, there is maximum version of this two value.</p>
+<ul>
+<li><p>Regulation error</p>
+</li>
+<li><p>Transient time</p>
+</li>
+</ul>
+<script type="math/tex; mode=display">
+t_{tr}=t_1-t_0\\
+t_0=begining\\
+t_1=max(t),\varepsilon(t_1)\ge D\\
+D=0.05\cdot\abs{y_0-y_{ss}}</script><ul>
+<li><p>Overshoot</p>
+<script type="math/tex; mode=display">
+\delta y_{max}=\abs{\frac{\triangle y_{max}}{y_{ss}-y_0}}</script></li>
+<li><p>Oscillation (fluctuation)</p>
+</li>
+</ul>
+<script type="math/tex; mode=display">
+M=\frac{10^{(L(\omega_c)-L(0))/20}}{10^{L(0)/20}}</script><ul>
+<li>Steady-state error</li>
+</ul>
+<p>Limit value theorem：</p>
+<script type="math/tex; mode=display">
+\lim_{s\rightarrow\infty}(s\cdot F(s))=\lim_{s\rightarrow0}(f(t))=f(0)\\
+\lim_{s\rightarrow0}(s\cdot F(s))=\lim_{s\rightarrow\infty}(f(t))=f(\infty)\\\\
+E(s)=\frac{1}{1+W_1(s)W_2(s)}G(s)-\frac{W_2(s)}{1+W_1(s)W_2(s)}F(s)\\\\
+E_G(s)=W_G(s)G(s), \ F(s)=0\\\\
+\varepsilon_g(t)|_{t\rightarrow\infty}=\lim_{s\rightarrow0}(s\cdot E_G(s))=c_{g0}\cdot g_0\\\\
+c_{g0}=W_G(s)|_{s=0}</script><p>The formulas are only <strong>valid</strong> if the <strong>stability</strong> condition is satisfied for <strong>F(s)</strong></p>
+<h3 id="PID-regulators"><a href="#PID-regulators" class="headerlink" title="PID regulators"></a>PID regulators</h3><ul>
+<li><h4 id="P"><a href="#P" class="headerlink" title="P"></a>P</h4><script type="math/tex; mode=display">
+u(t)=K_p\cdot e(t)\\W_{reg}(s)=\frac{U(s)}{E(s)}=K_p</script></li>
+<li></li>
+<li><h4 id="I"><a href="#I" class="headerlink" title="I"></a>I</h4><script type="math/tex; mode=display">
+u(t)=K_i\int e(t)dt\\W_{reg}(s)=\frac{U(s)}{E(s)}=K_i\frac{1}{s}</script></li>
+</ul>
+<ul>
+<li><h4 id="D"><a href="#D" class="headerlink" title="D"></a>D</h4><script type="math/tex; mode=display">
+u(t)=K_d\frac{de(t)}{dt}\\W_{reg}(s)=\frac{U(s)}{E(s)}=K_ds\\REAL\ ONE:\\W_{reg}=K_d\frac{s}{T_{\mu r}s+1}</script></li>
+</ul>
+<h3 id="Ziegler-Nichols-method"><a href="#Ziegler-Nichols-method" class="headerlink" title="Ziegler-Nichols method"></a>Ziegler-Nichols method</h3><p>In most cases, a properly tuned PID controller satisfies all system requirements. There are two methods.</p>
+<hr>
+<h2 id="Fin"><a href="#Fin" class="headerlink" title="Fin."></a>Fin.</h2>
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Modelling/" rel="tag">Modelling</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/System/" rel="tag">System</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/03/16/Router_I/"
+                    data-tooltip="Unlock a router"
+                    aria-label="PREVIOUS: Unlock a router"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/02/28/MathofSysT_I/"
+                    data-tooltip="Mathematical Basics of the System Theory PART I"
+                    aria-label="NEXT: Mathematical Basics of the System Theory PART I"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2023 Estus. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/03/16/Router_I/"
+                    data-tooltip="Unlock a router"
+                    aria-label="PREVIOUS: Unlock a router"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/02/28/MathofSysT_I/"
+                    data-tooltip="Mathematical Basics of the System Theory PART I"
+                    aria-label="NEXT: Mathematical Basics of the System Theory PART I"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Estus</h4>
+        
+            <div id="about-card-bio"><p>Fun things <del>never</del> always stops.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Student</p>
+
+            </div>
+        
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/Ess/0_t.png');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-yb3zostooymjozqpjlvijhvzw0bdaljwvcvx0fhqdpyvq6aviyzwgfjkfjkw.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

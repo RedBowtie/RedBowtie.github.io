@@ -1,0 +1,602 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Amaurot Ch.">
+    <title>Automatic Control Linear Systems PART I - Amaurot Ch.</title>
+    <meta name="author" content="Estus">
+    
+    
+        <link rel="icon" href="https://upload.cc/i1/2021/05/18/lSCp1v.png">
+    
+    
+        
+            <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png"},"articleBody":"Seems good, so far.\n\n\nLec 1 What is it about.\nI.    Basic physical exapmles\nSimple PendulumSimple CartDC MotorLR-Circuit(with intention, it becomes LCS)Solar system(a little over simplified, dynamic, nonlinear)\n\nII.    Differential equations arise from physics1.    Pendulum(downward position, with friction)Harmonic form(left), for small angle makes it linearized. Mass is concentrated on one end.\nWhat if the friction doesn’t exist? \nHere the coefficient of k is wrong, which should be divided by ml^2\n\n\n2.    Pendulum(upright position, with friction)Basically the same. Note that the equation stays true in the condition of small θ.\n\n3.    LR-circuitMagnetic flux is L * I, electromotive force is derived from Faraday law.\n\n4.    DC motor\n5.    Cart|with(out) frictionNote the coefficient here is wrong again\n\n\nComparing these equations, systems have inputs and outputs\nIII.    Inputs and OutputsDerivatives in equation makes the the speed of outputs changes.\n\nIV.    Feedback\n1.    Our goalsStudy how linear system behave on their own, without any input.\nStudy how linear system respond to different inputs.\nLearn to design feedback controllers and state observers\nLec 2 Linear differential equations and their solutions\nAt first, we will study how linear systems move when there is no control input.\n\nThese systems can be called as autonomous systems.\nIn mathematics, an autonomous system or *autonomous differential equation is a system of ordinary differential equations which does not explicitly depend on the independent variable. When the variable is time, they are also called time-invariant systems.\nI.    Mathematical background1.    Solution for homogeneous linear ordinary differential equations with constant coefficientsStep1 Characteristic Equation\nSimply rewrite the eq into algebraic eq. It doesn’t lose information.\nStep 2 Find algebraic rootsStep 3 Find corresponding Modes*Modes are simple functions from which solutions of a differential equation are combined. Linearly independent.\n\nEach next multiplicity of root give you next (set of) mode multiplied by t.\nStep 4 Obtain a  general solution as a linear combinition of modes with unkown coefficients\nStep 5 Obtain the particular solution from the given initial conditions\n2.    Stability of modesTwo different situations.\n\n\n\n\nAsymptotically is similar to gradually,, but have a tendency to a straight line.\n\nLyapunov - do not tend to zero.\n\n\nII.    Stability of a linear system1.    Definition Linear system is asymptotically stable if all roots of characteristic equations have negative real parts. It means that y(t) tends to 0 for all initial conditions.\n\nWhich means that you can start the system with big initial values, and it will stop.\n\nLinear system is Lyapunov stable if all roots of characteristic equations have either negative or zero real parts, and roots that gave zero real parts are simple (not repeated). It means taht y(t) is bounded for all initial conditions.\n\nIt’s a weaker stability, all asymptotically stable is Lyapunov stable (negative real part), but the latter (zero real parts) may not be the former.\n\nLinear system is unable otherwise. It means taht y(t) is unbounded for some initial conditions.\n2.    Examplesa.    Pendulum downwards without friction\nb.    Pendulum downwards with friction\nc.    Pendulum upwards\nd.    Repeated roots\nIII.    Hurwitz criterionHow can we check that a given system is stable or unstable without calculating roots of its characteristic equation.\n1.    Explanation\n2. Simple corollaries\nThey could have oscillations, or not.\nIV.    Basic of controller design1.    No control\nIt will move in one direction with constant speed.\n2.    P-Controller\nThe cart oscillates around x=0 with constant amplitude.\n3.    PD-Controllera.    Type one\nThe cart oscillates around x=0 with decaying amplitide.\nb.    Type two\nThe cart slides to x=0 without oscillations.\nc.    Check\n","dateCreated":"2020-11-30T20:32:00+08:00","dateModified":"2023-06-28T22:02:28+08:00","datePublished":"2020-11-30T20:32:00+08:00","description":"Seems good, so far.","headline":"Automatic Control Linear Systems PART I","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://redbowtie.github.io/2020/11/30/AutoCtrlLS_I/"},"publisher":{"@type":"Organization","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png","logo":{"@type":"ImageObject","url":"/Ess/lh.png"}},"url":"https://redbowtie.github.io/2020/11/30/AutoCtrlLS_I/","keywords":"Control, Linear System"}</script>
+    <meta name="description" content="Seems good, so far.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Automatic Control Linear Systems PART I">
+<meta property="og:url" content="https://redbowtie.github.io/2020/11/30/AutoCtrlLS_I/index.html">
+<meta property="og:site_name" content="Amaurot Ch.">
+<meta property="og:description" content="Seems good, so far.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/1/Pen2.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/1/RevPen.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/1/LR.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/1/dcm.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/1/cart.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/1/io.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/1/fb.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/2/diffEq.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/2/diff.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/2/modes.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/2/s4.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/2/S5.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/2/real.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/2/pima.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/2/complex.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/2/PenDown.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/2/PenDown_f.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/2/PenUp.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/2/repRt.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/2/HC_1.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/2/sc.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/2/eg1.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/2/eg2.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/2/eg3.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/2/eg4.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/2/check.png">
+<meta property="article:published_time" content="2020-11-30T12:32:00.000Z">
+<meta property="article:modified_time" content="2023-06-28T14:02:28.652Z">
+<meta property="article:author" content="Estus">
+<meta property="article:tag" content="Control">
+<meta property="article:tag" content="Linear System">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://redbowtie.github.io/images/ALCS/1/Pen2.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://redbowtie.github.io/assets/images/Ess/lh.png"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-4a47lwukh8khnoqxgkjhofoety2rdykli5sq4vv9v7xmmtg07euhkbfahoe5.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/"
+            aria-label=""
+        >
+            Amaurot Ch.
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+            <img class="header-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a
+                    href="/#about"
+                    aria-label="Read more about the author"
+                >
+                    <img class="sidebar-profile-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Estus</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>Fun things <del>never</del> always stops.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/RedBowtie"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/atom.xml"
+                            
+                            rel="noopener"
+                            title="RSS"
+                        >
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/links"
+                            
+                            rel="noopener"
+                            title="Links"
+                        >
+                        <i class="sidebar-button-icon fa fa-sign" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Links</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            Automatic Control Linear Systems PART I
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-11-30T20:32:00+08:00">
+	
+		    Nov 30, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Term3/">Term3</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>Seems good, so far.<span id="more"></span></p>
+<h1 id="table-of-contents">Table of Contents</h1><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Lec-1-What-is-it-about"><span class="toc-text">Lec 1 What is it about.</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#I-Basic-physical-exapmles"><span class="toc-text">I.    Basic physical exapmles</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#II-Differential-equations-arise-from-physics"><span class="toc-text">II.    Differential equations arise from physics</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Pendulum-downward-position-with-friction"><span class="toc-text">1.    Pendulum(downward position, with friction)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Pendulum-upright-position-with-friction"><span class="toc-text">2.    Pendulum(upright position, with friction)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-LR-circuit"><span class="toc-text">3.    LR-circuit</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-DC-motor"><span class="toc-text">4.    DC motor</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-Cart-with-out-friction"><span class="toc-text">5.    Cart|with(out) friction</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#III-Inputs-and-Outputs"><span class="toc-text">III.    Inputs and Outputs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IV-Feedback"><span class="toc-text">IV.    Feedback</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Our-goals"><span class="toc-text">1.    Our goals</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lec-2-Linear-differential-equations-and-their-solutions"><span class="toc-text">Lec 2 Linear differential equations and their solutions</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#I-Mathematical-background"><span class="toc-text">I.    Mathematical background</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Solution-for-homogeneous-linear-ordinary-differential-equations-with-constant-coefficients"><span class="toc-text">1.    Solution for homogeneous linear ordinary differential equations with constant coefficients</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Step1-Characteristic-Equation"><span class="toc-text">Step1 Characteristic Equation</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Step-2-Find-algebraic-roots"><span class="toc-text">Step 2 Find algebraic roots</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Step-3-Find-corresponding-Modes"><span class="toc-text">Step 3 Find corresponding Modes</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Step-4-Obtain-a-general-solution-as-a-linear-combinition-of-modes-with-unkown-coefficients"><span class="toc-text">Step 4 Obtain a  general solution as a linear combinition of modes with unkown coefficients</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Step-5-Obtain-the-particular-solution-from-the-given-initial-conditions"><span class="toc-text">Step 5 Obtain the particular solution from the given initial conditions</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Stability-of-modes"><span class="toc-text">2.    Stability of modes</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#II-Stability-of-a-linear-system"><span class="toc-text">II.    Stability of a linear system</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Definition"><span class="toc-text">1.    Definition</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Examples"><span class="toc-text">2.    Examples</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#a-Pendulum-downwards-without-friction"><span class="toc-text">a.    Pendulum downwards without friction</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#b-Pendulum-downwards-with-friction"><span class="toc-text">b.    Pendulum downwards with friction</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c-Pendulum-upwards"><span class="toc-text">c.    Pendulum upwards</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#d-Repeated-roots"><span class="toc-text">d.    Repeated roots</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#III-Hurwitz-criterion"><span class="toc-text">III.    Hurwitz criterion</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-Explanation"><span class="toc-text">1.    Explanation</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-Simple-corollaries"><span class="toc-text">2. Simple corollaries</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IV-Basic-of-controller-design"><span class="toc-text">IV.    Basic of controller design</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-No-control"><span class="toc-text">1.    No control</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-P-Controller"><span class="toc-text">2.    P-Controller</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-PD-Controller"><span class="toc-text">3.    PD-Controller</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#a-Type-one"><span class="toc-text">a.    Type one</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#b-Type-two"><span class="toc-text">b.    Type two</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c-Check"><span class="toc-text">c.    Check</span></a></li></ol></li></ol></li></ol></li></ol>
+<hr>
+<h2 id="Lec-1-What-is-it-about"><a href="#Lec-1-What-is-it-about" class="headerlink" title="Lec 1 What is it about."></a>Lec 1 What is it about.</h2><hr>
+<h3 id="I-Basic-physical-exapmles"><a href="#I-Basic-physical-exapmles" class="headerlink" title="I.    Basic physical exapmles"></a>I.    Basic physical exapmles</h3><blockquote>
+<p>Simple Pendulum<br>Simple Cart<br>DC Motor<br>LR-Circuit(with intention, it becomes LCS)<br>Solar system(a little over simplified, dynamic, nonlinear)</p>
+</blockquote>
+<h3 id="II-Differential-equations-arise-from-physics"><a href="#II-Differential-equations-arise-from-physics" class="headerlink" title="II.    Differential equations arise from physics"></a>II.    Differential equations arise from physics</h3><h4 id="1-Pendulum-downward-position-with-friction"><a href="#1-Pendulum-downward-position-with-friction" class="headerlink" title="1.    Pendulum(downward position, with friction)"></a>1.    Pendulum(downward position, with friction)</h4><p>Harmonic form(left), for small angle makes it linearized. Mass is concentrated on one end.</p>
+<p>What if the friction doesn’t exist? </p>
+<div style="color:red">Here the coefficient of k is wrong, which should be divided by ml^2</div>
+
+<p><img src="/images/ALCS/1/Pen2.png" alt="Pendulum"></p>
+<h4 id="2-Pendulum-upright-position-with-friction"><a href="#2-Pendulum-upright-position-with-friction" class="headerlink" title="2.    Pendulum(upright position, with friction)"></a>2.    Pendulum(upright position, with friction)</h4><p>Basically the same. Note that the equation stays true in the condition of small θ.</p>
+<p><img src="/images/ALCS/1/RevPen.png" alt="RevPen"></p>
+<h4 id="3-LR-circuit"><a href="#3-LR-circuit" class="headerlink" title="3.    LR-circuit"></a>3.    LR-circuit</h4><p>Magnetic flux is L * I, electromotive force is derived from Faraday law.</p>
+<p><img src="/images/ALCS/1/LR.png" alt="LR"></p>
+<h4 id="4-DC-motor"><a href="#4-DC-motor" class="headerlink" title="4.    DC motor"></a>4.    DC motor</h4><p><img src="/images/ALCS/1/dcm.png" alt="dcm"></p>
+<h4 id="5-Cart-with-out-friction"><a href="#5-Cart-with-out-friction" class="headerlink" title="5.    Cart|with(out) friction"></a>5.    Cart|with(out) friction</h4><div style="color:red">Note the coefficient here is wrong again</div>
+
+<p><img src="/images/ALCS/1/cart.png" alt="cart"></p>
+<p>Comparing these equations, systems have <font color=red>inputs</font> and <font color=green>outputs</font></p>
+<h3 id="III-Inputs-and-Outputs"><a href="#III-Inputs-and-Outputs" class="headerlink" title="III.    Inputs and Outputs"></a>III.    Inputs and Outputs</h3><p>Derivatives in equation makes the the speed of outputs changes.</p>
+<p><img src="/images/ALCS/1/io.png" alt="io"></p>
+<h3 id="IV-Feedback"><a href="#IV-Feedback" class="headerlink" title="IV.    Feedback"></a>IV.    Feedback</h3><p><img src="/images/ALCS/1/fb.png" alt="fb"></p>
+<h4 id="1-Our-goals"><a href="#1-Our-goals" class="headerlink" title="1.    Our goals"></a>1.    Our goals</h4><p>Study how linear system behave <font color=brown>on their own</font>, without any input.</p>
+<p>Study how linear system <font color=red>respond</font> to different inputs.</p>
+<p>Learn to design <font color=green>feedback controllers</font> and <font color=purple>state observers</font></p>
+<h2 id="Lec-2-Linear-differential-equations-and-their-solutions"><a href="#Lec-2-Linear-differential-equations-and-their-solutions" class="headerlink" title="Lec 2 Linear differential equations and their solutions"></a>Lec 2 Linear differential equations and their solutions</h2><hr>
+<p>At first, we will study how linear systems move when there is no <font color=red>control input</font>.</p>
+<p><img src="/images/ALCS/2/diffEq.png" alt="diffEq"></p>
+<p>These systems can be called as autonomous systems.</p>
+<p><em>In <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Mathematics">mathematics</a>, an <strong>autonomous system</strong> or <em>*autonomous differential equation</em></em> is a <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Simultaneous_equations">system</a> of <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Ordinary_differential_equation">ordinary differential equations</a> which does not explicitly depend on the <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Independent_variable">independent variable</a>. When the variable is time, they are also called <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Time-invariant_system">time-invariant systems</a>.</p>
+<h3 id="I-Mathematical-background"><a href="#I-Mathematical-background" class="headerlink" title="I.    Mathematical background"></a>I.    Mathematical background</h3><h4 id="1-Solution-for-homogeneous-linear-ordinary-differential-equations-with-constant-coefficients"><a href="#1-Solution-for-homogeneous-linear-ordinary-differential-equations-with-constant-coefficients" class="headerlink" title="1.    Solution for homogeneous linear ordinary differential equations with constant coefficients"></a>1.    Solution for homogeneous linear ordinary differential equations with constant coefficients</h4><h5 id="Step1-Characteristic-Equation"><a href="#Step1-Characteristic-Equation" class="headerlink" title="Step1 Characteristic Equation"></a>Step1 Characteristic Equation</h5><p><img src="/images/ALCS/2/diff.png" alt="diff"></p>
+<p>Simply rewrite the eq into algebraic eq. It doesn’t lose information.</p>
+<h5 id="Step-2-Find-algebraic-roots"><a href="#Step-2-Find-algebraic-roots" class="headerlink" title="Step 2 Find algebraic roots"></a><strong>Step 2 Find algebraic roots</strong></h5><h5 id="Step-3-Find-corresponding-Modes"><a href="#Step-3-Find-corresponding-Modes" class="headerlink" title="Step 3 Find corresponding Modes"></a><strong>Step 3 Find corresponding <em>Modes</em></strong></h5><p>*<font color=red>Modes</font> are simple functions from which solutions of a differential equation are combined. Linearly independent.</p>
+<p><img src="/images/ALCS/2/modes.png" alt="modes"></p>
+<p>Each next multiplicity of root give you next (set of) mode multiplied by t.</p>
+<h5 id="Step-4-Obtain-a-general-solution-as-a-linear-combinition-of-modes-with-unkown-coefficients"><a href="#Step-4-Obtain-a-general-solution-as-a-linear-combinition-of-modes-with-unkown-coefficients" class="headerlink" title="Step 4 Obtain a  general solution as a linear combinition of modes with unkown coefficients"></a>Step 4 Obtain a <font color=orange> general solution</font> as a linear combinition of modes with unkown coefficients</h5><p><img src="/images/ALCS/2/s4.png" alt="Step4"></p>
+<h5 id="Step-5-Obtain-the-particular-solution-from-the-given-initial-conditions"><a href="#Step-5-Obtain-the-particular-solution-from-the-given-initial-conditions" class="headerlink" title="Step 5 Obtain the particular solution from the given initial conditions"></a>Step 5 Obtain the <font color=orange>particular solution </font>from the given <font color=green>initial conditions</font></h5><p><img src="/images/ALCS/2/S5.png" alt="Step5"></p>
+<h4 id="2-Stability-of-modes"><a href="#2-Stability-of-modes" class="headerlink" title="2.    Stability of modes"></a>2.    Stability of modes</h4><p>Two different situations.</p>
+<p><img src="/images/ALCS/2/real.png" alt="real " style="zoom:67%;" /></p>
+<p><img src="/images/ALCS/2/pima.png" alt="pure imaginary" style="zoom:67%;" /></p>
+<p><img src="/images/ALCS/2/complex.png" alt="complex " style="zoom:67%;" /></p>
+<ul>
+<li><p>Asymptotically is similar to gradually,, but have a tendency to a straight line.</p>
+</li>
+<li><p>Lyapunov - do not tend to zero.</p>
+</li>
+</ul>
+<h3 id="II-Stability-of-a-linear-system"><a href="#II-Stability-of-a-linear-system" class="headerlink" title="II.    Stability of a linear system"></a>II.    Stability of a linear system</h3><h4 id="1-Definition"><a href="#1-Definition" class="headerlink" title="1.    Definition"></a>1.    Definition</h4><p> Linear system is <font color=green>asymptotically stable</font> if all roots of characteristic equations have negative real parts. It means that <font color=green>y(t) tends to 0</font> for all initial conditions.</p>
+<ul>
+<li>Which means that you can start the system with big initial values, and it will stop.</li>
+</ul>
+<p>Linear system is <font color=orange>Lyapunov stable</font> if all roots of characteristic equations have either negative or zero real parts, and roots that gave zero real parts are simple (not repeated). It means taht <font color=orange>y(t) is bounded</font> for all initial conditions.</p>
+<ul>
+<li>It’s a weaker stability, all asymptotically stable is Lyapunov stable (negative real part), but the latter (zero real parts) may not be the former.</li>
+</ul>
+<p>Linear system is <font color=red>unable otherwise</font>. It means taht <font color=red>y(t) is unbounded</font> for some initial conditions.</p>
+<h4 id="2-Examples"><a href="#2-Examples" class="headerlink" title="2.    Examples"></a>2.    Examples</h4><h5 id="a-Pendulum-downwards-without-friction"><a href="#a-Pendulum-downwards-without-friction" class="headerlink" title="a.    Pendulum downwards without friction"></a>a.    Pendulum downwards without friction</h5><p><img src="/images/ALCS/2/PenDown.png" alt="PenDown " style="zoom:80%;" /></p>
+<h5 id="b-Pendulum-downwards-with-friction"><a href="#b-Pendulum-downwards-with-friction" class="headerlink" title="b.    Pendulum downwards with friction"></a>b.    Pendulum downwards with friction</h5><p><img src="/images/ALCS/2/PenDown_f.png" alt="PenDown_f " style="zoom:80%;" /></p>
+<h5 id="c-Pendulum-upwards"><a href="#c-Pendulum-upwards" class="headerlink" title="c.    Pendulum upwards"></a>c.    Pendulum upwards</h5><p><img src="/images/ALCS/2/PenUp.png" alt="PenUp " style="zoom:80%;" /></p>
+<h5 id="d-Repeated-roots"><a href="#d-Repeated-roots" class="headerlink" title="d.    Repeated roots"></a>d.    Repeated roots</h5><p><img src="/images/ALCS/2/repRt.png" alt="repRt " style="zoom:80%;" /></p>
+<h3 id="III-Hurwitz-criterion"><a href="#III-Hurwitz-criterion" class="headerlink" title="III.    Hurwitz criterion"></a>III.    Hurwitz criterion</h3><p>How can we <font color=red>check</font> that a given system is stable or unstable <font color=red>without calculating roots</font> of its characteristic equation.</p>
+<h5 id="1-Explanation"><a href="#1-Explanation" class="headerlink" title="1.    Explanation"></a>1.    Explanation</h5><p><img src="/images/ALCS/2/HC_1.png" alt="HC_1"></p>
+<h5 id="2-Simple-corollaries"><a href="#2-Simple-corollaries" class="headerlink" title="2. Simple corollaries"></a>2. Simple corollaries</h5><p><img src="/images/ALCS/2/sc.png" alt="sc"></p>
+<p>They could have oscillations, or not.</p>
+<h3 id="IV-Basic-of-controller-design"><a href="#IV-Basic-of-controller-design" class="headerlink" title="IV.    Basic of controller design"></a>IV.    Basic of controller design</h3><h4 id="1-No-control"><a href="#1-No-control" class="headerlink" title="1.    No control"></a>1.    No control</h4><p><img src="/images/ALCS/2/eg1.png" alt="eg1"></p>
+<p>It will move<font color=orange> in one direction with constant speed.</font></p>
+<h4 id="2-P-Controller"><a href="#2-P-Controller" class="headerlink" title="2.    P-Controller"></a>2.    P-Controller</h4><p><img src="/images/ALCS/2/eg2.png" alt="eg2"></p>
+<p>The cart <font color=orange>oscillates around x=0 with constant amplitude.</font></p>
+<h4 id="3-PD-Controller"><a href="#3-PD-Controller" class="headerlink" title="3.    PD-Controller"></a>3.    PD-Controller</h4><h5 id="a-Type-one"><a href="#a-Type-one" class="headerlink" title="a.    Type one"></a>a.    Type one</h5><p><img src="/images/ALCS/2/eg3.png" alt="eg3"></p>
+<p>The cart <font color=orange>oscillates around x=0 with decaying amplitide.</font></p>
+<h5 id="b-Type-two"><a href="#b-Type-two" class="headerlink" title="b.    Type two"></a>b.    Type two</h5><p><img src="/images/ALCS/2/eg4.png" alt="eg4"></p>
+<p>The cart <font color=orange>slides to x=0 without oscillations.</font></p>
+<h5 id="c-Check"><a href="#c-Check" class="headerlink" title="c.    Check"></a>c.    Check</h5><p><img src="/images/ALCS/2/check.png" alt="check"></p>
+
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Control/" rel="tag">Control</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Linear-System/" rel="tag">Linear System</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/12/07/AutoCtrlLS_II/"
+                    data-tooltip="Automatic Control Linear Systems PART II"
+                    aria-label="PREVIOUS: Automatic Control Linear Systems PART II"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/11/28/EE/"
+                    data-tooltip="Electrical Engineering"
+                    aria-label="NEXT: Electrical Engineering"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="Table of Contents">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2023 Estus. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/12/07/AutoCtrlLS_II/"
+                    data-tooltip="Automatic Control Linear Systems PART II"
+                    aria-label="PREVIOUS: Automatic Control Linear Systems PART II"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/11/28/EE/"
+                    data-tooltip="Electrical Engineering"
+                    aria-label="NEXT: Electrical Engineering"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="Table of Contents">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Estus</h4>
+        
+            <div id="about-card-bio"><p>Fun things <del>never</del> always stops.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Student</p>
+
+            </div>
+        
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/Ess/0_t.png');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-yb3zostooymjozqpjlvijhvzw0bdaljwvcvx0fhqdpyvq6aviyzwgfjkfjkw.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

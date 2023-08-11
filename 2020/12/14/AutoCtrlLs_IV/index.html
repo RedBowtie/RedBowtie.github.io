@@ -1,0 +1,602 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Amaurot Ch.">
+    <title>Automatic Control Linear Systems PART IV - Amaurot Ch.</title>
+    <meta name="author" content="Estus">
+    
+    
+        <link rel="icon" href="https://upload.cc/i1/2021/05/18/lSCp1v.png">
+    
+    
+        
+            <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png"},"articleBody":"Let’s see then.\n\nLec 5 State-space representation and transition of a linear system\nI.    Classical vs. modern control theorya.    Classical contorl theory\nrapidly provides stability and transient information for deigns \nIn MIMO control system, it would become cumbersome, which is not convenient to use.\n\nb.    Modern control theory\nRicher and more global representation, is enabling the represenation, in the form of a matrix of any system: invariant or non-invariant, linear or non- linear, SISO or MIMO, continuous or discrete.\nTime domain analysis, including state-space representation, which is internal representation.\nAdditionaly to input and output characteristics. The more information of the system is feedback, the more complex system we can design.\n\nc.    SISO Control system\n\nphysical process - a sustained phenomenon or one marked by gradual changes through a series of states;\n\nd.    E.G. Missile Launcher system\nIf we know the transfer function of Power Amplifier and Motor, we can make a good approach using classical method in both open and closed loop.\ne.    MIMO Control system\nFor such system, in order to apply classical approaches, we have to find sets of transfer functions for all pairs of inputs and outputs.\nf.    E.G. Boiler Generator\nHere we have four outputs and four inputs. *Speed governor is also one of the inputs.\nTo use classical method, 16 transfer functions must be find, which make it cumbersome to analysis.\nIn some cases, we may neglect some parts of the system, we may lose important information and can’t guarantee the performance of control we want.\nSo using state-space representation makes it a lot easier.\nII.    State-space representation1.    Definition\nHere, in addition to control u and output y, we use the state x of t in order to obtain so called internal representation.\nThe state is a vector quantity, defined it at any instant, which you present the set of information and energy stored by the system by the instant t.\n2.    Some classes of linear dynamical systems\n3.    Block diagram (eg)\n4.    E.g.\n\n5.    Note that the space rep is not unique.a.    Case 1\nIt’s clear that it goes with your definition of x.\nb.    Case 2\nYet, they represent the same system.\n6.    Another way to derive the equation.\nDirectly from the free body diagram.\n\n\na.    E.g. RLC circuit\nb.    E.g. Mass-spring-damper system\nIII.    State Vector\nIV*.    Linear Algebra - pre skill tree.\nV.    Transition between representations\na. E.g.\n\nNote that the term, derivative of u is not allowed in the state-space representation\n\nb. Controllable Canonical Form\n\n\nc.    Observable Canonical Form\n\n\nd.    Diagonal Canonical Form\n\n\nGreatly simplify the calculatio\n\ne.    E.g\nf.    Derive input &amp; output representation\nDespite the fact that the state-space rep varies while the transfer function stays unique.\ng.    E.g.\nh.    Transfer matrix\ni.    E.g.\nj.    Addition\n\n","dateCreated":"2020-12-14T18:32:00+08:00","dateModified":"2023-06-28T22:02:45+08:00","datePublished":"2020-12-14T18:32:00+08:00","description":"Let’s see then.","headline":"Automatic Control Linear Systems PART IV","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://redbowtie.github.io/2020/12/14/AutoCtrlLs_IV/"},"publisher":{"@type":"Organization","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png","logo":{"@type":"ImageObject","url":"/Ess/lh.png"}},"url":"https://redbowtie.github.io/2020/12/14/AutoCtrlLs_IV/","keywords":"Control, Linear System"}</script>
+    <meta name="description" content="Let’s see then.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Automatic Control Linear Systems PART IV">
+<meta property="og:url" content="https://redbowtie.github.io/2020/12/14/AutoCtrlLs_IV/index.html">
+<meta property="og:site_name" content="Amaurot Ch.">
+<meta property="og:description" content="Let’s see then.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/5/SISO.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/5/eg1.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/5/MIMO.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/5/eg2.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/5/ssr.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/5/def2.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/5/dg.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/5/eg3.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/5/eg4.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/5/eg5.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/5/eg6.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/5/aw.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/5/eg7.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/5/eg8.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/5/sv.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/5/LAR.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/5/trans.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/5/eg9.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/5/ccf.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/5/ccf1.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/5/ccf2.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/5/ocf.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/5/ocf1.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/5/ocf2.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/5/dcf.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/5/dcf1.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/5/eg10.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/5/tran.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/5/eg11.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/5/tm.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/5/eg12.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/5/extra.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/5/ml.png">
+<meta property="article:published_time" content="2020-12-14T10:32:00.000Z">
+<meta property="article:modified_time" content="2023-06-28T14:02:45.941Z">
+<meta property="article:author" content="Estus">
+<meta property="article:tag" content="Control">
+<meta property="article:tag" content="Linear System">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://redbowtie.github.io/images/ALCS/5/SISO.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://redbowtie.github.io/assets/images/Ess/lh.png"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-4a47lwukh8khnoqxgkjhofoety2rdykli5sq4vv9v7xmmtg07euhkbfahoe5.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/"
+            aria-label=""
+        >
+            Amaurot Ch.
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+            <img class="header-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a
+                    href="/#about"
+                    aria-label="Read more about the author"
+                >
+                    <img class="sidebar-profile-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Estus</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>Fun things <del>never</del> always stops.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/RedBowtie"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/atom.xml"
+                            
+                            rel="noopener"
+                            title="RSS"
+                        >
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/links"
+                            
+                            rel="noopener"
+                            title="Links"
+                        >
+                        <i class="sidebar-button-icon fa fa-sign" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Links</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            Automatic Control Linear Systems PART IV
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-12-14T18:32:00+08:00">
+	
+		    Dec 14, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Term3/">Term3</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>Let’s see then.<span id="more"></span><br><h1 id="table-of-contents">Table of Contents</h1><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Lec-5-State-space-representation-and-transition-of-a-linear-system"><span class="toc-text">Lec 5 State-space representation and transition of a linear system</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#I-Classical-vs-modern-control-theory"><span class="toc-text">I.    Classical vs. modern control theory</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#a-Classical-contorl-theory"><span class="toc-text">a.    Classical contorl theory</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#b-Modern-control-theory"><span class="toc-text">b.    Modern control theory</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#c-SISO-Control-system"><span class="toc-text">c.    SISO Control system</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#d-E-G-Missile-Launcher-system"><span class="toc-text">d.    E.G. Missile Launcher system</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#e-MIMO-Control-system"><span class="toc-text">e.    MIMO Control system</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#f-E-G-Boiler-Generator"><span class="toc-text">f.    E.G. Boiler Generator</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#II-State-space-representation"><span class="toc-text">II.    State-space representation</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Definition"><span class="toc-text">1.    Definition</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Some-classes-of-linear-dynamical-systems"><span class="toc-text">2.    Some classes of linear dynamical systems</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-Block-diagram-eg"><span class="toc-text">3.    Block diagram (eg)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-E-g"><span class="toc-text">4.    E.g.</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-Note-that-the-space-rep-is-not-unique"><span class="toc-text">5.    Note that the space rep is not unique.</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#a-Case-1"><span class="toc-text">a.    Case 1</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#b-Case-2"><span class="toc-text">b.    Case 2</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-Another-way-to-derive-the-equation"><span class="toc-text">6.    Another way to derive the equation.</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#a-E-g-RLC-circuit"><span class="toc-text">a.    E.g. RLC circuit</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#b-E-g-Mass-spring-damper-system"><span class="toc-text">b.    E.g. Mass-spring-damper system</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#III-State-Vector"><span class="toc-text">III.    State Vector</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IV-Linear-Algebra-pre-skill-tree"><span class="toc-text">IV*.    Linear Algebra - pre skill tree.</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#V-Transition-between-representations"><span class="toc-text">V.    Transition between representations</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#a-E-g"><span class="toc-text">a. E.g.</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#b-Controllable-Canonical-Form"><span class="toc-text">b. Controllable Canonical Form</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#c-Observable-Canonical-Form"><span class="toc-text">c.    Observable Canonical Form</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#d-Diagonal-Canonical-Form"><span class="toc-text">d.    Diagonal Canonical Form</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#e-E-g"><span class="toc-text">e.    E.g</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#f-Derive-input-amp-output-representation"><span class="toc-text">f.    Derive input &amp; output representation</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#g-E-g"><span class="toc-text">g.    E.g.</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#h-Transfer-matrix"><span class="toc-text">h.    Transfer matrix</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#i-E-g"><span class="toc-text">i.    E.g.</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#j-Addition"><span class="toc-text">j.    Addition</span></a></li></ol></li></ol></li></ol></p>
+<hr>
+<h2 id="Lec-5-State-space-representation-and-transition-of-a-linear-system"><a href="#Lec-5-State-space-representation-and-transition-of-a-linear-system" class="headerlink" title="Lec 5 State-space representation and transition of a linear system"></a>Lec 5 State-space representation and transition of a linear system</h2><hr>
+<h3 id="I-Classical-vs-modern-control-theory"><a href="#I-Classical-vs-modern-control-theory" class="headerlink" title="I.    Classical vs. modern control theory"></a>I.    Classical vs. modern control theory</h3><h4 id="a-Classical-contorl-theory"><a href="#a-Classical-contorl-theory" class="headerlink" title="a.    Classical contorl theory"></a>a.    Classical contorl theory</h4><ul>
+<li>rapidly provides stability and transient information for deigns </li>
+<li>In MIMO control system, it would become cumbersome, which is not convenient to use.</li>
+</ul>
+<h4 id="b-Modern-control-theory"><a href="#b-Modern-control-theory" class="headerlink" title="b.    Modern control theory"></a>b.    Modern control theory</h4><ul>
+<li>Richer and more global representation, is enabling the represenation, in the form of a matrix of any system: invariant or non-invariant, linear or non- linear, SISO or MIMO, continuous or discrete.</li>
+<li>Time domain analysis, including state-space representation, which is internal representation.</li>
+<li>Additionaly to input and output characteristics. The more information of the system is feedback, the more complex system we can design.</li>
+</ul>
+<h4 id="c-SISO-Control-system"><a href="#c-SISO-Control-system" class="headerlink" title="c.    SISO Control system"></a>c.    SISO Control system</h4><p><img src="/images/ALCS/5/SISO.png" alt="SISO"></p>
+<ul>
+<li><strong>physical process</strong> - a sustained phenomenon or one marked by gradual changes through a series of states;</li>
+</ul>
+<h4 id="d-E-G-Missile-Launcher-system"><a href="#d-E-G-Missile-Launcher-system" class="headerlink" title="d.    E.G. Missile Launcher system"></a>d.    E.G. Missile Launcher system</h4><p><img src="/images/ALCS/5/eg1.png" alt="eg1 " style="zoom:67%;" /></p>
+<p>If we know the transfer function of Power Amplifier and Motor, we can make a good approach using classical method in both open and closed loop.</p>
+<h4 id="e-MIMO-Control-system"><a href="#e-MIMO-Control-system" class="headerlink" title="e.    MIMO Control system"></a>e.    MIMO Control system</h4><p><img src="/images/ALCS/5/MIMO.png" alt="MIMO " style="zoom:67%;" /></p>
+<p>For such system, in order to apply classical approaches, we have to find sets of transfer functions for all pairs of inputs and outputs.</p>
+<h4 id="f-E-G-Boiler-Generator"><a href="#f-E-G-Boiler-Generator" class="headerlink" title="f.    E.G. Boiler Generator"></a>f.    E.G. Boiler Generator</h4><p><img src="/images/ALCS/5/eg2.png" alt="eg2" style="zoom:67%;" /></p>
+<p>Here we have four outputs and four inputs. *Speed governor is also one of the inputs.</p>
+<p>To use classical method, 16 transfer functions must be find, which make it cumbersome to analysis.</p>
+<p>In some cases, we may neglect some parts of the system, we may lose important information and can’t guarantee the performance of control we want.</p>
+<p>So using state-space representation makes it a lot easier.</p>
+<h3 id="II-State-space-representation"><a href="#II-State-space-representation" class="headerlink" title="II.    State-space representation"></a>II.    State-space representation</h3><h4 id="1-Definition"><a href="#1-Definition" class="headerlink" title="1.    Definition"></a>1.    Definition</h4><p><img src="/images/ALCS/5/ssr.png" alt="ssr"></p>
+<p>Here, in addition to <strong>control u</strong> and <strong>output y</strong>, we use the state x of t in order to obtain so called <strong>internal representation</strong>.</p>
+<p>The state is a vector quantity, defined it at any instant, which you present the set of information and energy stored by the system by the instant t.</p>
+<h4 id="2-Some-classes-of-linear-dynamical-systems"><a href="#2-Some-classes-of-linear-dynamical-systems" class="headerlink" title="2.    Some classes of linear dynamical systems"></a>2.    Some classes of linear dynamical systems</h4><p><img src="/images/ALCS/5/def2.png" alt="def2"></p>
+<h4 id="3-Block-diagram-eg"><a href="#3-Block-diagram-eg" class="headerlink" title="3.    Block diagram (eg)"></a>3.    Block diagram (eg)</h4><p><img src="/images/ALCS/5/dg.png" alt="dg"></p>
+<h4 id="4-E-g"><a href="#4-E-g" class="headerlink" title="4.    E.g."></a>4.    E.g.</h4><p><img src="/images/ALCS/5/eg3.png" alt="eg3"></p>
+<p><img src="/images/ALCS/5/eg4.png" alt="eg4"></p>
+<h4 id="5-Note-that-the-space-rep-is-not-unique"><a href="#5-Note-that-the-space-rep-is-not-unique" class="headerlink" title="5.    Note that the space rep is not unique."></a>5.    Note that the space rep is not unique.</h4><h5 id="a-Case-1"><a href="#a-Case-1" class="headerlink" title="a.    Case 1"></a>a.    Case 1</h5><p><img src="/images/ALCS/5/eg5.png" alt="eg5"></p>
+<p>It’s clear that it goes with your definition of x.</p>
+<h5 id="b-Case-2"><a href="#b-Case-2" class="headerlink" title="b.    Case 2"></a>b.    Case 2</h5><p><img src="/images/ALCS/5/eg6.png" alt="eg6"></p>
+<p>Yet, they represent the same system.</p>
+<h4 id="6-Another-way-to-derive-the-equation"><a href="#6-Another-way-to-derive-the-equation" class="headerlink" title="6.    Another way to derive the equation."></a>6.    Another way to derive the equation.</h4><blockquote>
+<p><strong>Directly from the free body diagram.</strong></p>
+</blockquote>
+<p><img src="/images/ALCS/5/aw.png" alt="aw"></p>
+<h5 id="a-E-g-RLC-circuit"><a href="#a-E-g-RLC-circuit" class="headerlink" title="a.    E.g. RLC circuit"></a>a.    E.g. RLC circuit</h5><p><img src="/images/ALCS/5/eg7.png" alt="eg7"></p>
+<h5 id="b-E-g-Mass-spring-damper-system"><a href="#b-E-g-Mass-spring-damper-system" class="headerlink" title="b.    E.g. Mass-spring-damper system"></a>b.    E.g. Mass-spring-damper system</h5><p><img src="/images/ALCS/5/eg8.png" alt="eg8"></p>
+<h3 id="III-State-Vector"><a href="#III-State-Vector" class="headerlink" title="III.    State Vector"></a>III.    State Vector</h3><p><img src="/images/ALCS/5/sv.png" alt="sv"></p>
+<h3 id="IV-Linear-Algebra-pre-skill-tree"><a href="#IV-Linear-Algebra-pre-skill-tree" class="headerlink" title="IV*.    Linear Algebra - pre skill tree."></a>IV*.    Linear Algebra - pre skill tree.</h3><p><img src="/images/ALCS/5/LAR.png" alt="LAR"></p>
+<h3 id="V-Transition-between-representations"><a href="#V-Transition-between-representations" class="headerlink" title="V.    Transition between representations"></a>V.    Transition between representations</h3><p><img src="/images/ALCS/5/trans.png" alt="trans"></p>
+<h4 id="a-E-g"><a href="#a-E-g" class="headerlink" title="a. E.g."></a>a. E.g.</h4><p><img src="/images/ALCS/5/eg9.png" alt="eg9"></p>
+<ul>
+<li><strong>Note that the term, derivative of u is not allowed in the state-space representation</strong></li>
+</ul>
+<h4 id="b-Controllable-Canonical-Form"><a href="#b-Controllable-Canonical-Form" class="headerlink" title="b. Controllable Canonical Form"></a>b. Controllable Canonical Form</h4><p><img src="/images/ALCS/5/ccf.png" alt="ccf"></p>
+<p><img src="/images/ALCS/5/ccf1.png" alt="ccf1"></p>
+<p><img src="/images/ALCS/5/ccf2.png" alt="ccf2"></p>
+<h4 id="c-Observable-Canonical-Form"><a href="#c-Observable-Canonical-Form" class="headerlink" title="c.    Observable Canonical Form"></a>c.    Observable Canonical Form</h4><p><img src="/images/ALCS/5/ocf.png" alt="ocf"></p>
+<p><img src="/images/ALCS/5/ocf1.png" alt="ocf1"></p>
+<p><img src="/images/ALCS/5/ocf2.png" alt="ocf2"></p>
+<h4 id="d-Diagonal-Canonical-Form"><a href="#d-Diagonal-Canonical-Form" class="headerlink" title="d.    Diagonal Canonical Form"></a>d.    Diagonal Canonical Form</h4><p><img src="/images/ALCS/5/dcf.png" alt="dcf"></p>
+<p><img src="/images/ALCS/5/dcf1.png" alt="dcf1"></p>
+<ul>
+<li>Greatly simplify the calculatio</li>
+</ul>
+<h4 id="e-E-g"><a href="#e-E-g" class="headerlink" title="e.    E.g"></a>e.    E.g</h4><p><img src="/images/ALCS/5/eg10.png" alt="eg10"></p>
+<h4 id="f-Derive-input-amp-output-representation"><a href="#f-Derive-input-amp-output-representation" class="headerlink" title="f.    Derive input &amp; output representation"></a>f.    Derive input &amp; output representation</h4><p><img src="/images/ALCS/5/tran.png" alt="tran"></p>
+<p>Despite the fact that the state-space rep varies while the transfer function stays unique.</p>
+<h4 id="g-E-g"><a href="#g-E-g" class="headerlink" title="g.    E.g."></a>g.    E.g.</h4><p><img src="/images/ALCS/5/eg11.png" alt="eg11"></p>
+<h4 id="h-Transfer-matrix"><a href="#h-Transfer-matrix" class="headerlink" title="h.    Transfer matrix"></a>h.    Transfer matrix</h4><p><img src="/images/ALCS/5/tm.png" alt="tm"></p>
+<h4 id="i-E-g"><a href="#i-E-g" class="headerlink" title="i.    E.g."></a>i.    E.g.</h4><p><img src="/images/ALCS/5/eg12.png" alt="eg12"></p>
+<h4 id="j-Addition"><a href="#j-Addition" class="headerlink" title="j.    Addition"></a>j.    Addition</h4><p><img src="/images/ALCS/5/extra.png" alt="extra"></p>
+<p><img src="/images/ALCS/5/ml.png" alt="ml"></p>
+
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Control/" rel="tag">Control</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Linear-System/" rel="tag">Linear System</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/12/16/AutoCtrlLS_V/"
+                    data-tooltip="Automatic Control Linear Systems PART V"
+                    aria-label="PREVIOUS: Automatic Control Linear Systems PART V"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/12/09/AutoCtrlLS_III/"
+                    data-tooltip="Automatic Control Linear Systems PART III"
+                    aria-label="NEXT: Automatic Control Linear Systems PART III"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="Table of Contents">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2023 Estus. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/12/16/AutoCtrlLS_V/"
+                    data-tooltip="Automatic Control Linear Systems PART V"
+                    aria-label="PREVIOUS: Automatic Control Linear Systems PART V"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/12/09/AutoCtrlLS_III/"
+                    data-tooltip="Automatic Control Linear Systems PART III"
+                    aria-label="NEXT: Automatic Control Linear Systems PART III"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="Table of Contents">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Estus</h4>
+        
+            <div id="about-card-bio"><p>Fun things <del>never</del> always stops.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Student</p>
+
+            </div>
+        
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/Ess/0_t.png');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-yb3zostooymjozqpjlvijhvzw0bdaljwvcvx0fhqdpyvq6aviyzwgfjkfjkw.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

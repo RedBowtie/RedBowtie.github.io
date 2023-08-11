@@ -1,0 +1,559 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Amaurot Ch.">
+    <title>Entry to Ros (Noetic) - Amaurot Ch.</title>
+    <meta name="author" content="Estus">
+    
+    
+        <link rel="icon" href="https://upload.cc/i1/2021/05/18/lSCp1v.png">
+    
+    
+        
+            <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png"},"articleBody":"Solidworks really sucks without a geforce card and I would really forget this part.\n| PREFACE\nEnvironmentOS: Ubuntu with KDE(the latter is personal interest)Only Fresh new OS.\n\nInstall ROS on Ubuntu is really convenient, comparing with do it on MACOS. Finding supported and alternative dependencies is hard, exactly what happens when you wanna make your own wheel to do something that’s not offically done.Literaly just type those commands in terminal and it’s done. DAMN, do you have any idea how long I’ve spent on tries to make that work on MACOS? Laziness brings problems, I deserved that.Well, I’ll do that again sooner or later. A nice guy made a script made that more easily to work with. Thumbs up on that one.\nSo currently FOXY is on MACOS, as it’s distribution of ROS2, I’ll get into that in another page. Gotta focus on this first.\n| NAV ROS FILE SYSIn short, it mainly mentions cmds below.\n1rospack find [package_name]\nit returns the file location of correspoding component.\n1roscd &lt;package-or-stack&gt;[/subdir]\nit swith current work directory to where the component, or its subfolder, exists.\n1rosls &lt;package-or-stack&gt;[/subdir]\nprint all files and folders in the exact folder.\nSo, intrinsically, it’s modified version of *nix cmd, pretty straightforward.\n| ROS PACKAGESA catkin package consists of \n\nCatkin compliant package.xml file\nwhich provide meta information about the package\n\n\nCMakeLists.txt which uses catkin\n\nIf it is a catkin metapackage, it must have the relevent boilerplate file.\n\n\nEach package is placed in its own folder\n\nno nested ones sharing the same directory.\n\n\n\n1catkin_create_pkg &lt;package_name&gt; [depend 1] [depend 2] ... [depend n]\nThis is how we create a new catkin package.\n1rospack depends1 &lt;package_name&gt; // &quot;depends&quot; without 1 to return dependencies recursively\nThis returns the first-order dependencies.\nWords in Description tag should be simplified, keep it short.\nMaintainer tag is required and really important. It let others know who to contact about the package.\nNormally, you may imagine that catkin_make combines the calls to cmake and make in the standard CMake workflow.\n123456# In a CMake project$ mkdir build$ cd build$ cmake ..$ make$ make install  # (optionally)\nThis process is run for each CMake project, while catkin projects ( those in the src folder ) can be built together in workspace.\n| ROS NODESA node really isn’t much more than an executable file within a ROS package. ROS nodes use a ROS client library to communicate with other nodes. Nodes can publish or subscribe to a Topic. Nodes can also provide or use a Service.\nROS client libraries allow nodes written in different programming languages to communicate:\n\nrospy = python client library\nroscpp = c++ client library\n\n| ROS TOPICSrqt_graph creates a dynamic graph of what’s going on in the system. rqt_graph is part of the rqt package. Unless you already have it installed, run:\n1$ rosrun rqt_graph rqt_graph\nThe rostopic tool allows you to get information about ROS topics.\nYou can use the help option to get the available sub-commands for rostopic\n12345678$ rostopic -h\trostopic bw     display bandwidth used by topic    rostopic echo   print messages to screen    rostopic hz     display publishing rate of topic        rostopic list   print information about active topics    rostopic pub    publish data to topic    rostopic type   print topic type\nUsage:\n1rostopic pub [topic] [msg_type] [args]\nFor ROS Hydro and later, example:\n1$ rostopic pub -1 /turtle1/cmd_vel geometry_msgs/Twist -- &#x27;[2.0, 0.0, 0.0]&#x27; &#x27;[0.0, 0.0, 1.8]&#x27;\n| ROS SERVICESServices are another way that nodes can communicate with each other. Services allow nodes to send a request and receive a response.\n12345rosservice list         print information about active servicesrosservice call         call the service with the provided argsrosservice type         print service typerosservice find         find services by service typerosservice uri          print service ROSRPC uri\n| ROS PARAMrosparam allows you to store and manipulate data on the ROS Parameter Server. The Parameter Server can store integers, floats, boolean, dictionaries, and lists. rosparam uses the YAML markup language for syntax. In simple cases, YAML looks very natural: 1 is an integer, 1.0 is a float, one is a string, true is a boolean, [1, 2, 3] is a list of integers, and {a: b, c: d} is a dictionary. rosparam has many commands that can be used on parameters, as shown below:\n123456rosparam set            set parameterrosparam get            get parameterrosparam load           load parameters from filerosparam dump           dump parameters to filerosparam delete         delete parameterrosparam list           list parameter names\n","dateCreated":"2021-05-12T22:32:00+08:00","dateModified":"2022-08-23T13:03:49+08:00","datePublished":"2021-05-12T22:32:00+08:00","description":"Solidworks really sucks without a geforce card and I would really forget this part.","headline":"Entry to Ros (Noetic)","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://redbowtie.github.io/2021/05/12/ROS_Entry/"},"publisher":{"@type":"Organization","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png","logo":{"@type":"ImageObject","url":"/Ess/lh.png"}},"url":"https://redbowtie.github.io/2021/05/12/ROS_Entry/","keywords":"Robot, ROS"}</script>
+    <meta name="description" content="Solidworks really sucks without a geforce card and I would really forget this part.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Entry to Ros (Noetic)">
+<meta property="og:url" content="https://redbowtie.github.io/2021/05/12/ROS_Entry/index.html">
+<meta property="og:site_name" content="Amaurot Ch.">
+<meta property="og:description" content="Solidworks really sucks without a geforce card and I would really forget this part.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-05-12T14:32:00.000Z">
+<meta property="article:modified_time" content="2022-08-23T05:03:49.897Z">
+<meta property="article:author" content="Estus">
+<meta property="article:tag" content="Robot">
+<meta property="article:tag" content="ROS">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://redbowtie.github.io/assets/images/Ess/lh.png"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-4a47lwukh8khnoqxgkjhofoety2rdykli5sq4vv9v7xmmtg07euhkbfahoe5.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/"
+            aria-label=""
+        >
+            Amaurot Ch.
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+            <img class="header-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a
+                    href="/#about"
+                    aria-label="Read more about the author"
+                >
+                    <img class="sidebar-profile-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Estus</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>Fun things <del>never</del> always stops.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/RedBowtie"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/atom.xml"
+                            
+                            rel="noopener"
+                            title="RSS"
+                        >
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/links"
+                            
+                            rel="noopener"
+                            title="Links"
+                        >
+                        <i class="sidebar-button-icon fa fa-sign" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Links</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            Entry to Ros (Noetic)
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2021-05-12T22:32:00+08:00">
+	
+		    May 12, 2021
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Robotics/">Robotics</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>Solidworks really sucks without a geforce card and I would really forget this part.<span id="more"></span></p>
+<h2 id="PREFACE"><a href="#PREFACE" class="headerlink" title="| PREFACE"></a>| PREFACE</h2><blockquote>
+<p>Environment<br>OS: Ubuntu with KDE(the latter is personal interest)<br>Only Fresh new OS.</p>
+</blockquote>
+<p>Install ROS on Ubuntu is really convenient, comparing with do it on MACOS. Finding supported and alternative dependencies is hard, exactly what happens when you wanna make your own wheel to do something that’s not offically done.<br>Literaly just type those commands in terminal and it’s done. <del>DAMN, do you have any idea how long I’ve spent on tries to make that work on MACOS?</del> Laziness brings problems, I deserved that.<br>Well, I’ll do that again sooner or later. A nice guy made a script made that more easily to work with. Thumbs up on that one.</p>
+<p>So currently <em>FOXY</em> is on MACOS, as it’s distribution of ROS2, I’ll get into that in another page. Gotta focus on this first.</p>
+<h2 id="NAV-ROS-FILE-SYS"><a href="#NAV-ROS-FILE-SYS" class="headerlink" title="| NAV ROS FILE SYS"></a>| NAV ROS FILE SYS</h2><p>In short, it mainly mentions cmds below.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rospack find [package_name]</span><br></pre></td></tr></table></figure>
+<p>it returns the file location of correspoding component.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">roscd &lt;package-or-stack&gt;[/subdir]</span><br></pre></td></tr></table></figure>
+<p>it swith current work directory to where the component, or its subfolder, exists.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rosls &lt;package-or-stack&gt;[/subdir]</span><br></pre></td></tr></table></figure>
+<p>print all files and folders in the exact folder.</p>
+<p>So, intrinsically, it’s modified version of *nix cmd, pretty straightforward.</p>
+<h2 id="ROS-PACKAGES"><a href="#ROS-PACKAGES" class="headerlink" title="| ROS PACKAGES"></a>| ROS PACKAGES</h2><p>A catkin package consists of </p>
+<ul>
+<li>Catkin compliant <strong>package.xml</strong> file<ul>
+<li>which provide meta information about the package</li>
+</ul>
+</li>
+<li><p><strong>CMakeLists.txt</strong> which uses catkin</p>
+<ul>
+<li>If it is a catkin metapackage, it must have the relevent boilerplate file.</li>
+</ul>
+</li>
+<li><p>Each package is placed in its own folder</p>
+<ul>
+<li>no nested ones sharing the same directory.</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">catkin_create_pkg &lt;package_name&gt; [depend 1] [depend 2] ... [depend n]</span><br></pre></td></tr></table></figure>
+<p>This is how we create a new catkin package.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rospack depends1 &lt;package_name&gt; // &quot;depends&quot; without 1 to return dependencies recursively</span><br></pre></td></tr></table></figure>
+<p>This returns the <strong>first-order</strong> dependencies.</p>
+<p>Words in <strong>Description tag</strong> should be simplified, keep it short.</p>
+<p><strong>Maintainer tag</strong> is required and really important. It let others know who to contact about the package.</p>
+<p>Normally, you may imagine that <strong>catkin_make</strong> combines the calls to <strong>cmake and make</strong> in the standard CMake workflow.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">In a CMake project</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">mkdir</span> build</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> build</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">cmake ..</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">make</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">make install  <span class="comment"># (optionally)</span></span></span><br></pre></td></tr></table></figure>
+<p>This process is run for each CMake project, while catkin projects ( those in the <strong>src</strong> folder ) can be built together in workspace.</p>
+<h2 id="ROS-NODES"><a href="#ROS-NODES" class="headerlink" title="| ROS NODES"></a>| ROS NODES</h2><p>A node really isn’t much more than an executable file within a ROS package. ROS nodes use a ROS client library to communicate with other nodes. Nodes can publish or subscribe to a Topic. Nodes can also provide or use a Service.</p>
+<p>ROS client libraries allow nodes written in different programming languages to communicate:</p>
+<ul>
+<li>rospy = python client library</li>
+<li>roscpp = c++ client library</li>
+</ul>
+<h2 id="ROS-TOPICS"><a href="#ROS-TOPICS" class="headerlink" title="| ROS TOPICS"></a>| ROS TOPICS</h2><p>rqt_graph creates a dynamic graph of what’s going on in the system. rqt_graph is part of the rqt package. Unless you already have it installed, run:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rosrun rqt_graph rqt_graph</span></span><br></pre></td></tr></table></figure>
+<p>The rostopic tool allows you to get information about ROS <strong>topics</strong>.</p>
+<p>You can use the help option to get the available sub-commands for rostopic</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rostopic -h</span></span><br><span class="line"></span><br><span class="line">	rostopic bw     display bandwidth used by topic</span><br><span class="line">    rostopic echo   print messages to screen</span><br><span class="line">    rostopic hz     display publishing rate of topic    </span><br><span class="line">    rostopic list   print information about active topics</span><br><span class="line">    rostopic pub    publish data to topic</span><br><span class="line">    rostopic type   print topic type</span><br></pre></td></tr></table></figure>
+<p>Usage:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rostopic pub [topic] [msg_type] [args]</span><br></pre></td></tr></table></figure>
+<p>For ROS Hydro and later, example:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rostopic pub -1 /turtle1/cmd_vel geometry_msgs/Twist -- <span class="string">&#x27;[2.0, 0.0, 0.0]&#x27;</span> <span class="string">&#x27;[0.0, 0.0, 1.8]&#x27;</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="ROS-SERVICES"><a href="#ROS-SERVICES" class="headerlink" title="| ROS SERVICES"></a>| ROS SERVICES</h2><p>Services are another way that nodes can communicate with each other. Services allow nodes to send a <strong>request</strong> and receive a <strong>response</strong>.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">rosservice list         print information about active services</span><br><span class="line">rosservice call         call the service with the provided args</span><br><span class="line">rosservice type         print service type</span><br><span class="line">rosservice find         find services by service type</span><br><span class="line">rosservice uri          print service ROSRPC uri</span><br></pre></td></tr></table></figure>
+<h2 id="ROS-PARAM"><a href="#ROS-PARAM" class="headerlink" title="| ROS PARAM"></a>| ROS PARAM</h2><p>rosparam allows you to store and manipulate data on the ROS <a target="_blank" rel="noopener" href="http://wiki.ros.org/Parameter%20Server">Parameter Server</a>. The Parameter Server can store integers, floats, boolean, dictionaries, and lists. rosparam uses the YAML markup language for syntax. In simple cases, YAML looks very natural: 1 is an integer, 1.0 is a float, one is a string, true is a boolean, [1, 2, 3] is a list of integers, and {a: b, c: d} is a dictionary. rosparam has many commands that can be used on parameters, as shown below:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">rosparam set            set parameter</span><br><span class="line">rosparam get            get parameter</span><br><span class="line">rosparam load           load parameters from file</span><br><span class="line">rosparam dump           dump parameters to file</span><br><span class="line">rosparam delete         delete parameter</span><br><span class="line">rosparam list           list parameter names</span><br></pre></td></tr></table></figure>
+
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/ROS/" rel="tag">ROS</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Robot/" rel="tag">Robot</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/01/23/RA1/"
+                    data-tooltip="Robotic Arm, Imitation. Pt.1"
+                    aria-label="PREVIOUS: Robotic Arm, Imitation. Pt.1"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2021/01/01/Info/"
+                    data-tooltip="This is about."
+                    aria-label="NEXT: This is about."
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2023 Estus. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/01/23/RA1/"
+                    data-tooltip="Robotic Arm, Imitation. Pt.1"
+                    aria-label="PREVIOUS: Robotic Arm, Imitation. Pt.1"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2021/01/01/Info/"
+                    data-tooltip="This is about."
+                    aria-label="NEXT: This is about."
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Estus</h4>
+        
+            <div id="about-card-bio"><p>Fun things <del>never</del> always stops.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Student</p>
+
+            </div>
+        
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/Ess/0_t.png');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-yb3zostooymjozqpjlvijhvzw0bdaljwvcvx0fhqdpyvq6aviyzwgfjkfjkw.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

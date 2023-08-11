@@ -1,0 +1,524 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Amaurot Ch.">
+    <title>Experience with LaTex - Amaurot Ch.</title>
+    <meta name="author" content="Estus">
+    
+    
+        <link rel="icon" href="https://upload.cc/i1/2021/05/18/lSCp1v.png">
+    
+    
+        
+            <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png"},"articleBody":"\nThis mainly records some of  the errors I encoutered when using LaTex.\nContents\ninkscape\ngraphicx package option clash\nSubfigure and Subfloat\n\n\n\n1. inkscapeAccording to the example file of ITMO template, to import the vector graphics, this tool must be installed. I’ve never insert any figure of this kind before.\nAs many other tools are installed along with TeX itself, so I searched in TeX Live Utility first. There’s a package called svg-inkscape.  On that moment I didn’t reailize that the name of a certain package will not have any other prefix on it.\nI checked its description, seems alright: How to include an SVG image in LaTeX using Inkscape. Though in the documentation, the date is a little suspicious. I was 2013. And of course, when I tried to call it, errors emerged.\nThrough searching, so the tool works like this: it convert the svg file into a pdf file with same name and insert it into the position.\nSo skipping those trials and errors, I belive this site also gives a clear tutorial.\nFor installing Inkscape, I used brew.1$ brew install --cask inkscape\nBy default, the shell won’t call a external program, so options must be added when compiling.1$ pdflatex --shell-escape file.texThis is a direct execution, as I used LaTeX workshop in VSCode, so settings should be changed.\nSearch the keyword recipe in settings, select edit in settings.json, with the preset, copy and modify new tools first, like this (note the comma):1234567891011&#123;\t&quot;name&quot;: &quot;pdflatex-escape&quot;,\t&quot;command&quot;: &quot;pdflatex&quot;,\t&quot;args&quot;: [\t&quot;-shell-escpae&quot;,\t&quot;-synctex=1&quot;,\t&quot;-interaction=nonstopmode&quot;,\t&quot;-file-line-error&quot;,\t&quot;%DOC%&quot;\t]&#125;,Then adda a new recipe (just example, use what you need instead):123456&#123;\t&quot;name&quot;: &quot;pdflatex (escape)&quot;,\t&quot;tools&quot;: [\t&quot;pdflatex-escape&quot;\t]&#125;,\n\n\n2. Option clash for package graphicxDirectly starts with error:The package graphicx has already been loaded with options []There has nowbeen an attempt to load it with options [pdftex]\nThe error message is stright forward,  you may look for the exact position where include this package, and change the include order, as the options have set relations. And sometimes it could be hard, as some packages will include packages that you may already defined. In my case the real package conflict are between svg and graphicx.\n\n\n3. Subfigure and SubfloatSubfigure is sort of deprecated package. As I found it first and in the first template I used, there was no conflict, so I kept using it for some semesters. Till recently in the ITMO template, it clashed. So I went for other ways around.\nForgot to mention that, subfigure has two way of implementation, the first one, as documented on over leaf, also failed in my first template. And another way, the syntax is similar to that of subfloat, which is:123456789101112131415\\begin&#123;figure&#125;[!htb]\\hfill\\centering\\subfloat[sub label]&#123;\t\\centering\t\\includegraphics[width=0.45\\textwidth]&#123;pic1&#125;&#125;\\hfill\\subfloat[sub label]&#123;\t\\includegraphics[width=0.45\\textwidth]&#123;pic2&#125;&#125;\\hfill\\null\\caption&#123; &#125;\\label&#123;&#125;\\end&#123;figure&#125;\nAnd another thing is that engine automatically ingore the spaces at the end, so only adding \\hfill will not make a difference, \\null must be added behind it.","dateCreated":"2023-04-21T20:32:00+08:00","dateModified":"2023-05-15T15:19:11+08:00","datePublished":"2023-04-21T20:32:00+08:00","description":"I remember I used to write a similar article.","headline":"Experience with LaTex","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://redbowtie.github.io/2023/04/21/LaTexTechnique/"},"publisher":{"@type":"Organization","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png","logo":{"@type":"ImageObject","url":"/Ess/lh.png"}},"url":"https://redbowtie.github.io/2023/04/21/LaTexTechnique/","keywords":"LaTex"}</script>
+    <meta name="description" content="I remember I used to write a similar article.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Experience with LaTex">
+<meta property="og:url" content="https://redbowtie.github.io/2023/04/21/LaTexTechnique/index.html">
+<meta property="og:site_name" content="Amaurot Ch.">
+<meta property="og:description" content="I remember I used to write a similar article.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-04-21T12:32:00.000Z">
+<meta property="article:modified_time" content="2023-05-15T07:19:11.424Z">
+<meta property="article:author" content="Estus">
+<meta property="article:tag" content="LaTex">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://redbowtie.github.io/assets/images/Ess/lh.png"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-4a47lwukh8khnoqxgkjhofoety2rdykli5sq4vv9v7xmmtg07euhkbfahoe5.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/"
+            aria-label=""
+        >
+            Amaurot Ch.
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+            <img class="header-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a
+                    href="/#about"
+                    aria-label="Read more about the author"
+                >
+                    <img class="sidebar-profile-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Estus</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>Fun things <del>never</del> always stops.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/RedBowtie"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/atom.xml"
+                            
+                            rel="noopener"
+                            title="RSS"
+                        >
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/links"
+                            
+                            rel="noopener"
+                            title="Links"
+                        >
+                        <i class="sidebar-button-icon fa fa-sign" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Links</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            Experience with LaTex
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2023-04-21T20:32:00+08:00">
+	
+		    Apr 21, 2023
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Trick/">Trick</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <!--excerpt--></p>
+<p>This mainly records some of  the errors I encoutered when using LaTex.</p>
+<h2 id="Contents"><a href="#Contents" class="headerlink" title="Contents"></a>Contents</h2><ol>
+<li><a href = "#1">inkscape</a></li>
+<li><a href = "#2">graphicx package option clash</a></li>
+<li><a href = "#3">Subfigure and Subfloat</a></li>
+</ol>
+<hr>
+<p><div id="1"></div></p>
+<h2 id="1-inkscape"><a href="#1-inkscape" class="headerlink" title="1. inkscape"></a>1. inkscape</h2><p>According to the example file of ITMO template, to import the vector graphics, this tool must be installed. I’ve never insert any figure of this kind before.</p>
+<p>As many other tools are installed along with TeX itself, so I searched in TeX Live Utility first. There’s a package called <code>svg-inkscape</code>.  On that moment I didn’t reailize that the name of a certain package will not have any other prefix on it.</p>
+<p>I checked its description, seems alright: <strong>How to include an SVG image in LaTeX using Inkscape</strong>. Though in the documentation, the date is a little suspicious. I was 2013. And of course, when I tried to call it, errors emerged.</p>
+<p>Through searching, so the tool works like this: it convert the <code>svg</code> file into a pdf file with same name and insert it into the position.</p>
+<p>So skipping those trials and errors, I belive this <a href = "https://www.baeldung.com/cs/latex-svg-images">site</a> also gives a clear tutorial.</p>
+<p>For installing <code>Inkscape</code>, I used <code>brew</code>.<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">brew install --cask inkscape</span></span><br></pre></td></tr></table></figure></p>
+<p>By default, the shell won’t call a external program, so options must be added when compiling.<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">pdflatex --shell-escape file.tex</span></span><br></pre></td></tr></table></figure><br>This is a direct execution, as I used <code>LaTeX workshop</code> in VSCode, so settings should be changed.</p>
+<p>Search the keyword <code>recipe</code> in settings, select <code>edit in settings.json</code>, with the preset, copy and modify new tools first, like this (note the comma):<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">	<span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;pdflatex-escape&quot;</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;pdflatex&quot;</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">	<span class="string">&quot;-shell-escpae&quot;</span><span class="punctuation">,</span></span><br><span class="line">	<span class="string">&quot;-synctex=1&quot;</span><span class="punctuation">,</span></span><br><span class="line">	<span class="string">&quot;-interaction=nonstopmode&quot;</span><span class="punctuation">,</span></span><br><span class="line">	<span class="string">&quot;-file-line-error&quot;</span><span class="punctuation">,</span></span><br><span class="line">	<span class="string">&quot;%DOC%&quot;</span></span><br><span class="line">	<span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br></pre></td></tr></table></figure><br>Then adda a new recipe (just example, use what you need instead):<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">	<span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;pdflatex (escape)&quot;</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;tools&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">	<span class="string">&quot;pdflatex-escape&quot;</span></span><br><span class="line">	<span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br></pre></td></tr></table></figure></p>
+<hr>
+<p><div id="2"></div></p>
+<h2 id="2-Option-clash-for-package-graphicx"><a href="#2-Option-clash-for-package-graphicx" class="headerlink" title="2. Option clash for package graphicx"></a>2. Option clash for package graphicx</h2><p>Directly starts with error:<br><div class="alert danger no-icon"><p>The package graphicx has already been loaded with options []<br>There has nowbeen an attempt to load it with options [pdftex]</p>
+</div><br>The error message is stright forward,  you may look for the exact position where include this package, and change the include order, as the options have set relations. And sometimes it could be hard, as some packages will include packages that you may already defined. In my case the real package conflict are between <code>svg</code> and <code>graphicx</code>.</p>
+<hr>
+<p><div id="3"></div></p>
+<h2 id="3-Subfigure-and-Subfloat"><a href="#3-Subfigure-and-Subfloat" class="headerlink" title="3. Subfigure and Subfloat"></a>3. Subfigure and Subfloat</h2><p><code>Subfigure</code> is sort of deprecated package. As I found it first and in the first template I used, there was no conflict, so I kept using it for some semesters. Till recently in the ITMO template, it clashed. So I went for other ways around.</p>
+<p>Forgot to mention that, subfigure has two way of implementation, the first one, as documented on over leaf, also failed in my first template. And another way, the syntax is similar to that of <code>subfloat</code>, which is:<br><figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">\begin</span>&#123;figure&#125;[!htb]</span><br><span class="line"><span class="keyword">\hfill</span></span><br><span class="line"><span class="keyword">\centering</span></span><br><span class="line"><span class="keyword">\subfloat</span>[sub label]&#123;</span><br><span class="line">	<span class="keyword">\centering</span></span><br><span class="line">	<span class="keyword">\includegraphics</span>[width=0.45<span class="keyword">\textwidth</span>]&#123;pic1&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">\hfill</span></span><br><span class="line"><span class="keyword">\subfloat</span>[sub label]&#123;</span><br><span class="line">	<span class="keyword">\includegraphics</span>[width=0.45<span class="keyword">\textwidth</span>]&#123;pic2&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">\hfill</span><span class="keyword">\null</span></span><br><span class="line"><span class="keyword">\caption</span>&#123; &#125;</span><br><span class="line"><span class="keyword">\label</span>&#123;&#125;</span><br><span class="line"><span class="keyword">\end</span>&#123;figure&#125;</span><br></pre></td></tr></table></figure></p>
+<p>And another thing is that engine automatically ingore the spaces at the end, so only adding <code>\hfill</code> will not make a difference, <code>\null</code> must be added behind it.</p>
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/LaTex/" rel="tag">LaTex</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2023/05/15/GradThesis/"
+                    data-tooltip="Double Inverted Pendulum on Two-wheeled Self-balancing Vehicle"
+                    aria-label="PREVIOUS: Double Inverted Pendulum on Two-wheeled Self-balancing Vehicle"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2023/03/16/PaperWriting/"
+                    data-tooltip="Tips on Paper Writing"
+                    aria-label="NEXT: Tips on Paper Writing"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2023 Estus. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2023/05/15/GradThesis/"
+                    data-tooltip="Double Inverted Pendulum on Two-wheeled Self-balancing Vehicle"
+                    aria-label="PREVIOUS: Double Inverted Pendulum on Two-wheeled Self-balancing Vehicle"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2023/03/16/PaperWriting/"
+                    data-tooltip="Tips on Paper Writing"
+                    aria-label="NEXT: Tips on Paper Writing"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Estus</h4>
+        
+            <div id="about-card-bio"><p>Fun things <del>never</del> always stops.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Student</p>
+
+            </div>
+        
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/Ess/0_t.png');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-yb3zostooymjozqpjlvijhvzw0bdaljwvcvx0fhqdpyvq6aviyzwgfjkfjkw.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

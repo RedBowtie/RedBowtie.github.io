@@ -1,0 +1,537 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Amaurot Ch.">
+    <title>Automatic Control Linear Systems PART III - Amaurot Ch.</title>
+    <meta name="author" content="Estus">
+    
+    
+        <link rel="icon" href="https://upload.cc/i1/2021/05/18/lSCp1v.png">
+    
+    
+        
+            <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png"},"articleBody":"CTN.\n\n\nLec 4 Frequency response of a linear systemI.    What a linear system does to a sine wave\n\nnote that one is mutliplication and the other is sum.\n\n\nIt’s necessary to know the frequency, amplititude and inital phase.\nAs examples are simple, so they’re left behind.\nII.    How to calculated frequency responsea.    Introduction\n\nb.    Example1.\n2.\n\nIII. Calculating steady-state motion\n\nIV.    Bode plot\nIt’s two graph of frequency and amplitude with different scales.\nV.    Nyquist plot\nVI.    Nyquist stability criterionIf we know Nyquist plot of an open-loop system. We wanna determine stability of the corresponding closed-loop system.\nHow?\n\nIF W(s) is unstable, then the closed-loop system will be stable if the Nyquist plot of W(jω) encircles at the point (-1,0)  as many times, as there are poles of w(s) in the right half plane.\n","dateCreated":"2020-12-09T13:32:00+08:00","dateModified":"2023-06-28T22:02:42+08:00","datePublished":"2020-12-09T13:32:00+08:00","description":"CTN.","headline":"Automatic Control Linear Systems PART III","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://redbowtie.github.io/2020/12/09/AutoCtrlLS_III/"},"publisher":{"@type":"Organization","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png","logo":{"@type":"ImageObject","url":"/Ess/lh.png"}},"url":"https://redbowtie.github.io/2020/12/09/AutoCtrlLS_III/","keywords":"Control, Linear System"}</script>
+    <meta name="description" content="CTN.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Automatic Control Linear Systems PART III">
+<meta property="og:url" content="https://redbowtie.github.io/2020/12/09/AutoCtrlLS_III/index.html">
+<meta property="og:site_name" content="Amaurot Ch.">
+<meta property="og:description" content="CTN.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/4/c0.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/4/c1.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/4/cf0.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/4/cf1.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/4/eg0.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/4/eg1.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/4/eg2.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/4/ssm.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/4/ssm1.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/4/bp.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/4/np.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/4/nsc.png">
+<meta property="article:published_time" content="2020-12-09T05:32:00.000Z">
+<meta property="article:modified_time" content="2023-06-28T14:02:42.290Z">
+<meta property="article:author" content="Estus">
+<meta property="article:tag" content="Control">
+<meta property="article:tag" content="Linear System">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://redbowtie.github.io/images/ALCS/4/c0.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://redbowtie.github.io/assets/images/Ess/lh.png"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-4a47lwukh8khnoqxgkjhofoety2rdykli5sq4vv9v7xmmtg07euhkbfahoe5.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/"
+            aria-label=""
+        >
+            Amaurot Ch.
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+            <img class="header-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a
+                    href="/#about"
+                    aria-label="Read more about the author"
+                >
+                    <img class="sidebar-profile-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Estus</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>Fun things <del>never</del> always stops.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/RedBowtie"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/atom.xml"
+                            
+                            rel="noopener"
+                            title="RSS"
+                        >
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/links"
+                            
+                            rel="noopener"
+                            title="Links"
+                        >
+                        <i class="sidebar-button-icon fa fa-sign" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Links</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            Automatic Control Linear Systems PART III
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-12-09T13:32:00+08:00">
+	
+		    Dec 09, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Term3/">Term3</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>CTN.<span id="more"></span></p>
+<h1 id="table-of-contents">Table of Contents</h1><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Lec-4-Frequency-response-of-a-linear-system"><span class="toc-text">Lec 4 Frequency response of a linear system</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#I-What-a-linear-system-does-to-a-sine-wave"><span class="toc-text">I.    What a linear system does to a sine wave</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#II-How-to-calculated-frequency-response"><span class="toc-text">II.    How to calculated frequency response</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#a-Introduction"><span class="toc-text">a.    Introduction</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#b-Example"><span class="toc-text">b.    Example</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1"><span class="toc-text">1.</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2"><span class="toc-text">2.</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#III-Calculating-steady-state-motion"><span class="toc-text">III. Calculating steady-state motion</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IV-Bode-plot"><span class="toc-text">IV.    Bode plot</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#V-Nyquist-plot"><span class="toc-text">V.    Nyquist plot</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#VI-Nyquist-stability-criterion"><span class="toc-text">VI.    Nyquist stability criterion</span></a></li></ol></li></ol>
+<hr>
+<h2 id="Lec-4-Frequency-response-of-a-linear-system"><a href="#Lec-4-Frequency-response-of-a-linear-system" class="headerlink" title="Lec 4 Frequency response of a linear system"></a>Lec 4 Frequency response of a linear system</h2><h3 id="I-What-a-linear-system-does-to-a-sine-wave"><a href="#I-What-a-linear-system-does-to-a-sine-wave" class="headerlink" title="I.    What a linear system does to a sine wave"></a>I.    What a linear system does to a sine wave</h3><p><img src="/images/ALCS/4/c0.png" alt="c0"></p>
+<ul>
+<li>note that one is mutliplication and the other is sum.</li>
+</ul>
+<p><img src="/images/ALCS/4/c1.png" alt="c1"></p>
+<p>It’s necessary to know the frequency, amplititude and inital phase.</p>
+<p>As examples are simple, so they’re left behind.</p>
+<h3 id="II-How-to-calculated-frequency-response"><a href="#II-How-to-calculated-frequency-response" class="headerlink" title="II.    How to calculated frequency response"></a>II.    How to calculated frequency response</h3><h4 id="a-Introduction"><a href="#a-Introduction" class="headerlink" title="a.    Introduction"></a>a.    Introduction</h4><p><img src="/images/ALCS/4/cf0.png" alt="cf0"></p>
+<p><img src="/images/ALCS/4/cf1.png" alt="cf1"></p>
+<h4 id="b-Example"><a href="#b-Example" class="headerlink" title="b.    Example"></a>b.    Example</h4><h5 id="1"><a href="#1" class="headerlink" title="1."></a>1.</h5><p><img src="/images/ALCS/4/eg0.png" alt="eg0"></p>
+<h5 id="2"><a href="#2" class="headerlink" title="2."></a>2.</h5><p><img src="/images/ALCS/4/eg1.png" alt="eg1"></p>
+<p><img src="/images/ALCS/4/eg2.png" alt="eg2"></p>
+<h3 id="III-Calculating-steady-state-motion"><a href="#III-Calculating-steady-state-motion" class="headerlink" title="III. Calculating steady-state motion"></a>III. Calculating steady-state motion</h3><p><img src="/images/ALCS/4/ssm.png" alt="ssm"></p>
+<p><img src="/images/ALCS/4/ssm1.png" alt="ssm1"></p>
+<h3 id="IV-Bode-plot"><a href="#IV-Bode-plot" class="headerlink" title="IV.    Bode plot"></a>IV.    Bode plot</h3><p><img src="/images/ALCS/4/bp.png" alt="bp"></p>
+<p>It’s two graph of frequency and amplitude with different scales.</p>
+<h3 id="V-Nyquist-plot"><a href="#V-Nyquist-plot" class="headerlink" title="V.    Nyquist plot"></a>V.    Nyquist plot</h3><p><img src="/images/ALCS/4/np.png" alt="np"></p>
+<h3 id="VI-Nyquist-stability-criterion"><a href="#VI-Nyquist-stability-criterion" class="headerlink" title="VI.    Nyquist stability criterion"></a>VI.    Nyquist stability criterion</h3><p>If we know Nyquist plot of an open-loop system. We wanna <font color=red>determine stability </font>of the corresponding <font color=orange>closed-loop system</font>.</p>
+<p>How?</p>
+<p><img src="/images/ALCS/4/nsc.png" alt="nsc"></p>
+<p>IF <font color=orange>W(s) is unstable</font>, then the closed-loop system will be stable if the Nyquist plot of W(jω) encircles at the point <font color=red>(-1,0)</font>  as many times, as there are poles of w(s) in the right half plane.</p>
+
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Control/" rel="tag">Control</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Linear-System/" rel="tag">Linear System</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/12/14/AutoCtrlLs_IV/"
+                    data-tooltip="Automatic Control Linear Systems PART IV"
+                    aria-label="PREVIOUS: Automatic Control Linear Systems PART IV"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/12/07/AutoCtrlLS_II/"
+                    data-tooltip="Automatic Control Linear Systems PART II"
+                    aria-label="NEXT: Automatic Control Linear Systems PART II"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="Table of Contents">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2023 Estus. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/12/14/AutoCtrlLs_IV/"
+                    data-tooltip="Automatic Control Linear Systems PART IV"
+                    aria-label="PREVIOUS: Automatic Control Linear Systems PART IV"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/12/07/AutoCtrlLS_II/"
+                    data-tooltip="Automatic Control Linear Systems PART II"
+                    aria-label="NEXT: Automatic Control Linear Systems PART II"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="Table of Contents">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Estus</h4>
+        
+            <div id="about-card-bio"><p>Fun things <del>never</del> always stops.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Student</p>
+
+            </div>
+        
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/Ess/0_t.png');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-yb3zostooymjozqpjlvijhvzw0bdaljwvcvx0fhqdpyvq6aviyzwgfjkfjkw.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

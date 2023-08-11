@@ -1,0 +1,603 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Amaurot Ch.">
+    <title>Bad Introduction to Javascript - Amaurot Ch.</title>
+    <meta name="author" content="Estus">
+    
+    
+        <link rel="icon" href="https://upload.cc/i1/2021/05/18/lSCp1v.png">
+    
+    
+        
+            <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png"},"articleBody":"It’s not that bad now. I have a feeling about this\n他和 Java 没有关系，之所以取这个名字是当初为了蹭 Java 热度\n\n只用了10天开发\n直译语言，其中一条运行不了之后的不会运行。\n\n服务器端：Node.js\nI.    引用JSa.    script 内插入123456789&lt;body&gt;  &lt;button id=&quot;A&quot;&gt;GO&lt;/button&gt;  &lt;/button&gt;  &lt;script&gt;    document.getElementById(&quot;A&quot;).onclick =function()&#123;      alert(&quot;?&quot;);    &#125;  &lt;/script&gt;&lt;/body&gt;\n\n如果只是从可运行的角度考虑，那么在HTML文件（不是标签）内任意放置script它都能被识别与使用。\n但浏览器解析是按顺序的\n一般而言，放在 head | body部分\n如果是页面初始化需要用到的js必须放在head\n如果使用了getElementById(Class)或者类似需要已存在元素的查改，注意Js的插入位置。\n\n\n\nb.     script引用外部文件1&lt;script src=&quot;./xxx.js&quot;&gt;\n\n在引用外部文件以后，script标签内写的其他内容不会被执行\n\nc.    事件属性1&lt;span onclick=&quot;alert(??)&quot;&gt;\n比较常用的是以上几种。\nII.    Strict Mode使用以下语句进入严格模式\n1&quot;use strict&quot;;\na.    两种调用方式1.    对整个脚本文件置于第一行，否则大部分情况下以正常模式运行\n12345678　　&lt;script&gt;　　　　&quot;use strict&quot;;　　　　console.log(&quot;strict mode&quot;);　　&lt;/script&gt;　　&lt;script&gt;　　　　console.log(&quot;Not&quot;);　　&lt;/script&gt;\n上面的代码表示，一个页面中有两段Js。前一个是严格模式，后一个不是。\n2.    对单个函数将”use strict”放在函数体的第一行，则整个函数以”严格模式”运行。\nb.    具体差别一般体现在语法与行为上。\n\n严格模式禁止在不声明的情况下直接使用变量\n禁止this指向全局对象\n禁止函数内部遍历调用栈\n等\n\n总之一般在写比较复杂的js时会选择性使用\nIII.     let|const|var123var a=6;let c=2;const d=1;\nconst 常量应该都懂\n实际使用中最好使用let，因为用 var 声明的变量如果在之后的代码中再次声明（假设你忘了自己已经使用过了该变量名），并不会报错，会给潜在的debug带来麻烦。\n如果使用let，在运行到二次声明时会报错。\nIV.    数据类型基本类型\n\nstring ｜ number | boolean | null | undefined | symbol\n数字支持科学计数表示 如 123e5 （12300000）\n\n引用类型\n\nObject ｜ Array ｜ Function\n\n类型是动态的，所以相同的变量可以赋值为不同的类型\n\nnull 与undefined 值相等\n\n关于==与===在使用==比较两个变量时，会将其转换为同一种数据类型再进行比较\n相对应的===只要类型不同就会返回false\n基本的语法都能找到，和现存的其他语言都很相似\nV.    函数一般函数的结构为\n123function name(arg1,arg2..)&#123;\t//xxx&#125;\n参数可为空，如果需要有返回值使用 return 语句即可\na.    箭头函数12345x=&gt;x*x//等效于function(x)&#123;  return x*x;&#125;\n箭头函数相当于匿名函数并简化了定义\n多参数或执行语句需要用{}括起来\n1234(x,y)=&gt;&#123;\t//xxx\t//xxx&#125;\nVI.    RESTful &amp; spread （杂项）REST全称是Representational State Transfer\n如果简单理解，是对增删改查(GET PUT POST DELETE)的标准和约束\n\n要让一个资源可以被识别，需要有个唯一标识，在Web中这个唯一标识就是URI(Uniform Resource Identifier)\nRESTful架构应该遵循统一接口原则，不论什么样的资源，都是通过使用相同的接口进行资源的访问。接口应该使用标准的HTTP方法如GET，PUT和POST，并遵循这些方法的语义。\n\n典型用法见RUNOOB\nSpread \n1...a\n这里的..是ES6标准中的语法\n123456789var mid = [3, 4];var arr = [1, 2, mid, 5, 6];console.log(arr);  // [1, 2, [3, 4] , 5, 6]----var mid = [3, 4];var arr = [1, 2, ...mid, 5, 6];console.log(arr); // [1，2，3，4，5，6]\n只是扩展内容的举例\nVII.    DOMDOM (Document Object Model) 译为文档对象模型，是 HTML 和 XML 文档的编程接口。\nHTML DOM 定义了访问和操作 HTML 文档的标准方法。DOM 以树结构表达 HTML 文档。\n\n\n整个文档是一个节点\n每个HTML元素是一个节点\nHTML元素内的文本是文本节点\n每个HTML属性是属性节点\n注释是注释节点\n\na .    DOM 对象 方法 属性1.    常用方法\ngetElementById(id)\ngetElementByClassName(class)\nappendChild(node)\nremoveChild(node)\n\n2.    常用属性\ninnerHTML//节点的文本值\nparentNode//父节点\nChildNode//子节点\nattributes//属性节点\n\n有需要用到的可以再去查\n3.    示例12345678910111213141516171819202122232425262728293031323334&lt;body&gt;\t&lt;p id=&quot;ini&quot;&gt;    200 OK.  &lt;/p&gt;    &lt;button id=&quot;eg1&quot;&gt;    Ha.  &lt;/button&gt;    &lt;script&gt;  \tlet txt=document.getElementById(&quot;ini&quot;).innerHTML;// get   \tdocument.write(txt);        document.getElementById(&quot;ini&quot;).innerHTML=&#x27;??NO&#x27;;// rewrite    document.getElementById(&quot;ini&quot;).style.color=&quot;Blue&quot;;        let k1=document.createElement(&quot;div&quot;);// create append    let\tk2=document.createTextNode(&quot;New one&quot;);    k1.appendChild(k2);    document.getElementById(&quot;ini&quot;).appendChild(k1);        function Change(id)&#123;      id.innerHTML=&quot;Wrong&quot;;    &#125;        document.getElementById(&quot;eg1&quot;).onclick=function()&#123;Change(this)&#125;;//add event through script        document.addEventListener(&quot;click&quot;,=&gt;document.getElementById(&quot;ini&quot;).innerHTML=&quot;You clicked somewhere&quot;);  &lt;/script&gt;    &lt;button onclick=&quot;Change(this)&quot;&gt;    Click here.  &lt;/button&gt;&lt;/body&gt;\n那么简单的结合事件触发onXXX, addEventListener等即可做到一些常见的功能。\nAddEventListener相比 onXXX,可以对一个事件绑定多个函数\n","dateCreated":"2020-12-23T20:32:00+08:00","dateModified":"2022-04-02T12:03:21+08:00","datePublished":"2020-12-23T20:32:00+08:00","description":"It’s not that bad now. I have a feeling about this","headline":"Bad Introduction to Javascript","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://redbowtie.github.io/2020/12/23/Javascript/"},"publisher":{"@type":"Organization","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png","logo":{"@type":"ImageObject","url":"/Ess/lh.png"}},"url":"https://redbowtie.github.io/2020/12/23/Javascript/","keywords":"JS"}</script>
+    <meta name="description" content="It’s not that bad now. I have a feeling about this">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Bad Introduction to Javascript">
+<meta property="og:url" content="https://redbowtie.github.io/2020/12/23/Javascript/index.html">
+<meta property="og:site_name" content="Amaurot Ch.">
+<meta property="og:description" content="It’s not that bad now. I have a feeling about this">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.runoob.com/images/htmltree.gif">
+<meta property="article:published_time" content="2020-12-23T12:32:00.000Z">
+<meta property="article:modified_time" content="2022-04-02T04:03:21.373Z">
+<meta property="article:author" content="Estus">
+<meta property="article:tag" content="JS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.runoob.com/images/htmltree.gif">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://redbowtie.github.io/assets/images/Ess/lh.png"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-4a47lwukh8khnoqxgkjhofoety2rdykli5sq4vv9v7xmmtg07euhkbfahoe5.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/"
+            aria-label=""
+        >
+            Amaurot Ch.
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+            <img class="header-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a
+                    href="/#about"
+                    aria-label="Read more about the author"
+                >
+                    <img class="sidebar-profile-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Estus</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>Fun things <del>never</del> always stops.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/RedBowtie"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/atom.xml"
+                            
+                            rel="noopener"
+                            title="RSS"
+                        >
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/links"
+                            
+                            rel="noopener"
+                            title="Links"
+                        >
+                        <i class="sidebar-button-icon fa fa-sign" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Links</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            Bad Introduction to Javascript
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-12-23T20:32:00+08:00">
+	
+		    Dec 23, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/FE/">FE</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>It’s not that bad now. I have a feeling about this<span id="more"></span></p>
+<p>他和 Java 没有关系，之所以取这个名字是当初为了蹭 Java 热度</p>
+<ul>
+<li>只用了10天开发</li>
+<li>直译语言，其中一条运行不了之后的不会运行。</li>
+</ul>
+<p>服务器端：Node.js</p>
+<h2 id="I-引用JS"><a href="#I-引用JS" class="headerlink" title="I.    引用JS"></a>I.    引用JS</h2><h3 id="a-script-内插入"><a href="#a-script-内插入" class="headerlink" title="a.    script 内插入"></a>a.    <code>script</code> 内插入</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">&quot;A&quot;</span>&gt;</span>GO<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;A&quot;</span>).<span class="property">onclick</span> =<span class="keyword">function</span>(<span class="params"></span>)&#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="title function_">alert</span>(<span class="string">&quot;?&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">  </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果只是从可运行的角度考虑，那么在HTML文件（不是标签）内任意放置<code>script</code>它都能被识别与使用。</li>
+<li>但浏览器解析是按顺序的<ul>
+<li>一般而言，放在<code> head | body</code>部分</li>
+<li>如果是页面初始化需要用到的js必须放在<code>head</code></li>
+<li>如果使用了getElementById(Class)或者类似需要已存在元素的查改，注意Js的插入位置。</li>
+</ul>
+</li>
+</ul>
+<h3 id="b-script引用外部文件"><a href="#b-script引用外部文件" class="headerlink" title="b.     script引用外部文件"></a>b.     <code>script</code>引用外部文件</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;./xxx.js&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>在引用外部文件以后，<code>script</code>标签内写的其他内容不会被执行</li>
+</ul>
+<h3 id="c-事件属性"><a href="#c-事件属性" class="headerlink" title="c.    事件属性"></a>c.    事件属性</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">onclick</span>=<span class="string">&quot;alert(??)&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>比较常用的是以上几种。</p>
+<h2 id="II-Strict-Mode"><a href="#II-Strict-Mode" class="headerlink" title="II.    Strict Mode"></a>II.    Strict Mode</h2><p>使用以下语句进入严格模式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&quot;use strict&quot;</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="a-两种调用方式"><a href="#a-两种调用方式" class="headerlink" title="a.    两种调用方式"></a>a.    两种调用方式</h3><h4 id="1-对整个脚本文件"><a href="#1-对整个脚本文件" class="headerlink" title="1.    对整个脚本文件"></a>1.    对整个脚本文件</h4><p>置于第一行，否则大部分情况下以正常模式运行</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">　　&lt;script&gt;</span><br><span class="line">　　　　<span class="string">&quot;use strict&quot;</span>;</span><br><span class="line">　　　　<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;strict mode&quot;</span>);</span><br><span class="line">　　&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">　　<span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">　　　　<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Not&quot;</span>);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">　　</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>上面的代码表示，一个页面中有两段Js。前一个是严格模式，后一个不是。</p>
+<h4 id="2-对单个函数"><a href="#2-对单个函数" class="headerlink" title="2.    对单个函数"></a>2.    对单个函数</h4><p>将”use strict”放在函数体的第一行，则整个函数以”严格模式”运行。</p>
+<h3 id="b-具体差别"><a href="#b-具体差别" class="headerlink" title="b.    具体差别"></a>b.    具体差别</h3><p>一般体现在语法与行为上。</p>
+<ul>
+<li>严格模式禁止在不声明的情况下直接使用变量</li>
+<li>禁止this指向全局对象</li>
+<li>禁止函数内部遍历调用栈</li>
+<li>等</li>
+</ul>
+<p>总之一般在写比较复杂的js时会选择性使用</p>
+<h2 id="III-let-const-var"><a href="#III-let-const-var" class="headerlink" title="III.     let|const|var"></a>III.     let|const|var</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a=<span class="number">6</span>;</span><br><span class="line"><span class="keyword">let</span> c=<span class="number">2</span>;</span><br><span class="line"><span class="keyword">const</span> d=<span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<p>const 常量应该都懂</p>
+<p>实际使用中最好使用let，因为用 var 声明的变量如果在之后的代码中再次声明（假设你忘了自己已经使用过了该变量名），并不会报错，会给潜在的debug带来麻烦。</p>
+<p>如果使用let，在运行到二次声明时会报错。</p>
+<h2 id="IV-数据类型"><a href="#IV-数据类型" class="headerlink" title="IV.    数据类型"></a>IV.    数据类型</h2><p>基本类型</p>
+<ul>
+<li>string ｜ number | boolean | null | undefined | symbol</li>
+<li>数字支持科学计数表示 如 123e5 （12300000）</li>
+</ul>
+<p>引用类型</p>
+<ul>
+<li>Object ｜ Array ｜ Function</li>
+</ul>
+<p>类型是动态的，所以相同的变量可以赋值为不同的类型</p>
+<ul>
+<li>null 与undefined 值相等</li>
+</ul>
+<h3 id="关于-与"><a href="#关于-与" class="headerlink" title="关于==与==="></a>关于==与===</h3><p>在使用==比较两个变量时，会将其转换为同一种数据类型再进行比较</p>
+<p>相对应的===只要类型不同就会返回false</p>
+<p>基本的语法都能找到，和现存的其他语言都很相似</p>
+<h2 id="V-函数"><a href="#V-函数" class="headerlink" title="V.    函数"></a>V.    函数</h2><p>一般函数的结构为</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">name</span>(<span class="params">arg1,arg2..</span>)&#123;</span><br><span class="line">	<span class="comment">//xxx</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>参数可为空，如果需要有返回值使用 return 语句即可</p>
+<h3 id="a-箭头函数"><a href="#a-箭头函数" class="headerlink" title="a.    箭头函数"></a>a.    箭头函数</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">x=&gt;x*x</span><br><span class="line"><span class="comment">//等效于</span></span><br><span class="line"><span class="keyword">function</span>(<span class="params">x</span>)&#123;</span><br><span class="line">  <span class="keyword">return</span> x*x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>箭头函数相当于匿名函数并简化了定义</p>
+<p>多参数或执行语句需要用{}括起来</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(x,y)=&gt;&#123;</span><br><span class="line">	<span class="comment">//xxx</span></span><br><span class="line">	<span class="comment">//xxx</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="VI-RESTful-amp-spread-（杂项）"><a href="#VI-RESTful-amp-spread-（杂项）" class="headerlink" title="VI.    RESTful &amp; spread （杂项）"></a>VI.    RESTful &amp; spread （杂项）</h2><p>REST全称是Representational State Transfer</p>
+<p>如果简单理解，是对增删改查(GET PUT POST DELETE)的标准和约束</p>
+<ul>
+<li>要让一个资源可以被识别，需要有个唯一标识，在Web中这个唯一标识就是URI(Uniform Resource Identifier)</li>
+<li>RESTful架构应该遵循统一接口原则，不论什么样的资源，都是通过使用相同的接口进行资源的访问。接口应该使用标准的HTTP方法如GET，PUT和POST，并遵循这些方法的语义。</li>
+</ul>
+<p>典型用法见<a target="_blank" rel="noopener" href="https://www.runoob.com/w3cnote/restful-architecture.html">RUNOOB</a></p>
+<p>Spread </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">...a</span><br></pre></td></tr></table></figure>
+<p>这里的..是ES6标准中的语法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> mid = [<span class="number">3</span>, <span class="number">4</span>];</span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, mid, <span class="number">5</span>, <span class="number">6</span>];</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(arr);  <span class="comment">// [1, 2, [3, 4] , 5, 6]</span></span><br><span class="line">----</span><br><span class="line"><span class="keyword">var</span> mid = [<span class="number">3</span>, <span class="number">4</span>];</span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, ...mid, <span class="number">5</span>, <span class="number">6</span>];</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(arr); <span class="comment">// [1，2，3，4，5，6]</span></span><br></pre></td></tr></table></figure>
+<p>只是扩展内容的举例</p>
+<h2 id="VII-DOM"><a href="#VII-DOM" class="headerlink" title="VII.    DOM"></a>VII.    DOM</h2><p>DOM (Document Object Model) 译为<strong>文档对象模型</strong>，是 HTML 和 XML 文档的编程接口。</p>
+<p>HTML DOM 定义了访问和操作 HTML 文档的标准方法。DOM 以树结构表达 HTML 文档。</p>
+<p><img src="https://www.runoob.com/images/htmltree.gif" alt="DOM HTML tree"></p>
+<ul>
+<li>整个文档是一个节点</li>
+<li>每个HTML元素是一个节点</li>
+<li>HTML元素内的文本是文本节点</li>
+<li>每个HTML属性是属性节点</li>
+<li>注释是注释节点</li>
+</ul>
+<h3 id="a-DOM-对象-方法-属性"><a href="#a-DOM-对象-方法-属性" class="headerlink" title="a .    DOM 对象 方法 属性"></a>a .    DOM 对象 方法 属性</h3><h4 id="1-常用方法"><a href="#1-常用方法" class="headerlink" title="1.    常用方法"></a>1.    常用方法</h4><ul>
+<li>getElementById(id)</li>
+<li>getElementByClassName(class)</li>
+<li>appendChild(node)</li>
+<li>removeChild(node)</li>
+</ul>
+<h4 id="2-常用属性"><a href="#2-常用属性" class="headerlink" title="2.    常用属性"></a>2.    常用属性</h4><ul>
+<li>innerHTML//节点的文本值</li>
+<li>parentNode//父节点</li>
+<li>ChildNode//子节点</li>
+<li>attributes//属性节点</li>
+</ul>
+<p>有需要用到的可以再去查</p>
+<h4 id="3-示例"><a href="#3-示例" class="headerlink" title="3.    示例"></a>3.    示例</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;ini&quot;</span>&gt;</span></span><br><span class="line">    200 OK.</span><br><span class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  </span><br><span class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">&quot;eg1&quot;</span>&gt;</span></span><br><span class="line">    Ha.</span><br><span class="line">  <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">  </span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  	<span class="keyword">let</span> txt=<span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;ini&quot;</span>).<span class="property">innerHTML</span>;<span class="comment">// get</span></span></span><br><span class="line"><span class="language-javascript">   	<span class="variable language_">document</span>.<span class="title function_">write</span>(txt);</span></span><br><span class="line"><span class="language-javascript">    </span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;ini&quot;</span>).<span class="property">innerHTML</span>=<span class="string">&#x27;??NO&#x27;</span>;<span class="comment">// rewrite</span></span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;ini&quot;</span>).<span class="property">style</span>.<span class="property">color</span>=<span class="string">&quot;Blue&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">    </span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">let</span> k1=<span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;div&quot;</span>);<span class="comment">// create append</span></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">let</span>	k2=<span class="variable language_">document</span>.<span class="title function_">createTextNode</span>(<span class="string">&quot;New one&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">    k1.<span class="title function_">appendChild</span>(k2);</span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;ini&quot;</span>).<span class="title function_">appendChild</span>(k1);</span></span><br><span class="line"><span class="language-javascript">    </span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">function</span> <span class="title function_">Change</span>(<span class="params">id</span>)&#123;</span></span><br><span class="line"><span class="language-javascript">      id.<span class="property">innerHTML</span>=<span class="string">&quot;Wrong&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">    </span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;eg1&quot;</span>).<span class="property">onclick</span>=<span class="keyword">function</span>(<span class="params"></span>)&#123;<span class="title class_">Change</span>(<span class="variable language_">this</span>)&#125;;<span class="comment">//add event through script</span></span></span><br><span class="line"><span class="language-javascript">    </span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">document</span>.<span class="title function_">addEventListener</span>(<span class="string">&quot;click&quot;</span>,=&gt;<span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;ini&quot;</span>).<span class="property">innerHTML</span>=<span class="string">&quot;You clicked somewhere&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">  </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  </span><br><span class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">&quot;Change(this)&quot;</span>&gt;</span></span><br><span class="line">    Click here.</span><br><span class="line">  <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>那么简单的结合事件触发<code>onXXX, addEventListener</code>等即可做到一些常见的功能。</p>
+<p><code>AddEventListener</code>相比 <code>onXXX</code>,可以对一个事件绑定多个函数</p>
+
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/JS/" rel="tag">JS</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/12/23/AutoCtrlLS_VII/"
+                    data-tooltip="Automatic Control Linear Systems PART VII"
+                    aria-label="PREVIOUS: Automatic Control Linear Systems PART VII"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/12/21/AutoCtrlLS_VI/"
+                    data-tooltip="Automatic Control Linear Systems PART VI"
+                    aria-label="NEXT: Automatic Control Linear Systems PART VI"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2023 Estus. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/12/23/AutoCtrlLS_VII/"
+                    data-tooltip="Automatic Control Linear Systems PART VII"
+                    aria-label="PREVIOUS: Automatic Control Linear Systems PART VII"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/12/21/AutoCtrlLS_VI/"
+                    data-tooltip="Automatic Control Linear Systems PART VI"
+                    aria-label="NEXT: Automatic Control Linear Systems PART VI"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Estus</h4>
+        
+            <div id="about-card-bio"><p>Fun things <del>never</del> always stops.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Student</p>
+
+            </div>
+        
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/Ess/0_t.png');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-yb3zostooymjozqpjlvijhvzw0bdaljwvcvx0fhqdpyvq6aviyzwgfjkfjkw.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

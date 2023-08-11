@@ -1,0 +1,682 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Amaurot Ch.">
+    <title>System Software PART I - Amaurot Ch.</title>
+    <meta name="author" content="Estus">
+    
+    
+        <link rel="icon" href="https://upload.cc/i1/2021/05/18/lSCp1v.png">
+    
+    
+        
+            <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png"},"articleBody":"A course that is not concerned with MATLAB, great.\n\n\n\nWell to be clear that I’m not meaning that MATLAB is awful, it’s just too ‘perfect’. All functions within are well encapsuled. A lack of interacting I suppose.\nLec 1. Programming in C languageCourse structure\nthe main tool for system programming – the C programming language;\n\n(2) multithreaded programming with POSIX Threads;\n\n(3) Linux operating system basics and shell;\n\n(4) regular expression language.\n\n\nI have to admit that after seeing this, I’m super excited. Just right about what I wanted to learn.\nSystem softwareis a set of software that is a platform for the development and operation of other programs. For example, these are operating systems such as Windows, Linux, utilities (chmod, ipconfig, grep), game engines, programming tools\nLayers can be seen at page 3.\nMultithreaded programmingMultithreaded programming means program organization that can execute parallel operations (threads) in one process.\nIntroduction of Linux an CJust as name suggest.\nSome showcase of Assemly language optimization \nKinds of Typing and examplesStatic typing - checking the correctness of expressions occurs at the compilation stage.\nDynamic typing - works at run time.\nStrong typing means that we cannot perform operations on data that could lead to run-time errors due to data inconsistency or incompatibility.\nWeak typing allows the ability to implicitly convert data from type to type.\nExplicit typing − we explicitly specify data types.\nImplicit typing – the compiler itself can determine the data type from the expression.\n\nOCaml – static and strong-typed programming language\nfloat + float\n int + int\n40 + 2.0 – error\nJava – static and strong-typed programming language, BUT\n40 + 2.0 = 42.0 //compiler automatically casts 40 (integer) to 40.0 (double)\nPython – dynamic and strong-typed, duck-typed\nDuck-typing means that variables are untyped, but objects (data) are has data types.\nx = 1.0 + 2 #it is okay\nJavaScript – dynamic and weakly-typed \nx = ‘1’ + 1; //x has value ’11’ (string).\n\nAs for grammer of the C, I think I’m pretty familiar with most of common ones, for which I’ll pass.\nBut sometimes I gotta remember the corresponding notations in English.\n\nLec 2. As aboveFocus on \n\npointers\nmemory allocation / leakage\nDirectives\nSome utilities\n\n\nLec 3. Posix\nIt’s a part of network programming.\nThread is a single sequential flow of control within a program\n\nPros and Cons of Multithreading\nPros\nProgramming abstraction\nParallelism\nImproving responsiveness\nBlocking I/O\nMultiplexed I/O\nNonblocking Reads\nAsynchronous I/O\n\n\nContext switching\nSaving memory\n\n\n\nCost of MultithreadingLimitation of the performance growth $S_p$ of a computing system with an increase in the number of processors $p$\n\nS_p=\\frac{1}{\\alpha+\\frac{1-\\alpha}{p}}where, $S_p=Speedup$, $a=\\frac{seqential}{sequential+parrallel}$,\nThreading modelsThere are several approaches to the implementation of multithreading in a system with varying degrees of functionality provided by the kernel in user space.\n\nUser threads : managed without kernel support\nKernel threads : managed directly by OS\nRelationship b/w user and kernel thread\nMany-to-one model\nOne-to-one model\nMany-to-many model\n\n\n\n\nKernel-level threadingSimplest. One-to-one.\n\nUser-level threadingContra the first one. Many-to-one model.\n\nHybrid threadingMany to many. combines preivous advantages, native threading support.\n\nCoroutines and FibersThey provide a unit of execution even lighter in weight than the thread.  For them scheduling and execution almost does not require user space support. They’re scheduled together, requiring only a clear transition from one to another.\nThey’re more needed to control program execution than to execute parallelism.\n\n\nThreading Patterns\nThread-per-Connectionone thread is assigned to one execution item.\nThis thread is assigned to no more than one work item throughout all the work\n\nEvent-Driven ThreadingEvent-driven approach can separate threads from connections, which only use threads for events on specific callbacks or handlers.\n\n\nRace ConditionsA race condition occurs when two or more threads can access shared data and they try to change it at the same time. Because the thread scheduling algorithm can swap between threads at any time, you don’t know the order in which the threads will attempt to access the shared data. Therefore, the result of the change in data is dependent on the thread scheduling algorithm, i.e. both threads are “racing” to access/change the data.\n\nSo, thread  safety needs to be ensured.\n\nSynchronizationThe fundamental source of races is that critical regions are a window during which correct program behavior requires that threads do not interleave execution. To prevent race conditions, then, the programmer needs to synchronize access to that window, ensuring mutually exclusive access to the critical region.\nIn computer science, we say that an operation (or set of operations) is atomic if it is indivisible, unable to be interleaved with other operations. To the rest of the system, an atomic operation (or operations) appears to occur instantaneously. And that’s the problem with critical regions: they are not indivisible, they don’t occur instantaneously, they aren’t atomic.\nMutexes - mutually exclusive accessOnly one person (thread) can enter the room (resource) if he has a key (lock).\nThere is only one key.  So at the same time only one thread can get the resource.\nDeadlocksA deadlock is a situation in which two threads are waiting for each other to finish, and thus neither does. In the case of mutexes, a deadlock occurs if two threads are both waiting for a different mutex, which the other thread holds. \n\nPOSIX Threads\n\npthread POSIX standard tells us how threads should work on UNIX OS\n\nimportant calls:\n\npthread_create : Create a new thread; analogous to fork\npthread_exit : Terminating the calling thread. Analogous to exit , has return value\npthread_join : Wait for another thread to exit. Analogous to wait - the caller cannot proceed other thread exists\npthread_yield : Release the CPU, let another thread run.\npthread_attr_init : Create and initialize a thread’s attributes. Contains info like priority of thread\npthread_attr_destroy : Remove a thread’s attributes. Free up the memory holding the attribute info.\npthread_cancel : Signal cancellation to a thread. Can be asynchronous or deferred, depending on thread attributes\n\nThe pthread API is defined in . Every function in the API is prefixed by pthread_. For example, the function to create a thread is called pthread_create(). Pthread functions may be broken into two large groupings:\nThread management\nFunctions to create, destroy, join, and detach threads.\nSynchronization\nFunctions to manage the synchronization of threads, including mutexes, condition variables, and barriers.\n\nCreating threadsWhen your program is first run and executes the main() function, it is single threaded. Indeed, other than the compiler enabling some thread safety options and the linker linking in the Pthreads library, your process isn’t any different from any other. From this initial thread, sometimes called the default or master thread, you must create one or more additional threads to become multithreaded.\n12345#include &lt;pthread.h&gt;int pthread_create (pthread_t *thread                   const pthread_attr_t *attr,                   void *(*start_routine)(void *),                   void *arg);\nTerminating ThreadsThreads may terminate under several circumstances, all of which have analogues to process termination:\n\nIf a thread returns from its start routine, it terminates. This is akin to “falling off the end” of main().\nIf a thread invokes the pthread_exit**() function (discussed subsequently), it terminates. This is akin to calling exit().\nIf the thread is canceled by another thread via the pthread_cancel**() function, it terminates. This is akin to being sent the SIGKILL signal via kill().\n\n123// Terminating the current thread#include &lt;pthread.h&gt;void pthread_exit(void *retval);\nUpon invocation, the calling thread is terminated. retval is provided to any thread waiting on the terminating thread’s death, similar to exit().\n12345//Terminating other threads#include &lt;pthread.h&gt;int pthread_cancel (pthread_t thread);int pthread_setcancelstate(int state, int *oldstate);int pthread_setcanceltype(int type, int *oldtype);\n\nOn success, pthread_ cancel() returns zero. \nOn error, pthread_cancel() returns ESRCH, indicating that thread was invalid.\nThreads can change their state via pthread_set cancelstate():\nThreads can change their type via pthread_setcanceltype():\n\nJoining threadJoining allows one thread to block while waiting for the termination of another:\n12#include &lt;pthread.h&gt;void pthread_exit(void *retval);\nDetaching threadsBy default, threads are created as joinable. Threads may, however, detach, rendering them no longer joinable. Because threads consume system resources until joined, just as processes consume system resources until their parent calls wait(), threads that you do not intend to join should be detached.\n12#include &lt;pthread.h&gt;void pthread_detach(pthread_t thread);\nInitializing mutexesMutexes are represented by the pthread_mutex_t object. Like most of the objects in the Pthread API, it is meant to be an opaque structure provided to the various mutex interfaces. Although you can dynamically create mutexes, most uses are static:  \n12#include &lt;pthread.h&gt;pthread_mutex_t mutex = PHTHREAD_MUTEX_INITIALIZER;\nLocking / Unlocking mutexesLocking (also called acquiring) a Pthreads mutex is accomplished via the pthread_mutex_lock() function,\nThe counterpart to locking is unlocking, or releasing, the mutex. \n123#include &lt;pthread.h&gt;int pthread_mutex_lock (pthread_mutex_t *mutex);int pthread_mutex_unlock (pthread_mutex_t *mutex);\nConditional variableSynchronization mechanisms need more than just mutual exclusion; also need a way to wait for another thread to do something (e.g., wait for a character to be added to the buffer)\n\nwait(condition, lock): release lock, put thread to sleep until condition is signaled; when thread wakes up again, re-acquire lock before returning.\nsignal(condition, lock): if any threads are waiting on condition, wake up one of them. Caller must hold lock, which must be the same as the lock used in the wait call.\nbroadcast(condition, lock): same as signal, except wake up all waiting threads.\nNote: after signal, signaling thread keeps lock, waking thread goes on the queue waiting for the lock.\nWarning: when a thread wakes up after cond_wait there is no guarantee that the desired condition still exists: another thread might have snuck in.\n\nWaitThe pthread_cond_wait() routine always returns with the mutex locked and owned by the calling thread, even when returning an error.\nThis function blocks until the condition is signaled. It atomically releases the associated mutex lock before blocking, and atomically acquires it again before returning.\n\nSome additional discovery about usage of * in terminal if under zsh \nFollow error will be displayed by default when * is used to match files or some others.\n1$ clang-tidy: No match -checks=-*,clang-analyzer-*,-clang-analyzer-cplusplus*\nIt’s actually a limitation in zsh, which could save you in case you just typed  rm * . Surely that is dangerous.\nAnd please, remember that exit works for the whole program, don’t use it in the signal_handler for certain thread. \n\n\n[Thu Apr 7 2022, 22:54] Some toolchain support\ni clang-format\ni fmenezes/tap/clang-tidy\n\n","dateCreated":"2022-03-23T18:32:00+08:00","dateModified":"2023-06-28T22:07:03+08:00","datePublished":"2022-03-23T18:32:00+08:00","description":"A course that is not concerned with MATLAB, great.","headline":"System Software PART I","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://redbowtie.github.io/2022/03/23/SystemSoftware_I/"},"publisher":{"@type":"Organization","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png","logo":{"@type":"ImageObject","url":"/Ess/lh.png"}},"url":"https://redbowtie.github.io/2022/03/23/SystemSoftware_I/","keywords":"System, C, Programming"}</script>
+    <meta name="description" content="A course that is not concerned with MATLAB, great.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="System Software PART I">
+<meta property="og:url" content="https://redbowtie.github.io/2022/03/23/SystemSoftware_I/index.html">
+<meta property="og:site_name" content="Amaurot Ch.">
+<meta property="og:description" content="A course that is not concerned with MATLAB, great.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-03-23T10:32:00.000Z">
+<meta property="article:modified_time" content="2023-06-28T14:07:03.346Z">
+<meta property="article:author" content="Estus">
+<meta property="article:tag" content="System">
+<meta property="article:tag" content="C">
+<meta property="article:tag" content="Programming">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://redbowtie.github.io/assets/images/Ess/lh.png"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-4a47lwukh8khnoqxgkjhofoety2rdykli5sq4vv9v7xmmtg07euhkbfahoe5.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/"
+            aria-label=""
+        >
+            Amaurot Ch.
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+            <img class="header-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a
+                    href="/#about"
+                    aria-label="Read more about the author"
+                >
+                    <img class="sidebar-profile-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Estus</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>Fun things <del>never</del> always stops.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/RedBowtie"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/atom.xml"
+                            
+                            rel="noopener"
+                            title="RSS"
+                        >
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/links"
+                            
+                            rel="noopener"
+                            title="Links"
+                        >
+                        <i class="sidebar-button-icon fa fa-sign" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Links</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            System Software PART I
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2022-03-23T18:32:00+08:00">
+	
+		    Mar 23, 2022
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Term6/">Term6</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>A course that is not concerned with MATLAB, great.<span id="more"></span></p>
+<hr>
+<h1 id="table-of-contents">Table of Contents</h1><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Lec-1-Programming-in-C-language"><span class="toc-text">Lec 1. Programming in C language</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Course-structure"><span class="toc-text">Course structure</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#System-software"><span class="toc-text">System software</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Multithreaded-programming"><span class="toc-text">Multithreaded programming</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction-of-Linux-an-C"><span class="toc-text">Introduction of Linux an C</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Kinds-of-Typing-and-examples"><span class="toc-text">Kinds of Typing and examples</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lec-2-As-above"><span class="toc-text">Lec 2. As above</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lec-3-Posix"><span class="toc-text">Lec 3. Posix</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Pros-and-Cons-of-Multithreading"><span class="toc-text">Pros and Cons of Multithreading</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Cost-of-Multithreading"><span class="toc-text">Cost of Multithreading</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Threading-models"><span class="toc-text">Threading models</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Kernel-level-threading"><span class="toc-text">Kernel-level threading</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#User-level-threading"><span class="toc-text">User-level threading</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hybrid-threading"><span class="toc-text">Hybrid threading</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Coroutines-and-Fibers"><span class="toc-text">Coroutines and Fibers</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Threading-Patterns"><span class="toc-text">Threading Patterns</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Thread-per-Connection"><span class="toc-text">Thread-per-Connection</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Event-Driven-Threading"><span class="toc-text">Event-Driven Threading</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Race-Conditions"><span class="toc-text">Race Conditions</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Synchronization"><span class="toc-text">Synchronization</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mutexes-mutually-exclusive-access"><span class="toc-text">Mutexes - mutually exclusive access</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deadlocks"><span class="toc-text">Deadlocks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Creating-threads"><span class="toc-text">Creating threads</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Terminating-Threads"><span class="toc-text">Terminating Threads</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Joining-thread"><span class="toc-text">Joining thread</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Detaching-threads"><span class="toc-text">Detaching threads</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Initializing-mutexes"><span class="toc-text">Initializing mutexes</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Locking-Unlocking-mutexes"><span class="toc-text">Locking &#x2F; Unlocking mutexes</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Conditional-variable"><span class="toc-text">Conditional variable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Wait"><span class="toc-text">Wait</span></a></li></ol></li></ol>
+<hr>
+<p>Well to be clear that I’m not meaning that MATLAB is awful, it’s just too ‘perfect’. All functions within are well encapsuled. A lack of interacting I suppose.</p>
+<h2 id="Lec-1-Programming-in-C-language"><a href="#Lec-1-Programming-in-C-language" class="headerlink" title="Lec 1. Programming in C language"></a>Lec 1. Programming in C language</h2><h2 id="Course-structure"><a href="#Course-structure" class="headerlink" title="Course structure"></a>Course structure</h2><ul>
+<li><p>the main tool for system programming – the C programming language;</p>
+</li>
+<li><p>(2) multithreaded programming with POSIX Threads;</p>
+</li>
+<li><p>(3) Linux operating system basics and shell;</p>
+</li>
+<li><p>(4) regular expression language.</p>
+</li>
+</ul>
+<p>I have to admit that after seeing this, I’m super excited. Just right about what I wanted to learn.</p>
+<h2 id="System-software"><a href="#System-software" class="headerlink" title="System software"></a>System software</h2><p>is a set of software that is a platform for the development and operation of other programs. For example, these are operating systems such as Windows, Linux, utilities (chmod, ipconfig, grep), game engines, programming tools</p>
+<p>Layers can be seen at page 3.</p>
+<h2 id="Multithreaded-programming"><a href="#Multithreaded-programming" class="headerlink" title="Multithreaded programming"></a>Multithreaded programming</h2><p>Multithreaded programming means program organization that can execute parallel operations (threads) in one process.</p>
+<h2 id="Introduction-of-Linux-an-C"><a href="#Introduction-of-Linux-an-C" class="headerlink" title="Introduction of Linux an C"></a>Introduction of Linux an C</h2><p>Just as name suggest.</p>
+<p>Some showcase of Assemly language optimization </p>
+<h2 id="Kinds-of-Typing-and-examples"><a href="#Kinds-of-Typing-and-examples" class="headerlink" title="Kinds of Typing and examples"></a>Kinds of Typing and examples</h2><p><strong>Static typing -</strong> checking the correctness of expressions occurs at the compilation stage.</p>
+<p><strong>Dynamic typing</strong> - works at run time.</p>
+<p><strong>Strong typing</strong> means that we cannot perform operations on data that could lead to run-time errors due to data inconsistency or incompatibility.</p>
+<p><strong>Weak typing</strong> allows the ability to implicitly convert data from type to type.</p>
+<p><strong>Explicit typing</strong> − we explicitly specify data types.</p>
+<p><strong>Implicit typing</strong> – the compiler itself can determine the data type from the expression.</p>
+<blockquote>
+<p>OCaml – static and strong-typed programming language</p>
+<p>float + float</p>
+<p> int + int</p>
+<p>40 + 2.0 – error</p>
+<p>Java – static and strong-typed programming language, BUT</p>
+<p>40 + 2.0 = 42.0 //compiler automatically casts 40 (integer) to 40.0 (double)</p>
+<p>Python – dynamic and strong-typed, duck-typed</p>
+<p>Duck-typing means that variables are untyped, but objects (data) are has data types.</p>
+<p>x = 1.0 + 2 #it is okay</p>
+<p>JavaScript – dynamic and weakly-typed </p>
+<p>x = ‘1’ + 1; //x has value ’11’ (string).</p>
+</blockquote>
+<p>As for grammer of the C, I think I’m pretty familiar with most of common ones, for which I’ll pass.</p>
+<p>But sometimes I gotta remember the corresponding notations in English.</p>
+<hr>
+<h2 id="Lec-2-As-above"><a href="#Lec-2-As-above" class="headerlink" title="Lec 2. As above"></a>Lec 2. As above</h2><p>Focus on </p>
+<ul>
+<li>pointers</li>
+<li>memory allocation / leakage</li>
+<li>Directives</li>
+<li>Some utilities</li>
+</ul>
+<hr>
+<h2 id="Lec-3-Posix"><a href="#Lec-3-Posix" class="headerlink" title="Lec 3. Posix"></a>Lec 3. Posix</h2><blockquote>
+<p>It’s a part of <strong>network programming.</strong></p>
+<p>Thread is a single sequential <strong>flow</strong> of control within a program</p>
+</blockquote>
+<h3 id="Pros-and-Cons-of-Multithreading"><a href="#Pros-and-Cons-of-Multithreading" class="headerlink" title="Pros and Cons of Multithreading"></a>Pros and Cons of Multithreading</h3><ul>
+<li>Pros<ul>
+<li>Programming abstraction</li>
+<li>Parallelism</li>
+<li>Improving responsiveness</li>
+<li>Blocking I/O<ul>
+<li>Multiplexed I/O</li>
+<li>Nonblocking Reads</li>
+<li>Asynchronous I/O</li>
+</ul>
+</li>
+<li>Context switching</li>
+<li>Saving memory</li>
+</ul>
+</li>
+</ul>
+<h4 id="Cost-of-Multithreading"><a href="#Cost-of-Multithreading" class="headerlink" title="Cost of Multithreading"></a>Cost of Multithreading</h4><p>Limitation of the performance growth <code>$S_p$</code> of a computing system with an increase in the number of processors <code>$p$</code></p>
+<script type="math/tex; mode=display">
+S_p=\frac{1}{\alpha+\frac{1-\alpha}{p}}</script><p>where, $S_p=Speedup$, $a=\frac{seqential}{sequential+parrallel}$,</p>
+<h3 id="Threading-models"><a href="#Threading-models" class="headerlink" title="Threading models"></a>Threading models</h3><p>There are several approaches to the implementation of multithreading in a system with varying degrees of functionality provided by the kernel in user space.</p>
+<ul>
+<li>User threads : managed without kernel support</li>
+<li>Kernel threads : managed directly by OS</li>
+<li>Relationship b/w user and kernel thread<ul>
+<li>Many-to-one model</li>
+<li>One-to-one model</li>
+<li>Many-to-many model</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li><h4 id="Kernel-level-threading"><a href="#Kernel-level-threading" class="headerlink" title="Kernel-level threading"></a>Kernel-level threading</h4><p>Simplest. One-to-one.</p>
+</li>
+<li><h4 id="User-level-threading"><a href="#User-level-threading" class="headerlink" title="User-level threading"></a>User-level threading</h4><p>Contra the first one. Many-to-one model.</p>
+</li>
+<li><h4 id="Hybrid-threading"><a href="#Hybrid-threading" class="headerlink" title="Hybrid threading"></a>Hybrid threading</h4><p>Many to many. combines preivous advantages, native threading support.</p>
+</li>
+<li><h4 id="Coroutines-and-Fibers"><a href="#Coroutines-and-Fibers" class="headerlink" title="Coroutines and Fibers"></a>Coroutines and Fibers</h4><p>They provide a unit of execution even lighter in weight than the thread.  For them scheduling and execution almost does not require user space support. They’re scheduled together, requiring only a clear transition from one to another.</p>
+<p>They’re more needed to control program execution than to execute parallelism.</p>
+</li>
+</ol>
+<h3 id="Threading-Patterns"><a href="#Threading-Patterns" class="headerlink" title="Threading Patterns"></a>Threading Patterns</h3><ul>
+<li><h4 id="Thread-per-Connection"><a href="#Thread-per-Connection" class="headerlink" title="Thread-per-Connection"></a>Thread-per-Connection</h4><p>one thread is assigned to one execution item.</p>
+<p>This thread is assigned to no more than one work item throughout all the work</p>
+</li>
+<li><h4 id="Event-Driven-Threading"><a href="#Event-Driven-Threading" class="headerlink" title="Event-Driven Threading"></a>Event-Driven Threading</h4><p>Event-driven approach can separate threads from connections, which only use threads for events on specific callbacks or handlers.</p>
+</li>
+</ul>
+<h3 id="Race-Conditions"><a href="#Race-Conditions" class="headerlink" title="Race Conditions"></a>Race Conditions</h3><p>A race condition occurs when two or more threads can access shared data and they try to change it at the same time. Because the thread scheduling algorithm can swap between threads at any time, you don’t know the order in which the threads will attempt to access the shared data. Therefore, the result of the change in data is dependent on the thread scheduling algorithm, i.e. both threads are “racing” to access/change the data.</p>
+<blockquote>
+<p>So, thread  safety needs to be ensured.</p>
+</blockquote>
+<h3 id="Synchronization"><a href="#Synchronization" class="headerlink" title="Synchronization"></a>Synchronization</h3><p>The fundamental source of races is that critical regions are a window during which correct program behavior requires that threads do not interleave execution. To prevent race conditions, then, the programmer needs to synchronize access to that window, ensuring <strong>mutually exclusive access</strong> to the critical region.</p>
+<p>In computer science, we say that an operation (or set of operations) is <strong>atomic</strong> if it is indivisible, unable to be interleaved with other operations. To the rest of the system, an atomic operation (or operations) appears to occur instantaneously. And that’s the problem with <strong>critical regions</strong>: they are not indivisible, they don’t occur instantaneously, they <strong>aren’t atomic</strong>.</p>
+<h3 id="Mutexes-mutually-exclusive-access"><a href="#Mutexes-mutually-exclusive-access" class="headerlink" title="Mutexes - mutually exclusive access"></a>Mutexes - mutually exclusive access</h3><p>Only one person (thread) can enter the room (resource) if he has a key (lock).</p>
+<p>There is only one key.  So at the same time only one thread can get the resource.</p>
+<h3 id="Deadlocks"><a href="#Deadlocks" class="headerlink" title="Deadlocks"></a>Deadlocks</h3><p>A <strong>deadlock</strong> is a situation in which two threads are waiting for each other to finish, and thus neither does. In the case of mutexes, a deadlock occurs if two threads are both waiting for a different mutex, which the other thread holds. </p>
+<blockquote>
+<p><strong>POSIX</strong> <strong>Threads</strong></p>
+<ul>
+<li><strong>pthread</strong> POSIX standard tells us how threads should work on UNIX OS</li>
+</ul>
+<p><strong>important</strong> <strong>calls</strong>:</p>
+<ul>
+<li><strong>pthread_create</strong> : Create a new thread; analogous to fork</li>
+<li><strong>pthread_exit</strong> : Terminating the calling thread. Analogous to exit , has return value</li>
+<li><strong>pthread_join</strong> : Wait for another thread to exit. Analogous to wait - the caller cannot proceed other thread exists</li>
+<li><strong>pthread_yield</strong> : Release the CPU, let another thread run.</li>
+<li><strong>pthread_attr_init</strong> : Create and initialize a thread’s attributes. Contains info like priority of thread</li>
+<li><strong>pthread_attr_destroy</strong> : Remove a thread’s attributes. Free up the memory holding the attribute info.</li>
+<li><strong>pthread_cancel</strong> : Signal cancellation to a thread. Can be asynchronous or deferred, depending on thread attributes</li>
+</ul>
+<p>The <strong>pthread</strong> API is defined in <pthread.h>. Every function in the API is prefixed by pthread_. For example, the function to create a thread is called pthread_create(). <strong>Pthread</strong> <strong>functions</strong> may be broken into two large groupings:</p>
+<p><strong>Thread management</strong></p>
+<p>Functions to create, destroy, join, and detach threads.</p>
+<p><strong>Synchronization</strong></p>
+<p>Functions to manage the synchronization of threads, including mutexes, condition variables, and barriers.</p>
+</blockquote>
+<h3 id="Creating-threads"><a href="#Creating-threads" class="headerlink" title="Creating threads"></a>Creating threads</h3><p>When your program is first run and executes the main() function, <strong>it is single threaded</strong>. Indeed, other than the compiler enabling some <strong>thread safety options</strong> and the <strong>linker linking in the Pthreads library</strong>, your process isn’t any different from any other. From this initial thread, sometimes called the <strong>default or master thread</strong>, you must create one or more additional threads to become multithreaded.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">pthread_create</span> <span class="params">(<span class="type">pthread_t</span> *thread</span></span><br><span class="line"><span class="params">                   <span class="type">const</span> <span class="type">pthread_attr_t</span> *attr,</span></span><br><span class="line"><span class="params">                   <span class="type">void</span> *(*start_routine)(<span class="type">void</span> *),</span></span><br><span class="line"><span class="params">                   <span class="type">void</span> *arg)</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="Terminating-Threads"><a href="#Terminating-Threads" class="headerlink" title="Terminating Threads"></a>Terminating Threads</h3><p>Threads may terminate under several circumstances, all of which have analogues to process termination:</p>
+<blockquote>
+<p><em>If a thread returns from its start routine, it terminates. This is akin to “falling off the end” of main().</em></p>
+<p><em>If a thread invokes the</em> <em>pthread_exit**() function (discussed subsequently), it</em> <em>terminates. This is akin to calling exit().</em></p>
+<p><em>If the thread is canceled by another thread via the</em> <em>pthread_cancel**() function, it terminates. This is akin to being sent the SIGKILL signal via kill().</em></p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Terminating the current thread</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="type">void</span> <span class="title function_">pthread_exit</span><span class="params">(<span class="type">void</span> *retval)</span>;</span><br></pre></td></tr></table></figure>
+<p>Upon invocation, the calling thread is terminated. retval is provided to any thread waiting on the terminating thread’s death, similar to exit().</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Terminating other threads</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">pthread_cancel</span> <span class="params">(<span class="type">pthread_t</span> thread)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">pthread_setcancelstate</span><span class="params">(<span class="type">int</span> state, <span class="type">int</span> *oldstate)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">pthread_setcanceltype</span><span class="params">(<span class="type">int</span> type, <span class="type">int</span> *oldtype)</span>;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>On success, pthread_ cancel() returns zero. </p>
+<p>On error, pthread_cancel() returns ESRCH, indicating that thread was invalid.</p>
+<p>Threads can change their state via pthread_set cancelstate():</p>
+<p>Threads can change their type via pthread_setcanceltype():</p>
+</blockquote>
+<h3 id="Joining-thread"><a href="#Joining-thread" class="headerlink" title="Joining thread"></a>Joining thread</h3><p><em>Joining</em> allows one thread to block while waiting for the termination of another:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="type">void</span> <span class="title function_">pthread_exit</span><span class="params">(<span class="type">void</span> *retval)</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="Detaching-threads"><a href="#Detaching-threads" class="headerlink" title="Detaching threads"></a>Detaching threads</h3><p>By default, threads are created as <em>joinable</em>. Threads may, however, <em>detach</em>, rendering them no longer joinable. Because threads consume system resources until joined, just as processes consume system resources until their parent calls wait(), threads that you do not intend to join should be detached.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="type">void</span> <span class="title function_">pthread_detach</span><span class="params">(<span class="type">pthread_t</span> thread)</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="Initializing-mutexes"><a href="#Initializing-mutexes" class="headerlink" title="Initializing mutexes"></a>Initializing mutexes</h3><p>Mutexes are represented by the pthread_mutex_t object. Like most of the objects in the Pthread API, it is meant to be an opaque structure provided to the various mutex interfaces. Although you can dynamically create mutexes, most uses are static:  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="type">pthread_mutex_t</span> mutex = PHTHREAD_MUTEX_INITIALIZER;</span><br></pre></td></tr></table></figure>
+<h3 id="Locking-Unlocking-mutexes"><a href="#Locking-Unlocking-mutexes" class="headerlink" title="Locking / Unlocking mutexes"></a>Locking / Unlocking mutexes</h3><p>Locking (also called acquiring) a Pthreads mutex is accomplished via the pthread_mutex_lock() function,</p>
+<p>The counterpart to locking is unlocking, or releasing, the mutex. </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">pthread_mutex_lock</span> <span class="params">(<span class="type">pthread_mutex_t</span> *mutex)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">pthread_mutex_unlock</span> <span class="params">(<span class="type">pthread_mutex_t</span> *mutex)</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="Conditional-variable"><a href="#Conditional-variable" class="headerlink" title="Conditional variable"></a>Conditional variable</h3><p>Synchronization mechanisms need more than just mutual exclusion; also need a way to wait for another thread to do something (e.g., wait for a character to be added to the buffer)</p>
+<blockquote>
+<p>wait(condition, lock): release lock, put thread to sleep until condition is signaled; when thread wakes up again, re-acquire lock before returning.</p>
+<p>signal(condition, lock): if any threads are waiting on condition, wake up one of them. Caller must hold lock, which must be the same as the lock used in the wait call.</p>
+<p>broadcast(condition, lock): same as signal, except wake up all waiting threads.</p>
+<p>Note: after signal, signaling thread keeps lock, waking thread goes on the queue waiting for the lock.</p>
+<p>Warning: when a thread wakes up after cond_wait there is no guarantee that the desired condition still exists: another thread might have snuck in.</p>
+</blockquote>
+<h3 id="Wait"><a href="#Wait" class="headerlink" title="Wait"></a>Wait</h3><p>The <code>pthread_cond_wait()</code> routine always returns with the mutex locked and owned by the calling thread, even when returning an error.</p>
+<p>This function blocks until the condition is signaled. It atomically releases the associated mutex lock before blocking, and atomically acquires it again before returning.</p>
+<hr>
+<p>Some additional discovery about usage of <code>*</code> in terminal if under <code>zsh</code> </p>
+<p>Follow error will be displayed by default when <code>*</code> is used to match files or some others.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ clang-tidy: No match -checks=-*,clang-analyzer-*,-clang-analyzer-cplusplus*</span><br></pre></td></tr></table></figure>
+<p>It’s actually a limitation in <code>zsh</code>, which could save you in case you just typed  <code>rm *</code> . Surely that is dangerous.</p>
+<p>And please, remember that <code>exit</code> works for the whole program, don’t use it in the <code>signal_handler</code> for certain thread. </p>
+<hr>
+<blockquote>
+<p>[Thu Apr 7 2022, 22:54] Some toolchain support</p>
+<p>i clang-format</p>
+<p>i fmenezes/tap/clang-tidy</p>
+</blockquote>
+
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/C/" rel="tag">C</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Programming/" rel="tag">Programming</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/System/" rel="tag">System</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/03/23/ComputerVision_I/"
+                    data-tooltip="Computer Vision PART I"
+                    aria-label="PREVIOUS: Computer Vision PART I"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/03/21/MathofSysT_II/"
+                    data-tooltip="Mathematical Basics of the System Theory PART II"
+                    aria-label="NEXT: Mathematical Basics of the System Theory PART II"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="Table of Contents">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2023 Estus. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/03/23/ComputerVision_I/"
+                    data-tooltip="Computer Vision PART I"
+                    aria-label="PREVIOUS: Computer Vision PART I"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/03/21/MathofSysT_II/"
+                    data-tooltip="Mathematical Basics of the System Theory PART II"
+                    aria-label="NEXT: Mathematical Basics of the System Theory PART II"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="Table of Contents">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Estus</h4>
+        
+            <div id="about-card-bio"><p>Fun things <del>never</del> always stops.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Student</p>
+
+            </div>
+        
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/Ess/0_t.png');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-yb3zostooymjozqpjlvijhvzw0bdaljwvcvx0fhqdpyvq6aviyzwgfjkfjkw.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

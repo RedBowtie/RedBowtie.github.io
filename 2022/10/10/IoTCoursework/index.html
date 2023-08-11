@@ -1,0 +1,572 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Amaurot Ch.">
+    <title>A weird IoT coursework, document for code - Amaurot Ch.</title>
+    <meta name="author" content="Estus">
+    
+    
+        <link rel="icon" href="https://upload.cc/i1/2021/05/18/lSCp1v.png">
+    
+    
+        
+            <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png"},"articleBody":"It sucks. (Not IoT, but the instructor and the company) \nSo, this is kinda like the document of that IoT project, but just don’t have too much expectation on this article.\n\nI. Env and toolsEnv:\nLinux (should be OK with most of distributions)\nWINDOWS (optinal, because my instance of IoT application is forced to use a simulation app)\n\nPackages:\npaho.mqtt.c-1.3.0\ngcc\narbitrary text editor or IDE\nI forget the rest, but if the compile goes wrong, google it then install the corresponding package works fine\n\nPreparation\nCannot remember anything that is important.\nmaybe open the simulation sofware and the project file to make it easier for test part\n\n\nII. Configuration\nOpen editor and goto smartHome.conf Change the uri (and maybe as well as port) term into the correspoding ip address where the mqtt server holds.\n 1234[mqtt]uri=tcp://192.168.114.107:1883[server]port=8888\n\nAs I used virtual platform, so the whole thing runs locally. It should work fine with regular network, but the proper configuration of the firewall settings is required, otherwise the connection will be refused.\n\n\nIn mqtt.c Change the following terms in preprocessing derivatives\n\nADDRESS\nMQTT_SUB_TOPIC12#define ADDRESS &quot;tcp://192.168.114.107:1883&quot;#define MQTT_SUB_TOPIC &quot;1663401252952/AIOTSIM2APP&quot;\n\n\n\nIn main.c Change the following terms in preprocessing derivatives\n\nCTRL_PUB_TOPIC\nSUB_TOPIC  12#define CTRL_PUB_TOPIC &quot;1663401252952/APP2AIOTSIM&quot;#define SUB_TOPIC &quot;1663401252952/AIOTSIM2APP&quot;\n\n\n\n\nThis should be the least change to make the code running.\n\nIII. Compile and runTo compile the files\n1$ make\nRun the executable\n1$ ./smart_home\n\nIV.  CustomizationSome comments\nEstabilish Connection In main.c mqtt funcions are called to connect to the server and subscribe the topic. \nThe process is mainly done with official means, while in Callback function, the original  publication topic is set to default, and is not used since. Thus I highly doubt this is the right way.\n\n\nData Collection The time interval can be changed as you like, however, the shorter the interval, the more likely some value cannot be updated.\n\nIt should be noted that due to some issue, the shorter the interval is, the more likely you’re going to miss data from the very beginning.\n\n  In mqtt.c, when the function get_virtual_env() is not called, every(most) JSON msg will be captured, and then handled separately with many IFs to store the value into corresponding term in a dedicate structure. The value handling for number types is simple, however  if string (char array) is involved, it should be consider whether the comparison should be handled instantly, or assign new memory for it.As both comparison are fulltext, thus the time complexity are both O(N) to either assign and copy the string content, or make a instant comparison. The latter only need to store a single digit to represent the result. And remember to deal with fallback situations, especially for certain kind of msg that will not constantly update its value.\n\n\nData Handling After the data is retrieved into main, again accessing the elements one by one to decide corresponding measures, again here, the command can be also preset in preprocessing derivatives for a straight forward code reading experience.\n Due to the need of showing status and detailed problem, there should be flags to indicate the condition of each sensor values, however, that will be a lot more extra code, so I use a single variable to store the status in sum of powers of 2. To me this is clearer.\n\nReport I think there’s no need for explaination on this on.\n\n\nModification suggestions\nChange Structure definition in mqtt.h.\nAdd Data handdling in transfer_virtual_data()\nAdd preset behavior in main.c\nChange conditions and exception handling in main()\nFix bad posix Don’t waste time on it\n\n","dateCreated":"2022-10-10T20:32:00+08:00","dateModified":"2022-10-10T09:10:08+08:00","datePublished":"2022-10-10T20:32:00+08:00","description":"It sucks. (Not IoT, but the instructor and the company)","headline":"A weird IoT coursework, document for code","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://redbowtie.github.io/2022/10/10/IoTCoursework/"},"publisher":{"@type":"Organization","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png","logo":{"@type":"ImageObject","url":"/Ess/lh.png"}},"url":"https://redbowtie.github.io/2022/10/10/IoTCoursework/","keywords":"IoT, C"}</script>
+    <meta name="description" content="It sucks. (Not IoT, but the instructor and the company)">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="A weird IoT coursework, document for code">
+<meta property="og:url" content="https://redbowtie.github.io/2022/10/10/IoTCoursework/index.html">
+<meta property="og:site_name" content="Amaurot Ch.">
+<meta property="og:description" content="It sucks. (Not IoT, but the instructor and the company)">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-10-10T12:32:00.000Z">
+<meta property="article:modified_time" content="2022-10-10T01:10:08.544Z">
+<meta property="article:author" content="Estus">
+<meta property="article:tag" content="IoT">
+<meta property="article:tag" content="C">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://redbowtie.github.io/assets/images/Ess/lh.png"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-4a47lwukh8khnoqxgkjhofoety2rdykli5sq4vv9v7xmmtg07euhkbfahoe5.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/"
+            aria-label=""
+        >
+            Amaurot Ch.
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+            <img class="header-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a
+                    href="/#about"
+                    aria-label="Read more about the author"
+                >
+                    <img class="sidebar-profile-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Estus</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>Fun things <del>never</del> always stops.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/RedBowtie"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/atom.xml"
+                            
+                            rel="noopener"
+                            title="RSS"
+                        >
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/links"
+                            
+                            rel="noopener"
+                            title="Links"
+                        >
+                        <i class="sidebar-button-icon fa fa-sign" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Links</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            A weird IoT coursework, document for code
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2022-10-10T20:32:00+08:00">
+	
+		    Oct 10, 2022
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Term7/">Term7</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>It sucks. (Not IoT, but the instructor and the company) <span id="more"></span></p>
+<p>So, this is kinda like the document of that <a target="_blank" rel="noopener" href="https://github.com/RedBowtie/iot_prj_0">IoT project</a>, but just don’t have too much expectation on this article.</p>
+<hr>
+<h2 id="I-Env-and-tools"><a href="#I-Env-and-tools" class="headerlink" title="I. Env and tools"></a>I. Env and tools</h2><h4 id="Env"><a href="#Env" class="headerlink" title="Env:"></a>Env:</h4><ul>
+<li>Linux (should be OK with most of distributions)</li>
+<li>WINDOWS (optinal, because my instance of IoT application is forced to use a simulation app)</li>
+</ul>
+<h4 id="Packages"><a href="#Packages" class="headerlink" title="Packages:"></a>Packages:</h4><ul>
+<li>paho.mqtt.c-1.3.0</li>
+<li>gcc</li>
+<li>arbitrary text editor or IDE</li>
+<li><del>I forget the rest, but if the compile goes wrong, google it then install the corresponding package works fine</del></li>
+</ul>
+<h4 id="Preparation"><a href="#Preparation" class="headerlink" title="Preparation"></a>Preparation</h4><ul>
+<li>Cannot remember anything that is important.</li>
+<li>maybe open the simulation sofware and the project file to make it easier for test part</li>
+</ul>
+<hr>
+<h2 id="II-Configuration"><a href="#II-Configuration" class="headerlink" title="II. Configuration"></a>II. Configuration</h2><ol>
+<li><h4 id="Open-editor-and-goto-smartHome-conf"><a href="#Open-editor-and-goto-smartHome-conf" class="headerlink" title="Open editor and goto smartHome.conf"></a>Open editor and goto <code>smartHome.conf</code></h4><p> Change the <code>uri</code> (and maybe as well as <code>port</code>) term into the correspoding <code>ip address</code> where the mqtt server holds.</p>
+ <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">[</span>mqtt<span class="punctuation">]</span></span><br><span class="line">uri=tcp<span class="punctuation">:</span><span class="comment">//192.168.114.107:1883</span></span><br><span class="line"><span class="punctuation">[</span>server<span class="punctuation">]</span></span><br><span class="line">port=<span class="number">8888</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>As I used virtual platform, so the whole thing runs locally. It <strong>should</strong> work fine with regular network, but the <strong>proper configuration of the firewall</strong> settings is required, otherwise the connection will be refused.</p>
+</blockquote>
+</li>
+<li><h4 id="In-mqtt-c"><a href="#In-mqtt-c" class="headerlink" title="In mqtt.c"></a>In <code>mqtt.c</code></h4><p> Change the following terms in <code>preprocessing derivatives</code></p>
+<ul>
+<li><code>ADDRESS</code></li>
+<li><code>MQTT_SUB_TOPIC</code><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> ADDRESS <span class="string">&quot;tcp://192.168.114.107:1883&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MQTT_SUB_TOPIC <span class="string">&quot;1663401252952/AIOTSIM2APP&quot;</span></span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><h4 id="In-main-c"><a href="#In-main-c" class="headerlink" title="In main.c"></a>In <code>main.c</code></h4><p> Change the following terms in <code>preprocessing derivatives</code></p>
+<ul>
+<li><code>CTRL_PUB_TOPIC</code></li>
+<li><code>SUB_TOPIC</code>  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> CTRL_PUB_TOPIC <span class="string">&quot;1663401252952/APP2AIOTSIM&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SUB_TOPIC <span class="string">&quot;1663401252952/AIOTSIM2APP&quot;</span></span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+<p>This should be the <strong>least change</strong> to make the code running.</p>
+<hr>
+<h2 id="III-Compile-and-run"><a href="#III-Compile-and-run" class="headerlink" title="III. Compile and run"></a>III. Compile and run</h2><p>To compile the files</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">make</span></span><br></pre></td></tr></table></figure>
+<p>Run the executable</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">./smart_home</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="IV-Customization"><a href="#IV-Customization" class="headerlink" title="IV.  Customization"></a>IV.  Customization</h2><h2 id="Some-comments"><a href="#Some-comments" class="headerlink" title="Some comments"></a>Some comments</h2><ol>
+<li><h4 id="Estabilish-Connection"><a href="#Estabilish-Connection" class="headerlink" title="Estabilish Connection"></a>Estabilish Connection</h4> In <code>main.c</code> mqtt funcions are called to <strong>connect to the server</strong> and <strong>subscribe the topic</strong>. <blockquote>
+<p>The process is mainly done with official means, while in <code>Callback</code> function, the original <code> publication topic</code> is set to default, and is not used since. Thus I highly doubt this is the right way.<br><br></p>
+</blockquote>
+</li>
+<li><h4 id="Data-Collection"><a href="#Data-Collection" class="headerlink" title="Data Collection"></a>Data Collection</h4><p> The time interval can be changed as you like, however, the shorter the interval, the more likely some value cannot be updated.</p>
+<blockquote>
+<p>It should be noted that due to some <a target="_blank" rel="noopener" href="https://github.com/RedBowtie/iot_prj_0/issues?q=is%3Aissue+is%3Aclosed">issue</a>, the shorter the interval is, the more likely you’re going to miss data from the very beginning.</p>
+</blockquote>
+<p> <br><br> In <code>mqtt.c</code>, when the function <code>get_virtual_env()</code> is not called, every(most) <code>JSON</code> msg will be captured, and then handled separately with many IFs to store the value into corresponding term in a <strong>dedicate structure</strong>.<br> <div class="alert warning no-icon"><p>The value handling for number types is simple, however  if string (char array) is involved, it should be consider whether the comparison should be handled instantly, or assign new memory for it.<br><br><br>As both comparison are <strong>fulltext</strong>, thus the time complexity are both <code>O(N)</code> to either <strong>assign and copy the string</strong> content, or make a <strong>instant comparison</strong>. The latter only need to store a single digit to represent the result. And remember to deal with <em>fallback situations</em>, especially for certain kind of msg that will not constantly update its value.</p>
+</div><br></p>
+</li>
+<li><h4 id="Data-Handling"><a href="#Data-Handling" class="headerlink" title="Data Handling"></a>Data Handling</h4><p> After the data is retrieved into <code>main</code>, again accessing the elements one by one to decide corresponding measures, again here, the command can be also preset in preprocessing derivatives for a straight forward code reading experience.</p>
+<p> Due to the need of showing status and detailed problem, there should be flags to indicate the condition of each sensor values, however, that will be a lot more extra code, so I use a single variable to store the status in sum of powers of 2. To me this is clearer.</p>
+</li>
+<li><h3 id="Report"><a href="#Report" class="headerlink" title="Report"></a>Report</h3><p> I think there’s no need for explaination on this on.</p>
+</li>
+</ol>
+<h3 id="Modification-suggestions"><a href="#Modification-suggestions" class="headerlink" title="Modification suggestions"></a>Modification suggestions</h3><ol>
+<li><h4 id="Change-Structure-definition-in-mqtt-h"><a href="#Change-Structure-definition-in-mqtt-h" class="headerlink" title="Change Structure definition in mqtt.h."></a>Change Structure definition in <code>mqtt.h</code>.</h4></li>
+<li><h4 id="Add-Data-handdling-in-transfer-virtual-data"><a href="#Add-Data-handdling-in-transfer-virtual-data" class="headerlink" title="Add Data handdling in transfer_virtual_data()"></a>Add Data handdling in <code>transfer_virtual_data()</code></h4></li>
+<li><h4 id="Add-preset-behavior-in-main-c"><a href="#Add-preset-behavior-in-main-c" class="headerlink" title="Add preset behavior in main.c"></a>Add preset behavior in <code>main.c</code></h4></li>
+<li><h4 id="Change-conditions-and-exception-handling-in-main"><a href="#Change-conditions-and-exception-handling-in-main" class="headerlink" title="Change conditions and exception handling in main()"></a>Change conditions and exception handling in <code>main()</code></h4></li>
+<li><h4 id="Fix-bad-posix-Don’t-waste-time-on-it"><a href="#Fix-bad-posix-Don’t-waste-time-on-it" class="headerlink" title="Fix bad posix Don’t waste time on it"></a><del>Fix bad posix</del> Don’t waste time on it</h4></li>
+</ol>
+
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/C/" rel="tag">C</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/IoT/" rel="tag">IoT</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2023/03/16/PaperWriting/"
+                    data-tooltip="Tips on Paper Writing"
+                    aria-label="PREVIOUS: Tips on Paper Writing"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/09/28/DiscreteCtrl/"
+                    data-tooltip="Discrete Control - Practical assignments"
+                    aria-label="NEXT: Discrete Control - Practical assignments"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2023 Estus. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2023/03/16/PaperWriting/"
+                    data-tooltip="Tips on Paper Writing"
+                    aria-label="PREVIOUS: Tips on Paper Writing"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/09/28/DiscreteCtrl/"
+                    data-tooltip="Discrete Control - Practical assignments"
+                    aria-label="NEXT: Discrete Control - Practical assignments"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Estus</h4>
+        
+            <div id="about-card-bio"><p>Fun things <del>never</del> always stops.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Student</p>
+
+            </div>
+        
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/Ess/0_t.png');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-yb3zostooymjozqpjlvijhvzw0bdaljwvcvx0fhqdpyvq6aviyzwgfjkfjkw.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

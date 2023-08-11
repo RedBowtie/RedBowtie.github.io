@@ -1,0 +1,688 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Amaurot Ch.">
+    <title>Dynamic Systems Simulation PART I - Amaurot Ch.</title>
+    <meta name="author" content="Estus">
+    
+    
+        <link rel="icon" href="https://upload.cc/i1/2021/05/18/lSCp1v.png">
+    
+    
+        
+            <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png"},"articleBody":"This course really goes like a train.\nLec 1&amp;2: Mathemetical modelsWent through the course plan quickly, surely a lot of topics, a lot of labs, and 3 tests.\nMathematical modelling definitionsMathematical modelling is\n\nis the act of building a model.\n\na process in which real-life situations and relations in these\nsituations are expressed by using mathematics. (Haines and\nCrouch, 2007)\n\nthe art of translating problems from an application area into\ntractable mathematical formulations whose theoretical and numerical analysis provides insight, answers, and guidance useful for the originating application. (A. Neumaier, 2004)\n\na cyclical process in which real-life problems are translated into mathematical language, solved within a symbolic system, and the solutions tested back within the real-life system. (Verschaffel, Greer, and De Corte, 2002)\n\n\nMathematical model\n\na representation in mathematical terms of the behavior of real devices and objects. (What Is Mathematical Modeling? by Clive L. Dym)\na description of a system using mathematical concepts and language to facilitate proper explanation of a system or to study the effects of different components and to make predictions on patterns of behaviour. (Abramowitz and Stegun, 1968)\n\nThe real systems are too complicated. Model shoud be simple as possible, but not simpler. And which can be used to predict the behaviour of the real system.\nSimulationSimulating is the act of using a model for a simulation.\nMajor steps\n\n\nFormulate problem and model.\nConstruct system model.\nConduct simulation experiments.\nInterpret results.\nDocument study.\nImplement conclusions.\nX. Validate model.\n\n\n\nTypes of methematical modelsModels can be divided to three types by used information about real objects or processes, according to adversary’s knowledge\n• White-box • Black-box • Grey-box\nBlack boxSystem which are modelled entirely based on experimental data (input-output measurements) are called black-box models. The user can observe the response (output) of the model for a certain stimulus (input) but has no information about the internal mechanism (principles).\nGray-boxMost of the time, it’s better to benefit from the advantages of both methods. In this case we’ll end up with gray-box models.\nSimplification examples2:\n\nNon-linear parameters or processes are often approximated by\nlinear ones.\n\nAreas of physical detail are often simplified by averaging the localised properties.\n\nContact between one part of a model and another is sometimes considered perfect.\n\n\nModel Classification • Linear vs Nonlinear • Static vs Dynamic • Time-invariant vs Time-variant • Discrete vs continuous • Explicit vs Implicit • Deterministic vs Probabilistic (stochastic). • etc.\nLinear &amp; NonlinearA linear mathematical model is governed by linear differential equations. A linear model is a model for which the superposition principle can be applied (Additivity and Homogeneity properties).\n\ny(\\alpha u_1+\\beta u_2)=\\alpha y(u_1)+\\beta y(u_2)As for nonlinear, ones for which the principle of superposition does not apply.\nStatic &amp; Dynamic• Static models are not affected with time, only reply on present input.\n• Dynamic models are affected with time\nTime-invariant &amp; Time-variant• Time-invariant — the behaviour does not depends on time. If y(t) is a output for u(t), then y(t −τ) is a output for u(t −τ)\n• Time-variant — output response depends on moment of observation as well as moment of input signal application.\nDiscrete &amp; Continuous• Discrete system is affected by the state variable changes at a discrete point of time.\n• Continuous system is affected by the state variable, which changes continuously as a function with time.\nClassification by samplingSee page 24, very direct.\n\nLec 3&amp;4: Linear modelsLinear time-invariant system (LTI)As the name suggest, any linear time-invariant (LTI) system has two defining properties: linearity and time invariance.\nLinearityIf input u1(t) produces response y1(t), input u2(t) produces response y2(t), …,and uk(t) produces response yk(t), then input $\\sum_k c_ku_k(t)$ produces response $\\sum_k c_ky_k(t),\\ c_1,c_2,\\dots,c_k$ Are real scalars.\nTime invarianceIf input u(t) produces response y(t), then input u(t − τ) produces response y (t − τ ), where τ is a time delay.\nN-order differential equationsLinear dynamical models of continuous-time system could be given as n-order differential equations (DE) :\n\ny^{(n)}(t)+a_{n-1}y^{n-1}(t)+\\dots+a_2\\ddot{y}(t)+a_1\\dot{y}(t)+a_0y(t)=\\\\\n=b_mu^{(m)}(t)+b_{m-1}u^{(m-1)}(t)+\\dots+b_2\\ddot{u}(t)+b_1\\dot{u}(t)+b_0u(t)Causality condition for DEThe LTI system is called causal, if $n\\ge m$\nDifferential operator and Characteristic equationSome operator form, and characteristic equation, whoose roots determine a behavior of the system.\nThat can be demonstrate by a phase portrait.\nBehaviour of the second-order LTI systemA phase portrait is a representative set of LTI system‘s solutions, plotted as parametric curves (with t as the parameter) on the Cartesian plane tracing the path of each particular solution ((x,y) = (y(t),y ̇(t)), −∞ &lt; t &lt; ∞.\nThe Cartesian plane where the phase portrait resides is called the phase plane.\nThe parametric curves traced by the solutions for specific initial conditions are called phase trajectories.\nSecond order LTI systemMainly the classification for different root conditions. Just like old courses or what learn from Dr.Can’s Ch.\n\nRoots are all real and negative - Stable\n\nRoots are all real and positive - Unstable\n\nBoth real and is positive and negative respectively - Saddle\n\nBoth complex and $Re(\\lambda_1,\\lambda_2)&lt;0$ - Stable focus \n\nBoth complex and $Re(\\lambda_1,\\lambda_2)&gt;0$ - Unstable focus \n\nBoth complex and $Re(\\lambda_1,\\lambda_2)=0$ - Center \n\n\nFollowed by Laplace transformation and transfer function, which should be very familiar with.\nControl SystemFeedback control (closed-loop) enables to achieve new parameters of the system.\nThe modal control is based on this idea. The input signal is set as\n\nu(t)=-\\bold{K}x(t)where K is k × n matrix of feed-back gain coefficients.\nThus the augmented system is described in State-Space representation as\n\n\\dot{x}(t)=Ax(t)-BKx(t)\\\\\n=(A-BK)x(t)Here F is a n × n matrix that describe augmented closed-loop system.\nLec 4&amp;5: Nonlinear systemsDefinition 1.The equilibrium point x = 0 of $\\dot{x} = f(x)$ is\n\nstable if for each $\\epsilon&gt;0$ There is $\\delta&gt;0$ (dependent on $\\epsilon$ ) such that\n\n||x(0)||","dateCreated":"2022-03-21T18:32:00+08:00","dateModified":"2022-04-15T18:42:57+08:00","datePublished":"2022-03-21T18:32:00+08:00","description":"This course really goes like a train.","headline":"Dynamic Systems Simulation PART I","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://redbowtie.github.io/2022/03/21/DSS_1/"},"publisher":{"@type":"Organization","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png","logo":{"@type":"ImageObject","url":"/Ess/lh.png"}},"url":"https://redbowtie.github.io/2022/03/21/DSS_1/","keywords":"Control, System, Simulation"}</script>
+    <meta name="description" content="This course really goes like a train.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Dynamic Systems Simulation PART I">
+<meta property="og:url" content="https://redbowtie.github.io/2022/03/21/DSS_1/index.html">
+<meta property="og:site_name" content="Amaurot Ch.">
+<meta property="og:description" content="This course really goes like a train.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-03-21T10:32:00.000Z">
+<meta property="article:modified_time" content="2022-04-15T10:42:57.106Z">
+<meta property="article:author" content="Estus">
+<meta property="article:tag" content="Control">
+<meta property="article:tag" content="System">
+<meta property="article:tag" content="Simulation">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://redbowtie.github.io/assets/images/Ess/lh.png"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-4a47lwukh8khnoqxgkjhofoety2rdykli5sq4vv9v7xmmtg07euhkbfahoe5.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/"
+            aria-label=""
+        >
+            Amaurot Ch.
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+            <img class="header-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a
+                    href="/#about"
+                    aria-label="Read more about the author"
+                >
+                    <img class="sidebar-profile-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Estus</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>Fun things <del>never</del> always stops.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/RedBowtie"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/atom.xml"
+                            
+                            rel="noopener"
+                            title="RSS"
+                        >
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/links"
+                            
+                            rel="noopener"
+                            title="Links"
+                        >
+                        <i class="sidebar-button-icon fa fa-sign" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Links</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            Dynamic Systems Simulation PART I
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2022-03-21T18:32:00+08:00">
+	
+		    Mar 21, 2022
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Term6/">Term6</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>This course really goes like a train.<span id="more"></span></p>
+<h2 id="Lec-1-amp-2-Mathemetical-models"><a href="#Lec-1-amp-2-Mathemetical-models" class="headerlink" title="Lec 1&amp;2: Mathemetical models"></a>Lec 1&amp;2: Mathemetical models</h2><p>Went through the course plan quickly, surely a lot of topics, a lot of labs, and 3 tests.</p>
+<h3 id="Mathematical-modelling-definitions"><a href="#Mathematical-modelling-definitions" class="headerlink" title="Mathematical modelling definitions"></a>Mathematical modelling definitions</h3><p><strong>Mathematical modelling</strong> is</p>
+<ul>
+<li><p>is the act of building a model.</p>
+</li>
+<li><p>a process in which real-life situations and relations in these</p>
+<p>situations are expressed by using mathematics. (Haines and</p>
+<p>Crouch, 2007)</p>
+</li>
+<li><p>the art of translating problems from an application area into</p>
+<p>tractable mathematical formulations whose theoretical and numerical analysis provides insight, answers, and guidance useful for the originating application. (A. Neumaier, 2004)</p>
+</li>
+<li><p>a cyclical process in which real-life problems are translated into mathematical language, solved within a symbolic system, and the solutions tested back within the real-life system. (Verschaffel, Greer, and De Corte, 2002)</p>
+</li>
+</ul>
+<p><strong>Mathematical model</strong></p>
+<ul>
+<li>a representation in mathematical terms of the behavior of real devices and objects. (What Is Mathematical Modeling? by Clive L. Dym)</li>
+<li>a description of a system using mathematical concepts and language to facilitate proper explanation of a system or to study the effects of different components and to make predictions on patterns of behaviour. (Abramowitz and Stegun, 1968)</li>
+</ul>
+<p>The real systems are too complicated. <strong>Model shoud be simple as possible, but not simpler</strong>. And which can be used to predict the behaviour of the real system.</p>
+<h3 id="Simulation"><a href="#Simulation" class="headerlink" title="Simulation"></a>Simulation</h3><p>Simulating is the act of using a model for a simulation.</p>
+<p>Major steps</p>
+<blockquote>
+<ol>
+<li>Formulate problem and model.</li>
+<li>Construct system model.</li>
+<li>Conduct simulation experiments.</li>
+<li>Interpret results.</li>
+<li>Document study.</li>
+<li><p>Implement conclusions.</p>
+<p>X. Validate model.</p>
+</li>
+</ol>
+</blockquote>
+<h3 id="Types-of-methematical-models"><a href="#Types-of-methematical-models" class="headerlink" title="Types of methematical models"></a>Types of methematical models</h3><p>Models can be divided to three types by used information about real objects or processes, according to adversary’s knowledge</p>
+<p>• White-box • Black-box • Grey-box</p>
+<h4 id="Black-box"><a href="#Black-box" class="headerlink" title="Black box"></a>Black box</h4><p>System which are modelled entirely based on experimental data (input-output measurements) are called black-box models. The user can observe the response (output) of the model for a certain stimulus (input) but has no information about the internal mechanism (principles).</p>
+<h4 id="Gray-box"><a href="#Gray-box" class="headerlink" title="Gray-box"></a>Gray-box</h4><p>Most of the time, it’s better to benefit from the advantages of both methods. In this case we’ll end up with gray-box models.</p>
+<p>Simplification examples2:</p>
+<ul>
+<li><p>Non-linear parameters or processes are often approximated by</p>
+<p>linear ones.</p>
+</li>
+<li><p>Areas of physical detail are often simplified by averaging the localised properties.</p>
+</li>
+<li><p>Contact between one part of a model and another is sometimes considered perfect.</p>
+</li>
+</ul>
+<h3 id="Model-Classification"><a href="#Model-Classification" class="headerlink" title="Model Classification"></a>Model Classification</h3><p> • Linear vs Nonlinear<br> • Static vs Dynamic<br> • Time-invariant vs Time-variant<br> • Discrete vs continuous<br> • Explicit vs Implicit<br> • Deterministic vs Probabilistic (stochastic). • etc.</p>
+<h4 id="Linear-amp-Nonlinear"><a href="#Linear-amp-Nonlinear" class="headerlink" title="Linear &amp; Nonlinear"></a>Linear &amp; Nonlinear</h4><p>A linear mathematical model is governed by linear differential equations. A linear model is a model for which the superposition principle can be applied (Additivity and Homogeneity properties).</p>
+<script type="math/tex; mode=display">
+y(\alpha u_1+\beta u_2)=\alpha y(u_1)+\beta y(u_2)</script><p>As for nonlinear, ones for which the principle of superposition does not apply.</p>
+<h4 id="Static-amp-Dynamic"><a href="#Static-amp-Dynamic" class="headerlink" title="Static &amp; Dynamic"></a>Static &amp; Dynamic</h4><p>• Static models are not affected with time, only reply on present input.</p>
+<p>• Dynamic models are affected with time</p>
+<h4 id="Time-invariant-amp-Time-variant"><a href="#Time-invariant-amp-Time-variant" class="headerlink" title="Time-invariant &amp; Time-variant"></a>Time-invariant &amp; Time-variant</h4><p>• Time-invariant — the behaviour does not depends on time. If y(t) is a output for u(t), then y(t −τ) is a output for u(t −τ)</p>
+<p>• Time-variant — output response depends on moment of observation as well as moment of input signal application.</p>
+<h4 id="Discrete-amp-Continuous"><a href="#Discrete-amp-Continuous" class="headerlink" title="Discrete &amp; Continuous"></a>Discrete &amp; Continuous</h4><p>• Discrete system is affected by the state variable changes at a discrete point of time.</p>
+<p>• Continuous system is affected by the state variable, which changes continuously as a function with time.</p>
+<h4 id="Classification-by-sampling"><a href="#Classification-by-sampling" class="headerlink" title="Classification by sampling"></a>Classification by sampling</h4><p>See page 24, very direct.</p>
+<hr>
+<h2 id="Lec-3-amp-4-Linear-models"><a href="#Lec-3-amp-4-Linear-models" class="headerlink" title="Lec 3&amp;4: Linear models"></a>Lec 3&amp;4: Linear models</h2><h3 id="Linear-time-invariant-system-LTI"><a href="#Linear-time-invariant-system-LTI" class="headerlink" title="Linear time-invariant system (LTI)"></a>Linear time-invariant system (LTI)</h3><p>As the name suggest, any linear time-invariant (LTI) system has two defining properties: <strong>linearity and time invariance.</strong></p>
+<h4 id="Linearity"><a href="#Linearity" class="headerlink" title="Linearity"></a>Linearity</h4><p>If input u1(t) produces response y1(t), input u2(t) produces response y2(t), …,and uk(t) produces response yk(t), then input $\sum_k c_ku_k(t)$ produces response $\sum_k c_ky_k(t),\ c_1,c_2,\dots,c_k$ Are real scalars.</p>
+<h4 id="Time-invariance"><a href="#Time-invariance" class="headerlink" title="Time invariance"></a>Time invariance</h4><p>If input u(t) produces response y(t), then input u(t − τ) produces response y (t − τ ), where τ is a time delay.</p>
+<h3 id="N-order-differential-equations"><a href="#N-order-differential-equations" class="headerlink" title="N-order differential equations"></a>N-order differential equations</h3><p>Linear dynamical models of continuous-time system could be given as n-order differential equations (DE) :</p>
+<script type="math/tex; mode=display">
+y^{(n)}(t)+a_{n-1}y^{n-1}(t)+\dots+a_2\ddot{y}(t)+a_1\dot{y}(t)+a_0y(t)=\\
+=b_mu^{(m)}(t)+b_{m-1}u^{(m-1)}(t)+\dots+b_2\ddot{u}(t)+b_1\dot{u}(t)+b_0u(t)</script><h4 id="Causality-condition-for-DE"><a href="#Causality-condition-for-DE" class="headerlink" title="Causality condition for DE"></a>Causality condition for DE</h4><p>The LTI system is called <strong>causal</strong>, if $n\ge m$</p>
+<h3 id="Differential-operator-and-Characteristic-equation"><a href="#Differential-operator-and-Characteristic-equation" class="headerlink" title="Differential operator and Characteristic equation"></a>Differential operator and Characteristic equation</h3><p>Some <strong>operator form</strong>, and characteristic equation, whoose <strong>roots</strong> determine a behavior of the system.</p>
+<p>That can be demonstrate by a phase portrait.</p>
+<h3 id="Behaviour-of-the-second-order-LTI-system"><a href="#Behaviour-of-the-second-order-LTI-system" class="headerlink" title="Behaviour of the second-order LTI system"></a>Behaviour of the second-order LTI system</h3><p>A <strong>phase portrait</strong> is a representative set of LTI system‘s solutions, plotted as parametric curves (with t as the parameter) on the Cartesian plane tracing the path of each particular solution ((x,y) = (y(t),y ̇(t)), −∞ &lt; t &lt; ∞.</p>
+<p>The Cartesian plane where the phase portrait resides is called the <strong>phase plane.</strong></p>
+<p>The parametric curves traced by the solutions for specific initial conditions are called <strong>phase trajectories.</strong></p>
+<h3 id="Second-order-LTI-system"><a href="#Second-order-LTI-system" class="headerlink" title="Second order LTI system"></a>Second order LTI system</h3><p>Mainly the classification for different root conditions. Just like old courses or what learn from Dr.Can’s Ch.</p>
+<ol>
+<li><p>Roots are all <strong>real</strong> and <strong>negative</strong> - <strong>Stable</strong></p>
+</li>
+<li><p>Roots are all <strong>real</strong> and <strong>positive</strong> - <strong>Unstable</strong></p>
+</li>
+<li><p>Both <strong>real</strong> and is <strong>positive and negative respectively</strong> - <strong>Saddle</strong></p>
+</li>
+<li><p>Both <strong>complex</strong> and $Re(\lambda_1,\lambda_2)&lt;0$ - <strong>Stable focus</strong> </p>
+</li>
+<li><p>Both <strong>complex</strong> and $Re(\lambda_1,\lambda_2)&gt;0$ - <strong>Unstable focus</strong> </p>
+</li>
+<li><p>Both <strong>complex</strong> and $Re(\lambda_1,\lambda_2)=0$ - <strong>Center</strong> </p>
+</li>
+</ol>
+<p>Followed by <strong>Laplace transformation</strong> and <strong>transfer function</strong>, which should be very familiar with.</p>
+<h3 id="Control-System"><a href="#Control-System" class="headerlink" title="Control System"></a>Control System</h3><p>Feedback control (closed-loop) enables to achieve new parameters of the system.</p>
+<p>The modal control is based on this idea. The input signal is set as</p>
+<script type="math/tex; mode=display">
+u(t)=-\bold{K}x(t)</script><p>where K is k × n matrix of feed-back gain coefficients.</p>
+<p>Thus the augmented system is described in State-Space representation as</p>
+<script type="math/tex; mode=display">
+\dot{x}(t)=Ax(t)-BKx(t)\\
+=(A-BK)x(t)</script><p>Here F is a n × n matrix that describe augmented closed-loop system.</p>
+<h2 id="Lec-4-amp-5-Nonlinear-systems"><a href="#Lec-4-amp-5-Nonlinear-systems" class="headerlink" title="Lec 4&amp;5: Nonlinear systems"></a>Lec 4&amp;5: Nonlinear systems</h2><h3 id="Definition-1"><a href="#Definition-1" class="headerlink" title="Definition 1."></a>Definition 1.</h3><p>The equilibrium point x = 0 <em>of</em> $\dot{x} = f(x)$ is</p>
+<ul>
+<li><p>stable if for each $\epsilon&gt;0$ There is $\delta&gt;0$ (dependent on $\epsilon$ ) such that</p>
+<script type="math/tex; mode=display">
+||x(0)||<\delta \Rightarrow ||x(t)||<\epsilon, \forall t \geq 0</script></li>
+<li><p>Unstable otherwise</p>
+</li>
+</ul>
+<h3 id="Definition-2-Asymptotic-stability"><a href="#Definition-2-Asymptotic-stability" class="headerlink" title="Definition 2. Asymptotic stability"></a>Definition 2. Asymptotic stability</h3><p>Let the origin be an asymptotically stable equilibrium point of the system $x ̇ = f(x)$, where f is a locally Lipschitz function defined over a domain $D⊂\mathbb{R}^n (0∈D)$</p>
+<h3 id="Definition-3-Exponential-Stability"><a href="#Definition-3-Exponential-Stability" class="headerlink" title="Definition 3. Exponential Stability"></a>Definition 3. Exponential Stability</h3><p><em>The equilibrium point</em> x = 0 <em>of</em> x ̇ = f(x) <em>is said to be exponentially stable if</em></p>
+<script type="math/tex; mode=display">
+||x(t)||\leq k||x(0)||e^{-\lambda t},\  \forall t\geq 0,k\geq 1,\ \lambda>0, \forall||x(0)||<c</script><p>Some linearization and bifurcation, check slides for more detail.</p>
+<h2 id="Lec-6-amp-7-Numerical-methods-for-ordinary-differential-equations-ODEs"><a href="#Lec-6-amp-7-Numerical-methods-for-ordinary-differential-equations-ODEs" class="headerlink" title="Lec 6&amp;7: Numerical methods for ordinary differential equations (ODEs)"></a>Lec 6&amp;7: Numerical methods for ordinary differential equations (ODEs)</h2><h3 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h3><p>Differential equations are an essential tool in a wide range of applications. Many phenomena can be modelled by a relationship between a function and its derivatives.</p>
+<script type="math/tex; mode=display">
+f'(t)=lim_{\triangle t\rightarrow0}\frac{f(t+\triangle t)-f(t)}{\triangle t}</script><p>Differential equations can be divided into several types namely: • Ordinary Differential Equations<br> • Partial Differential Equations<br> • Linear Differential Equations</p>
+<p>• Non-linear Differential equations<br> • Homogeneous Differential Equations<br> • Non-homogeneous Differential Equations</p>
+<p>We will consider ordinary linear homogeneous and non-homogeneous differential equations.</p>
+<h4 id="Why-we-use-numerical-solutions-of-differential-equations"><a href="#Why-we-use-numerical-solutions-of-differential-equations" class="headerlink" title="Why we use numerical solutions of differential equations?"></a>Why we use numerical solutions of differential equations?</h4><ul>
+<li>Numerical solution of differential equations used, if impossible to find an analytic solution of the math system.</li>
+<li>Also, computing machines usually work with numerical methods, so programming numerical methods are simpler than programming analytical methods.</li>
+</ul>
+<p>The use of <strong>high iteration frequencies</strong> produces a more realistic simulation than the lower frequency models. But high iteration frequencies <strong>produces a harder</strong> for computing machines</p>
+<h3 id="Euler’s-method"><a href="#Euler’s-method" class="headerlink" title="Euler’s method"></a>Euler’s method</h3><p>The simplest of numerical methods is Euler’s method which is based directly on the geometric interpretation in observation.</p>
+<script type="math/tex; mode=display">
+Y_{n+1} =Y_n +h·f(t_n,Y_n)</script><h4 id="Error-analysis"><a href="#Error-analysis" class="headerlink" title="Error analysis"></a>Error analysis</h4><p>Consider polynomial of second degree of the Taylor series:</p>
+<script type="math/tex; mode=display">
+f(x)\approx f(a)+\frac{f'(a)}{1!}(x-a)+\frac{f''(a)}{2!}(x-a)^2.</script><script type="math/tex; mode=display">
+Y(t_{n+1})=Y(t_n)+hY'(t_n)+\frac{1}{2}h^2Y''(\xi_n),\ \xi\in[t_n,t_{n+1}]\\
+Y'(t_{n+1})-y_{n+1}=Y(t_n)-y_n+h[f(t_n,Y(t_n))-f(t_n,y_n)]+\frac{1}{2}h^2Y''(\xi_n)</script><p>Where $\frac{1}{2}h^2Y’’(\xi_n)$ - the truncation error</p>
+<p>$Y(t_n)-y_n+h[f(t_n,Y(t_n))-f(t_n,y_n)]$ - the propagated error</p>
+<p>Using the mean value theorem obtain</p>
+<script type="math/tex; mode=display">
+f(t_n,Y(t_n))-f(t_n,y_n)=\frac{\partial f(t_n,\varsigma)}{\partial y}</script><p>For the global error:</p>
+<script type="math/tex; mode=display">
+e_k\equiv Y(t_k)-y_k,\ k\leq 0, \xi\in[t_n;t_{n+1}]</script><blockquote>
+<p><strong>General error</strong></p>
+<script type="math/tex; mode=display">
+e_{n+1}=[1+h\frac{\partial f(t_n,\varsigma_n)}{\partial y}]e_n+\frac{1}{2}h^2Y''(\xi_n)</script></blockquote>
+<h3 id="Euler-method-modifications"><a href="#Euler-method-modifications" class="headerlink" title="Euler method modifications"></a>Euler method modifications</h3><p>If $Y’(t)=f(t,Y(t))$, then</p>
+<script type="math/tex; mode=display">
+Y(t)=Y_0+\int_{t_0}^{t}f(s,Y(s))ds=Y_0,\lim_{||\triangle t||\rightarrow0}\sum_{t=1}^n f(t,Y(t))\triangle t_i.</script><h4 id="Trapezoidal-Riemann-sum"><a href="#Trapezoidal-Riemann-sum" class="headerlink" title="Trapezoidal Riemann sum"></a>Trapezoidal Riemann sum</h4><script type="math/tex; mode=display">
+y_{n+1} =y_n +\frac{h}{2}(f(t_n,y_n)+f(t_{n+1},y_{n+1}))</script><p>and cuz $y_{n+1}$​ is unknown</p>
+<script type="math/tex; mode=display">
+y_{n+1} =y_n +\frac{h}{2}(f(t_n,y_n)+f(t_{n+1},y_n+hf(t_n,y_n)))</script><h4 id="Midpont-Riemann-sum"><a href="#Midpont-Riemann-sum" class="headerlink" title="Midpont Riemann sum"></a>Midpont Riemann sum</h4><script type="math/tex; mode=display">
+y_{n+1}=y_n+hf(t_n+\frac{h}{2},y_{n+0.5})</script><p>Remember to replace $y_{n+0.5}$ with $\hat{y}=y_n+\frac{h}{2}f(t_n,y_n)$</p>
+<h3 id="Taylor-methods"><a href="#Taylor-methods" class="headerlink" title="Taylor methods"></a>Taylor methods</h3><p>Use the quadratic Taylor approximation</p>
+<script type="math/tex; mode=display">
+Y(t_{n+1})≈Y(t_n)+hY'(t_n)+ \frac{h}{2}Y''(t_n)</script><p>The truncation error: $T_{n+1}(Y)=\frac{1}{6}h^3Y’’’(\xi_n),\ \xi_n\in[t_n;t_{n+1}]$</p>
+<p>See general in page 22.</p>
+<h4 id="Error-analysis-1"><a href="#Error-analysis-1" class="headerlink" title="Error analysis"></a>Error analysis</h4><p>It’s an asymptotic error formula.</p>
+<p>To avoid the need for the higher-order derivatives (in the Taylor method), the Runge - Kutta methods evaluate f(t,y) at more points, while attempting to retain the accuracy of the Taylor approximation.</p>
+<p> Let’s take a look at Runge - Kutta method of order 2:</p>
+<script type="math/tex; mode=display">
+y_{n+1}=y_n+hF(t_n,y_n,h), y_0=Y_0</script><p>See 24 for more detail.</p>
+<h3 id="Runge-Kutta-methods"><a href="#Runge-Kutta-methods" class="headerlink" title="Runge - Kutta methods"></a>Runge - Kutta methods</h3><p>The explicit methods</p>
+<script type="math/tex; mode=display">
+y_{n+1}=y_n+\sum_{i=1}^s b_i k_i</script><p>where</p>
+<script type="math/tex; mode=display">
+k_1=hf(t_n,y_n)\\
+k_i=hf(t_n+c_i h,y_n+\sum_{j=1}^{i-1}a_{ij}k_j)</script><p>Note the construction of matrix of coefficients on page 29.</p>
+<h3 id="Numerical-methods-in-Matlab"><a href="#Numerical-methods-in-Matlab" class="headerlink" title="Numerical methods in Matlab"></a>Numerical methods in Matlab</h3><p>In a Matlab, the choice of solver depends on many factors:</p>
+<ol>
+<li>System dynamics (stiff, nonstiff, linear, nonlinear) </li>
+<li>Solution stability</li>
+<li>Computation speed</li>
+<li>Solver robustness</li>
+</ol>
+<h4 id="Model-states"><a href="#Model-states" class="headerlink" title="Model states:"></a>Model states:</h4><ul>
+<li>Continuous solvers<br> Use numerical integration to compute continuous states of a model at the current time step based on the states at previous time steps and the state derivatives.</li>
+<li>Discrete solvers<br> Primarily used for solving purely discrete models.</li>
+</ul>
+<h4 id="Computation-step-size"><a href="#Computation-step-size" class="headerlink" title="Computation step size:"></a>Computation step size:</h4><p>• Fixed-step solvers<br> Solve the model using the same step size from the beginning to the end of the simulation</p>
+<p>• Variable-step solvers vary the step size during the simulation</p>
+<h5 id="Explicit-form-of-ODE"><a href="#Explicit-form-of-ODE" class="headerlink" title="Explicit form of ODE"></a>Explicit form of ODE</h5><script type="math/tex; mode=display">
+F(x,y,y',\dots,y^{n-1})=y^{n}</script><h5 id="Implicit-form-of-ODE-usually-used-in-stiff-solvers"><a href="#Implicit-form-of-ODE-usually-used-in-stiff-solvers" class="headerlink" title="Implicit form of ODE (usually used in stiff solvers)"></a>Implicit form of ODE (usually used in stiff solvers)</h5><script type="math/tex; mode=display">
+F(x,y,y',\dots,y^{n-1},y^{n})=0</script><p>Check the provided diagram for reference. at Page 33.</p>
+<p>Just like manual.</p>
+<h5 id="Stiff-equation"><a href="#Stiff-equation" class="headerlink" title="Stiff equation"></a>Stiff equation</h5><p>A stiff equation is a differential equation for which certain numerical methods for solving the equation are numerically unstable.</p>
+<p>The main idea is that the equation includes some terms that can lead to rapid variation in the solution</p>
+<h3 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h3><ol>
+<li><p>About methods</p>
+<p>1.1   Euler’s method plotting tangent lines with fixed step h, $Y_{n+1} = Y_n + hf (t_n , Y_n )$. The local error may become smaller, opposite global error only increase</p>
+<p>1.2  Taylor methods use high order derivatives</p>
+<p>1.3  Runge–Kutta methods. The idea of Runge–Kutta methods is to use</p>
+<p>combinations of compositions of the right-side function of the equation to approximate the derivative terms to a required order</p>
+</li>
+<li><p>The use of high iteration frequencies produces a more realistic simulation than the lower frequency models. But high frequencies of iterations requires more computing power.</p>
+</li>
+</ol>
+
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Control/" rel="tag">Control</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Simulation/" rel="tag">Simulation</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/System/" rel="tag">System</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/03/21/Ballkid/"
+                    data-tooltip="Ballkid Vol.1"
+                    aria-label="PREVIOUS: Ballkid Vol.1"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/03/21/GRE/"
+                    data-tooltip="GRE ess"
+                    aria-label="NEXT: GRE ess"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2023 Estus. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/03/21/Ballkid/"
+                    data-tooltip="Ballkid Vol.1"
+                    aria-label="PREVIOUS: Ballkid Vol.1"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/03/21/GRE/"
+                    data-tooltip="GRE ess"
+                    aria-label="NEXT: GRE ess"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Estus</h4>
+        
+            <div id="about-card-bio"><p>Fun things <del>never</del> always stops.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Student</p>
+
+            </div>
+        
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/Ess/0_t.png');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-yb3zostooymjozqpjlvijhvzw0bdaljwvcvx0fhqdpyvq6aviyzwgfjkfjkw.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

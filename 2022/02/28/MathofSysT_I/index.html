@@ -1,0 +1,577 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Amaurot Ch.">
+    <title>Mathematical Basics of the System Theory PART I - Amaurot Ch.</title>
+    <meta name="author" content="Estus">
+    
+    
+        <link rel="icon" href="https://upload.cc/i1/2021/05/18/lSCp1v.png">
+    
+    
+        
+            <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png"},"articleBody":"So, semester begins. I suppose that this would be helpful\nLec 1. Introduction\nSome notations.\nLec 2. Algebraic structures and spaces\nRecall of linear algebra and dicrete math.Some of them did become vague. Gotta find some corresponding notations in English for better understanding.\nPractice 1. Matrices propertiers\nBegin with recalling some old LA notations.\nPractice 2. System of Linear Equations\nAs the name suggest, mainly concerned with linear equations, eigenvalues, eigenvectors, etc.\nLec 3. Matrix invariants and non-ivariants\n1.Matrix invariants and its properties.Characteristic polynomial\ndet(\\lambda I-A)=det(\\lambda I-B)\n\nAlgebraic spectra of eigenvalues of similar matricesDeterminants\ndet(A)=det(B)=\\Pi \\lambda\n\nTraces\ntr(A)=tr(B)=\\Sigma \\lambda\n\nRanks2.Matrix non-invanriantsGeometric spectra of eigenvectorsNorms of similar matrices\nEuclidean norm\nOperator norm\nInfinity norm (row norm)\n\nAlgebraic spectra of singular numbers of similar matricesCondition numbers of similar matricesLec 4. Singular number decomposition\nDefinitionThe singular value decomposition of a real-valued matrix N of demension (mxn) os ots factorizationN=U \\Sigma V^T, where U is and orthogonal matrix (m x m), V is an orthogonal matrix that fom left and right singular basics and has the following peroperties:U U^T = U^T U= I, V V^T = V^T V = I\nCondition numberThe condition number of an arbitrary (nxn) matrix N is the positive-valued scalar characteristic of this matrixC{N} = ||N||_p ||N^{-1}||_pCondition number based on spectral norms takes the formC{N} = ||N||_{p=2} ||N^{-1}||_2 = a_M (N) a_m^{-1} (N)the former shows that the condition number of the matrix of the linear algebraic problem \\eta = N \\chi, characterize the degree of flattening of the ellipsoid obtained by mapping a shere of the unit radius (geometric definition of the condition number).\nLec 5. Canonical Forms of Matrices\nDefinition of similar matricesTwo matrices A and \\bar(A) are called similar if they define the same linear operator A with respect to different pairs of bases (e,f) and (\\bar{e},\\bar{f})\nDefinition of canonical formThe canonical form of the matrix of a linear operator is the form of a matrix that is built in accordance with a certian rule.\n\nThe use of canonical forms helps solve one of the possible problems: reducing the amount of matrix calculations by minimizing the number of nonzero matrix elements; facilitating the analysis of the structure of the linear operator’s space, ensuring the computational stability of all matrix procedures by reducing the condition number of the linear operator’s matrix, etc.\n\nBasic cononical forms are built on two algebraic spectra of the original matrix A given in an aarbitrary basis\n1. Diagonal canonical form of a matrixIFF all eigenvalues are real and simple (different, not multiples).$\\bar{A} = diag\\{\\lambda_i , i=1…n\\}$\n2. Block diagonal canonical form of a matrixCan be constructed when the spectrum of the eigen values contains non-multiple compelx conjugate eigenvalues.\n\n\\sigma\\{A\\}=\\{Im\\{\\lambda_{i,i+1}\\ne 0\\}, \\lambda_{i,i+1}=a_i \\pm j\\beta\\}\\\\\n\\bar{A} = diag{\\Lambda_{ii} = [a_i b_i;-b_i a_i], i=1..n/2}3. Combined block-diagonal formCan be constructed when the algebraic specturm of eigenvalues contains only simple real and complex conjugate eigenvalues.n_r - number of real eigenvaluesn_c - number of complex conjugate eigenvalues\n\n\\bar{A} = diag{\\Lambda_{nr*nr}; \\Lambda(nc*nc)}4. Jordan canonical formCan be constructed when the algebraic spectrum of eigenvalues has the form\n\n\\sigma{A}={\\lambda_k of multiplicity \\mu_k, k=1...p, \\Sigma_{\\mu_k=1}^p \\mu_k = n,\\\\ Im(\\lambda_k)= 0}; \\\\\nTJ = AT\\\\\nT_i = (A-\\lambda I)T_{i+1}The jordan canonical form can also be constructed for the case when the spectrum of eigenvalues of the matrix contains multiple conjugate\nCanonical Forms Constructed on the Algebraic Spectrum of the Characteristic PolynomialAlso called normal or Frobenius canonical form\n\nD(A)=det(\\lambda I-A) = \\lambda^n + \\Sigma_1^n a_i \\lambda^{n-i}\nCanonical controllable form$\\bar{A} = [0 1 0 … 0; 0 0 1 … 0; …; 0 0 0 …1; -a_n … -a_1]$Canonical observable formIt is $\\bar{A}^T$\n\nMatrices of similarity transformation to canonical formsStatement 1. The columns of the matrix M, which transforms the matrix A of a simple structureto the diagonal form, are the eigenvector of the matrix A.Statement 1. Eigenvectors of the canonical controllable form A_F of a simple structure matrix A are constructed according to the Vandermode scheme.Statement 3. Let matrix A_F is a canonical form of a simple structure matrix. Then matrix $A_F$ can be transformed into diagonal matrix $\\Lambda$ with the help of Vendermonde matrix $M_V$, whose columns are eigenvectors of the form $\\Lambda=M_V^{-1} A_F M_V$\nPractice 5. Calculation of similarity transformation matrices\nBegin with multiple examples.Basically, do with the previous steps.Remember the notation of Vendermonde matrixAlso, the condition for a matrix to transform into the diagonal matrix is the rank of thier eigenvalue.That is, whether the eigenvectors are all linear independent.\nLec 7. Linear and quadratic forms\nDefinition 1: Scalar function of a vector\nF(x):R^n \\Rightarrow RDefinition 2: Real linear formA function whose domain of definition is a linear space R^n and whose domain of values is real numbers set R is called a real linear form.\n\nF_1(a1*x1+a2*x2) = a1*F_1(x1)+a2*F_1(x2)We can see that linear form is a scalar function of vector argument.\nDefinition 3: Kernel of the lienar formThe set of all vectors is called the kernel of the linear form (functional) and is denoted N(F1):\n\nN(F_1)={x \\in R^n: F_1(x)=0}Definition 4: Quadratic form\nF_2(x)=\\Sigma\\Sigma a_{ij}x_i x_jThe rank of a quadratic form is the rank of its matrix 𝐴\nCanonical form of quadratic formWith non-degenerate transformation $x=T_y$$F_2(y)=\\Sigma \\lambda_i(y_i)^2$Here 𝜆𝑖 (𝑖 = 1, … 𝑛) are eigenvalues of matrix 𝐴, columns of matrix 𝑇 are pairwise orthogonal normalized eigenvectors of the matrix 𝐴 (norm of each eigenvector is equal to 1).\nPositive and negative definiteness of a quadratic formwrite a quadratic form as scalar product with weight A:\n\nF_2(x) = (Ax,x) = x^T A x = (||x||)_A^2\nThe quadratic form 𝐹 𝑥 = 𝐴𝑥,𝑥 is called positively (negatively) definite if 𝐴𝑥, 𝑥 &gt; 0 ( 𝐴𝑥, 𝑥 &lt; 0) for 𝑥 ≠ 0 and 𝐴𝑥, 𝑥 = 0 for 𝑥 = 0.The quadratic form 𝐹 𝑥 = 𝐴𝑥, 𝑥 is called nonnegatively (nonpositive) definite if it takes only nonnegatively (nonpositive) values and becomes zero not only for 𝑥 = 0.If the quadratic form 𝐹 𝑥 has different signs for some 𝑥 then this form is called indefinite. \nTheorem 1. If all eigenvalues of a matrix of a quadratic form are positive, then it is positive definite. If all eigenvalues are negative, then it is negative definite.Theorem 2 (Sylvester’s criterion for the sign-definiteness of a quadratic form).For a quadratic form to be positive definite, it is necessary and sufficient that all the angular minors of its matrix be positive.For a quadratic form to be negative definite, it is necessary and sufficient that the signs of the angular minors of its matrix alternate as follows 𝛿1 0,𝛿3 &lt;0,…\n\n\n\n\nThe rules for differentiating of matrices with respect to scalar variables, scalar and vector function of a vector argument with respect to vector variables\n\nDefinition 6: derivative of a matrix with respect to a scalar variableLet 𝐴 be a matrix whose elements are functions 𝐴𝑖𝑗 = 𝐴𝑖𝑗(𝑞) of a scalar variable 𝑞. Then the derivative of the matrix 𝐴(𝑞) is the matrix 𝐴𝑞 = 𝜕𝐴(𝑞)/𝜕q composed of the derivatives of its elements 𝐴𝑖𝑗𝑞 = 𝜕𝐴𝑖𝑗(𝑞)/𝜕𝑞 with respect to the variable 𝑞, which can be written in the form 𝐴𝑞 =𝑟𝑜𝑤{𝑐𝑜𝑙(𝐴𝑖𝑗;𝑖=1,…𝑚);𝑗=1,…𝑛}\nDefinition 7: derivative of a scalar function of vector argument.The numbe of formulas is large, check them on slides.\nDefinition 8: derivative of vector function of a vector argumentSame as Def. 7\n","dateCreated":"2022-02-28T16:32:00+08:00","dateModified":"2022-03-22T15:06:17+08:00","datePublished":"2022-02-28T16:32:00+08:00","description":"So, semester begins. I suppose that this would be helpful","headline":"Mathematical Basics of the System Theory PART I","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://redbowtie.github.io/2022/02/28/MathofSysT_I/"},"publisher":{"@type":"Organization","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png","logo":{"@type":"ImageObject","url":"/Ess/lh.png"}},"url":"https://redbowtie.github.io/2022/02/28/MathofSysT_I/","keywords":"System Theory, Math"}</script>
+    <meta name="description" content="So, semester begins. I suppose that this would be helpful">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Mathematical Basics of the System Theory PART I">
+<meta property="og:url" content="https://redbowtie.github.io/2022/02/28/MathofSysT_I/index.html">
+<meta property="og:site_name" content="Amaurot Ch.">
+<meta property="og:description" content="So, semester begins. I suppose that this would be helpful">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-02-28T08:32:00.000Z">
+<meta property="article:modified_time" content="2022-03-22T07:06:17.560Z">
+<meta property="article:author" content="Estus">
+<meta property="article:tag" content="System Theory">
+<meta property="article:tag" content="Math">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://redbowtie.github.io/assets/images/Ess/lh.png"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-4a47lwukh8khnoqxgkjhofoety2rdykli5sq4vv9v7xmmtg07euhkbfahoe5.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/"
+            aria-label=""
+        >
+            Amaurot Ch.
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+            <img class="header-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a
+                    href="/#about"
+                    aria-label="Read more about the author"
+                >
+                    <img class="sidebar-profile-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Estus</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>Fun things <del>never</del> always stops.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/RedBowtie"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/atom.xml"
+                            
+                            rel="noopener"
+                            title="RSS"
+                        >
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/links"
+                            
+                            rel="noopener"
+                            title="Links"
+                        >
+                        <i class="sidebar-button-icon fa fa-sign" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Links</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            Mathematical Basics of the System Theory PART I
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2022-02-28T16:32:00+08:00">
+	
+		    Feb 28, 2022
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Term6/">Term6</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>So, semester begins. I suppose that this would be helpful<span id="more"></span></p>
+<h2 id="Lec-1-Introduction"><a href="#Lec-1-Introduction" class="headerlink" title="Lec 1. Introduction"></a>Lec 1. Introduction</h2><hr>
+<p>Some notations.</p>
+<h2 id="Lec-2-Algebraic-structures-and-spaces"><a href="#Lec-2-Algebraic-structures-and-spaces" class="headerlink" title="Lec 2. Algebraic structures and spaces"></a>Lec 2. Algebraic structures and spaces</h2><hr>
+<p>Recall of linear algebra and dicrete math.<br>Some of them did become vague. Gotta find some corresponding notations in English for better understanding.</p>
+<h2 id="Practice-1-Matrices-propertiers"><a href="#Practice-1-Matrices-propertiers" class="headerlink" title="Practice 1. Matrices propertiers"></a>Practice 1. Matrices propertiers</h2><hr>
+<p>Begin with recalling some old LA notations.</p>
+<h2 id="Practice-2-System-of-Linear-Equations"><a href="#Practice-2-System-of-Linear-Equations" class="headerlink" title="Practice 2. System of Linear Equations"></a>Practice 2. System of Linear Equations</h2><hr>
+<p>As the name suggest, mainly concerned with linear equations, eigenvalues, eigenvectors, etc.</p>
+<h2 id="Lec-3-Matrix-invariants-and-non-ivariants"><a href="#Lec-3-Matrix-invariants-and-non-ivariants" class="headerlink" title="Lec 3. Matrix invariants and non-ivariants"></a>Lec 3. Matrix invariants and non-ivariants</h2><hr>
+<h3 id="1-Matrix-invariants-and-its-properties"><a href="#1-Matrix-invariants-and-its-properties" class="headerlink" title="1.Matrix invariants and its properties."></a>1.Matrix invariants and its properties.</h3><h4 id="Characteristic-polynomial"><a href="#Characteristic-polynomial" class="headerlink" title="Characteristic polynomial"></a>Characteristic polynomial</h4><ul>
+<li>det(\lambda I-A)=det(\lambda I-B)</li>
+</ul>
+<h4 id="Algebraic-spectra-of-eigenvalues-of-similar-matrices"><a href="#Algebraic-spectra-of-eigenvalues-of-similar-matrices" class="headerlink" title="Algebraic spectra of eigenvalues of similar matrices"></a>Algebraic spectra of eigenvalues of similar matrices</h4><h4 id="Determinants"><a href="#Determinants" class="headerlink" title="Determinants"></a>Determinants</h4><ul>
+<li>det(A)=det(B)=\Pi \lambda</li>
+</ul>
+<h4 id="Traces"><a href="#Traces" class="headerlink" title="Traces"></a>Traces</h4><ul>
+<li>tr(A)=tr(B)=\Sigma \lambda</li>
+</ul>
+<h4 id="Ranks"><a href="#Ranks" class="headerlink" title="Ranks"></a>Ranks</h4><h3 id="2-Matrix-non-invanriants"><a href="#2-Matrix-non-invanriants" class="headerlink" title="2.Matrix non-invanriants"></a>2.Matrix non-invanriants</h3><h4 id="Geometric-spectra-of-eigenvectors"><a href="#Geometric-spectra-of-eigenvectors" class="headerlink" title="Geometric spectra of eigenvectors"></a>Geometric spectra of eigenvectors</h4><h4 id="Norms-of-similar-matrices"><a href="#Norms-of-similar-matrices" class="headerlink" title="Norms of similar matrices"></a>Norms of similar matrices</h4><ul>
+<li>Euclidean norm</li>
+<li>Operator norm</li>
+<li>Infinity norm (row norm)</li>
+</ul>
+<h4 id="Algebraic-spectra-of-singular-numbers-of-similar-matrices"><a href="#Algebraic-spectra-of-singular-numbers-of-similar-matrices" class="headerlink" title="Algebraic spectra of singular numbers of similar matrices"></a>Algebraic spectra of singular numbers of similar matrices</h4><h4 id="Condition-numbers-of-similar-matrices"><a href="#Condition-numbers-of-similar-matrices" class="headerlink" title="Condition numbers of similar matrices"></a>Condition numbers of similar matrices</h4><h2 id="Lec-4-Singular-number-decomposition"><a href="#Lec-4-Singular-number-decomposition" class="headerlink" title="Lec 4. Singular number decomposition"></a>Lec 4. Singular number decomposition</h2><hr>
+<h3 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h3><p>The singular value decomposition of a real-valued matrix N of demension (mxn) os ots factorization<br>N=U \Sigma V^T, where U is and orthogonal matrix (m x m), V is an orthogonal matrix that fom left and right singular basics and has the following peroperties:<br>U U^T = U^T U= I, V V^T = V^T V = I</p>
+<h3 id="Condition-number"><a href="#Condition-number" class="headerlink" title="Condition number"></a>Condition number</h3><p>The condition number of an arbitrary (nxn) matrix N is the positive-valued scalar characteristic of this matrix<br>C{N} = ||N||_p ||N^{-1}||_p<br>Condition number based on spectral norms takes the form<br>C{N} = ||N||_{p=2} ||N^{-1}||_2 = a_M (N) a_m^{-1} (N)<br>the former shows that the condition number of the matrix of the linear algebraic problem \eta = N \chi, characterize the degree of flattening of the ellipsoid obtained by mapping a shere of the unit radius (geometric definition of the condition number).</p>
+<h2 id="Lec-5-Canonical-Forms-of-Matrices"><a href="#Lec-5-Canonical-Forms-of-Matrices" class="headerlink" title="Lec 5. Canonical Forms of Matrices"></a>Lec 5. Canonical Forms of Matrices</h2><hr>
+<h4 id="Definition-of-similar-matrices"><a href="#Definition-of-similar-matrices" class="headerlink" title="Definition of similar matrices"></a>Definition of similar matrices</h4><p>Two matrices A and \bar(A) are called similar if they define the same linear operator A with respect to different pairs of bases (e,f) and (\bar{e},\bar{f})</p>
+<h4 id="Definition-of-canonical-form"><a href="#Definition-of-canonical-form" class="headerlink" title="Definition of canonical form"></a>Definition of canonical form</h4><p>The canonical form of the matrix of a linear operator is the form of a matrix that is built in accordance with a certian rule.</p>
+<blockquote>
+<p>The use of canonical forms helps solve one of the possible problems: reducing the amount of matrix calculations by minimizing the number of nonzero matrix elements; facilitating the analysis of the structure of the linear operator’s space, ensuring the computational stability of all matrix procedures by reducing the condition number of the linear operator’s matrix, etc.</p>
+</blockquote>
+<p>Basic cononical forms are built on two algebraic spectra of the original matrix A given in an aarbitrary basis</p>
+<h4 id="1-Diagonal-canonical-form-of-a-matrix"><a href="#1-Diagonal-canonical-form-of-a-matrix" class="headerlink" title="1. Diagonal canonical form of a matrix"></a>1. Diagonal canonical form of a matrix</h4><p>IFF all eigenvalues are real and simple (different, not multiples).<br>$\bar{A} = diag\{\lambda_i , i=1…n\}$</p>
+<h4 id="2-Block-diagonal-canonical-form-of-a-matrix"><a href="#2-Block-diagonal-canonical-form-of-a-matrix" class="headerlink" title="2. Block diagonal canonical form of a matrix"></a>2. Block diagonal canonical form of a matrix</h4><p>Can be constructed when the spectrum of the eigen values contains non-multiple compelx conjugate eigenvalues.</p>
+<script type="math/tex; mode=display">
+\sigma\{A\}=\{Im\{\lambda_{i,i+1}\ne 0\}, \lambda_{i,i+1}=a_i \pm j\beta\}\\
+\bar{A} = diag{\Lambda_{ii} = [a_i b_i;-b_i a_i], i=1..n/2}</script><h4 id="3-Combined-block-diagonal-form"><a href="#3-Combined-block-diagonal-form" class="headerlink" title="3. Combined block-diagonal form"></a>3. Combined block-diagonal form</h4><p>Can be constructed when the algebraic specturm of eigenvalues contains only simple real and complex conjugate eigenvalues.<br>n_r - number of real eigenvalues<br>n_c - number of complex conjugate eigenvalues</p>
+<script type="math/tex; mode=display">
+\bar{A} = diag{\Lambda_{nr*nr}; \Lambda(nc*nc)}</script><h4 id="4-Jordan-canonical-form"><a href="#4-Jordan-canonical-form" class="headerlink" title="4. Jordan canonical form"></a>4. Jordan canonical form</h4><p>Can be constructed when the algebraic spectrum of eigenvalues has the form</p>
+<script type="math/tex; mode=display">
+\sigma{A}={\lambda_k of multiplicity \mu_k, k=1...p, \Sigma_{\mu_k=1}^p \mu_k = n,\\ Im(\lambda_k)= 0}; \\
+TJ = AT\\
+T_i = (A-\lambda I)T_{i+1}</script><p>The jordan canonical form can also be constructed for the case when the spectrum of eigenvalues of the matrix contains multiple conjugate</p>
+<h4 id="Canonical-Forms-Constructed-on-the-Algebraic-Spectrum-of-the-Characteristic-Polynomial"><a href="#Canonical-Forms-Constructed-on-the-Algebraic-Spectrum-of-the-Characteristic-Polynomial" class="headerlink" title="Canonical Forms Constructed on the Algebraic Spectrum of the Characteristic Polynomial"></a>Canonical Forms Constructed on the Algebraic Spectrum of the Characteristic Polynomial</h4><p>Also called normal or Frobenius canonical form</p>
+<script type="math/tex; mode=display">
+D(A)=det(\lambda I-A) = \lambda^n + \Sigma_1^n a_i \lambda^{n-i}</script><blockquote>
+<p>Canonical controllable form<br>$\bar{A} = [0 1 0 … 0; 0 0 1 … 0; …; 0 0 0 …1; -a_n … -a_1]$<br>Canonical observable form<br>It is $\bar{A}^T$</p>
+</blockquote>
+<h4 id="Matrices-of-similarity-transformation-to-canonical-forms"><a href="#Matrices-of-similarity-transformation-to-canonical-forms" class="headerlink" title="Matrices of similarity transformation to canonical forms"></a>Matrices of similarity transformation to canonical forms</h4><p>Statement 1. The columns of the matrix M, which transforms the matrix A of a simple structureto the diagonal form, are the eigenvector of the matrix A.<br>Statement 1. Eigenvectors of the canonical controllable form A_F of a simple structure matrix A are constructed according to the Vandermode scheme.<br>Statement 3. Let matrix A_F is a canonical form of a simple structure matrix. Then matrix $A_F$ can be transformed into diagonal matrix $\Lambda$ with the help of Vendermonde matrix $M_V$, whose columns are eigenvectors of the form $\Lambda=M_V^{-1} A_F M_V$</p>
+<h2 id="Practice-5-Calculation-of-similarity-transformation-matrices"><a href="#Practice-5-Calculation-of-similarity-transformation-matrices" class="headerlink" title="Practice 5. Calculation of similarity transformation matrices"></a>Practice 5. Calculation of similarity transformation matrices</h2><hr>
+<p>Begin with multiple examples.<br>Basically, do with the previous steps.<br>Remember the notation of Vendermonde matrix<br><strong>Also, the condition for a matrix to transform into the diagonal matrix is the rank of thier eigenvalue.</strong><br><strong>That is, whether the eigenvectors are all linear independent.</strong></p>
+<h2 id="Lec-7-Linear-and-quadratic-forms"><a href="#Lec-7-Linear-and-quadratic-forms" class="headerlink" title="Lec 7. Linear and quadratic forms"></a>Lec 7. Linear and quadratic forms</h2><hr>
+<h4 id="Definition-1-Scalar-function-of-a-vector"><a href="#Definition-1-Scalar-function-of-a-vector" class="headerlink" title="Definition 1: Scalar function of a vector"></a>Definition 1: Scalar function of a vector</h4><script type="math/tex; mode=display">
+F(x):R^n \Rightarrow R</script><h4 id="Definition-2-Real-linear-form"><a href="#Definition-2-Real-linear-form" class="headerlink" title="Definition 2: Real linear form"></a>Definition 2: Real linear form</h4><p>A function whose domain of definition is a linear space R^n and whose domain of values is real numbers set R is called a real linear form.</p>
+<script type="math/tex; mode=display">
+F_1(a1*x1+a2*x2) = a1*F_1(x1)+a2*F_1(x2)</script><p>We can see that linear form is a scalar function of vector argument.</p>
+<h4 id="Definition-3-Kernel-of-the-lienar-form"><a href="#Definition-3-Kernel-of-the-lienar-form" class="headerlink" title="Definition 3: Kernel of the lienar form"></a>Definition 3: Kernel of the lienar form</h4><p>The set of all vectors is called the kernel of the linear form (functional) and is denoted N(F1):</p>
+<script type="math/tex; mode=display">
+N(F_1)={x \in R^n: F_1(x)=0}</script><h4 id="Definition-4-Quadratic-form"><a href="#Definition-4-Quadratic-form" class="headerlink" title="Definition 4: Quadratic form"></a>Definition 4: Quadratic form</h4><script type="math/tex; mode=display">
+F_2(x)=\Sigma\Sigma a_{ij}x_i x_j</script><p>The rank of a quadratic form is the rank of its matrix 𝐴</p>
+<h5 id="Canonical-form-of-quadratic-form"><a href="#Canonical-form-of-quadratic-form" class="headerlink" title="Canonical form of quadratic form"></a>Canonical form of quadratic form</h5><p>With non-degenerate transformation $x=T_y$<br>$F_2(y)=\Sigma \lambda_i(y_i)^2$<br>Here 𝜆𝑖 (𝑖 = 1, … 𝑛) are eigenvalues of matrix 𝐴, columns of matrix 𝑇 are pairwise orthogonal normalized eigenvectors of the matrix 𝐴 (norm of each eigenvector is equal to 1).</p>
+<h4 id="Positive-and-negative-definiteness-of-a-quadratic-form"><a href="#Positive-and-negative-definiteness-of-a-quadratic-form" class="headerlink" title="Positive and negative definiteness of a quadratic form"></a>Positive and negative definiteness of a quadratic form</h4><p>write a quadratic form as scalar product with weight A:</p>
+<script type="math/tex; mode=display">
+F_2(x) = (Ax,x) = x^T A x = (||x||)_A^2</script><ol>
+<li>The quadratic form 𝐹 𝑥 = 𝐴𝑥,𝑥 is called positively (negatively) definite if 𝐴𝑥, 𝑥 &gt; 0 ( 𝐴𝑥, 𝑥 &lt; 0) for 𝑥 ≠ 0 and 𝐴𝑥, 𝑥 = 0 for 𝑥 = 0.<br>The quadratic form 𝐹 𝑥 = 𝐴𝑥, 𝑥 is called nonnegatively (nonpositive) definite if it takes only nonnegatively (nonpositive) values and becomes zero not only for 𝑥 = 0.<br>If the quadratic form 𝐹 𝑥 has different signs for some 𝑥 then this form is called indefinite. <blockquote>
+<p>Theorem 1. If all eigenvalues of a matrix of a quadratic form are positive, then it is positive definite. If all eigenvalues are negative, then it is negative definite.<br>Theorem 2 (Sylvester’s criterion for the sign-definiteness of a quadratic form).<br>For a quadratic form to be positive definite, it is necessary and sufficient that all the angular minors of its matrix be positive.<br>For a quadratic form to be negative definite, it is necessary and sufficient that the signs of the angular minors of its matrix alternate as follows 𝛿1 <0,𝛿2 >0,𝛿3 &lt;0,…</p>
+</blockquote>
+</li>
+</ol>
+<blockquote>
+<p>The rules for differentiating of matrices with respect to scalar variables, scalar and vector function of a vector argument with respect to vector variables</p>
+</blockquote>
+<h4 id="Definition-6-derivative-of-a-matrix-with-respect-to-a-scalar-variable"><a href="#Definition-6-derivative-of-a-matrix-with-respect-to-a-scalar-variable" class="headerlink" title="Definition 6: derivative of a matrix with respect to a scalar variable"></a>Definition 6: derivative of a matrix with respect to a scalar variable</h4><p>Let 𝐴 be a matrix whose elements are functions 𝐴𝑖𝑗 = 𝐴𝑖𝑗(𝑞) of a scalar variable 𝑞. Then the derivative of the matrix 𝐴(𝑞) is the matrix 𝐴𝑞 = 𝜕𝐴(𝑞)/𝜕q composed of the derivatives of its elements 𝐴𝑖𝑗𝑞 = 𝜕𝐴𝑖𝑗(𝑞)/𝜕𝑞 with respect to the variable 𝑞, which can be written in the form 𝐴𝑞 =𝑟𝑜𝑤{𝑐𝑜𝑙(𝐴𝑖𝑗;𝑖=1,…𝑚);𝑗=1,…𝑛}</p>
+<h4 id="Definition-7-derivative-of-a-scalar-function-of-vector-argument"><a href="#Definition-7-derivative-of-a-scalar-function-of-vector-argument" class="headerlink" title="Definition 7: derivative of a scalar function of vector argument."></a>Definition 7: derivative of a scalar function of vector argument.</h4><p>The numbe of formulas is large, check them on slides.</p>
+<h4 id="Definition-8-derivative-of-vector-function-of-a-vector-argument"><a href="#Definition-8-derivative-of-vector-function-of-a-vector-argument" class="headerlink" title="Definition 8: derivative of vector function of a vector argument"></a>Definition 8: derivative of vector function of a vector argument</h4><p>Same as Def. 7</p>
+
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Math/" rel="tag">Math</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/System-Theory/" rel="tag">System Theory</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/02/28/ESD/"
+                    data-tooltip="Electromechanical Systems Dynamics"
+                    aria-label="PREVIOUS: Electromechanical Systems Dynamics"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/01/23/RA1/"
+                    data-tooltip="Robotic Arm, Imitation. Pt.1"
+                    aria-label="NEXT: Robotic Arm, Imitation. Pt.1"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2023 Estus. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/02/28/ESD/"
+                    data-tooltip="Electromechanical Systems Dynamics"
+                    aria-label="PREVIOUS: Electromechanical Systems Dynamics"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/01/23/RA1/"
+                    data-tooltip="Robotic Arm, Imitation. Pt.1"
+                    aria-label="NEXT: Robotic Arm, Imitation. Pt.1"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Estus</h4>
+        
+            <div id="about-card-bio"><p>Fun things <del>never</del> always stops.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Student</p>
+
+            </div>
+        
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/Ess/0_t.png');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-yb3zostooymjozqpjlvijhvzw0bdaljwvcvx0fhqdpyvq6aviyzwgfjkfjkw.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

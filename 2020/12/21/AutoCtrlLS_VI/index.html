@@ -1,0 +1,591 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Amaurot Ch.">
+    <title>Automatic Control Linear Systems PART VI - Amaurot Ch.</title>
+    <meta name="author" content="Estus">
+    
+    
+        <link rel="icon" href="https://upload.cc/i1/2021/05/18/lSCp1v.png">
+    
+    
+        
+            <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png"},"articleBody":"Younger than I thought.\n\n\nLec 7 Controllability and Observability\nI.    LA Recalla.    Rank of matrixThe rank of a matrix 𝐴 is the dimension of the vector space generated (or spanned) by its columns. This corresponds to the maximal number of linearly independent columns of 𝐴.\nIn MATLAB, using rank() would be quick.\nII.    Controllabilitya.    DefinitionA system is said to be completely state controllable if it is possible to transfer the system states from any initial state 𝑥(𝑡0) to any other desired state 𝑥(𝑡1) in a desired finite time interval 𝑡1 by unconstrained control vector 𝑢 𝑡 . Otherwise the system is not completely state controllable.\n\n\nif the system is controllable, the car can be moved to a desired position from any point in finite time.\nUnstrained control, it’s more theoretical.\nNote that not all parts are controllable and who’s in charge of the system - Matrix B.\n\nb.    Example.\n\nc .    Definition 2\n\nA way to calculate the coresponding u.\nHere, Matrix W_c is usually called Controllability Gramian\n\nIn linear algebra, the Gram matrix (or Gramian matrix, Gramian) of a set of vectors  in an inner product space is the Hermitian matrix of inner products, whose entries are given by ${\\displaystyle G_{ij}=\\left\\langle v_{i},v_{j}\\right\\rangle }$https://en.wikipedia.org/wiki/Gramian_matrix#cite_note-HJ-7.2.10-1)\nAn important application is to compute linear independence: a set of vectors are linearly independent if and only if the Gram determinant (the determinant of the Gram matrix) is non-zero.\n\n\nd.    Example\ne.    TheoremThe following statements are equivalent: \nS1) The pair 𝐴, 𝐵 is controllable;\nS2) is nonsigular for any t&gt;0\nS3) The controllability matrix 𝑄𝑐 ∈ 𝑅𝑛×𝑛𝑚:\n​            𝑄𝑐 =[𝐵,𝐴𝐵,.$𝐴^{𝑛−1}$𝐵] \nS4)𝑟𝑎𝑛𝑘 (𝜆𝑖𝐼−𝐴⋮𝐵 )=𝑛 for all eigenvalues 𝜆𝑖  of 𝐴.\nd.    ConditionThe controllability matrix 𝑄𝑐 ∈ 𝑅𝑛×𝑛𝑚 has rank n:\n\nThe controllability matrix 𝑄𝑐 is square matrix if the system is single input only.\nIf the matrix 𝑄𝑐 has rank less than 𝑛, this condition does not give which states are uncontrollable and the rest are controllable.\nIf there is any 𝑛 × 𝑛 submatrix of 𝑄𝑐 with nonzero determinant, the matrix 𝑄𝑐 has rank 𝑛.\nThe matrix 𝑄𝑐 has rank 𝑛 if the matrix 𝑀 = ${𝑄𝑐^𝑇 }$𝑄𝑐 (or 𝑀 = 𝑄𝑐${𝑄𝑐^𝑇 }$) has nonzero determinant.\n\n\nIn MATLAB, ctrb(A,B) returns the controllability matrix.\nIII.    Output controbilitya .    DefinitionA system is said to be completely output controllable if it is possible to transfer the system output from any 𝑦($𝑡_0$) to any other desired output 𝑦($𝑡_1$) in a desired finite time interval $𝑡_1$ by unconstrained control vector 𝑢(𝑡).\nIn this case, we do not care controllability of each state, but the output.\n\nb.    TheoremThe necessary and sufficient condition for the system to be output controllable is that the rank of the output controllability matrix\n​        𝑄𝑐𝑜 = [𝐶𝐵,𝐶𝐴𝐵,.𝐶$𝐴^{𝑛−1}$𝐵,𝐷]\nhas rank 𝑝, where 𝑝 is a dimension of output vector 𝑦.\n\nA controllable system is not necessarily output controllable!\nAn output controllable system is not necessarily state controllable!\n\n\n\n\n\nIV.    Reachabilitya.    Definition A particular state $𝑥_1$ is called reachable if there exists an input that transfers the state of the system from the initial state $𝑥_0$ to $x_1$ in some finite time interval $[t0, t).$\n\nV.    Stabilizabilitya.    Definition A system is stabilizable if all states that cannot be reached decay  to zero asymptotically.\n\n\nIn other words, in such system, limited states can be controlled to certain values in reachable set and others tend to zero.\n\nVI.    Observabilitya.    DefinitionA system is said to be completely observable if every (critical) state 𝑥($𝑡_0$) can be completely identified by measurement of the output 𝑦(𝑡) over a finite time interval assuming that the control 𝑢(𝑡) is also available.\nControllability study the possibility to control the state from the input, while the observability study the possibility of estimating the state vector from the system output 𝑦(𝑡). If a system is not completely observable then some of its state variables are not practically measurable and are shielded from the observation.\n\nb.    Theorem\nc.    ConditionThe Observability matrix $𝑄_𝑂$ ∈ $𝑅^{𝑛𝑃×𝑁}$ has rank n:\n\nThe observability matrix $𝑄_𝑂$ is square matrix if the system is single output only.\nIf the matrix 𝑄𝑜 has rank less than 𝑛, this condition does not give which states are unobservable and the rest are observable.\nThematrix $𝑄_𝑂$ has rank 𝑛 if there is an 𝑛×𝑛 submatrix of 𝑄𝑜 that has nonzero determinant.\nThe matrix 𝑄𝑜 has rank 𝑛 if the matrix 𝑀 = $𝑄_𝑂^𝑇 𝑄𝑜$ (or 𝑀 = $𝑄𝑜𝑄_𝑂^𝑇$ ) has nonzero determinant.\n\nIn MATLAB, you may use obsv(A,C)\nVII. Detectabilitya. DefinitionA system is detectable if all states that cannot be observed decay to zero asymptotically.\n\n","dateCreated":"2020-12-21T18:32:00+08:00","dateModified":"2023-06-28T22:02:52+08:00","datePublished":"2020-12-21T18:32:00+08:00","description":"Younger than I thought.","headline":"Automatic Control Linear Systems PART VI","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://redbowtie.github.io/2020/12/21/AutoCtrlLS_VI/"},"publisher":{"@type":"Organization","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png","logo":{"@type":"ImageObject","url":"/Ess/lh.png"}},"url":"https://redbowtie.github.io/2020/12/21/AutoCtrlLS_VI/","keywords":"Control, Linear System"}</script>
+    <meta name="description" content="Younger than I thought.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Automatic Control Linear Systems PART VI">
+<meta property="og:url" content="https://redbowtie.github.io/2020/12/21/AutoCtrlLS_VI/index.html">
+<meta property="og:site_name" content="Amaurot Ch.">
+<meta property="og:description" content="Younger than I thought.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/7/cb0.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/7/eg0.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/7/eg1.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/7/pr0.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/7/def3.png">
+<meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/3e6ddc943290a5e10aa10a064fb4d6a745f0fde7">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/7/eg2.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/7/eq0.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/7/eg3.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/7/oc0.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/7/eg4.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/7/eg5.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/7/eg6.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/7/th0.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/7/eg7.png">
+<meta property="article:published_time" content="2020-12-21T10:32:00.000Z">
+<meta property="article:modified_time" content="2023-06-28T14:02:52.219Z">
+<meta property="article:author" content="Estus">
+<meta property="article:tag" content="Control">
+<meta property="article:tag" content="Linear System">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://redbowtie.github.io/images/ALCS/7/cb0.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://redbowtie.github.io/assets/images/Ess/lh.png"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-4a47lwukh8khnoqxgkjhofoety2rdykli5sq4vv9v7xmmtg07euhkbfahoe5.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/"
+            aria-label=""
+        >
+            Amaurot Ch.
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+            <img class="header-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a
+                    href="/#about"
+                    aria-label="Read more about the author"
+                >
+                    <img class="sidebar-profile-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Estus</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>Fun things <del>never</del> always stops.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/RedBowtie"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/atom.xml"
+                            
+                            rel="noopener"
+                            title="RSS"
+                        >
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/links"
+                            
+                            rel="noopener"
+                            title="Links"
+                        >
+                        <i class="sidebar-button-icon fa fa-sign" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Links</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            Automatic Control Linear Systems PART VI
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-12-21T18:32:00+08:00">
+	
+		    Dec 21, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Term3/">Term3</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>Younger than I thought.<span id="more"></span></p>
+<h1 id="table-of-contents">Table of Contents</h1><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Lec-7-Controllability-and-Observability"><span class="toc-text">Lec 7 Controllability and Observability</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#I-LA-Recall"><span class="toc-text">I.    LA Recall</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#a-Rank-of-matrix"><span class="toc-text">a.    Rank of matrix</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#II-Controllability"><span class="toc-text">II.    Controllability</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#a-Definition"><span class="toc-text">a.    Definition</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#b-Example"><span class="toc-text">b.    Example.</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#c-Definition-2"><span class="toc-text">c .    Definition 2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#d-Example"><span class="toc-text">d.    Example</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#e-Theorem"><span class="toc-text">e.    Theorem</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#d-Condition"><span class="toc-text">d.    Condition</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#III-Output-controbility"><span class="toc-text">III.    Output controbility</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#a-Definition-1"><span class="toc-text">a .    Definition</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#b-Theorem"><span class="toc-text">b.    Theorem</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IV-Reachability"><span class="toc-text">IV.    Reachability</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#a-Definition-2"><span class="toc-text">a.    Definition</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#V-Stabilizability"><span class="toc-text">V.    Stabilizability</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#a-Definition-3"><span class="toc-text">a.    Definition</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#VI-Observability"><span class="toc-text">VI.    Observability</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#a-Definition-4"><span class="toc-text">a.    Definition</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#b-Theorem-1"><span class="toc-text">b.    Theorem</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#c-Condition"><span class="toc-text">c.    Condition</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#VII-Detectability"><span class="toc-text">VII. Detectability</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#a-Definition-5"><span class="toc-text">a. Definition</span></a></li></ol></li></ol></li></ol>
+<hr>
+<h2 id="Lec-7-Controllability-and-Observability"><a href="#Lec-7-Controllability-and-Observability" class="headerlink" title="Lec 7 Controllability and Observability"></a>Lec 7 Controllability and Observability</h2><hr>
+<h3 id="I-LA-Recall"><a href="#I-LA-Recall" class="headerlink" title="I.    LA Recall"></a>I.    LA Recall</h3><h4 id="a-Rank-of-matrix"><a href="#a-Rank-of-matrix" class="headerlink" title="a.    Rank of matrix"></a>a.    Rank of matrix</h4><p>The <u><strong>rank</strong></u> of a matrix 𝐴 is the dimension of the vector space generated (or spanned) by its columns. This corresponds to the maximal number of <u><strong>linearly independent columns</strong></u> of 𝐴.</p>
+<p>In MATLAB, using <font color=red>rank()</font> would be quick.</p>
+<h3 id="II-Controllability"><a href="#II-Controllability" class="headerlink" title="II.    Controllability"></a>II.    Controllability</h3><h4 id="a-Definition"><a href="#a-Definition" class="headerlink" title="a.    Definition"></a>a.    Definition</h4><p>A system is said to be completely <strong>state controllable</strong> if it is possible to transfer the system states from any initial state 𝑥(𝑡0) to any other desired state 𝑥(𝑡1) in a desired finite time interval 𝑡1 by unconstrained control vector 𝑢 𝑡 . Otherwise the system is not completely state controllable.</p>
+<p><img src="/images/ALCS/7/cb0.png" alt="cb0"></p>
+<ul>
+<li>if the system is controllable, the car can be moved to a desired position from any point in finite time.</li>
+<li>Unstrained control, it’s more theoretical.</li>
+<li>Note that not all parts are controllable and who’s in charge of the system - Matrix B.</li>
+</ul>
+<h4 id="b-Example"><a href="#b-Example" class="headerlink" title="b.    Example."></a>b.    Example.</h4><p><img src="/images/ALCS/7/eg0.png" alt="eg0"></p>
+<p><img src="/images/ALCS/7/eg1.png" alt="eg1"></p>
+<h4 id="c-Definition-2"><a href="#c-Definition-2" class="headerlink" title="c .    Definition 2"></a>c .    Definition 2</h4><p><img src="/images/ALCS/7/pr0.png" alt="pr0"></p>
+<p><img src="/images/ALCS/7/def3.png" alt="def3"></p>
+<p>A way to calculate the coresponding u.</p>
+<p>Here, Matrix W_c is usually called <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Controllability_Gramian#Controllability_Gramian">Controllability Gramian</a></p>
+<ul>
+<li><p>In <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Linear_algebra">linear algebra</a>, the <strong>Gram matrix</strong> (or <strong>Gramian matrix</strong>, <strong>Gramian</strong>) of a set of vectors <img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/3e6ddc943290a5e10aa10a064fb4d6a745f0fde7" alt="v_{1},\dots ,v_{n}"> in an <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Inner_product_space">inner product space</a> is the <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Hermitian_matrix">Hermitian matrix</a> of <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Inner_product">inner products</a>, whose entries are given by ${\displaystyle G_{ij}=\left\langle v_{i},v_{j}\right\rangle }$<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Gramian_matrix#cite_note-HJ-7.2.10-1">https://en.wikipedia.org/wiki/Gramian_matrix#cite_note-HJ-7.2.10-1</a>)</p>
+<p>An important application is to compute <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Linear_independence">linear independence</a>: a set of vectors are linearly independent if and only if the <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Gramian_matrix#Gram_determinant">Gram determinant</a> (the <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Determinant">determinant</a> of the Gram matrix) is non-zero.</p>
+</li>
+</ul>
+<h4 id="d-Example"><a href="#d-Example" class="headerlink" title="d.    Example"></a>d.    Example</h4><p><img src="/images/ALCS/7/eg2.png" alt="eg2"></p>
+<h4 id="e-Theorem"><a href="#e-Theorem" class="headerlink" title="e.    Theorem"></a>e.    Theorem</h4><p>The following statements are equivalent: </p>
+<p>S1) The pair 𝐴, 𝐵 is controllable;</p>
+<p>S2) <img src="/images/ALCS/7/eq0.png" alt="eq0">is nonsigular for any t&gt;0</p>
+<p>S3) The controllability matrix 𝑄𝑐 ∈ 𝑅𝑛×𝑛𝑚:</p>
+<p>​            𝑄𝑐 =[𝐵,𝐴𝐵,.$𝐴^{𝑛−1}$𝐵] </p>
+<p>S4)𝑟𝑎𝑛𝑘 (𝜆𝑖𝐼−𝐴⋮𝐵 )=𝑛 for all eigenvalues 𝜆𝑖  of 𝐴.</p>
+<h4 id="d-Condition"><a href="#d-Condition" class="headerlink" title="d.    Condition"></a>d.    Condition</h4><p>The controllability matrix 𝑄𝑐 ∈ 𝑅𝑛×𝑛𝑚 has rank n:</p>
+<ul>
+<li>The controllability matrix 𝑄𝑐 is square matrix if the system is single input only.</li>
+<li>If the matrix 𝑄𝑐 has rank less than 𝑛, this condition does not give which states are uncontrollable and the rest are controllable.</li>
+<li>If there is any 𝑛 × 𝑛 submatrix of 𝑄𝑐 with nonzero determinant, the matrix 𝑄𝑐 has rank 𝑛.</li>
+<li>The matrix 𝑄𝑐 has rank 𝑛 if the matrix 𝑀 = ${𝑄𝑐^𝑇 }$𝑄𝑐 (or 𝑀 = 𝑄𝑐${𝑄𝑐^𝑇 }$) has nonzero determinant.</li>
+</ul>
+<p><img src="/images/ALCS/7/eg3.png" alt="eg3" style="zoom:50%;" /></p>
+<p>In MATLAB, <strong>ctrb(A,B)</strong> returns the controllability matrix.</p>
+<h3 id="III-Output-controbility"><a href="#III-Output-controbility" class="headerlink" title="III.    Output controbility"></a>III.    Output controbility</h3><h4 id="a-Definition-1"><a href="#a-Definition-1" class="headerlink" title="a .    Definition"></a>a .    Definition</h4><p>A system is said to be completely <strong><u>output controllable</u></strong> if it is possible to transfer the system output from any 𝑦($𝑡_0$) to any other desired output 𝑦($𝑡_1$) in a desired finite time interval $𝑡_1$ by unconstrained control vector 𝑢(𝑡).</p>
+<p>In this case, we <u>do not care</u> controllability of <strong>each state</strong>, but the <strong>output.</strong></p>
+<p><img src="/images/ALCS/7/oc0.png" alt="oc0"></p>
+<h4 id="b-Theorem"><a href="#b-Theorem" class="headerlink" title="b.    Theorem"></a>b.    Theorem</h4><p>The necessary and sufficient condition for the system to be output controllable is that the <u>rank of the output controllability matrix</u></p>
+<p>​        𝑄𝑐𝑜 = [𝐶𝐵,𝐶𝐴𝐵,.𝐶$𝐴^{𝑛−1}$𝐵,𝐷]</p>
+<p>has rank 𝑝, where <strong>𝑝 is a dimension of output vector 𝑦.</strong></p>
+<ul>
+<li><font color=red>A controllable system is not necessarily output controllable!</font></li>
+<li><font color=red>An output controllable system is not necessarily state controllable!</font>
+
+
+
+</li>
+</ul>
+<h3 id="IV-Reachability"><a href="#IV-Reachability" class="headerlink" title="IV.    Reachability"></a>IV.    Reachability</h3><h4 id="a-Definition-2"><a href="#a-Definition-2" class="headerlink" title="a.    Definition"></a>a.    Definition</h4><p> A particular state $𝑥_1$ is called reachable if there exists an input that transfers the state of the system from the initial state $𝑥_0$ to $x_1$ in some finite time interval $[t0, t).$</p>
+<p><img src="/images/ALCS/7/eg4.png" alt="eg4"></p>
+<h3 id="V-Stabilizability"><a href="#V-Stabilizability" class="headerlink" title="V.    Stabilizability"></a>V.    Stabilizability</h3><h4 id="a-Definition-3"><a href="#a-Definition-3" class="headerlink" title="a.    Definition"></a>a.    Definition</h4><p> A system is <strong>stabilizable</strong> if all states that <font color=red>cannot be reached decay </font> to zero asymptotically.</p>
+<p><img src="/images/ALCS/7/eg5.png" alt="eg5"></p>
+<ul>
+<li>In other words, in such system, limited states can be controlled to certain values in reachable set and others tend to zero.</li>
+</ul>
+<h3 id="VI-Observability"><a href="#VI-Observability" class="headerlink" title="VI.    Observability"></a>VI.    Observability</h3><h4 id="a-Definition-4"><a href="#a-Definition-4" class="headerlink" title="a.    Definition"></a>a.    Definition</h4><p>A system is said to be completely observable if <strong>every (critical) state</strong> 𝑥($𝑡_0$) can be completely identified by measurement of the output 𝑦(𝑡) over a finite time interval assuming that the control 𝑢(𝑡) is also available.</p>
+<p>Controllability study the possibility to control the state from the input, while the observability study the possibility of estimating the state vector from the system output 𝑦(𝑡). If a system is <strong><u>not completely observable</u></strong> then some of its state variables are not practically measurable and are shielded from the observation.</p>
+<p><img src="/images/ALCS/7/eg6.png" alt="eg6"></p>
+<h4 id="b-Theorem-1"><a href="#b-Theorem-1" class="headerlink" title="b.    Theorem"></a>b.    Theorem</h4><p><img src="/images/ALCS/7/th0.png" alt="th0"></p>
+<h4 id="c-Condition"><a href="#c-Condition" class="headerlink" title="c.    Condition"></a>c.    Condition</h4><p>The Observability matrix $𝑄_𝑂$ ∈ $𝑅^{𝑛𝑃×𝑁}$ has rank n:</p>
+<ul>
+<li>The observability matrix $𝑄_𝑂$ is square matrix if the system is single output only.</li>
+<li>If the matrix 𝑄𝑜 has rank less than 𝑛, this condition does not give which states are unobservable and the rest are observable.</li>
+<li>Thematrix $𝑄_𝑂$ has rank 𝑛 if there is an 𝑛×𝑛 submatrix of 𝑄𝑜 that has nonzero determinant.</li>
+<li>The matrix 𝑄𝑜 has rank 𝑛 if the matrix 𝑀 = $𝑄_𝑂^𝑇 𝑄𝑜$ (or 𝑀 = $𝑄𝑜𝑄_𝑂^𝑇$ ) has nonzero determinant.</li>
+</ul>
+<p>In MATLAB, you may use obsv(A,C)</p>
+<h3 id="VII-Detectability"><a href="#VII-Detectability" class="headerlink" title="VII. Detectability"></a>VII. Detectability</h3><h4 id="a-Definition-5"><a href="#a-Definition-5" class="headerlink" title="a. Definition"></a>a. Definition</h4><p>A system is <strong><em>detectable</em></strong> if all states that cannot be observed decay to zero asymptotically.</p>
+<p><img src="/images/ALCS/7/eg7.png" alt="eg7"></p>
+
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Control/" rel="tag">Control</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Linear-System/" rel="tag">Linear System</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/12/23/Javascript/"
+                    data-tooltip="Bad Introduction to Javascript"
+                    aria-label="PREVIOUS: Bad Introduction to Javascript"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/12/16/AutoCtrlLS_V/"
+                    data-tooltip="Automatic Control Linear Systems PART V"
+                    aria-label="NEXT: Automatic Control Linear Systems PART V"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="Table of Contents">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2023 Estus. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/12/23/Javascript/"
+                    data-tooltip="Bad Introduction to Javascript"
+                    aria-label="PREVIOUS: Bad Introduction to Javascript"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/12/16/AutoCtrlLS_V/"
+                    data-tooltip="Automatic Control Linear Systems PART V"
+                    aria-label="NEXT: Automatic Control Linear Systems PART V"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="Table of Contents">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Estus</h4>
+        
+            <div id="about-card-bio"><p>Fun things <del>never</del> always stops.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Student</p>
+
+            </div>
+        
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/Ess/0_t.png');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-yb3zostooymjozqpjlvijhvzw0bdaljwvcvx0fhqdpyvq6aviyzwgfjkfjkw.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

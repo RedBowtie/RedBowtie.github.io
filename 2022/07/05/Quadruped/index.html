@@ -1,0 +1,638 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Amaurot Ch.">
+    <title>Quadruped Basics - Amaurot Ch.</title>
+    <meta name="author" content="Estus">
+    
+    
+        <link rel="icon" href="https://upload.cc/i1/2021/05/18/lSCp1v.png">
+    
+    
+        
+            <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png"},"articleBody":"Things are getting clearer now. \nThe analysis of forward and reverse kinematics and etc. will be supplemented in the future from manual scripts.\n\n\n\n2D - Modellingtbc\n\n3D - Modellingtbc\n\nPitch\nRoll\nYaw\nTrajectory PlanningCycloidBazier\nDynamics BasicsPreviously, the modelling of legs is done, however, only the kinematics part is not enough. As the robot is in motion, which is a time-variant system. During the process, velocity and acceleration may change with time. Natrually, force is involved with acceleration, and the analysis of force requires dynamics.\n1.Velocity and static forceStarting with rigid motion.\n1.1 Time-variant representationsDifferential of position vectorWhen the mass of an object can be concentrate into one point, the rotation of the object itself can be ignored, and only linear velocity needs to be considered.\nDefine a point $Q$ in reference coodinate $B$, the position can be represent as $^B P_Q$, and the velocity as $^B V_Q$\nThe following relation exists:\n\n^B V_Q=\\frac{d^B P_Q}{dt}=\\lim_{\\triangle t\\rightarrow0 }\\frac{^B P_Q(t+\\triangle t)- {^B P_Q(t)}}{\\triangle t}\nThe reference frame is very important, as the frame itself may be moving.\n\nSimilar to transformation of position, the velocity can also be changed between coordinate.\n\n^A(^B V_Q)=^A(\\frac{d^B V_Q}{dt})=^A_B R^B V_Q\nIn most cases, there’ll be discussion about the relative velocity of origin to the world reference frame, without considering the relative velocity to any other coordinate:\nv_C={^U V_{CORG}}\nAngular velocityWhen the object cannot be regard as an mass point, the rotation needs to be considered, which will usually be represented as $\\Omega$.\nAssume to observe point $Q$ from coordinate $\\{B\\}$, and the position is invariant to time, while $\\{B\\}$ is rotating relatively to $\\{A\\}$, compute the velocity of $Q$ in $\\{A\\}$,\n\n^A V_Q = {^A\\Omega_B} \\times {^A P_Q}\nThe cross product equation:a\\times b=(l,m,n)\\times(o,p,q)=(mq-np,no-lq,lp-mo)\n\nIn which,\n\n^A P_Q = {^A_B R^B P_Q}Normally, $Q$ is changing relatively to $\\{B\\}$, thus the linear velocity compoent.\n\n^A V_Q={^A_B R {^B V_Q}}+{^A\\Omega_B}\\times{^A_B R_BP_Q}Adding velocity of origin,\n\n^A V_Q={^A V_{BORG}}+{^A R_B {^B V_Q}}+{^A\\Omega_B}\\times{^A_B R_BP_Q}\n2. Link motionAcording to D-H parameters, calculate angular velocity:\n\n^i\\omega_{i+1}={^i\\omega_{i}}+ {^i_{i+1}R\\dot{\\theta}_{i+1}}{^{i+1}}\\hat{Z}_{i+1}where:\n\n\\theta_{i+1}{^{i\n+1}}\\hat{Z}_{i+1}={^{i+1}}\\left[\\begin{array}{c}0\\\\0\\\\\\dot{\\theta}_{i+1}\\end{array}\\right]\nTo note that, in DH parameter, the revolute joints are defined as $Z$ axis, hence\n\n \\theta_{i+1}{^{i+1}\\hat{Z}_{i+1}}\nAs the angular velocity of $(i+1)-th$ link is produced by joint motion, so its angular velocity with respect to $i-th$ link, equals the raw angular velocity of link $i$ plus the joint speed of link $i+1$\nMultiply $^{i+1}_i R$ on both sides to change observation coordinate,\n\n^{i+1}\\omega_{i+1}=^{i+1}_i R^i \\omega_i+\\dot{\\theta}_{i+1}{^{i+1}}\\hat{Z}_{i+1}For linear velocity\n\n^i v_{i+1}={^iv_i}+{^i\\omega_i}\\times{^iP_{i+1}}Similarly,\n\n^{i+1}v_{i+1}={^{i+1}_i}R(^iv_i+{^i\\omega_i}\\times{^iP_{i+\n1}})\nDynamics Modelling1. ReviewThe equation for revolute joint are presented above. As for prismatic joints, the idea is about the same:\n\n^{i+1}\\omega_{i+1}={^{i+1}_iR{^i\\omega_i}}\n^{i+1}v_{i+1}={^{i+1}_iR(^iv_i+{^i\\omega_i\\times{^iP_{i+1}}})}+\\dot{d}_{i+1}{^{i+1}\\hat{Z}_{i+1}}\n2. Rigid body acceleration2.1 Linear accelerationSame as the previous process, differentiate the velocity to obtain acceleration.\n\n^BA_Q=\\frac{d^BV_Q}{dt}=\\lim_{\\triangle t\\rightarrow0}\\frac{^BV_Q(t+\\triangle t)-^BV_Q(t)}{\\triangle t}Thr transformation between coordiantes are\n\n^AA_Q={^AA_{BORG}}+^A\\dot{\\Omega}_B\\times{^A_BR^BP_Q}+{^A\\Omega_B\\times({^A\\Omega_B\\times{^A_BR^BP_Q}})}+2{^A\\Omega_B\\times{^A_BR^BV_Q}}+{^A_BR^BA_Q}2.2 Angular acceleration\n^A\\dot{\\Omega}_B=\\frac{d^A\\Omega_B}{dt}=\\lim_{\\triangle t\\rightarrow0}\\frac{^A\\Omega_B(t+\\triangle t)-{^A\\Omega_B(t)}}{\\triangle t}Transformation between coordinate is as follows, asusme the reference frame $\\{B\\}$ is rotating at an angular speed $^A\\Omega_B$ with respect to reference frame $\\{A\\}$, and frame $\\{C\\}$  is rorating at the speed $^B\\Omega_C$ with respect to frame $\\{B\\}$\n\n^A\\Omega_C={^A\\Omega_B}+{^A_BR^B\\Omega_C}\n^A\\dot{\\Omega}_C={^A\\dot{\\Omega}_B}+{^A_BR^B\\dot{\\Omega_C}}+{^A\\Omega_B}\\times{^A_BR^B\\Omega_C}\n3. Parallel axis theoremThe theorem can be used to determine the moment of inertia or the second moment of area of a rigid body about any axis, given the body’s moment of inertia about a parallel axis through the object’s center of gravity and the perpendicular distance between the axes.\n\n^AI={^CI}+m(P^T_CP_CI_3-P_CP^T_C)where $P_C=[x_C\\ y_C\\ z_C]^T$, representing the center of mass in coordinate $\\{A\\}$.\n\n4. Newton / Euler equationIn Newton’s equation, $m$ is the mass of rigid body.\n\nF=m\\dot{v}In Euler’s equation, $\\dot{\\omega},\\ \\omega$ are angular acceleration and angupar speed respectively, $^CI$ represent the moment of inertia in rigid mass center corrdinate.\n\nN={^CI\\dot{\\omega}}+\\omega\\times{^CI\\omega}\n5. Iterative Newton-Euler dynamicsTo calculate the inertia force applied to the link, the angular speed, linear speed and angular acceleration is required.\n5.1 Iteration of  AccelerationAngular accelerationTo differentiate the angular speed equation, to obtain angular acceleration.\n\n^{i+1}\\dot{\\omega}_{i+1}={^{i+1}_iR{^i\\dot{\\omega}_i}}+{^{i+1}_iR}{^i\\omega_i}\\times\\dot{\\theta}_{i+1}{^{i+1}\\hat{Z}_{i+1}}Linear acceleration\n^{i+1}a_{i+1}={^{i+1}_i}R({^{i+1}_i}a_i+{^i\\dot{\\omega_i}\\times{^iP_{i+1}+{^i\\omega_i}({^i\\omega_i}\\times{^iP_{i+1}}}})Acceleration of mass center\n^ia_{c_i} = {^ia_i}+{^i\\dot{\\omega}_i\\times{^iP_{c_i}}}+{^i\\omega_i}\\times({^i\\omega_i\\times {^iP_{c_i}}})5.2 Iteration of force and torque\n^if_i={^iF_i}+{^i_{i+1}R{^{i+1}}f_{i+1}}\n^in_i={^i_{i+1}R^{i+1}n_{i+1}}+{^iN_i} + {^iP_{c_i}}\\times{^iF_i} + {^iP_{i+1}}\\times {^i_{i+1}R^{i+1}f_{i+1}}In static force, the joint torque can be derived via the torque applied to adjacent one by link on the $\\hat{Z}$ component.\n\n\\tau={^in^T_i}{^i\\hat{Z}_i}\nUnitree GazeboPreviously, I tried once fore. But, at that time, I was in a hurry and barely had time to read the instructions thoroghouly.\nThe main problem was about the SKD called unitree_ros_to_real, in which the legged_msgs is required for simulating model A1, but I’ve been having isssues compiling the other one designed for manipulating real robots. \nI was not aware of this, and the simplest solution was to remove that package.\nKinda dumb.\nSo, according to the offical readme.md\n\nRobots and joints controller can be loaded in Gazebo, in order to perform low-level control (e.g. torque, position and angular velocity of the joints), while the high-level control, namely wakling is not supported.\n\nDependencies\nROS Melodic or Kinetic\nGazebo\nunitree_legged_msgs: It’s a package under unitree_ros_to_real\n\nBuildFor Melodic\n1sudo apt-get install ros-melodic-controller-interface  ros-melodic-gazebo-ros-control ros-melodic-joint-state-controller ros-melodic-effort-controllers ros-melodic-joint-trajectory-controller\nIn the file unitree_gazebo/worlds/stairs.world. At the end:\n123&lt;include&gt;\t&lt;uri&gt;model:///home/unitree/catkin_ws/src/unitree_ros/unitree_gazebo/worlds/building_editor_models/stairs&lt;/uri&gt;&lt;/include&gt;\nChange the path of building_editor_models/stairs to real path.\nThen use catkin_make to build:\n12cd ~/catkin_wscatkin_make\nunitree_ros_to_real\nBasic message function: unitree_legged_msgs\nThe interface between ROS and real robot: unitree_legged_real\n\nBuildDownload the package, throw it in to source directory and then\n12cd ~/wscatkin_make\nunitree_legged_sdkIt’s really strange that the different versions of SDK supports different product.\nDependencies\nBoost\nCMake\ng++\n\nBuild1234mkdir buildcd buildcmake ../make\nOne more thingRemember to source the workspace in order to get things linked.\nDetails of PackagesThe description of robotsIt contains the description of Go1, A1, Aliengo and Laikago, including mesh, urdf and xacro files of robot.\nModel can be checked by\n1roslaunch model_description model_rviz.launch\nunitree_legged_controllIt contains the joints controllers for Gazebo simulation, which allows users to control joints with position, velocity and torque. \nRefer to unitree_ros/unitree_controllers/src/servo.cpp for joint control examples in different modes.\nunitree_gazebo &amp; unitree_controllerLaunch gazebo simulation with the following command\n1roslaunch unitree_gazebo normal.launch rname:=a1 wname:=stairs\nStand controllerAfter launching the gazebo, you can start to control the robot:\n1rosrun unitree_controller unitree_servo\nExternal disturbances is also available\n1rosrun unitree_controller unitree_external_force\nPosition and pose publisherHere we demonstrated how to control the position and pose of robot without a controller, which should be useful in SLAM or visual development.\nThen run the position and pose publisher in another terminal:\n1rosrun unitree_controller unitree_move_kinetic\nThe robot will turn around the origin, which is the movement under the world coordinate frame. And inside of the source file move_publisher.cpp, we also provide the method to move using the robot coordinate frame. You can change the value of def_frame to coord::ROBOT and run the catkin_make again, then the unitree_move_publisher will move robot under its own coordinate frame.\n","dateCreated":"2022-07-05T00:32:00+08:00","dateModified":"2023-06-28T22:06:34+08:00","datePublished":"2022-07-05T00:32:00+08:00","description":"Things are getting clearer now.","headline":"Quadruped Basics","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://redbowtie.github.io/2022/07/05/Quadruped/"},"publisher":{"@type":"Organization","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png","logo":{"@type":"ImageObject","url":"/Ess/lh.png"}},"url":"https://redbowtie.github.io/2022/07/05/Quadruped/","keywords":"Quadruped"}</script>
+    <meta name="description" content="Things are getting clearer now.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Quadruped Basics">
+<meta property="og:url" content="https://redbowtie.github.io/2022/07/05/Quadruped/index.html">
+<meta property="og:site_name" content="Amaurot Ch.">
+<meta property="og:description" content="Things are getting clearer now.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-07-04T16:32:00.000Z">
+<meta property="article:modified_time" content="2023-06-28T14:06:34.170Z">
+<meta property="article:author" content="Estus">
+<meta property="article:tag" content="Quadruped">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://redbowtie.github.io/assets/images/Ess/lh.png"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-4a47lwukh8khnoqxgkjhofoety2rdykli5sq4vv9v7xmmtg07euhkbfahoe5.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/"
+            aria-label=""
+        >
+            Amaurot Ch.
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+            <img class="header-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a
+                    href="/#about"
+                    aria-label="Read more about the author"
+                >
+                    <img class="sidebar-profile-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Estus</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>Fun things <del>never</del> always stops.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/RedBowtie"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/atom.xml"
+                            
+                            rel="noopener"
+                            title="RSS"
+                        >
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/links"
+                            
+                            rel="noopener"
+                            title="Links"
+                        >
+                        <i class="sidebar-button-icon fa fa-sign" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Links</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            Quadruped Basics
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2022-07-05T00:32:00+08:00">
+	
+		    Jul 05, 2022
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Robotics/">Robotics</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>Things are getting clearer now. <span id="more"></span></p>
+<p>The analysis of forward and reverse kinematics and etc. will be supplemented in the future from manual scripts.</p>
+<hr>
+<h1 id="table-of-contents">Table of Contents</h1><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#2D-Modelling"><span class="toc-text">2D - Modelling</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3D-Modelling"><span class="toc-text">3D - Modelling</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pitch"><span class="toc-text">Pitch</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Roll"><span class="toc-text">Roll</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Yaw"><span class="toc-text">Yaw</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Trajectory-Planning"><span class="toc-text">Trajectory Planning</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Cycloid"><span class="toc-text">Cycloid</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bazier"><span class="toc-text">Bazier</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dynamics-Basics"><span class="toc-text">Dynamics Basics</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Velocity-and-static-force"><span class="toc-text">1.Velocity and static force</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-Time-variant-representations"><span class="toc-text">1.1 Time-variant representations</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Differential-of-position-vector"><span class="toc-text">Differential of position vector</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Angular-velocity"><span class="toc-text">Angular velocity</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Link-motion"><span class="toc-text">2. Link motion</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dynamics-Modelling"><span class="toc-text">Dynamics Modelling</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Review"><span class="toc-text">1. Review</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Rigid-body-acceleration"><span class="toc-text">2. Rigid body acceleration</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-Linear-acceleration"><span class="toc-text">2.1 Linear acceleration</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-Angular-acceleration"><span class="toc-text">2.2 Angular acceleration</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Parallel-axis-theorem"><span class="toc-text">3. Parallel axis theorem</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Newton-Euler-equation"><span class="toc-text">4. Newton &#x2F; Euler equation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-Iterative-Newton-Euler-dynamics"><span class="toc-text">5. Iterative Newton-Euler dynamics</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-1-Iteration-of-Acceleration"><span class="toc-text">5.1 Iteration of  Acceleration</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Angular-acceleration"><span class="toc-text">Angular acceleration</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Linear-acceleration"><span class="toc-text">Linear acceleration</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Acceleration-of-mass-center"><span class="toc-text">Acceleration of mass center</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-2-Iteration-of-force-and-torque"><span class="toc-text">5.2 Iteration of force and torque</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unitree-Gazebo"><span class="toc-text">Unitree Gazebo</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dependencies"><span class="toc-text">Dependencies</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Build"><span class="toc-text">Build</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#unitree-ros-to-real"><span class="toc-text">unitree_ros_to_real</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Build-1"><span class="toc-text">Build</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#unitree-legged-sdk"><span class="toc-text">unitree_legged_sdk</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Dependencies-1"><span class="toc-text">Dependencies</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Build-2"><span class="toc-text">Build</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#One-more-thing"><span class="toc-text">One more thing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Details-of-Packages"><span class="toc-text">Details of Packages</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#The-description-of-robots"><span class="toc-text">The description of robots</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#unitree-legged-controll"><span class="toc-text">unitree_legged_controll</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#unitree-gazebo-amp-unitree-controller"><span class="toc-text">unitree_gazebo &amp; unitree_controller</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Stand-controller"><span class="toc-text">Stand controller</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Position-and-pose-publisher"><span class="toc-text">Position and pose publisher</span></a></li></ol></li></ol></li></ol>
+<hr>
+<h2 id="2D-Modelling"><a href="#2D-Modelling" class="headerlink" title="2D - Modelling"></a>2D - Modelling</h2><p>tbc</p>
+<hr>
+<h2 id="3D-Modelling"><a href="#3D-Modelling" class="headerlink" title="3D - Modelling"></a>3D - Modelling</h2><p>tbc</p>
+<hr>
+<h2 id="Pitch"><a href="#Pitch" class="headerlink" title="Pitch"></a>Pitch</h2><hr>
+<h2 id="Roll"><a href="#Roll" class="headerlink" title="Roll"></a>Roll</h2><hr>
+<h2 id="Yaw"><a href="#Yaw" class="headerlink" title="Yaw"></a>Yaw</h2><hr>
+<h2 id="Trajectory-Planning"><a href="#Trajectory-Planning" class="headerlink" title="Trajectory Planning"></a>Trajectory Planning</h2><h3 id="Cycloid"><a href="#Cycloid" class="headerlink" title="Cycloid"></a>Cycloid</h3><h3 id="Bazier"><a href="#Bazier" class="headerlink" title="Bazier"></a>Bazier</h3><hr>
+<h2 id="Dynamics-Basics"><a href="#Dynamics-Basics" class="headerlink" title="Dynamics Basics"></a>Dynamics Basics</h2><p>Previously, the modelling of legs is done, however, only the kinematics part is not enough. As the robot is in motion, which is a time-variant system. During the process, velocity and acceleration may change with time. Natrually, force is involved with acceleration, and the analysis of force requires dynamics.</p>
+<h3 id="1-Velocity-and-static-force"><a href="#1-Velocity-and-static-force" class="headerlink" title="1.Velocity and static force"></a>1.Velocity and static force</h3><p>Starting with rigid motion.</p>
+<h4 id="1-1-Time-variant-representations"><a href="#1-1-Time-variant-representations" class="headerlink" title="1.1 Time-variant representations"></a>1.1 Time-variant representations</h4><h5 id="Differential-of-position-vector"><a href="#Differential-of-position-vector" class="headerlink" title="Differential of position vector"></a>Differential of position vector</h5><p>When the mass of an object can be concentrate into one point, the rotation of the object itself can be ignored, and only linear velocity needs to be considered.</p>
+<p>Define a point $Q$ in reference coodinate $B$, the position can be represent as $^B P_Q$, and the velocity as $^B V_Q$</p>
+<p>The following relation exists:</p>
+<script type="math/tex; mode=display">
+^B V_Q=\frac{d^B P_Q}{dt}=\lim_{\triangle t\rightarrow0 }\frac{^B P_Q(t+\triangle t)- {^B P_Q(t)}}{\triangle t}</script><blockquote>
+<p>The reference frame is very important, as the frame itself may be moving.</p>
+</blockquote>
+<p>Similar to transformation of position, the velocity can also be changed between coordinate.</p>
+<script type="math/tex; mode=display">
+^A(^B V_Q)=^A(\frac{d^B V_Q}{dt})=^A_B R^B V_Q</script><blockquote>
+<p>In most cases, there’ll be discussion about the relative velocity of origin to the world reference frame, without considering the relative velocity to any other coordinate:</p>
+<script type="math/tex; mode=display">v_C={^U V_{CORG}}</script></blockquote>
+<h5 id="Angular-velocity"><a href="#Angular-velocity" class="headerlink" title="Angular velocity"></a>Angular velocity</h5><p>When the object cannot be regard as an mass point, the rotation needs to be considered, which will usually be represented as $\Omega$.</p>
+<p>Assume to observe point $Q$ from coordinate $\{B\}$, and the position is invariant to time, while $\{B\}$ is rotating relatively to $\{A\}$, compute the velocity of $Q$ in $\{A\}$,</p>
+<script type="math/tex; mode=display">
+^A V_Q = {^A\Omega_B} \times {^A P_Q}</script><blockquote>
+<p>The cross product equation:<script type="math/tex">a\times b=(l,m,n)\times(o,p,q)=(mq-np,no-lq,lp-mo)</script></p>
+</blockquote>
+<p>In which,</p>
+<script type="math/tex; mode=display">
+^A P_Q = {^A_B R^B P_Q}</script><p>Normally, $Q$ is changing relatively to $\{B\}$, thus the linear velocity compoent.</p>
+<script type="math/tex; mode=display">
+^A V_Q={^A_B R {^B V_Q}}+{^A\Omega_B}\times{^A_B R_BP_Q}</script><p>Adding velocity of origin,</p>
+<script type="math/tex; mode=display">
+^A V_Q={^A V_{BORG}}+{^A R_B {^B V_Q}}+{^A\Omega_B}\times{^A_B R_BP_Q}</script><hr>
+<h3 id="2-Link-motion"><a href="#2-Link-motion" class="headerlink" title="2. Link motion"></a>2. Link motion</h3><p>Acording to D-H parameters, calculate angular velocity:</p>
+<script type="math/tex; mode=display">
+^i\omega_{i+1}={^i\omega_{i}}+ {^i_{i+1}R\dot{\theta}_{i+1}}{^{i+1}}\hat{Z}_{i+1}</script><p>where:</p>
+<script type="math/tex; mode=display">
+\theta_{i+1}{^{i
++1}}\hat{Z}_{i+1}={^{i+1}}\left[\begin{array}{c}0\\0\\\dot{\theta}_{i+1}\end{array}\right]</script><blockquote>
+<p>To note that, in DH parameter, the revolute joints are defined as $Z$ axis, hence</p>
+<script type="math/tex; mode=display">
+ \theta_{i+1}{^{i+1}\hat{Z}_{i+1}}</script></blockquote>
+<p>As the angular velocity of $(i+1)-th$ link is produced by joint motion, so its angular velocity with respect to $i-th$ link, equals the raw angular velocity of link $i$ plus the joint speed of link $i+1$</p>
+<p>Multiply $^{i+1}_i R$ on both sides to change observation coordinate,</p>
+<script type="math/tex; mode=display">
+^{i+1}\omega_{i+1}=^{i+1}_i R^i \omega_i+\dot{\theta}_{i+1}{^{i+1}}\hat{Z}_{i+1}</script><p>For linear velocity</p>
+<script type="math/tex; mode=display">
+^i v_{i+1}={^iv_i}+{^i\omega_i}\times{^iP_{i+1}}</script><p>Similarly,</p>
+<script type="math/tex; mode=display">
+^{i+1}v_{i+1}={^{i+1}_i}R(^iv_i+{^i\omega_i}\times{^iP_{i+
+1}})</script><hr>
+<h2 id="Dynamics-Modelling"><a href="#Dynamics-Modelling" class="headerlink" title="Dynamics Modelling"></a>Dynamics Modelling</h2><h3 id="1-Review"><a href="#1-Review" class="headerlink" title="1. Review"></a>1. Review</h3><p>The equation for revolute joint are presented above. As for prismatic joints, the idea is about the same:</p>
+<script type="math/tex; mode=display">
+^{i+1}\omega_{i+1}={^{i+1}_iR{^i\omega_i}}</script><script type="math/tex; mode=display">
+^{i+1}v_{i+1}={^{i+1}_iR(^iv_i+{^i\omega_i\times{^iP_{i+1}}})}+\dot{d}_{i+1}{^{i+1}\hat{Z}_{i+1}}</script><hr>
+<h3 id="2-Rigid-body-acceleration"><a href="#2-Rigid-body-acceleration" class="headerlink" title="2. Rigid body acceleration"></a>2. Rigid body acceleration</h3><h4 id="2-1-Linear-acceleration"><a href="#2-1-Linear-acceleration" class="headerlink" title="2.1 Linear acceleration"></a>2.1 Linear acceleration</h4><p>Same as the previous process, differentiate the velocity to obtain acceleration.</p>
+<script type="math/tex; mode=display">
+^BA_Q=\frac{d^BV_Q}{dt}=\lim_{\triangle t\rightarrow0}\frac{^BV_Q(t+\triangle t)-^BV_Q(t)}{\triangle t}</script><p>Thr transformation between coordiantes are</p>
+<script type="math/tex; mode=display">
+^AA_Q={^AA_{BORG}}+^A\dot{\Omega}_B\times{^A_BR^BP_Q}+{^A\Omega_B\times({^A\Omega_B\times{^A_BR^BP_Q}})}+2{^A\Omega_B\times{^A_BR^BV_Q}}+{^A_BR^BA_Q}</script><h4 id="2-2-Angular-acceleration"><a href="#2-2-Angular-acceleration" class="headerlink" title="2.2 Angular acceleration"></a>2.2 Angular acceleration</h4><script type="math/tex; mode=display">
+^A\dot{\Omega}_B=\frac{d^A\Omega_B}{dt}=\lim_{\triangle t\rightarrow0}\frac{^A\Omega_B(t+\triangle t)-{^A\Omega_B(t)}}{\triangle t}</script><p>Transformation between coordinate is as follows, asusme the reference frame $\{B\}$ is rotating at an angular speed $^A\Omega_B$ with respect to reference frame $\{A\}$, and frame $\{C\}$  is rorating at the speed $^B\Omega_C$ with respect to frame $\{B\}$</p>
+<script type="math/tex; mode=display">
+^A\Omega_C={^A\Omega_B}+{^A_BR^B\Omega_C}</script><script type="math/tex; mode=display">
+^A\dot{\Omega}_C={^A\dot{\Omega}_B}+{^A_BR^B\dot{\Omega_C}}+{^A\Omega_B}\times{^A_BR^B\Omega_C}</script><hr>
+<h3 id="3-Parallel-axis-theorem"><a href="#3-Parallel-axis-theorem" class="headerlink" title="3. Parallel axis theorem"></a>3. Parallel axis theorem</h3><p>The theorem can be used to determine the moment of inertia or the second moment of area of a rigid body about any axis, given the body’s moment of inertia about a parallel axis through the object’s center of gravity and the perpendicular distance between the axes.</p>
+<script type="math/tex; mode=display">
+^AI={^CI}+m(P^T_CP_CI_3-P_CP^T_C)</script><p>where $P_C=[x_C\ y_C\ z_C]^T$, representing the center of mass in coordinate $\{A\}$.</p>
+<hr>
+<h3 id="4-Newton-Euler-equation"><a href="#4-Newton-Euler-equation" class="headerlink" title="4. Newton / Euler equation"></a>4. Newton / Euler equation</h3><p>In Newton’s equation, $m$ is the mass of rigid body.</p>
+<script type="math/tex; mode=display">
+F=m\dot{v}</script><p>In Euler’s equation, $\dot{\omega},\ \omega$ are angular acceleration and angupar speed respectively, $^CI$ represent the moment of inertia in rigid mass center corrdinate.</p>
+<script type="math/tex; mode=display">
+N={^CI\dot{\omega}}+\omega\times{^CI\omega}</script><hr>
+<h3 id="5-Iterative-Newton-Euler-dynamics"><a href="#5-Iterative-Newton-Euler-dynamics" class="headerlink" title="5. Iterative Newton-Euler dynamics"></a>5. Iterative Newton-Euler dynamics</h3><p>To calculate the inertia force applied to the link, the angular speed, linear speed and angular acceleration is required.</p>
+<h4 id="5-1-Iteration-of-Acceleration"><a href="#5-1-Iteration-of-Acceleration" class="headerlink" title="5.1 Iteration of  Acceleration"></a>5.1 Iteration of  Acceleration</h4><h5 id="Angular-acceleration"><a href="#Angular-acceleration" class="headerlink" title="Angular acceleration"></a>Angular acceleration</h5><p>To differentiate the angular speed equation, to obtain angular acceleration.</p>
+<script type="math/tex; mode=display">
+^{i+1}\dot{\omega}_{i+1}={^{i+1}_iR{^i\dot{\omega}_i}}+{^{i+1}_iR}{^i\omega_i}\times\dot{\theta}_{i+1}{^{i+1}\hat{Z}_{i+1}}</script><h5 id="Linear-acceleration"><a href="#Linear-acceleration" class="headerlink" title="Linear acceleration"></a>Linear acceleration</h5><script type="math/tex; mode=display">
+^{i+1}a_{i+1}={^{i+1}_i}R({^{i+1}_i}a_i+{^i\dot{\omega_i}\times{^iP_{i+1}+{^i\omega_i}({^i\omega_i}\times{^iP_{i+1}}}})</script><h5 id="Acceleration-of-mass-center"><a href="#Acceleration-of-mass-center" class="headerlink" title="Acceleration of mass center"></a>Acceleration of mass center</h5><script type="math/tex; mode=display">
+^ia_{c_i} = {^ia_i}+{^i\dot{\omega}_i\times{^iP_{c_i}}}+{^i\omega_i}\times({^i\omega_i\times {^iP_{c_i}}})</script><h4 id="5-2-Iteration-of-force-and-torque"><a href="#5-2-Iteration-of-force-and-torque" class="headerlink" title="5.2 Iteration of force and torque"></a>5.2 Iteration of force and torque</h4><script type="math/tex; mode=display">
+^if_i={^iF_i}+{^i_{i+1}R{^{i+1}}f_{i+1}}</script><script type="math/tex; mode=display">
+^in_i={^i_{i+1}R^{i+1}n_{i+1}}+{^iN_i} + {^iP_{c_i}}\times{^iF_i} + {^iP_{i+1}}\times {^i_{i+1}R^{i+1}f_{i+1}}</script><p>In static force, the joint torque can be derived via the torque applied to adjacent one by link on the $\hat{Z}$ component.</p>
+<script type="math/tex; mode=display">
+\tau={^in^T_i}{^i\hat{Z}_i}</script><hr>
+<h2 id="Unitree-Gazebo"><a href="#Unitree-Gazebo" class="headerlink" title="Unitree Gazebo"></a>Unitree Gazebo</h2><p>Previously, I tried once fore. But, at that time, I was in a hurry and barely had time to read the instructions thoroghouly.</p>
+<p>The main problem was about the SKD called <em>unitree_ros_to_real</em>, in which the <em>legged_msgs</em> is required for simulating model A1, but I’ve been having isssues compiling the other one designed for manipulating real robots. </p>
+<p>I was not aware of this, and the simplest solution was to remove that package.</p>
+<p>Kinda dumb.</p>
+<p>So, according to the offical <code>readme.md</code></p>
+<blockquote>
+<p>Robots and joints controller can be loaded in Gazebo, in order to perform low-level control (e.g. torque, position and angular velocity of the joints), while the high-level control, namely wakling is not supported.</p>
+</blockquote>
+<h3 id="Dependencies"><a href="#Dependencies" class="headerlink" title="Dependencies"></a>Dependencies</h3><ul>
+<li>ROS Melodic or Kinetic</li>
+<li>Gazebo</li>
+<li>unitree_legged_msgs: It’s a package under <code>unitree_ros_to_real</code></li>
+</ul>
+<h3 id="Build"><a href="#Build" class="headerlink" title="Build"></a>Build</h3><p>For Melodic</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install ros-melodic-controller-interface  ros-melodic-gazebo-ros-control ros-melodic-joint-state-controller ros-melodic-effort-controllers ros-melodic-joint-trajectory-controller</span><br></pre></td></tr></table></figure>
+<p>In the file <code>unitree_gazebo/worlds/stairs.world</code>. At the end:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">include</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">uri</span>&gt;</span>model:///home/unitree/catkin_ws/src/unitree_ros/unitree_gazebo/worlds/building_editor_models/stairs<span class="tag">&lt;/<span class="name">uri</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Change the path of <code>building_editor_models/stairs</code> to real path.</p>
+<p>Then use catkin_make to build:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/catkin_ws</span><br><span class="line">catkin_make</span><br></pre></td></tr></table></figure>
+<h4 id="unitree-ros-to-real"><a href="#unitree-ros-to-real" class="headerlink" title="unitree_ros_to_real"></a>unitree_ros_to_real</h4><ul>
+<li>Basic message function: <code>unitree_legged_msgs</code></li>
+<li>The interface between ROS and real robot: <code>unitree_legged_real</code></li>
+</ul>
+<h5 id="Build-1"><a href="#Build-1" class="headerlink" title="Build"></a>Build</h5><p>Download the package, throw it in to source directory and then</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/ws</span><br><span class="line">catkin_make</span><br></pre></td></tr></table></figure>
+<h4 id="unitree-legged-sdk"><a href="#unitree-legged-sdk" class="headerlink" title="unitree_legged_sdk"></a>unitree_legged_sdk</h4><p>It’s really strange that the different versions of SDK supports different product.</p>
+<h5 id="Dependencies-1"><a href="#Dependencies-1" class="headerlink" title="Dependencies"></a>Dependencies</h5><ul>
+<li>Boost</li>
+<li>CMake</li>
+<li>g++</li>
+</ul>
+<h5 id="Build-2"><a href="#Build-2" class="headerlink" title="Build"></a>Build</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir build</span><br><span class="line">cd build</span><br><span class="line">cmake ../</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
+<h3 id="One-more-thing"><a href="#One-more-thing" class="headerlink" title="One more thing"></a>One more thing</h3><p>Remember to <code>source</code> the <code>workspace</code> in order to get things linked.</p>
+<h3 id="Details-of-Packages"><a href="#Details-of-Packages" class="headerlink" title="Details of Packages"></a>Details of Packages</h3><h4 id="The-description-of-robots"><a href="#The-description-of-robots" class="headerlink" title="The description of robots"></a>The description of robots</h4><p>It contains the description of Go1, A1, Aliengo and Laikago, including mesh, urdf and xacro files of robot.</p>
+<p>Model can be checked by</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">roslaunch model_description model_rviz.launch</span><br></pre></td></tr></table></figure>
+<h4 id="unitree-legged-controll"><a href="#unitree-legged-controll" class="headerlink" title="unitree_legged_controll"></a>unitree_legged_controll</h4><p>It contains the joints controllers for Gazebo simulation, which allows users to control joints with position, velocity and torque. </p>
+<p>Refer to <code>unitree_ros/unitree_controllers/src/servo.cpp</code> for joint control examples in different modes.</p>
+<h4 id="unitree-gazebo-amp-unitree-controller"><a href="#unitree-gazebo-amp-unitree-controller" class="headerlink" title="unitree_gazebo &amp; unitree_controller"></a>unitree_gazebo &amp; unitree_controller</h4><p>Launch gazebo simulation with the following command</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">roslaunch unitree_gazebo normal.launch rname:=a1 wname:=stairs</span><br></pre></td></tr></table></figure>
+<h4 id="Stand-controller"><a href="#Stand-controller" class="headerlink" title="Stand controller"></a>Stand controller</h4><p>After launching the gazebo, you can start to control the robot:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rosrun unitree_controller unitree_servo</span><br></pre></td></tr></table></figure>
+<p>External disturbances is also available</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rosrun unitree_controller unitree_external_force</span><br></pre></td></tr></table></figure>
+<h4 id="Position-and-pose-publisher"><a href="#Position-and-pose-publisher" class="headerlink" title="Position and pose publisher"></a>Position and pose publisher</h4><p>Here we demonstrated how to control the position and pose of robot without a controller, which should be useful in SLAM or visual development.</p>
+<p>Then run the position and pose publisher in another terminal:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rosrun unitree_controller unitree_move_kinetic</span><br></pre></td></tr></table></figure>
+<p>The robot will turn around the origin, which is the movement under the world coordinate frame. And inside of the source file move_publisher.cpp, we also provide the method to move using the robot coordinate frame. You can change the value of <code>def_frame</code> to <code>coord::ROBOT</code> and run the catkin_make again, then the <code>unitree_move_publisher</code> will move robot under its own coordinate frame.</p>
+
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Quadruped/" rel="tag">Quadruped</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/09/28/DiscreteCtrl/"
+                    data-tooltip="Discrete Control - Practical assignments"
+                    aria-label="PREVIOUS: Discrete Control - Practical assignments"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/06/29/YEAR3/"
+                    data-tooltip="END of the 3rd year"
+                    aria-label="NEXT: END of the 3rd year"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="Table of Contents">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2023 Estus. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/09/28/DiscreteCtrl/"
+                    data-tooltip="Discrete Control - Practical assignments"
+                    aria-label="PREVIOUS: Discrete Control - Practical assignments"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/06/29/YEAR3/"
+                    data-tooltip="END of the 3rd year"
+                    aria-label="NEXT: END of the 3rd year"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="Table of Contents">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Estus</h4>
+        
+            <div id="about-card-bio"><p>Fun things <del>never</del> always stops.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Student</p>
+
+            </div>
+        
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/Ess/0_t.png');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-yb3zostooymjozqpjlvijhvzw0bdaljwvcvx0fhqdpyvq6aviyzwgfjkfjkw.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

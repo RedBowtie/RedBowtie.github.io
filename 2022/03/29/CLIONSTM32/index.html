@@ -1,0 +1,699 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Amaurot Ch.">
+    <title>Configuring CLION for STM32 development - Amaurot Ch.</title>
+    <meta name="author" content="Estus">
+    
+    
+        <link rel="icon" href="https://upload.cc/i1/2021/05/18/lSCp1v.png">
+    
+    
+        
+            <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png"},"articleBody":"Finally. it really took longer than I expected to figure it out. \nReference: 配置CLion用于STM32开发【优雅の嵌入式开发】- Peng Zhihui\n\nI suppose the outline is a imitation of his article. I’ll try to form my own one in the future.\n\n\n\nN. PrologueYou may assume it’s not necessary, but I just like to continue from where I left.\nWell the main reason is that I simply uses MacOS more. Yeah, despite the fact that I have a physical WINDOWS machine, but it’s like 10 meters away from me. Just very ridiculous considering I need to run over to see the board myself to get some feedback every time. So that’s a no.\nCLION have pretty much everything a modern IDE should have, with nice plugin support. Keil is just a little.. out of date, as least to me.\nWith in the process, I’ve met some problems without direct answer, each one took me approximately a day to solve. As relavant search results including MacOS is limited and most of which weren’t published recently, and it seems that they didn’t encounter the similar situation.\n\nI. Env and toolsEnv:\nMacOS - Intel based\n\nPackages:\nSTM32CubeMX\nCLION\nOpenOCD\nArm-none-eabi-gcc\nHomebrew\n\nHardware:\nA 3-rd Party STM32F103RCT6\nA ST-LINK/V2\n\nPreparation\nSTM32CubeMXDownload the latest release from official website: here\n\nCLIONSame as above: here\n\nOpenOCD1$ brew install openocd --HEAD\n\nPlease be sure to append “—HEAD”. As for the reason, check Troubleshooting - I \n\n\nArm-none-eabi-gcc1$ brew install arm-none-eabi-gcc\n\n\nIf brew is used, packages should be linked automatically and there’s no need to configure additional environment variables.\n\nII. CLION\nSet a new toolchainPreferences - Build, Execution, Deployment - Toolchains\nAdd a new profile with the name you would recognize.\ndefault CMake optionBundled should work fine.\nSet C/C++ Compiler,Debugger into corresponding ones which you may find at where arm-none-eabi-gcc is.\n\n\nSet a new CMake profileCreate a new one with previous toolchain.\n\n\nCreate a STM32CubeMX project.\n\nClick on the *.ioc file, then proceed with Open with STM32CubeMX\n\n\nIII.  STM32CubeMXJust take turns.\n\nDownload MCU PackagesIf you were the first time open this software, this window may pop up, just select the series you need. In my case, it’s STM32F1 Series.\n\nSelect the corresponding MCUThe default one should be different with what you got.\n\n\nSwitch to tab - Project Manager\nMake sure the project name and project location matches info in CLION.\nSelect SW4STM32  in  Toolchain/IDE. ( Not that necessary, in new version the default works fine)\n\nClick Generate Code on upper right cornerBefore doing so, remember to assign correct properties to pinouts.\nAnd be sure to do this every time you changed some thing in STM32Cube.\n\n\nAdditional InfomationIn some other tutorial, one suggest\n\nIn the same tab above, make sure SYS - Debug is Serial Wire.  This is for the convenience of all the following operations.\n\n(I’m not sure what is the exact effect of the following modification.)\n\nChange the HCLK(MHz) to 72 in Clock Configuration\nDon’t do this if you’re not clear what you’re doing, see Troubleshooting - II\n\n\nToggle Generate peripheral initialization as a pair of ‘.c/.h’ file per peripheral in Project Manager - Code Generator.\nChange High Speed Clock in Pinout &amp; configuration into Crystal/Ceramic Resonator\n\n\nIV. OpenOCDHeading back to CLION, a pop up window may apper suggest you to select Board Config Files\nBecause I’m using a 3-rd party board, so Cancel  first. But you may use a existing one if it matches.\n\nBefore the following operationsMaybe check if CMake returns any error first.\nIf it does, check the previous steps. But be sure that you are using the right profile.\nClick circled button to refresh.\n\nAnd on the upper right corner, the icon of hammer, triangle and bug, correspond with Compile, Flash and Debug\n\nClick on hammer, considering nothing is added to the code. You should have the following info.\n\nIt’s a little different from those shown in other tutorials, no number percentage, no blue characters suggesting the hex and bin files are being built.\nDespite of this, you should be able to find these two files under the workspace - xxx-arm-xxx directory.\n\nConfig fileUsing CLION to flash and debugging, and actually, you are doing so via OpenOCD\nThe mentioned *.cfg file is necessary for OpenOCD to operate.\nCreate a folder inside workspace or some other place you like. Then create a new file SomeName.cfg with the following content ( for ST-link )\n12345678# choose st-link/j-link/dap-link etc.# adapter driver cmsis-dap# transport select swdsource [find interface/stlink.cfg]transport select hla_swdsource [find target/stm32f1x.cfg]# download speed = 10MHzadapter speed 10000\nOf course, after observing provided cfg files in installedLocation\\openocd\\scripts\n\nBoard - Configuration of some certified board\nInterface - Configuration of debugger\nTarget - MCU configuration\n\nIt’s clear that the first line determines the interface and type, while the following are MCU type and download speed.\n\nMaybe it’s better not to add reset_config sirs_only, which may cause flash to fail\n\n\nDebug ConfigurationDrag down the menu beside the hammer icon, select Edit Configurations.\n\nBrowse and select the right cfg file.\nThe whole thing should be ready to go.\n\n\n\nBesides, when in debug session, Peripheral, you may load *.svd files to check registers in detail. SVD files can be found on github or just google it.\n\n\nTroubleshootingI. SEGFAULT when running opened -f *.cfg\nIt all started here:\n\nWhen trying to flash the *.bin file, OpenOCD’s output info stopped after showing Info: Clock speed 10000 kHz.\n\nThe screenshot taken is with the latest version, only for demonstration.\nIt actually quite strange, considering there’s no other error messages anymore. \nChecking ST-LINKAt first I doubt that if it was ST-LINK‘s problem, and maybe it’s related to firnware versions. As it’s a second-handed one, and last owner said that it had been eating dust for quite a while.\nFirmwareGladly, firmware update is available on MacOS. Check here\nUsing terminal commands to open, but be sure to get into the System Preferences, allow relavant dynamic library to run.\nDrive1$ st-info --probe\nThis command is used to detect info of connected board. If it cannot detect anything, maybe try to reconnect the pins ?\n1$ st-flash write .../*.bin 0x8000000\nWith this, you can flash built bin into the board, fully isolated from openocd.\nFor more usage, check the help message after input only st-flash, it provides sufficient examples.\n\n\n The simple program works fine, so the problem is not on ST-LINK’s side.\n\nChecking OpenOCD1$ openocd [-f interface/stlink.cfg](optinal) -f ../var/yourProfile.cfg\nAnd bingo.\nThis time, at least it returns an SEGFAULT error message.\nWith additional -d parameter, it can return more debug info, but not quite useful for finding the exact problem.\nAt first I thought it was related to the serial, as in terminal, previous index has a value behind it, but not this one.\nAfter some searching, I found an issue on github , so my guess is wrong, but coindidentally it leads me to the right clue (actually only because it’s in the debugger info, that’s just it).\n\nThanks to mcuee, he got into it and analyze the problem thoroughly. It was due to the minor changes in the interface of libusb, and, OpenOCD releases it’s major update in a slow pace. The latest one was in Feb, 2021. So what happens next is predictable. \nOpenOCD fixed this issue in the later updates, but without making it as an release version. So the fix was like the presented above, pull the latest source code from github and compile it is the only solution.\n1$ brew install openocd --HEAD\n\nII. Unexpected behaviour when flashing, but ran properly in debugging.\nSo I tried to toggle LED on and off with in the while loop, but the *.bin file seems to have something wrong.\n\nEither perform the first line then stop forever.\nOr, stop running at where HAL_DELAY is.\n\nAnd strangely, when using debug mode\n\nThe while loop repeats perfectly without HAL_DELAY. \n\nRemembering the last time I said that ST-LINK flashing was functional?\nSo I suspect it has something to do with compiling.\nAnd HAL_DELAY interrupting Debug session seems to be a known issue, but it should not be the same in terms of flashing. So currently not a clue.\n\nGood news:\n​    After create a new project and repeat the previous step, this problem is gone.\n​    Previously, the direct reason was that the process hangs on Systick_handler().\n​    And sometimes “connect while holding reset” is really helpful.\nBad news:\n​    Still have no clue on what exactly caused this.\n\nChange of Clock Speed ?\nLikely, remember that if after inputing the numbers and STM32CubeMX suggest that there’s no valid solution, don’t hit yes.\n\n\nAccidentally change some of the source code in other files ?\nMaybe not\n\n\n\n\n- End on 31 Mar. 2022\n","dateCreated":"2022-03-29T23:32:00+08:00","dateModified":"2023-06-28T22:04:15+08:00","datePublished":"2022-03-29T23:32:00+08:00","description":"Finally. it really took longer than I expected to figure it out.","headline":"Configuring CLION for STM32 development","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://redbowtie.github.io/2022/03/29/CLIONSTM32/"},"publisher":{"@type":"Organization","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png","logo":{"@type":"ImageObject","url":"/Ess/lh.png"}},"url":"https://redbowtie.github.io/2022/03/29/CLIONSTM32/","keywords":"STM32, CLION"}</script>
+    <meta name="description" content="Finally. it really took longer than I expected to figure it out.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Configuring CLION for STM32 development">
+<meta property="og:url" content="https://redbowtie.github.io/2022/03/29/CLIONSTM32/index.html">
+<meta property="og:site_name" content="Amaurot Ch.">
+<meta property="og:description" content="Finally. it really took longer than I expected to figure it out.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://redbowtie.github.io/images/CLIONSTM32/0.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/CLIONSTM32/1.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/CLIONSTM32/3.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/CLIONSTM32/4.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/CLIONSTM32/6.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/CLIONSTM32/5.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/CLIONSTM32/7.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/CLIONSTM32/8.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/CLIONSTM32/12.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/CLIONSTM32/9.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/CLIONSTM32/10.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/CLIONSTM32/11.png">
+<meta property="article:published_time" content="2022-03-29T15:32:00.000Z">
+<meta property="article:modified_time" content="2023-06-28T14:04:15.864Z">
+<meta property="article:author" content="Estus">
+<meta property="article:tag" content="STM32">
+<meta property="article:tag" content="CLION">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://redbowtie.github.io/images/CLIONSTM32/0.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://redbowtie.github.io/assets/images/Ess/lh.png"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-4a47lwukh8khnoqxgkjhofoety2rdykli5sq4vv9v7xmmtg07euhkbfahoe5.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/"
+            aria-label=""
+        >
+            Amaurot Ch.
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+            <img class="header-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a
+                    href="/#about"
+                    aria-label="Read more about the author"
+                >
+                    <img class="sidebar-profile-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Estus</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>Fun things <del>never</del> always stops.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/RedBowtie"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/atom.xml"
+                            
+                            rel="noopener"
+                            title="RSS"
+                        >
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/links"
+                            
+                            rel="noopener"
+                            title="Links"
+                        >
+                        <i class="sidebar-button-icon fa fa-sign" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Links</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            Configuring CLION for STM32 development
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2022-03-29T23:32:00+08:00">
+	
+		    Mar 29, 2022
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Trick/">Trick</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>Finally. it really took longer than I expected to figure it out. <span id="more"></span></p>
+<div class="alert success no-icon"><p><em>Reference</em>: <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/145801160">配置CLion用于STM32开发【优雅の嵌入式开发】- Peng Zhihui</a></p>
+</div>
+<p>I suppose the outline is a imitation of his article. I’ll try to form my own one in the future.</p>
+<hr>
+<h1 id="table-of-contents">Table of Contents</h1><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#N-Prologue"><span class="toc-text">N. Prologue</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#I-Env-and-tools"><span class="toc-text">I. Env and tools</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Env"><span class="toc-text">Env:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Packages"><span class="toc-text">Packages:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hardware"><span class="toc-text">Hardware:</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Preparation"><span class="toc-text">Preparation</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#STM32CubeMX"><span class="toc-text">STM32CubeMX</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#CLION"><span class="toc-text">CLION</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#OpenOCD"><span class="toc-text">OpenOCD</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Arm-none-eabi-gcc"><span class="toc-text">Arm-none-eabi-gcc</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#II-CLION"><span class="toc-text">II. CLION</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Set-a-new-toolchain"><span class="toc-text">Set a new toolchain</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Set-a-new-CMake-profile"><span class="toc-text">Set a new CMake profile</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#III-STM32CubeMX"><span class="toc-text">III.  STM32CubeMX</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Download-MCU-Packages"><span class="toc-text">Download MCU Packages</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Select-the-corresponding-MCU"><span class="toc-text">Select the corresponding MCU</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Switch-to-tab-Project-Manager"><span class="toc-text">Switch to tab - Project Manager</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Click-Generate-Code-on-upper-right-corner"><span class="toc-text">Click Generate Code on upper right corner</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Additional-Infomation"><span class="toc-text">Additional Infomation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IV-OpenOCD"><span class="toc-text">IV. OpenOCD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Before-the-following-operations"><span class="toc-text">Before the following operations</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Config-file"><span class="toc-text">Config file</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Debug-Configuration"><span class="toc-text">Debug Configuration</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Troubleshooting"><span class="toc-text">Troubleshooting</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#I-SEGFAULT-when-running-opened-f-cfg"><span class="toc-text">I. SEGFAULT when running opened -f *.cfg</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#It-all-started-here"><span class="toc-text">It all started here:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Checking-ST-LINK"><span class="toc-text">Checking ST-LINK</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Firmware"><span class="toc-text">Firmware</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Drive"><span class="toc-text">Drive</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Checking-OpenOCD"><span class="toc-text">Checking OpenOCD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#II-Unexpected-behaviour-when-flashing-but-ran-properly-in-debugging"><span class="toc-text">II. Unexpected behaviour when flashing, but ran properly in debugging.</span></a></li></ol></li></ol>
+<hr>
+<h2 id="N-Prologue"><a href="#N-Prologue" class="headerlink" title="N. Prologue"></a>N. Prologue</h2><p>You may assume it’s not necessary, but I just like to continue from where I left.</p>
+<p>Well the main reason is that I simply uses MacOS more. Yeah, despite the fact that I have a physical WINDOWS machine, but it’s like 10 meters away from me. Just very ridiculous considering I need to run over to see the board myself to get some feedback every time. So that’s a no.</p>
+<p><strong><em>CLION</em></strong> have pretty much everything a modern IDE should have, with nice plugin support. <strong><em>Keil</em></strong> is just a little.. out of date, as least to me.</p>
+<p>With in the process, I’ve met some problems without direct answer, each one took me approximately a day to solve. As relavant search results including MacOS is limited and most of which weren’t published recently, and it seems that they didn’t encounter the similar situation.</p>
+<hr>
+<h2 id="I-Env-and-tools"><a href="#I-Env-and-tools" class="headerlink" title="I. Env and tools"></a>I. Env and tools</h2><h4 id="Env"><a href="#Env" class="headerlink" title="Env:"></a>Env:</h4><ul>
+<li>MacOS - Intel based</li>
+</ul>
+<h4 id="Packages"><a href="#Packages" class="headerlink" title="Packages:"></a>Packages:</h4><ul>
+<li>STM32CubeMX</li>
+<li>CLION</li>
+<li>OpenOCD</li>
+<li>Arm-none-eabi-gcc</li>
+<li>Homebrew</li>
+</ul>
+<h4 id="Hardware"><a href="#Hardware" class="headerlink" title="Hardware:"></a>Hardware:</h4><ul>
+<li>A 3-rd Party STM32F103RCT6</li>
+<li>A ST-LINK/V2</li>
+</ul>
+<h3 id="Preparation"><a href="#Preparation" class="headerlink" title="Preparation"></a>Preparation</h3><ol>
+<li><h5 id="STM32CubeMX"><a href="#STM32CubeMX" class="headerlink" title="STM32CubeMX"></a>STM32CubeMX</h5><p>Download the latest release from official website: <a target="_blank" rel="noopener" href="https://www.st.com/en/development-tools/stm32cubemx.html">here</a></p>
+</li>
+<li><h5 id="CLION"><a href="#CLION" class="headerlink" title="CLION"></a>CLION</h5><p>Same as above: <a target="_blank" rel="noopener" href="https://www.jetbrains.com/clion/">here</a></p>
+</li>
+<li><h5 id="OpenOCD"><a href="#OpenOCD" class="headerlink" title="OpenOCD"></a>OpenOCD</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew install openocd --HEAD</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Please be sure to append <strong>“—HEAD”</strong>. As for the reason, check <strong>Troubleshooting - I</strong> </p>
+</blockquote>
+</li>
+<li><h5 id="Arm-none-eabi-gcc"><a href="#Arm-none-eabi-gcc" class="headerlink" title="Arm-none-eabi-gcc"></a>Arm-none-eabi-gcc</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew install arm-none-eabi-gcc</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>If brew is used, packages should be linked automatically and there’s no need to configure additional environment variables.</p>
+<hr>
+<h2 id="II-CLION"><a href="#II-CLION" class="headerlink" title="II. CLION"></a>II. CLION</h2><ol>
+<li><h3 id="Set-a-new-toolchain"><a href="#Set-a-new-toolchain" class="headerlink" title="Set a new toolchain"></a>Set a new toolchain</h3><p><code>Preferences - Build, Execution, Deployment - Toolchains</code></p>
+<p>Add a new profile with the name you would recognize.</p>
+<p>default CMake option<code>Bundled</code> should work fine.</p>
+<p>Set <code>C/C++ Compiler</code>,<code>Debugger</code> into corresponding ones which you may find at where <code>arm-none-eabi-gcc</code> is.</p>
+<p><img src="/images/CLIONSTM32/0.png" alt="toolchain"></p>
+</li>
+<li><h3 id="Set-a-new-CMake-profile"><a href="#Set-a-new-CMake-profile" class="headerlink" title="Set a new CMake profile"></a>Set a new CMake profile</h3><p>Create a new one with previous toolchain.</p>
+<p><img src="/images/CLIONSTM32/1.png" alt="CMake"></p>
+</li>
+<li><p>Create a <code>STM32CubeMX</code> project.</p>
+</li>
+<li><p>Click on the <code>*.ioc</code> file, then proceed with <code>Open with STM32CubeMX</code></p>
+</li>
+</ol>
+<h2 id="III-STM32CubeMX"><a href="#III-STM32CubeMX" class="headerlink" title="III.  STM32CubeMX"></a>III.  STM32CubeMX</h2><p>Just take turns.</p>
+<ol>
+<li><h3 id="Download-MCU-Packages"><a href="#Download-MCU-Packages" class="headerlink" title="Download MCU Packages"></a>Download MCU Packages</h3><p>If you were the first time open this software, this window may pop up, just select the series you need. In my case, it’s <code>STM32F1 Series</code>.</p>
+</li>
+<li><h3 id="Select-the-corresponding-MCU"><a href="#Select-the-corresponding-MCU" class="headerlink" title="Select the corresponding MCU"></a>Select the corresponding MCU</h3><p>The default one should be different with what you got.</p>
+<p><img src="/images/CLIONSTM32/3.png" alt="3"></p>
+</li>
+<li><h3 id="Switch-to-tab-Project-Manager"><a href="#Switch-to-tab-Project-Manager" class="headerlink" title="Switch to tab - Project Manager"></a>Switch to tab - Project Manager</h3><p><img src="/images/CLIONSTM32/4.png" alt="4"></p>
+<p>Make sure the <code>project name</code> and <code>project location</code> matches info in CLION.</p>
+<p><del>Select SW4STM32  in  Toolchain/IDE.</del> ( Not that necessary, in new version the default works fine)</p>
+</li>
+<li><h3 id="Click-Generate-Code-on-upper-right-corner"><a href="#Click-Generate-Code-on-upper-right-corner" class="headerlink" title="Click Generate Code on upper right corner"></a>Click Generate Code on upper right corner</h3><p>Before doing so, remember to assign correct properties to pinouts.</p>
+<p>And be sure to do this every time you changed some thing in STM32Cube.</p>
+</li>
+</ol>
+<h3 id="Additional-Infomation"><a href="#Additional-Infomation" class="headerlink" title="Additional Infomation"></a>Additional Infomation</h3><p>In some other tutorial, one suggest</p>
+<ul>
+<li>In the same tab above, make sure <code>SYS - Debug</code> is <code>Serial Wire</code>.  This is for the convenience of all the following operations.</li>
+</ul>
+<p>(I’m <strong>not sure</strong> what is the exact effect of the following modification.)</p>
+<ul>
+<li><del>Change the <code>HCLK(MHz)</code> to 72 in <code>Clock Configuration</code></del><ul>
+<li>Don’t do this if you’re not clear what you’re doing, see <strong>Troubleshooting - II</strong></li>
+</ul>
+</li>
+<li>Toggle <code>Generate peripheral initialization as a pair of ‘.c/.h’ file per peripheral</code> in <code>Project Manager - Code Generator</code>.</li>
+<li>Change <code>High Speed Clock</code> in <code>Pinout &amp; configuration</code> into <code>Crystal/Ceramic Resonator</code></li>
+</ul>
+<hr>
+<h3 id="IV-OpenOCD"><a href="#IV-OpenOCD" class="headerlink" title="IV. OpenOCD"></a>IV. OpenOCD</h3><p>Heading back to CLION, a pop up window may apper suggest you to select <code>Board Config Files</code></p>
+<p>Because I’m using a 3-rd party board, so <code>Cancel</code>  first. But you may use a existing one if it matches.</p>
+<ol>
+<li><h3 id="Before-the-following-operations"><a href="#Before-the-following-operations" class="headerlink" title="Before the following operations"></a>Before the following operations</h3><p>Maybe check if CMake returns any error first.</p>
+<p>If it does, check the previous steps. But be sure that you are using the right profile.</p>
+<p>Click circled button to refresh.</p>
+<p><img src="/images/CLIONSTM32/6.png" alt="6"></p>
+<p>And on the upper right corner, the icon of hammer, triangle and bug, correspond with <code>Compile</code>, <code>Flash</code> and <code>Debug</code></p>
+<p><img src="/images/CLIONSTM32/5.png" alt="5"></p>
+<p>Click on hammer, considering nothing is added to the code. You should have the following info.</p>
+<p><img src="/images/CLIONSTM32/7.png" alt="7"></p>
+<p>It’s a little different from those shown in other tutorials, no number percentage, no blue characters suggesting the <code>hex</code> and <code>bin</code> files are being built.</p>
+<p>Despite of this, you should be able to find these two files under the <code>workspace - xxx-arm-xxx</code> directory.</p>
+</li>
+<li><h3 id="Config-file"><a href="#Config-file" class="headerlink" title="Config file"></a>Config file</h3><p>Using CLION to flash and debugging, and actually, you are doing so via <code>OpenOCD</code></p>
+<p>The mentioned <code>*.cfg</code> file is necessary for OpenOCD to operate.</p>
+<p>Create a folder inside <code>workspace</code> or some other place you like. Then create a new file <code>SomeName.cfg</code> with the following content ( for ST-link )</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># choose st-link/j-link/dap-link etc.</span></span><br><span class="line"><span class="comment"># adapter driver cmsis-dap</span></span><br><span class="line"><span class="comment"># transport select swd</span></span><br><span class="line"><span class="built_in">source</span> [find interface/stlink.cfg]</span><br><span class="line">transport select hla_swd</span><br><span class="line"><span class="built_in">source</span> [find target/stm32f1x.cfg]</span><br><span class="line"><span class="comment"># download speed = 10MHz</span></span><br><span class="line">adapter speed 10000</span><br></pre></td></tr></table></figure>
+<p>Of course, after observing provided cfg files in <code>installedLocation\openocd\scripts</code></p>
+<ul>
+<li>Board - Configuration of some certified board</li>
+<li>Interface - Configuration of debugger</li>
+<li>Target - MCU configuration</li>
+</ul>
+<p>It’s clear that the first line determines the interface and type, while the following are MCU type and download speed.</p>
+<blockquote>
+<p>Maybe it’s better not to add <code>reset_config sirs_only</code>, which may cause flash to fail</p>
+</blockquote>
+</li>
+<li><h3 id="Debug-Configuration"><a href="#Debug-Configuration" class="headerlink" title="Debug Configuration"></a>Debug Configuration</h3><p>Drag down the menu beside the <strong>hammer</strong> icon, select <code>Edit Configurations</code>.</p>
+<p><img src="/images/CLIONSTM32/8.png" alt="8"></p>
+<p>Browse and select the right cfg file.</p>
+<p>The whole thing should be ready to go.</p>
+</li>
+</ol>
+<hr>
+<p>Besides, when in debug session, <code>Peripheral</code>, you may load <code>*.svd</code> files to check registers in detail. <code>SVD files</code> can be found on <a target="_blank" rel="noopener" href="https://github.com/posborne/cmsis-svd">github</a> or just google it.</p>
+<p><img src="/images/CLIONSTM32/12.png" alt="12"></p>
+<hr>
+<h2 id="Troubleshooting"><a href="#Troubleshooting" class="headerlink" title="Troubleshooting"></a>Troubleshooting</h2><div class="alert danger no-icon"><h3 id="I-SEGFAULT-when-running-opened-f-cfg"><a href="#I-SEGFAULT-when-running-opened-f-cfg" class="headerlink" title="I. SEGFAULT when running opened -f *.cfg"></a>I. <strong>SEGFAULT</strong> when running <strong>opened -f *.cfg</strong></h3></div>
+<h4 id="It-all-started-here"><a href="#It-all-started-here" class="headerlink" title="It all started here:"></a>It all started here:</h4><p><img src="/images/CLIONSTM32/9.png" alt="9"></p>
+<ul>
+<li>When trying to flash the <code>*.bin</code> file, OpenOCD’s output info stopped after showing <code>Info: Clock speed 10000 kHz</code>.</li>
+</ul>
+<p>The screenshot taken is with the latest version, only for demonstration.</p>
+<p>It actually quite strange, considering there’s <strong>no other error</strong> messages anymore. </p>
+<h4 id="Checking-ST-LINK"><a href="#Checking-ST-LINK" class="headerlink" title="Checking ST-LINK"></a>Checking ST-LINK</h4><p>At first I doubt that if it was <code>ST-LINK</code>‘s problem, and maybe it’s related to firnware versions. As it’s a second-handed one, and last owner said that it had been eating dust for quite a while.</p>
+<h5 id="Firmware"><a href="#Firmware" class="headerlink" title="Firmware"></a>Firmware</h5><p>Gladly, firmware update is available on MacOS. <a target="_blank" rel="noopener" href="https://www.st.com/en/development-tools/stsw-link007.html">Check here</a></p>
+<p>Using terminal commands to open, but be sure to get into the <code>System Preferences</code>, allow relavant dynamic library to run.</p>
+<h5 id="Drive"><a href="#Drive" class="headerlink" title="Drive"></a>Drive</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ st-info --probe</span><br></pre></td></tr></table></figure>
+<p>This command is used to detect info of connected board. If it cannot detect anything, maybe try to reconnect the pins ?</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ st-flash write .../*.bin 0x8000000</span><br></pre></td></tr></table></figure>
+<p>With this, you can flash built <code>bin</code> into the board, fully isolated from <code>openocd</code>.</p>
+<p>For more usage, check the help message after input only <code>st-flash</code>, it provides sufficient examples.</p>
+<p><img src="/images/CLIONSTM32/10.png" alt="10"></p>
+<blockquote>
+<p> The simple program works fine, so the problem is not on ST-LINK’s side.</p>
+</blockquote>
+<h3 id="Checking-OpenOCD"><a href="#Checking-OpenOCD" class="headerlink" title="Checking OpenOCD"></a>Checking OpenOCD</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ openocd [-f interface/stlink.cfg](optinal) -f ../var/yourProfile.cfg</span><br></pre></td></tr></table></figure>
+<p>And <strong>bingo.</strong></p>
+<p>This time, at least it returns an <code>SEGFAULT</code> error message.</p>
+<p>With additional <code>-d</code> parameter, it can return more debug info, but not quite useful for finding the exact problem.</p>
+<p>At first I thought it was related to the <code>serial</code>, as in terminal, previous index has a value behind it, but not this one.</p>
+<p>After some searching, I found an issue on <a target="_blank" rel="noopener" href="https://github.com/libusb/libusb/issues/928"><strong>github</strong> </a>, so my guess is wrong, but coindidentally it leads me to the right clue (actually only because it’s in the debugger info, that’s just it).</p>
+<p><img src="/images/CLIONSTM32/11.png" alt="11"></p>
+<p>Thanks to <strong>mcuee</strong>, he got into it and analyze the problem thoroughly. It was due to the minor changes in the interface of <code>libusb</code>, and, <code>OpenOCD</code> releases it’s major update in a slow pace. The latest one was in Feb, 2021. So what happens next is predictable. </p>
+<p>OpenOCD fixed this issue in the later updates, but without making it as an release version. So the fix was like the presented above, pull the latest source code from github and compile it is the only solution.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew install openocd --HEAD</span><br></pre></td></tr></table></figure>
+<hr>
+<div class="alert danger no-icon"><h3 id="II-Unexpected-behaviour-when-flashing-but-ran-properly-in-debugging"><a href="#II-Unexpected-behaviour-when-flashing-but-ran-properly-in-debugging" class="headerlink" title="II. Unexpected behaviour when flashing, but ran properly in debugging."></a>II. Unexpected behaviour when flashing, but ran properly in debugging.</h3></div>
+<p>So I tried to toggle LED on and off with in the <code>while loop</code>, but the <code>*.bin</code> file seems to have something wrong.</p>
+<ul>
+<li>Either perform the first line then stop forever.</li>
+<li>Or, stop running at where <code>HAL_DELAY</code> is.</li>
+</ul>
+<p>And strangely, when using <code>debug mode</code></p>
+<ul>
+<li>The while loop repeats perfectly without <code>HAL_DELAY</code>. </li>
+</ul>
+<p>Remembering the last time I said that <code>ST-LINK</code> flashing was functional?</p>
+<p>So I suspect it has something to do with <strong>compiling.</strong></p>
+<p>And <code>HAL_DELAY</code> interrupting <code>Debug session</code> seems to be a known issue, but it should not be the same in terms of flashing. So currently not a clue.</p>
+<blockquote>
+<p><strong>Good news:</strong></p>
+<p>​    After create a new project and repeat the previous step, this problem is gone.</p>
+<p>​    Previously, the direct reason was that the process hangs on <code>Systick_handler()</code>.</p>
+<p>​    And sometimes “connect while holding reset” is really helpful.</p>
+<p><strong>Bad news:</strong></p>
+<p>​    Still have no clue on what exactly caused this.</p>
+<ul>
+<li>Change of <code>Clock Speed </code>?<ul>
+<li>Likely, remember that if after inputing the numbers and STM32CubeMX suggest that there’s no valid solution, don’t hit yes.</li>
+</ul>
+</li>
+<li><del>Accidentally change some of the source code in other files ?</del><ul>
+<li>Maybe not</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<p>- End on 31 Mar. 2022</p>
+
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/CLION/" rel="tag">CLION</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/STM32/" rel="tag">STM32</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/06/29/YEAR3/"
+                    data-tooltip="END of the 3rd year"
+                    aria-label="PREVIOUS: END of the 3rd year"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/03/23/MathofSysT_III/"
+                    data-tooltip="Mathematical Basics of the System Theory PART III"
+                    aria-label="NEXT: Mathematical Basics of the System Theory PART III"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="Table of Contents">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2023 Estus. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/06/29/YEAR3/"
+                    data-tooltip="END of the 3rd year"
+                    aria-label="PREVIOUS: END of the 3rd year"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/03/23/MathofSysT_III/"
+                    data-tooltip="Mathematical Basics of the System Theory PART III"
+                    aria-label="NEXT: Mathematical Basics of the System Theory PART III"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="Table of Contents">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Estus</h4>
+        
+            <div id="about-card-bio"><p>Fun things <del>never</del> always stops.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Student</p>
+
+            </div>
+        
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/Ess/0_t.png');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-yb3zostooymjozqpjlvijhvzw0bdaljwvcvx0fhqdpyvq6aviyzwgfjkfjkw.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

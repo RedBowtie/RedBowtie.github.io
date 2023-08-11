@@ -1,0 +1,1592 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Amaurot Ch.">
+    <title>Double Inverted Pendulum on Two-wheeled Self-balancing Vehicle - Amaurot Ch.</title>
+    <meta name="author" content="Estus">
+    
+    
+        <link rel="icon" href="https://upload.cc/i1/2021/05/18/lSCp1v.png">
+    
+    
+        
+            <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png"},"articleBody":"Next time I could do better. \nTo view the topic part, click here, for some substantiation, I’ve skipped them, as they’re not presented clearly from the beginning.\nTo view the problems encoutered during implementation, click here.\n\n\n\nN. PrologueI didn’t expect this to begin so early. So I’ll try to make this a combination of paper writing and the project designing. Instead, the paper writing technique will be separated to here.\nOh, and mabe if the article is too long, I’ll consider to make it two.\n\nI. Previously on  inverted pendulumSome priorities:\n\nRemodelling the invert pendulum due to the conflict between two models.\n\nConstruct mathematical modelWell there are many ways to make such model such as from\n\nLagrange equation\nForce analysis\n\nSo maybe I can go through most of them.\nLagrange equation\\frac{d}{dt}(\\frac{\\partial L}{\\partial \\dot{q_i}})-\\frac{\\partial L}{\\partial q_i}=Q_i\\tag{1.1}L = T-V \\tag{1.2}For cart:\nM,\\ x_c,\\ \\dot{x_c},\\ FFor the pole:\nm,\\ l,\\ J_c,\\ \\theta,\\ \\dot{\\theta}Note that $l$ is the total length of the pole.\nThe moment of inertia to center of mass:\nJ_c = \\frac{1}{12}ml^2The moment of intertia to one end of the pole, perpendicular\nJ=J_c+\\frac{1}{4}ml^2=\\frac{1}{3}ml^2 \\tag{1.3}The kinematic and potential energy for cart:\nT_c=\\frac{1}{2}M\\dot{x_c}^2,\\ \\ V_c=0 \\tag{1.4}The position of the pole:\nx_p=x_c+\\frac{1}{2}l\\sin\\theta,\\ \\ y_p=\\frac{1}{2}l\\cos\\theta \\tag{1.5}From Eq. 5, derive the pole’s kinematic and potential energy:\nT_p=\\frac{1}{2}J_c\\dot{\\theta}^2+\\frac{1}{2}m(\\dot{x}_p^2+\\dot{y}_p^2),\\ \\ V_p=\\frac{1}{2}mgl\\cos\\theta \\tag{1.6}where\n\\dot{x}_p=\\dot{x_c}+\\frac{1}{2}l\\cos\\theta\\dot{\\theta}, \\ \\ \\dot{y}_p=-\\frac{1}{2}l\\sin\\theta\\dot{\\theta} \\tag{1.7}Substitute Eq. 4, 6, 7 into Eq. 2\nL=T_c+T_p-V_p\\\\\n=\\frac{1}{2}M\\dot{x_c}^2+\\frac{1}{2}J_c\\dot{\\theta}^2+\\frac{1}{2}m((\\dot{x_c}+\\frac{1}{2}l\\cos\\theta\\dot{\\theta})^2+(-\\frac{1}{2}l\\sin\\theta\\dot{\\theta})^2)-\\frac{1}{2}mgl\\cos\\theta=\\frac{1}{2}M\\dot{x_c}^2+\\frac{1}{2}J_c\\dot{\\theta}^2+\\frac{1}{2}m(\\dot{x}_c^2+\\dot{x}_cl\\cos(\\theta)\\dot{\\theta}+\\frac{1}{4}l^2\\cos^2(\\theta)\\dot{\\theta}^2+\\frac{1}{4}l^2\\sin^2(\\theta)\\dot{\\theta}^2)\\\\-\\frac{1}{2}mgl\\cos\\theta\n=\\frac{1}{2}M\\dot{x_c}^2+\\frac{1}{2}J_c\\dot{\\theta}^2+\\frac{1}{2}m(\\dot{x}_c^2+\\dot{x}_cl\\cos(\\theta)\\dot{\\theta}+\\frac{1}{4}l^2\\dot{\\theta}^2)-\\frac{1}{2}mgl\\cos\\theta=\\frac{1}{2}(M+m)\\dot{x}_c^2+\\frac{1}{2}(J_c+\\frac{1}{4}ml^2)\\dot{\\theta}^2+\\frac{1}{2}ml\\cos\n(\\theta)\\dot{\\theta}\\dot{x}_c-\\frac{1}{2}mgl\\cos\\theta\n\\tag{1.8}Using Eq. 1 for displacement:\nx_c:\\frac{d}{dt}(\\frac{\\partial L}{\\partial\\dot{x}_c})-\\frac{\\partial L}{\\partial x_c}=F \\tag{1.9}\\frac{\\partial L}{\\partial\\dot{x_c}}=(M+m)\\dot{x}_c+\\frac{1}{2}ml\\cos\n(\\theta)\\dot{\\theta}\\frac{\\partial L}{\\partial x_c}=0Substitute:\n\n\\frac{d}{dt}(\\frac{\\partial L}{\\partial\\dot{x_c}})=(M+m)\\ddot{x}_c+\\frac{1}{2}ml(-\\sin(\\theta)\\dot{\\theta}^2+cos(\\theta)\\ddot{\\theta})=F\n\\tag{1.10}Using Eq. 1 for angle: \n\n\\theta:\\frac{d}{dt}(\\frac{\\partial L}{\\partial\\dot{\\theta}})-\\frac{\\partial L}{\\partial \\theta}=0\n\\tag{1.11}\n\\frac{\\partial L}{\\partial\\dot{\\theta}}=(J_c+\\frac{1}{4}ml^2)\\dot{\\theta}+\\frac{1}{2}ml\\cos(\\theta)\\dot{x}_c\n\\frac{\\partial L}{\\partial \\theta}=-\\frac{1}{2}ml\\sin(\\theta)\\dot{\\theta}\\dot{x}_c+\\frac{1}{2}mgl\\sin(\\theta)\n\\frac{d}{dt}(\\frac{\\partial L}{\\partial\\dot{\\theta}})=(J_c+\\frac{1}{4}ml^2)\\ddot{\\theta}-\\frac{1}{2}ml\\sin(\\theta)\\dot{\\theta}\\dot{x}_c+\\frac{1}{2}mgl\\cos(\\theta)\\ddot{x}_cSubstuting:\n\n(J_c+\\frac{1}{4}ml^2)\\ddot{\\theta}-\\frac{1}{2}ml\\sin(\\theta)\\dot{\\theta}\\dot{x}_c+\\frac{1}{2}mgl\\cos(\\theta)\\ddot{x}_c\\\\ +\\frac{1}{2}ml\\sin(\\theta)\\dot{\\theta}\\dot{x}_c-\\frac{1}{2}mgl\\sin(\\theta)\n= (J_c+\\frac{1}{4}ml^2)\\ddot{\\theta}+\\frac{1}{2}mgl\\cos(\\theta)\\ddot{x}_c-\\frac{1}{2}mgl\\sin(\\theta)=0\n\\tag{1.12}Now we have the following relation:\n\n\\left\\{\\begin{array}{l}\n(M+m)\\ddot{x}_c+\\frac{1}{2}ml(-\\sin(\\theta)\\dot{\\theta}^2+cos(\\theta)\\ddot{\\theta})=F,\\\\\n(J_c+\\frac{1}{4}ml^2)\\ddot{\\theta}+\\frac{1}{2}mgl\\cos(\\theta)\\ddot{x}_c-\\frac{1}{2}mgl\\sin(\\theta)=0\n\\end{array}\\right.\n\\tag{1.13}Rewrite the system into matrix form:\n\n\\left[\\begin{array}{cc}\nM+m & \\frac{1}{2}ml\\cos(\\theta)\\\\\n\\frac{1}{2}ml\\cos(\\theta) & J_c+\\frac{1}{4}ml^2\n\\end{array}\\right]\n\n\\left[\\begin{array}{c}\n\\ddot{x}_c \\\\\n\\ddot{\\theta}\n\\end{array}\\right]\n+\n\\left[\\begin{array}{cc}\n0 & -\\frac{1}{2}ml\\sin(\\theta)\\dot{\\theta}\\\\\n0 & 0\n\\end{array}\\right]\n\n\\left[\\begin{array}{c}\n\\dot{x}_c \\\\\n\\dot{\\theta}\n\\end{array}\\right]\n=\n\\left[\\begin{array}{c}\nF \\\\\n\\frac{1}{2}mgl\\sin(\\theta)\n\\end{array}\\right]Introduce\n\nQ=\\left[\\begin{array}{cc}\nM+m & \\frac{1}{2}ml\\cos(\\theta)\\\\\n\\frac{1}{2}ml\\cos(\\theta) & J_c+\\frac{1}{4}ml^2\n\\end{array}\\right]and whose inverse matrix:\n\nQ^{-1}=\\left[\\begin{array}{cc}\n\\frac{4J}{\\sigma} & -\\frac{2ml\\cos(\\theta)}{\\sigma}\\\\\n-\\frac{2ml\\cos(\\theta)}{\\sigma} & \\frac{4(M+m)}{\\sigma}\n\\end{array}\\right],\\ \\  \\sigma=-m^2l^2\\cos^2\\theta+4J(M+m)under the condition  $\\theta\\ll 1$\n\ncos\\theta\\approx 1,\\ \\ \\sin\\theta\\approx\\theta,\\ \\ \\\\sin(\\theta)\\dot{\\theta}\\approx0\nQ_l^{-1}=\\left[\\begin{array}{cc}\n\\frac{4J}{\\sigma} & -\\frac{2ml}{\\sigma}\\\\\n-\\frac{2ml}{\\sigma} & \\frac{4(M+m)}{\\sigma}\n\\end{array}\\right],\\ \\  \\sigma=-m^2l^2+4J(M+m)\n\\left[\\begin{array}{c}\n\\ddot{x}_c \\\\\n\\ddot{\\theta}\n\\end{array}\\right]\n=\nQ_l^{-1}\n\\left[\\begin{array}{c}\nF \\\\\n\\frac{1}{2}mgl\\theta\n\\end{array}\\right]\n\\left[\\begin{array}{c}\n\\ddot{x}_c \\\\\n\\ddot{\\theta}\n\\end{array}\\right]\n=\n\n\\left[\\begin{array}{c}\n\\frac{4FJ-gl^2m^2\\theta}{\\sigma}\\\\\n\\frac{2ml((M+m)g\\theta-F)}{\\sigma}\n\\end{array}\\right],\\ \\ \\sigma=-m^2l^2+4J(M+m)\n\\tag{1.14}Expand states, perform linearlization,\n\n\\dot{x}=\n\\left[\\begin{array}{c}\n\\dot{x}_c \\\\\n\\ddot{x}_c \\\\\n\\dot{\\theta} \\\\\n\\ddot{\\theta}\n\\end{array}\\right], \\ \\ \ny=\n\\left[\\begin{array}{c}\nx_c \\\\\n\\theta \\\\\n\\end{array}\\right]In state-space representation\n\n\\left[\\begin{array}{c}\n\\dot{x}_c \\\\\n\\ddot{x}_c \\\\\n\\dot{\\theta} \\\\\n\\ddot{\\theta}\n\\end{array}\\right]\n=\n\\left[\\begin{array}{cccc}\n0 & 1 & 0 & 0 \\\\\n0 & 0 & \\frac{-gm^2l^2}{\\sigma}&0\\\\\n0 & 0 & 0 & 1\\\\\n0 & 0 & \\frac{2ml(M+m)}{\\sigma} & 0\n\\end{array}\\right]\n\n\\left[\\begin{array}{c}\nx_c \\\\\n\\dot{x}_c \\\\\n\\theta \\\\\n\\dot{\\theta}\n\\end{array}\\right]\n+\n\\left[\\begin{array}{c}\n\\frac{4J}{\\sigma}\\\\\n0\\\\\n\\frac{-ml}{\\sigma} \\\\\n0\n\\end{array}\\right]F\n\\tag{1.15}\n\\left[\\begin{array}{c}\nx_c \\\\\n\\theta \\\\\n\\end{array}\\right]\n=\n\\left[\\begin{array}{cccc}\n1&0&0&0\\\\\n0&0&1&0\\\\\n\\end{array}\\right]\n\\left[\\begin{array}{c}\nx_c \\\\\n\\dot{x}_c \\\\\n\\theta \\\\\n\\dot{\\theta}\n\\end{array}\\right]\n\\tag{1.16}\nForce analysisAs there are some notation error in the reference document, I assume I shouold do the process once again to ensure this is the right thing. \nFor the torque of pole with respect to one end:\n\nJ\\ddot{\\theta} = F_y\\cdot\\frac{1}{2}l\\sin(\\theta)-F_x\\cdot\\frac{1}{2}l\\cos(\\theta)\n\\tag{2.1}(note that the sign for couter-clockwise torque is negative, while the positive direction of $F_y$ is downward)\nSome process is eliminated to cut redundant part.\nNewton’s third law on the pole’s center of mass (refer to Eq 1.5):\n\nF_x = m\\frac{d^2}{d^2t}(x+\\frac{1}{2}l\\sin(\\theta))\n\\tag{2.2}\nF_y=mg-\\frac{1}{2}ml\\frac{d^2}{d^2t}(\\cos(\\theta))\n\\tag{2.3}And the motion of cart:\n\nF-F_x=M(\\frac{d^2 x}{d^2t})\n\\tag{2.4}Considering the formulas above Eq 2.1, 2, 3, 4, obtain the mathematical model:\n\n\\left\\{\\begin{array}{l}\n\\ddot{x}=\\frac{}{},\\\\\n\\ddot{\\theta}=\\frac{}{}\n\\end{array}\\right.Currently, this part will be suspended until the main thesis is complete.\n\n\nII. Thesis TopicThe Design of Controllers for Two-wheeled Self-balancing Robot\nAs the robot itself, the double-pendulum structure is selected.\nNotations for parameters of the robot are as follows:\n\n\n\n\nParameter Name\nSymbol\nUnit\n\n\n\n\nMass of First pendulum\n$M_1$\n$kg$\n\n\nMass of Second Pendulum\n$M_2$\n$kg$\n\n\nLength to the CoM the First pendulum\n$L_1$\n$m$\n\n\nLength to the CoM the Second pendulum\n$L_2$\n$m$\n\n\nLength between center of wheels\n$D_m$\n$m$\n\n\nRadius of wheels\n$R_w$\n$m$\n\n\nMass of the wheels\n$M_L=M_R=M_w$\n$kg$\n\n\nInertia of the wheels\n$J_L=J_R=J_w$\n$N\\cdot m/rad$\n\n\n\n\nNotations for variables of the robot are as follows\n\n\n\n\nParameter Name\nSymbol\nUnit\n\n\n\n\nPitch angle of lower pendulum\n$\\theta_1$\n$rad$\n\n\nPitch angle of upper pendulum\n$\\theta_2$\n$rad$\n\n\nYaw angle\n$\\psi$\n$rad$\n\n\nAngular Displacement of wheels\n$\\theta_L, \\theta_R$\n$rad/s$\n\n\nLinear speed of the wheels\n$x_L, x_R$\n$m/s$\n\n\nSystem forward speed\n$x =(x_L+x_R)/2$\n$m/s$\n\n\n\n\n1. Kinematics ModellingDescribing its relation without considering internal effects.\nVelocity Analysis1.1 The velocity of the CoM (Center of Mass) for lower body:Yaw angle is not considered in the reasearch.\n\nV_{C1}=\\left[\n\\begin{array}{ccc}\nvX_{C1} & vY_{C1} & vZ_{C1}\n\\end{array}\n\\right]^\\intercal = \n\\left[\n\\begin{array}{c}\n\\dot{x}+l_1\\dot{\\theta}_1\\cos\\theta_1\\\\\n0\\\\\n-l_1\\dot\\theta_1\\sin\\theta_1\n\\end{array}\n\\right]\n\\tag{1-1}1.2 The speed of the CoM for Upper rod:\nV_{C2}=\\left[\n\\begin{array}{ccc}\nvX_{C2} & vY_{C2} & vZ_{C2}\n\\end{array}\n\\right]^\\intercal = \n\\left[\n\\begin{array}{c}\n\\dot{x}+l_2\\dot{\\theta}_2\\cos\\theta_2+2l_1\\dot\\theta_1\\cos\\theta_1\\\\\n0\\\\\n-l_2\\dot\\theta_2\\sin\\theta_2-2l_1\\dot\\theta_1\\sin\\theta_1\n\\end{array}\n\\right]\n\\tag{1-2}1.3 The horizontal linear velocity of wheels (CoM):\n\\left\\{\n\\begin{array}{rcl}\n\\dot x_L &=& R_w\\dot\\theta_L\\\\\n\\dot x_R &=& R_w\\dot\\theta_R\\\\\n\\dot x &=& \\frac{1}{2}\\cdot(\\dot x_L + \\dot x_R)\n\\end{array}\n\\right.1.4 The velocity for $B_1,\\  B_2$ in angle coordinates. (deprecated)\n\\Omega_i=\\left[\n\\begin{array}{ccc}\n\\omega X_i & \\omega Y_i & \\omega Z_i\n\\end{array}\n\\right]^\\intercal = \n\\left[\n\\begin{array}{ccc}\n\\dot\\phi\\sin\\theta_i & \\dot\\theta_i & \\dot\\phi\\cos\\theta_i\n\\end{array}\n\\right]^\\intercal, (i=1,2)\n\\tag{1-4}1.5 The velocity for wheels in angle coordinates: (deprecated)\n\\Omega_{w_k}=\\left[\n\\begin{array}{ccc}\n\\omega X_k & \\omega Y_k & \\omega Z_k\n\\end{array}\n\\right]^\\intercal = \n\\left[\n\\begin{array}{ccc}\n\\dot\\phi\\sin\\varphi_k & \\dot\\varphi_k & \\dot\\phi\\cos\\varphi_k\n\\end{array}\n\\right]^\\intercal, (k=L, R)\n\\tag{1-5}1.6 Plane motion\n\\left\\{\n\\begin{array}{l}\n\\dot x =\\frac{R_w}{2}(\\dot\\theta_L+\\dot\\theta_R)\\\\\n\\dot\\psi= \\frac{R_w}{D_m}(\\dot\\theta_R-\\dot\\theta_L)\n\\end{array}\n\\right.\n\\tag{1-6}\n\\left[\n\\begin{array}{c}\n\\dot\\theta_L\\\\\n\\dot\\theta_R\n\\end{array}\n\\right]\n=\n\\frac{1}{R_w}\n\\left[\n\\begin{array}{cc}\n-D_m/2 & 1\\\\\nD_m/2 & 1\n\\end{array}\n\\right]\n\n\\left[\n\\begin{array}{c}\n\\dot x\\\\\n\\dot\\psi\n\\end{array}\n\\right]\n\\tag{1-7}\n2. Dynamics Modelling2.1 Select 3 DoF of the robots as general coordinates.\nq=\\left[\n\\begin{array}{cccc}\nx & \\theta_1 & \\theta_2\n\\end{array}\n\\right]\n\\tag{2-1}2.2 The kinematic engergy for the systemWheel:The kinetic engergy include the translational kinetic engergy  $T_L$ and $T_R$, and the rotational kinetic engergy when wheels rotates around the shaft.\n\nT_L=\\frac{1}{2}m_w\\dot x_L^2=\\frac{1}{2}m_wR_w^2\\dot\\theta_L^2Similarly\n\nT_R=\\frac{1}{2}m_w\\dot x_R^2=\\frac{1}{2}m_wR_w^2\\dot\\theta_R^2As for ratational kinetic engery:\n\n\\left\\{\n\\begin{array}{rcl}\nP_L &=& \\frac{1}{2}J_w\\dot\\theta_L^2\\\\\nP_R &=& \\frac{1}{2}J_w\\dot\\theta_R^2\n\\end{array}\n\\right.\n\\begin{array}{rcl}\nT_1&=&T_L+T_R+P_L+P_R\\\\\n&=& \\frac{1}{2}m_w(\\dot x_L^2+\\dot x_R^2)+\\frac{1}{2}J_w(\\dot\\theta_L^2+\\dot\\theta_R^2)\\\\\n&=& \\frac{1}{2}(m_wR_w^2+J_w)(\\dot\\theta_L^2+\\dot\\theta_R^2)\n\\end{array}As the turning is not considered, $\\dot\\theta_L=\\dot\\theta_R$\n\n\\begin{array}{rcl}\nT_1&=&\\frac{1}{2}(m_wR_w^2+J_w)\\frac{2\\dot x^2}{R_w^2}\\\\\n&=&\\frac{(mR^2+J_w)}{R^2}\\dot x^2\n\\end{array}Cart:Cart - Translational\n\n\\begin{array}{rcl}\nT_{c} &=& \\frac{1}{2}m_1V_{C1}^\\intercal V_{C1}\\\\\n&=& \\frac{1}{2}m_1[(\\dot{x}+l_1\\dot{\\theta}_1\\cos\\theta_1)^2+(-l_1\\dot\\theta_1\\sin\\theta_1)^2]\\\\\n&=&\\frac{1}{2}m_1[l_1^2\\dot\\theta_1^2+2l_1\\dot\\theta_1\\dot x\\cos\\theta_1+\\dot x^2]\n\\end{array}Cart - Rotational\n\nP_{Yc}=\\frac{1}{2}J_{\\theta_1} \\dot\\theta_1^2Cart - whole\n\n\\begin{array}{rcl}\nT_2 &=& T_{c}+P_{Yc}\\\\\n&=& \\frac{1}{2}m_1[l_1^2\\dot\\theta_1^2+2l_1\\dot\\theta_1\\dot x\\cos\\theta_1+\\dot x^2]+\\frac{1}{2}J_{\\theta_1} \\dot\\theta_1^2\\\\\n&=& \\frac{1}{2}(m_1l_1^2+J_{\\theta_1})\\dot\\theta_1^2\n+ m_1l_1\\dot x\\dot\\theta_1\\cos\\theta_1\n+ \\frac{1}{2}m_1\\dot x^2\n\\end{array}Pendulum:Pendulum - Translational\n\n\\begin{array}{rcl}\n\nT_{p} &=& \\frac{1}{2}m_2V_{C2}^\\intercal V_{C2}\\\\\n&=& \\frac{1}{2}m_2\n[(\\dot{x}+l_2\\dot{\\theta}_2\\cos\\theta_2+2l_1\\dot\\theta_1\\cos\\theta_1)^2\n+ (-l_2\\dot\\theta_2\\sin\\theta_2-2l_1\\dot\\theta_1\\sin\\theta_1)^2]\\\\\n&=& \\frac{1}{2}m_2[l_2^2\\dot\\theta_2^2+4l_1^2\\dot\\theta_1^2+(2l_2\\dot\\theta_2\\cos\\theta_2+4l_1\\dot\\theta_1\\cos\\theta_1)\\dot x\n+4l_1l_2\\dot\\theta_1\\dot\\theta_2(\\sin\\theta_1\\sin\\theta_2+\\cos\\theta_1\\cos\\theta_2)+\\dot x^2]\n\\end{array}Pendulum - Rotational\n\nP_{Yp}=\\frac{1}{2}J_{\\theta_2}\\dot\\theta_2^2Pendulum - Whole\n\n\\begin{array}{rcl}\nT_3  &=& T_p+P_{Yp}\\\\\n&=& \\frac{1}{2}m_2[l_2^2\\dot\\theta_2^2+4l_1^2\\dot\\theta_1^2+(2l_2\\dot\\theta_2\\cos\\theta_2+4l_1\\dot\\theta_1\\cos\\theta_1)\\dot x\n+4l_1l_2\\dot\\theta_1\\dot\\theta_2(\\sin\\theta_1\\sin\\theta_2+\\cos\\theta_1\\cos\\theta_2)+\\dot x^2]+ \\frac{1}{2}J_{\\theta_2}\\dot\\theta_2^2\n\\\\&=& \\frac{1}{2}(m_2l_2^2+J_{\\theta_2})\\dot\\theta_2^2+2m_2l_1^2\\dot\\theta_1^2\\\\\n&&+m_2(l_2\\dot\\theta_2\\cos\\theta_2+2l_1\\dot\\theta_1\\cos\\theta_1)\\dot x\\\\\n&&+2m_2l_1l_2\\dot\\theta_1\\dot\\theta_2(\\sin\\theta_1\\sin\\theta_2+\\cos\\theta_1\\cos\\theta_2)\\\\\n&&+\\frac{1}{2}m_2\\dot x^2\n\\end{array}Thus the whole kinetic engergy for the system:\n\n\\begin{array}{rcl}\nT &=& T_1+T_2+T_3\\\\\n&=& [\\frac{1}{2}(m_1+m_2)+\\frac{(mR^2+J_w)}{R^2}]\\dot x^2\\\\\n&& +\\frac{1}{2}(m_1l_1^2+J_{\\theta_1}+4m_2l_1^2)\\dot\\theta_1^2+\\frac{1}{2}(m_2l_2^2+J_{\\theta_2})\\dot\\theta_2^2\\\\\n&& +((m_1l_1+2m_2l_1)\\dot\\theta_1\\cos\\theta_1+m_2l_2\\dot\\theta_2\\cos\\theta_2)\\dot x\\\\\n&& +2m_2l_1l_2\\dot\\theta_1\\dot\\theta_2\\cos(\\theta_1-\\theta_2)\n\\end{array}Potential engergy:The potential engergy for the sysstem equals:\n\n\\begin{array}{rcl}\nV &=& m_1gl_1\\cos\\theta_1+m_2g(2l_1\\cos\\theta_1+l_2\\cos\\theta_2)\\\\\n&=& (m_1+2m_2)gl_1\\cos\\theta_1 + m_2gl_2\\cos\\theta_2\n\\end{array}2.3 LagrangianNow we have the Lagrangian:\n\n\\begin{array}{rcl}\nL &=& T-V\\\\\n&=& [\\frac{1}{2}(m_1+m_2)+\\frac{(mR^2+J_w)}{R^2}]\\dot x^2\\\\\n&&+\\frac{1}{2}(m_1l_1^2+J_{\\theta_1}+4m_2l_1^2)\\dot\\theta_1^2+\\frac{1}{2}(m_2l_2^2+J_{\\theta_2})\\dot\\theta_2^2\\\\\n&&+((m_1l_1+2m_2l_1)\\dot\\theta_1\\cos\\theta_1+m_2l_2\\dot\\theta_2\\cos\\theta_2)\\dot x\\\\\n&&+2m_2l_1l_2\\dot\\theta_1\\dot\\theta_2(\\sin\\theta_1\\sin\\theta_2+\\cos\\theta_1\\cos\\theta_2)\\\\\n&&- (m_1+2m_2)gl_1\\cos\\theta_1 - m_2gl_2\\cos\\theta_2\n\\end{array}To simplify the lagrangian, using $M_{ij}$ to replace constant coefficients:\n\n\\begin{array}{rcl}\nL&=& T-V\\\\\n&=& M_{11}\\dot x^2\\\\\n&&+M_{21}\\dot\\theta_1^2+M_{22}\\dot\\theta_2^2\\\\\n&&+(M_{31}\\dot\\theta_1\\cos\\theta_1+M_{32}\\dot\\theta_2\\cos\\theta_2)\\dot x\\\\\n&&+M_{41}\\dot\\theta_1\\dot\\theta_2(\\sin\\theta_1\\sin\\theta_2+\\cos\\theta_1\\cos\\theta_2)\\\\\n&&-M_{51}\\cos\\theta_1 - M_{52}\\cos\\theta_2\n\\end{array}where, \n\n\\left[\n\\begin{array}{c}\nM_{11}\\\\\nM_{21}\\\\\nM_{22}\\\\\nM_{31}\\\\\nM_{32}\\\\\nM_{41}\\\\\nM_{51}\\\\\nM_{52}\n\\end{array}\n\\right]\n=\n\\left[\n\\begin{array}{c}\n\\frac{1}{2}(m_1+m_2)+\\frac{(mR^2+J_w)}{R^2}\\\\\n\\frac{1}{2}(m_1l_1^2+J_{\\theta_1}+4m_2l_1^2)\\\\\n\\frac{1}{2}(m_2l_2^2+J_{\\theta_2})\\\\\nm_1l_1+2m_2l_1\\\\\nm_2l_2\\\\\n2m_2l_1l_2\\\\\n(m_1+2m_2)gl_1\\\\\nm_2gl_2\n\\end{array}\n\\right]Lagrangian equation:Generalized coordinates: $[x\\ \\theta_1\\ \\theta_2]$\n\n\\left\\{\n\\begin{array}{rcl}\n\\frac{d}{dt}(\\frac{\\partial L}{\\partial\\dot x})-\\frac{\\partial L}{\\partial x}&=&\\tau\\\\\n\\frac{d}{dt}(\\frac{\\partial L}{\\partial\\dot \\theta_1})-\\frac{\\partial L}{\\partial \\theta_1}&=&-2\\tau\\\\\n\\frac{d}{dt}(\\frac{\\partial L}{\\partial\\dot \\theta_2})-\\frac{\\partial L}{\\partial \\theta_2}&=&0\\\\\n\\end{array}\n\\right.Simplified equation:\n\n\\left\\{\n\\begin{array}{rcl}\n2M_{11}\\ddot x - M_{31}\\dot\\theta_1^2\\sin\\theta_1 - M_{32}\\dot\\theta_2^2\\sin\\theta_2 + M_{31}\\ddot\\theta_1\\cos\\theta_1 + M_{32}\\ddot\\theta_2\\cos\\theta_2 &=& \\tau\n\\\\\n2M_{21}\\ddot\\theta_1 - M_{51}\\sin\\theta_1 + M_{31}\\ddot x\\cos\\theta_1 - M_{41}\\dot\\theta_2^2\\cos\\theta_1\\sin\\theta_2  + M_{41}\\dot\\theta_2^2\\cos\\theta_2\\sin\\theta_1 +\nM_{41}\\ddot\\theta_2\\cos\\theta_1\\cos\\theta_2 +\nM_{41}\\ddot\\theta_2\\sin\\theta_1\\sin\\theta_2 &=& -2\\tau \n\\\\\n2M_{22}\\ddot\\theta_2 - M_{52}\\sin\\theta_2 + M_{32}\\ddot x\\cos\\theta_2 + M_{41}\\dot\\theta_1^2\\cos\\theta_1\\sin\\theta_2 - M_{41}\\dot\\theta_1^2\\cos\\theta_2\\sin\\theta_1 +\nM_{41}\\ddot\\theta_1\\cos\\theta_1\\cos\\theta_2 +\nM_{41}\\ddot\\theta_1\\sin\\theta_1\\sin\\theta_2 &=& 0\n\\end{array}\n\\right.2.4 LinearizationPerform linearization around $[x, 0, 0]$, thus that $\\cos\\theta=1,\\ \\sin\\theta=\\theta,\\ \\dot\\theta^2=0$,  so that:\n\n\\left\\{\n\\begin{array}{rcl}\n2M_{11}\\ddot x + M_{31}\\ddot\\theta_1+ M_{32}\\ddot\\theta_2&=& \\tau\n\\\\\n2M_{21}\\ddot\\theta_1 - M_{51}\\theta_1 + M_{31}\\ddot x+\nM_{41}\\ddot\\theta_2+\nM_{41}\\ddot\\theta_2\\theta_1\\theta_2 &=& -2\\tau \n\\\\\n2M_{22}\\ddot\\theta_2 - M_{52}\\theta_2 + M_{32}\\ddot x +\nM_{41}\\ddot\\theta_1+\nM_{41}\\ddot\\theta_1\\theta_1\\theta_2 &=& 0\n\\end{array}\n\\right.Also treat $\\theta_1\\theta_2=0$, we have \n\n\\left\\{\n\\begin{array}{rcl}\n2M_{11}\\ddot x + M_{31}\\ddot\\theta_1+ M_{32}\\ddot\\theta_2&=& \\tau\n\\\\\nM_{31}\\ddot x+2M_{21}\\ddot\\theta_1 + M_{41}\\ddot\\theta_2 - M_{51}\\theta_1 &=& -2\\tau \n\\\\\nM_{32}\\ddot x + M_{41}\\ddot\\theta_1+ 2M_{22}\\ddot\\theta_2 - M_{52}\\theta_2 &=& 0\n\\end{array}\n\\right.Transform into matrix form:\n\n\\left[\n\\begin{array}{ccc}\n2M_{11} & M_{31} & M_{32}\\\\\nM_{31} & 2M_{21} & M_{41}\\\\\nM_{32}  & M_{41} & 2M_{22}\n\\end{array}\n\\right]\n\\cdot\n\\left[\n\\begin{array}{c}\n\\ddot x\\\\\n\\ddot\\theta_1\\\\\n\\ddot\\theta_2\n\\end{array}\n\\right]\n+\n\\left[\n\\begin{array}{ccc}\n0 & 0 & 0\\\\\n0 & -M_{51} & 0\\\\\n0 & 0 & -M_{52}\n\\end{array}\n\\right]\n\\cdot\n\\left[\n\\begin{array}{c}\nx\\\\\n\\theta_1\\\\\n\\theta_2\n\\end{array}\n\\right]\n=\n\\left[\n\\begin{array}{c}\n\\tau\\\\\n-2\\tau\\\\\n0\n\\end{array}\n\\right]Set $M=\\left[\\begin{array}{ccc}2M_{11} &amp; M_{31} &amp; M_{32}\\\\M_{31} &amp; 2M_{21} &amp; M_{41}\\\\M_{32}  &amp; M_{41} &amp; 2M_{22}\\end{array}\\right],\\ M_{aux}=\\left[\\begin{array}{ccc}0 &amp; 0 &amp; 0\\\\0 &amp; -M_{51} &amp; 0\\\\0 &amp; 0 &amp; -M_{52}\\end{array}\\right]$\n\nM\n\\cdot\n\\left[\n\\begin{array}{c}\n\\ddot x\\\\\n\\ddot\\theta_1\\\\\n\\ddot\\theta_2\n\\end{array}\n\\right]\n=\n-M_{aux}\n\\cdot\n\\left[\n\\begin{array}{c}\nx\\\\\n\\theta_1\\\\\n\\theta_2\n\\end{array}\n\\right]\n+\n\\left[\n\\begin{array}{c}\n\\tau\\\\\n-2\\tau\\\\\n0\n\\end{array}\n\\right]Then multiply its inverse on both side (if inverse exist)\n\n\\left[\n\\begin{array}{c}\n\\ddot x\\\\\n\\ddot\\theta_1\\\\\n\\ddot\\theta_2\n\\end{array}\n\\right]\n=M^{-1}\\cdot\n(-M_{aux})\n\\cdot\n\\left[\n\\begin{array}{c}\nx\\\\\n\\theta_1\\\\\n\\theta_2\n\\end{array}\n\\right]\n+\nM^{-1}\\cdot\n\\left[\n\\begin{array}{c}\n\\tau\\\\\n-2\\tau\\\\\n0\n\\end{array}\n\\right]Regard $M_f=M^{-1}\\cdot(-M_{aux}),\\ \\ M_b=M^{-1}\\cdot[\\begin{array}{ccc}1&amp; -2&amp; 0\\end{array}]^\\intercal$ \n\n\\left[\n\\begin{array}{l}\n\\dot x\\\\\n\\dot \\theta_1\\\\\n\\dot \\theta_2\\\\\n\\ddot x\\\\\n\\ddot\\theta_1\\\\\n\\ddot\\theta_2\n\\end{array}\n\\right]\n=\n\\left[\n\\begin{array}{cc}\n0_{3\\times3} & I_{3\\times3}\\\\\nM_f & 0_{3\\times 3}\n\\end{array}\n\\right]\n\\cdot\n\\left[\n\\begin{array}{l}\nx\\\\\n\\theta_1\\\\\n\\theta_2\\\\\n\\dot x\\\\\n\\dot\\theta_1\\\\\n\\dot\\theta_2\n\\end{array}\n\\right]\n+\n\\left[\n\\begin{array}{c}\n0_{3\\times 1}\\\\\nM_b\n\\end{array}\n\\right]\n\\cdot\n\\tauThus we have\n\n\\dot q = Aq+B\\tauwhere \n\nA=\\left[\n\\begin{array}{cc}\n0_{3\\times3} & eye(3)\\\\\nM_f & 0_{3\\times 3}\n\\end{array}\n\\right],\\ \\ \nB = \\left[\n\\begin{array}{c}\n0_{3\\times 1}\\\\\nM_b\n\\end{array}\n\\right]This is an implementation of the simplest expansion, other possible methods are: Tylor expansion (Maclaurin expansion), these two are more accurate, meanwhile it takes time to derive the corresponding  \n\n2.5 Nonlinear modelFor original relation:\n\n\\left\\{\n\\begin{array}{rcl}\n2M_{11}\\ddot x - M_{31}\\dot\\theta_1^2\\sin\\theta_1 - M_{32}\\dot\\theta_2^2\\sin\\theta_2 + M_{31}\\ddot\\theta_1\\cos\\theta_1 + M_{32}\\ddot\\theta_2\\cos\\theta_2 &=& \\tau\n\\\\\n2M_{21}\\ddot\\theta_1 - M_{51}\\sin\\theta_1 + M_{31}\\ddot x\\cos\\theta_1 - M_{41}\\dot\\theta_2^2\\cos\\theta_1\\sin\\theta_2  + M_{41}\\dot\\theta_2^2\\cos\\theta_2\\sin\\theta_1 +\nM_{41}\\ddot\\theta_2\\cos\\theta_1\\cos\\theta_2 +\nM_{41}\\ddot\\theta_2\\sin\\theta_1\\sin\\theta_2 &=& -2\\tau \n\\\\\n2M_{22}\\ddot\\theta_2 - M_{52}\\sin\\theta_2 + M_{32}\\ddot x\\cos\\theta_2 + M_{41}\\dot\\theta_1^2\\cos\\theta_1\\sin\\theta_2 - M_{41}\\dot\\theta_1^2\\cos\\theta_2\\sin\\theta_1 +\nM_{41}\\ddot\\theta_1\\cos\\theta_1\\cos\\theta_2 +\nM_{41}\\ddot\\theta_1\\sin\\theta_1\\sin\\theta_2 &=& 0\n\\end{array}\n\\right.Apply transform:\n\n\\left[\n\\begin{array}{ccc}\n2M_{11} & M_{31}\\cos\\theta_1 & M_{32}\\cos\\theta_2\\\\\nM_{31}\\cos\\theta_1 & 2M_{21}  & M_{41}\\cdot(\\cos\\theta_1\\cos\\theta_2+\\sin\\theta_1\\sin\\theta_2)\\\\\nM_{32}\\cos\\theta_2  & M_{41}\\cdot(\\cos\\theta_1\\cos\\theta_2+\\sin\\theta_1\\sin\\theta_2) & 2M_{22}\n\\end{array}\n\\right]\n\\cdot\n\\left[\n\\begin{array}{c}\n\\ddot x\\\\\n\\ddot\\theta_1\\\\\n\\ddot\\theta_2\n\\end{array}\n\\right]\n+\n\\left[\n\\begin{array}{ccc}\n0 & -M_{31}\\dot\\theta_1\\sin\\theta_1 & -M_{32}\\dot\\theta_2\\sin\\theta_2\\\\\n0 & 0 & -M_{41}\\dot\\theta_2(\\cos\\theta_1\\sin\\theta_2-\\cos\\theta_2\\sin\\theta_1)\\\\\n0 & M_{41}\\dot\\theta_1(\\cos\\theta_1\\sin\\theta_2-\\cos\\theta_2\\sin\\theta_1) & 0\n\\end{array}\n\\right]\n\\cdot\n\\left[\n\\begin{array}{c}\n\\dot x\\\\\n\\dot\\theta_1\\\\\n\\dot\\theta_2\n\\end{array}\n\\right]\n=\n\\left[\n\\begin{array}{c}\n\\tau\\\\\n-2\\tau+M_{51}\\sin\\theta_1\\\\\nM_{52}\\sin\\theta_2\n\\end{array}\n\\right]Using trigonometric function to simplify:\n\n\\left[\n\\begin{array}{ccc}\n2M_{11} & M_{31}\\cos\\theta_1 & M_{32}\\cos\\theta_2\\\\\nM_{31}\\cos\\theta_1 & 2M_{21}  & M_{41}\\cdot\\cos(\\theta_1-\\theta_2)\\\\\nM_{32}\\cos\\theta_2  & M_{41}\\cdot\\cos(\\theta_1-\\theta_2) & 2M_{22}\n\\end{array}\n\\right]\n\\cdot\n\\left[\n\\begin{array}{c}\n\\ddot x\\\\\n\\ddot\\theta_1\\\\\n\\ddot\\theta_2\n\\end{array}\n\\right]\n+\n\\left[\n\\begin{array}{ccc}\n0 & -M_{31}\\dot\\theta_1\\sin\\theta_1 & -M_{32}\\dot\\theta_2\\sin\\theta_2\\\\\n0 & 0 & -M_{41}\\dot\\theta_2\\sin(\\theta_1-\\theta_2)\\\\\n0 & M_{41}\\dot\\theta_1\\sin(\\theta_1-\\theta_2) & 0\n\\end{array}\n\\right]\n\\cdot\n\\left[\n\\begin{array}{c}\n\\dot x\\\\\n\\dot\\theta_1\\\\\n\\dot\\theta_2\n\\end{array}\n\\right]\n+\n\\left[\n\\begin{array}{c}\n0\\\\\n-M_{51}\\sin\\theta_1\\\\\n-M_{52}\\sin\\theta_2\n\\end{array}\n\\right]\n=\n\\left[\n\\begin{array}{c}\n\\tau\\\\\n-2\\tau\\\\\n0\n\\end{array}\n\\right]Correspondingly:\n\nM_n\n\\cdot\n\\left[\n\\begin{array}{c}\n\\ddot x\\\\\n\\ddot\\theta_1\\\\\n\\ddot\\theta_2\n\\end{array}\n\\right]\n+\nM_{naux1}\n\\cdot\n\\left[\n\\begin{array}{c}\n\\dot x\\\\\n\\dot\\theta_1\\\\\n\\dot\\theta_2\n\\end{array}\n\\right]\n+\nM_{naux2}\n=\n\\left[\n\\begin{array}{c}\n\\tau\\\\\n-2\\tau\\\\\n0\n\\end{array}\n\\right]where, \n\nM_n=\n\\left[\n\\begin{array}{ccc}\n2M_{11} & M_{31}\\cos\\theta_1 & M_{32}\\cos\\theta_2\\\\\nM_{31}\\cos\\theta_1 & 2M_{21}  & M_{41}\\cdot\\cos(\\theta_1-\\theta_2)\\\\\nM_{32}\\cos\\theta_2  & M_{41}\\cdot\\cos(\\theta_1-\\theta_2) & 2M_{22}\n\\end{array}\n\\right]\nM_{naux1}=\n\\left[\n\\begin{array}{ccc}\n0 & -M_{31}\\dot\\theta_1\\sin\\theta_1 & -M_{32}\\dot\\theta_2\\sin\\theta_2\\\\\n0 & 0 & -M_{41}\\dot\\theta_2\\sin(\\theta_1-\\theta_2)\\\\\n0 & M_{41}\\dot\\theta_1\\sin(\\theta_1-\\theta_2) & 0\n\\end{array}\n\\right],\\ \\\nM_{naux2}=\n\\left[\n\\begin{array}{c}\n0\\\\\n-M_{51}\\sin\\theta_1\\\\\n-M_{52}\\sin\\theta_2\n\\end{array}\n\\right]Transform\n\n\\left[\n\\begin{array}{c}\n\\ddot x\\\\\n\\ddot\\theta_1\\\\\n\\ddot\\theta_2\n\\end{array}\n\\right]\n=\nM_n^{-1}\\cdot\n(-M_{naux1})\n\\cdot\n\\left[\n\\begin{array}{c}\n\\dot x\\\\\n\\dot\\theta_1\\\\\n\\dot\\theta_2\n\\end{array}\n\\right]\n+\nM_n^{-1}\\cdot(-M_{naux2})\n+\nM_n^{-1}\n\\left[\n\\begin{array}{c}\n1\\\\\n-2\\\\\n0\n\\end{array}\n\\right]\n\\cdot\n\\tau\n\\left[\n\\begin{array}{c}\n\\ddot x\\\\\n\\ddot\\theta_1\\\\\n\\ddot\\theta_2\n\\end{array}\n\\right]\n=f_q(q)\n+b_q(q)\n\\tau\\\\where,\n\n\\begin{array}{rcl}\nf_q(q)\n&=&\nM_n^{-1}\\cdot\n(-M_{naux1})\n\\cdot\n\\left[\n\\begin{array}{c}\n\\dot x\\\\\n\\dot\\theta_1\\\\\n\\dot\\theta_2\n\\end{array}\n\\right]\n+\nM_n^{-1}\\cdot(-M_{naux2})\n\\end{array}\n\\begin{array}{rcl}\nb_q(q) &=&\nM_n^{-1}\n\\left[\n\\begin{array}{c}\n1\\\\\n-2\\\\\n0\n\\end{array}\n\\right]\n\\end{array}\n3. AlgorithmsSMC\\left\\{\n\\begin{array}{rcl}\nx_1 &=& x\\\\\n\\dot x_1 &=& x_2\\\\\n\\dot x_2 &=& f_1(x)+b_1(x)u+d_1\n\\end{array}\n\\right.\ne = x-x_d\ns = ce+\\dot e,\\ c>0target:\n\n\\left\\{\n\\begin{array}{c}\ns \\rightarrow 0\\\\\n\\dot s \\rightarrow 0\n\\end{array}\n\\right.\n\\Rightarrow\nc\\dot{e}+\\ddot{e}=0\nc(\\dot x_1 - \\dot x_d)+(\\ddot x_1 - \\ddot x_d)=0When $x_d$ is constant\n\nc\\cdot x_2+f_1(x)+b_1(x)\\cdot u+d_1=0We have \n\nu_{eq1}=-\\frac{f_1(x)+cx_2+d_1}{b_1(x)}Set\n\nu = u_{eq}+u_{sw}Select Lynapnov function\n\n\\left\\{\n\\begin{array}{rcl}\nV(t) &=& \\frac{1}{2}s^2\\\\\n\\dot V &=& s\\cdot \\dot s\\le 0\n\\end{array}\n\\right.\n\\begin{array}{rcl}\n\\dot V &=& s(cx_2+\\dot x_2)\\\\\n&=& s(cx_2+f_1+b_1(u_{eq}+u_{sw})+d_1)\\\\\n&=& s(cx_2+f_1+b_1u_{eq}+b_1u_{sw}+d_1)\\\\\n&=& s(b_1u_{sw}+d_1)\n\\end{array}and to do so, using exponential reaching law, let:\n\n\\begin{array}{c}\nb_1u_{sw} = -\\eta\\ sgn(s)-k\\cdot s\n\\end{array}Then the equation becomes:\n\n\\begin{array}{rcl}\n\\dot V &=& s(-\\eta sgn(s)-ks+d_1)\\\\\n&=& -\\eta|s|-ks^2+sd_1\\\\\n&\\le & -\\eta|s|-ks^2+|s|\\cdot|d_1|\n\\end{array}As $d_1$ is bounded and $|d_1|\\le d_M$\n\n\\begin{array}{rcl}\n\\dot V &\\le & -\\eta|s|-ks^2+|s|\\cdot d_M\\\\\n&\\le & -ks^2 -|s|\\cdot(\\eta-d_M)\n\\end{array}Its easy to find that when $\\eta&gt;d_M$\n\n\\dot V\\le 0The sliding surface is stable.\n\nHSMC\\left\\{\n\\begin{array}{rcl}\n\\dot x_{2n-1} &=& x_{2n}\\\\\n\\dot x_{2n} &=& f_n(x)+b_n(x)u\n\\end{array}\n\\right.Set Sliding Surface\n\ns_n = c_n\\cdot e_n + \\dot e_nCorrespondingly we will have $n$ equivalent control\n\nu_{eq_n}=-\\frac{f_n(x)+c_n\\cdot x_{2n}}{b_n(x)}Set larger level of sliding surface:\n\nS = \\alpha s_1 + \\beta s_2 + \\gamma s_3+\\dots\nu=\\sum_1^n u_{eq_i}+u_{sw}To satisfy the Lyapunov function\n\nu_{sw}=-\\frac{\\alpha b_1(x)u_{eq_1}+\\beta b_2(x)u_{eq_2}+\\gamma b_3(x)u_{eq_3}+\\dots+\\eta\\ sgn(S)+k(S)}{\\alpha b_1(x)+\\beta b_2(x)+\\gamma b_3(x)+\\dots}Take 3-layer as an example\n\n\\begin{array}{rcl}\n\\dot V &=& S \\dot S\\\\\n&=& S(\\alpha\\dot s_1+\\beta\\dot s_2+\\gamma\\dot s_3)\\\\\n&=& S[\\alpha(c_1x_2+\\dot x_2)+\\beta(c_2x_4+\\dot x_4)+\\gamma(c_3x_6+\\dot x_6)]\\\\\n&=& S[\\alpha(c_1x_2+f_1+b_1(u_{eq1}+u_{eq2}+u_{eq3}+u_{sw})+d_1)\\\\\n&&+\\beta(c_2x_4+f_2+b_2(u_{eq1}+u_{eq2}+u_{eq3}+u_{sw})+d_2)\\\\\n&&+\\gamma(c_3x_6+f_3+b_3(u_{eq1}+u_{eq2}+u_{eq3}+u_{sw})+d_3)]\\\\\n&=&S[\\alpha b_1(u_{eq2}+u_{eq3}+u_{sw})+\\beta b_2(u_{eq1}+u_{eq3}+u_{sw})\n+\\gamma b_3(u_{eq1}+u_{eq2}+u_{sw})+(\\alpha d_1+\\beta d_2+\\gamma d_3)]\\\\\n&=& S[(\\alpha b_1+\\beta b_2+\\gamma b_3)u_{sw}+(\\alpha d_1+\\beta d_2+\\gamma d_3)\\\\\n&&+[(\\beta b_2+\\gamma b_3)u_{eq1}+(\\alpha b_1+\\gamma b_3)u_{eq2}+(\\alpha b_1+\\beta b_2)u_{eq3}]]\n\\end{array}Let $(\\alpha b_1+\\beta b_2+\\gamma b_3)u_{sw}+[(\\beta b_2+\\gamma b_3)u_{eq1}+(\\alpha b_1+\\gamma b_3)u_{eq2}+(\\alpha b_1+\\beta b_2)u_{eq3}]=-\\eta sgn(S)-kS$\n\n\\begin{array}{rcl}\nu_{sw} &=& (\\alpha b_1+\\beta b_2+\\gamma b_3)^{-1}\\{-[(\\beta b_2+\\gamma b_3)u_{eq1}+(\\alpha b_1+\\gamma b_3)u_{eq2}+(\\alpha b_1+\\beta b_2)u_{eq3}]-\\eta\\cdot sgn(S)-kS\\}\\\\\n&=& -(\\alpha b_1+\\beta b_2+\\gamma b_3)^{-1}[(\\beta b_2+\\gamma b_3)u_{eq1}+(\\alpha b_1+\\gamma b_3)u_{eq2}+(\\alpha b_1+\\beta b_2)u_{eq3}+\\eta\\cdot sgn(S)+kS]\n\\end{array}he remaining Lyapunov function proof is similar\n\n\\begin{array}{rcl}\n\\dot V &=& S[-\\eta\\cdot sgn(S)-kS+(\\alpha d_1+\\beta d_2+\\gamma d_3)]\\\\\n&=& -\\eta|S|-kS^2+S(\\alpha d_1+\\beta d_2+\\gamma d_3)\\\\\n&\\le&  -\\eta|S|-kS^2+|S|\\cdot|(\\alpha d_1+\\beta d_2+\\gamma d_3)|\n\\end{array}As $d_i$ is bounded, assume that $|(\\alpha d_1+\\beta d_2+\\gamma d_3)|\\le D_M$ so if $\\eta &gt;D_M$\n\n\\begin{array}{rcl}\n\\dot V &\\le&  -\\eta|S|-kS^2+|S|\\cdot|(\\alpha d_1+\\beta d_2+\\gamma d_3)|\\\\\n&\\le& -kS^2-|S|\\cdot(\\eta-|(\\alpha d_1+\\beta d_2+\\gamma d_3)|)\\\\\n&\\le& -kS^2-(\\eta-D_M)|S|\\le0\n\\end{array}And hence,\n\n\\begin{array}{rcl}\nu &=& u_{eq1}+u_{eq2}+u_{eq3}+u_{sw}\\\\\n&=& (\\alpha b_1+\\beta b_2+\\gamma b_3)^{-1}[\\alpha b_1u_{eq1}+\\beta b_2u_{eq2}+\\gamma b_3 u_{eq3}-\\eta\\cdot sgn(S)-kS]\n\\end{array}\n4. Controller DesignFor linearized model:\n\n\\left\\{\n\\begin{array}{rcl}\n\\ddot \\theta_1 &=& M_f(2,2)\\theta_1+M_f(2,3)\\theta_2+B(2,1)\\tau\\\\\n\\ddot \\theta_2 &=& M_f(3,2)\\theta_1+M_f(3,3)\\theta_2+B(3,1)\\tau\\\\\n\\ddot x &=& M_f(1,2)\\theta_1+M_f(1,3)\\theta_2+B(1,1)\\tau\n\\end{array}\n\\right.\n\\left\\{\n\\begin{array}{rcl}\ne_1 &=& \\theta_1-\\theta_{1d},\\ \\ \\dot e_1=\\dot\\theta_1\\\\\ne_2 &=& \\theta_2-\\theta_{2d},\\ \\ \\dot e_2=\\dot\\theta_2\\\\\ne_3 &=& x-x_d,\\ \\ \\dot e_3=\\dot x\n\\end{array}\n\\right.Set first-level sliding surface:\n\n\\left\\{\n\\begin{array}{rcl}\ns_1 &=& c_1e_1+\\dot e_1\\\\\ns_2 &=& c_2e_2+\\dot e_2\\\\\ns_3 &=& c_3e_3+\\dot e_3\n\\end{array}\n\\right.Thus we have equivalent control law:\n\n\\left\\{\n\\begin{array}{rcl}\nu_{eq1} &=& -\\frac{(M_f(2,2)\\theta_1+M_f(2,3)\\theta_2)+c_1\\dot\\theta_1}{B(2,1)}\\\\\nu_{eq2} &=& -\\frac{(M_f(3,2)\\theta_1+M_f(3,3)\\theta_2)+c_2\\dot\\theta_2}{B(3,1)}\\\\\nu_{eq3} &=& -\\frac{(M_f(1,2)\\theta_1+M_f(1,3)\\theta_2)+c_3\\dot x}{B(1,1)}\\\\\n\\end{array}\n\\right.Set second level sliding surface:\n\nS=\\alpha s_1+\\beta s_2+\\gamma s_3We have switching control law:\n\nu_{sw}=-(\\alpha b_1+\\beta b_2+\\gamma b_3)^{-1}[\\gamma b_1 u_{eq3}+\\beta b_2 u_{eq2}+\\alpha b_1u_{eq1}+\\eta sgn(S)+kS]Combining two terms:\n\nu=u_{eq}+u_{sw}=(\\alpha b_1+\\beta b_2)^{-1}[\\alpha b_1u_{eq1}+\\beta b_2u_{eq2}-\\eta sgn(S)-kS]\n\nProblems encountered1. ModellingIn system modeling, for the convenience of theoretical research, factors such as internal mechanical friction and external disturbances are ignored, and the changes in the z-axis position of the robot are not considered, making the model less accurate and affecting the design of the controller. Therefore, in subsequent research, these factors need to be taken into account.\n\n2. LinearizationIn linearizing the model near the balance point, the method used is too crude. In subsequent research, the Maclaurin expansion method can be used and the high-order terms can be discarded to make the linearized model more accurate. Fortunately, MALTAB provides function for the Taylor series, see here\n\n3. S-functionIn Version 2023a, level-1 s-function template in MATLAB language (sfunctmpl.m) is removed, and existing template in the cooresponding files are for level-2. The description web pages are link1, link2. Gladly the function is maintained, so the previous template can be used, as long as you can find it. According to the documentation, the storage of variables are indeed much safer, inspite that it could take some time convert a level-1 code into level-2. It is said that level-1 s-function runs faster than level-2, I’m not sure. At first I intended to use template in C, and only discovered that I did not have any embedded  C coding experience of any sort. So lastly I stick to the matlab language for consistency. In future, I would like to try it.\n\n4. TuningIn the HSMC controller, due to the large number of adjustable parameters, trial and error method is finally used to determine the parameters, resulting in the performance of LQR and HSMC controllers not being optimized. Therefore, in future research, methods such as genetic algorithms can be considered to determine the parameters.\n\n5. Switching Law, Controller OrderIn the HSMC controller used in this paper, only the most basic exponential reaching law is used, which involves the sign function $sgn()$, leading to the emergence of chattering phenomenon, and it is impossible to achieve such a high switching frequency in reality. Therefore, in subsequent research, the saturation function can be considered, or higher-order sliding mode can be applied.\n\n6. Intelligent ControlFrom the simulation results of controllers designed based on linear and nonlinear models, the HSMC controller based on nonlinear models cannot stabilize the system, which is due to the lack of handling coupling problems in the nonlinear model. The decoupling method in this paper only involves linearization, but this makes the model less accurate. Therefore, in subsequent research, more complex controllers can be considered, such as recursive LQR controllers, PSO optimized LQR controllers or fuzzy controllers, etc.\n","dateCreated":"2023-05-15T14:32:00+08:00","dateModified":"2023-06-28T21:49:24+08:00","datePublished":"2023-05-15T14:32:00+08:00","description":"Next time I could do better.","headline":"Double Inverted Pendulum on Two-wheeled Self-balancing Vehicle","image":["https://i.imgur.com/FdfgmHT.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://redbowtie.github.io/2023/05/15/GradThesis/"},"publisher":{"@type":"Organization","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png","logo":{"@type":"ImageObject","url":"/Ess/lh.png"}},"url":"https://redbowtie.github.io/2023/05/15/GradThesis/","keywords":"Control, MATLAB, Paper","thumbnailUrl":"https://i.imgur.com/FdfgmHT.png"}</script>
+    <meta name="description" content="Next time I could do better.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Double Inverted Pendulum on Two-wheeled Self-balancing Vehicle">
+<meta property="og:url" content="https://redbowtie.github.io/2023/05/15/GradThesis/index.html">
+<meta property="og:site_name" content="Amaurot Ch.">
+<meta property="og:description" content="Next time I could do better.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.imgur.com/FdfgmHT.png">
+<meta property="article:published_time" content="2023-05-15T06:32:00.000Z">
+<meta property="article:modified_time" content="2023-06-28T13:49:24.527Z">
+<meta property="article:author" content="Estus">
+<meta property="article:tag" content="Control">
+<meta property="article:tag" content="MATLAB">
+<meta property="article:tag" content="Paper">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/FdfgmHT.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://redbowtie.github.io/assets/images/Ess/lh.png"/>
+    
+    
+        <meta property="og:image" content="https://i.imgur.com/FdfgmHT.png"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://i.imgur.com/FdfgmHT.png"/>
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-4a47lwukh8khnoqxgkjhofoety2rdykli5sq4vv9v7xmmtg07euhkbfahoe5.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/"
+            aria-label=""
+        >
+            Amaurot Ch.
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+            <img class="header-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a
+                    href="/#about"
+                    aria-label="Read more about the author"
+                >
+                    <img class="sidebar-profile-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Estus</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>Fun things <del>never</del> always stops.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/RedBowtie"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/atom.xml"
+                            
+                            rel="noopener"
+                            title="RSS"
+                        >
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/links"
+                            
+                            rel="noopener"
+                            title="Links"
+                        >
+                        <i class="sidebar-button-icon fa fa-sign" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Links</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            Double Inverted Pendulum on Two-wheeled Self-balancing Vehicle
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2023-05-15T14:32:00+08:00">
+	
+		    May 15, 2023
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Robotics/">Robotics</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>Next time I could do better. <span id="more"></span></p>
+<p>To view the topic part, click <a href = "#start">here</a>, for some substantiation, I’ve skipped them, as they’re not presented clearly from the beginning.</p>
+<p>To view the problems encoutered during implementation, click <a href = "#Exp">here</a>.</p>
+<hr>
+<h1 id="table-of-contents">Table of Contents</h1><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#N-Prologue"><span class="toc-text">N. Prologue</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#I-Previously-on-inverted-pendulum"><span class="toc-text">I. Previously on  inverted pendulum</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Construct-mathematical-model"><span class="toc-text">Construct mathematical model</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Lagrange-equation"><span class="toc-text">Lagrange equation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Force-analysis"><span class="toc-text">Force analysis</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#II-Thesis-Topic"><span class="toc-text">II. Thesis Topic</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Design-of-Controllers-for-Two-wheeled-Self-balancing-Robot"><span class="toc-text">The Design of Controllers for Two-wheeled Self-balancing Robot</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Kinematics-Modelling"><span class="toc-text">1. Kinematics Modelling</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Velocity-Analysis"><span class="toc-text">Velocity Analysis</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-The-velocity-of-the-CoM-Center-of-Mass-for-lower-body"><span class="toc-text">1.1 The velocity of the CoM (Center of Mass) for lower body:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-The-speed-of-the-CoM-for-Upper-rod"><span class="toc-text">1.2 The speed of the CoM for Upper rod:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-The-horizontal-linear-velocity-of-wheels-CoM"><span class="toc-text">1.3 The horizontal linear velocity of wheels (CoM):</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-The-velocity-for-B-1-B-2-in-angle-coordinates-deprecated"><span class="toc-text">1.4 The velocity for $B_1,\  B_2$ in angle coordinates. (deprecated)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-5-The-velocity-for-wheels-in-angle-coordinates-deprecated"><span class="toc-text">1.5 The velocity for wheels in angle coordinates: (deprecated)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-6-Plane-motion"><span class="toc-text">1.6 Plane motion</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Dynamics-Modelling"><span class="toc-text">2. Dynamics Modelling</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-Select-3-DoF-of-the-robots-as-general-coordinates"><span class="toc-text">2.1 Select 3 DoF of the robots as general coordinates.</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-The-kinematic-engergy-for-the-system"><span class="toc-text">2.2 The kinematic engergy for the system</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Wheel"><span class="toc-text">Wheel:</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Cart"><span class="toc-text">Cart:</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Pendulum"><span class="toc-text">Pendulum:</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-Lagrangian"><span class="toc-text">2.3 Lagrangian</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-Linearization"><span class="toc-text">2.4 Linearization</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-Nonlinear-model"><span class="toc-text">2.5 Nonlinear model</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Algorithms"><span class="toc-text">3. Algorithms</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SMC"><span class="toc-text">SMC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HSMC"><span class="toc-text">HSMC</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Controller-Design"><span class="toc-text">4. Controller Design</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Problems-encountered"><span class="toc-text">Problems encountered</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Modelling"><span class="toc-text">1. Modelling</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Linearization"><span class="toc-text">2. Linearization</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-S-function"><span class="toc-text">3. S-function</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Tuning"><span class="toc-text">4. Tuning</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Switching-Law-Controller-Order"><span class="toc-text">5. Switching Law, Controller Order</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-Intelligent-Control"><span class="toc-text">6. Intelligent Control</span></a></li></ol>
+<hr>
+<h2 id="N-Prologue"><a href="#N-Prologue" class="headerlink" title="N. Prologue"></a>N. Prologue</h2><p>I didn’t expect this to begin so early. <del>So I’ll try to make this a combination of <strong>paper writing</strong> and the <strong>project designing.</strong></del> Instead, the paper writing technique will be separated to <a href="../PaperWriting/">here</a>.</p>
+<p><del>Oh, and mabe if the article is too long, I’ll consider to make it two.</del></p>
+<hr>
+<h1 id="I-Previously-on-inverted-pendulum"><a href="#I-Previously-on-inverted-pendulum" class="headerlink" title="I. Previously on  inverted pendulum"></a>I. Previously on  inverted pendulum</h1><p>Some priorities:</p>
+<ul>
+<li>Remodelling the invert pendulum due to the conflict between two models.</li>
+</ul>
+<h2 id="Construct-mathematical-model"><a href="#Construct-mathematical-model" class="headerlink" title="Construct mathematical model"></a>Construct mathematical model</h2><p>Well there are many ways to make such model such as from</p>
+<ul>
+<li>Lagrange equation</li>
+<li>Force analysis</li>
+</ul>
+<p>So maybe I can go through most of them.</p>
+<h3 id="Lagrange-equation"><a href="#Lagrange-equation" class="headerlink" title="Lagrange equation"></a>Lagrange equation</h3><script type="math/tex; mode=display">\frac{d}{dt}(\frac{\partial L}{\partial \dot{q_i}})-\frac{\partial L}{\partial q_i}=Q_i\tag{1.1}</script><script type="math/tex; mode=display">L = T-V \tag{1.2}</script><p>For cart:</p>
+<script type="math/tex; mode=display">M,\ x_c,\ \dot{x_c},\ F</script><p>For the pole:</p>
+<script type="math/tex; mode=display">m,\ l,\ J_c,\ \theta,\ \dot{\theta}</script><p>Note that $l$ is the total length of the pole.</p>
+<p>The moment of inertia to center of mass:</p>
+<script type="math/tex; mode=display">J_c = \frac{1}{12}ml^2</script><p>The moment of intertia to one end of the pole, perpendicular</p>
+<script type="math/tex; mode=display">J=J_c+\frac{1}{4}ml^2=\frac{1}{3}ml^2 \tag{1.3}</script><p>The kinematic and potential energy for cart:</p>
+<script type="math/tex; mode=display">T_c=\frac{1}{2}M\dot{x_c}^2,\ \ V_c=0 \tag{1.4}</script><p>The position of the pole:</p>
+<script type="math/tex; mode=display">x_p=x_c+\frac{1}{2}l\sin\theta,\ \ y_p=\frac{1}{2}l\cos\theta \tag{1.5}</script><p>From <em>Eq. 5</em>, derive the pole’s kinematic and potential energy:</p>
+<script type="math/tex; mode=display">T_p=\frac{1}{2}J_c\dot{\theta}^2+\frac{1}{2}m(\dot{x}_p^2+\dot{y}_p^2),\ \ V_p=\frac{1}{2}mgl\cos\theta \tag{1.6}</script><p>where</p>
+<script type="math/tex; mode=display">\dot{x}_p=\dot{x_c}+\frac{1}{2}l\cos\theta\dot{\theta}, \ \ \dot{y}_p=-\frac{1}{2}l\sin\theta\dot{\theta} \tag{1.7}</script><p>Substitute <em>Eq. 4, 6, 7</em> into <em>Eq. 2</em></p>
+<script type="math/tex; mode=display">L=T_c+T_p-V_p\\
+=\frac{1}{2}M\dot{x_c}^2+\frac{1}{2}J_c\dot{\theta}^2+\frac{1}{2}m((\dot{x_c}+\frac{1}{2}l\cos\theta\dot{\theta})^2+(-\frac{1}{2}l\sin\theta\dot{\theta})^2)-\frac{1}{2}mgl\cos\theta</script><script type="math/tex; mode=display">=\frac{1}{2}M\dot{x_c}^2+\frac{1}{2}J_c\dot{\theta}^2+\frac{1}{2}m(\dot{x}_c^2+\dot{x}_cl\cos(\theta)\dot{\theta}+\frac{1}{4}l^2\cos^2(\theta)\dot{\theta}^2+\frac{1}{4}l^2\sin^2(\theta)\dot{\theta}^2)\\-\frac{1}{2}mgl\cos\theta</script><script type="math/tex; mode=display">
+=\frac{1}{2}M\dot{x_c}^2+\frac{1}{2}J_c\dot{\theta}^2+\frac{1}{2}m(\dot{x}_c^2+\dot{x}_cl\cos(\theta)\dot{\theta}+\frac{1}{4}l^2\dot{\theta}^2)-\frac{1}{2}mgl\cos\theta</script><script type="math/tex; mode=display">=\frac{1}{2}(M+m)\dot{x}_c^2+\frac{1}{2}(J_c+\frac{1}{4}ml^2)\dot{\theta}^2+\frac{1}{2}ml\cos
+(\theta)\dot{\theta}\dot{x}_c-\frac{1}{2}mgl\cos\theta
+\tag{1.8}</script><p>Using <em>Eq. 1</em> for displacement:</p>
+<script type="math/tex; mode=display">x_c:\frac{d}{dt}(\frac{\partial L}{\partial\dot{x}_c})-\frac{\partial L}{\partial x_c}=F \tag{1.9}</script><script type="math/tex; mode=display">\frac{\partial L}{\partial\dot{x_c}}=(M+m)\dot{x}_c+\frac{1}{2}ml\cos
+(\theta)\dot{\theta}</script><script type="math/tex; mode=display">\frac{\partial L}{\partial x_c}=0</script><p>Substitute:</p>
+<script type="math/tex; mode=display">
+\frac{d}{dt}(\frac{\partial L}{\partial\dot{x_c}})=(M+m)\ddot{x}_c+\frac{1}{2}ml(-\sin(\theta)\dot{\theta}^2+cos(\theta)\ddot{\theta})=F
+\tag{1.10}</script><p>Using <em>Eq. 1</em> for angle: </p>
+<script type="math/tex; mode=display">
+\theta:\frac{d}{dt}(\frac{\partial L}{\partial\dot{\theta}})-\frac{\partial L}{\partial \theta}=0
+\tag{1.11}</script><script type="math/tex; mode=display">
+\frac{\partial L}{\partial\dot{\theta}}=(J_c+\frac{1}{4}ml^2)\dot{\theta}+\frac{1}{2}ml\cos(\theta)\dot{x}_c</script><script type="math/tex; mode=display">
+\frac{\partial L}{\partial \theta}=-\frac{1}{2}ml\sin(\theta)\dot{\theta}\dot{x}_c+\frac{1}{2}mgl\sin(\theta)</script><script type="math/tex; mode=display">
+\frac{d}{dt}(\frac{\partial L}{\partial\dot{\theta}})=(J_c+\frac{1}{4}ml^2)\ddot{\theta}-\frac{1}{2}ml\sin(\theta)\dot{\theta}\dot{x}_c+\frac{1}{2}mgl\cos(\theta)\ddot{x}_c</script><p>Substuting:</p>
+<script type="math/tex; mode=display">
+(J_c+\frac{1}{4}ml^2)\ddot{\theta}-\frac{1}{2}ml\sin(\theta)\dot{\theta}\dot{x}_c+\frac{1}{2}mgl\cos(\theta)\ddot{x}_c\\ +\frac{1}{2}ml\sin(\theta)\dot{\theta}\dot{x}_c-\frac{1}{2}mgl\sin(\theta)</script><script type="math/tex; mode=display">
+= (J_c+\frac{1}{4}ml^2)\ddot{\theta}+\frac{1}{2}mgl\cos(\theta)\ddot{x}_c-\frac{1}{2}mgl\sin(\theta)=0
+\tag{1.12}</script><p>Now we have the following relation:</p>
+<script type="math/tex; mode=display">
+\left\{\begin{array}{l}
+(M+m)\ddot{x}_c+\frac{1}{2}ml(-\sin(\theta)\dot{\theta}^2+cos(\theta)\ddot{\theta})=F,\\
+(J_c+\frac{1}{4}ml^2)\ddot{\theta}+\frac{1}{2}mgl\cos(\theta)\ddot{x}_c-\frac{1}{2}mgl\sin(\theta)=0
+\end{array}\right.
+\tag{1.13}</script><p>Rewrite the system into matrix form:</p>
+<script type="math/tex; mode=display">
+\left[\begin{array}{cc}
+M+m & \frac{1}{2}ml\cos(\theta)\\
+\frac{1}{2}ml\cos(\theta) & J_c+\frac{1}{4}ml^2
+\end{array}\right]
+
+\left[\begin{array}{c}
+\ddot{x}_c \\
+\ddot{\theta}
+\end{array}\right]
++
+\left[\begin{array}{cc}
+0 & -\frac{1}{2}ml\sin(\theta)\dot{\theta}\\
+0 & 0
+\end{array}\right]
+
+\left[\begin{array}{c}
+\dot{x}_c \\
+\dot{\theta}
+\end{array}\right]
+=
+\left[\begin{array}{c}
+F \\
+\frac{1}{2}mgl\sin(\theta)
+\end{array}\right]</script><p>Introduce</p>
+<script type="math/tex; mode=display">
+Q=\left[\begin{array}{cc}
+M+m & \frac{1}{2}ml\cos(\theta)\\
+\frac{1}{2}ml\cos(\theta) & J_c+\frac{1}{4}ml^2
+\end{array}\right]</script><p>and whose inverse matrix:</p>
+<script type="math/tex; mode=display">
+Q^{-1}=\left[\begin{array}{cc}
+\frac{4J}{\sigma} & -\frac{2ml\cos(\theta)}{\sigma}\\
+-\frac{2ml\cos(\theta)}{\sigma} & \frac{4(M+m)}{\sigma}
+\end{array}\right],\ \  \sigma=-m^2l^2\cos^2\theta+4J(M+m)</script><p>under the condition  $\theta\ll 1$</p>
+<script type="math/tex; mode=display">
+cos\theta\approx 1,\ \ \sin\theta\approx\theta,\ \ \\sin(\theta)\dot{\theta}\approx0</script><script type="math/tex; mode=display">
+Q_l^{-1}=\left[\begin{array}{cc}
+\frac{4J}{\sigma} & -\frac{2ml}{\sigma}\\
+-\frac{2ml}{\sigma} & \frac{4(M+m)}{\sigma}
+\end{array}\right],\ \  \sigma=-m^2l^2+4J(M+m)</script><script type="math/tex; mode=display">
+\left[\begin{array}{c}
+\ddot{x}_c \\
+\ddot{\theta}
+\end{array}\right]
+=
+Q_l^{-1}
+\left[\begin{array}{c}
+F \\
+\frac{1}{2}mgl\theta
+\end{array}\right]</script><script type="math/tex; mode=display">
+\left[\begin{array}{c}
+\ddot{x}_c \\
+\ddot{\theta}
+\end{array}\right]
+=
+
+\left[\begin{array}{c}
+\frac{4FJ-gl^2m^2\theta}{\sigma}\\
+\frac{2ml((M+m)g\theta-F)}{\sigma}
+\end{array}\right],\ \ \sigma=-m^2l^2+4J(M+m)
+\tag{1.14}</script><p>Expand states, perform linearlization,</p>
+<script type="math/tex; mode=display">
+\dot{x}=
+\left[\begin{array}{c}
+\dot{x}_c \\
+\ddot{x}_c \\
+\dot{\theta} \\
+\ddot{\theta}
+\end{array}\right], \ \ 
+y=
+\left[\begin{array}{c}
+x_c \\
+\theta \\
+\end{array}\right]</script><p>In state-space representation</p>
+<script type="math/tex; mode=display">
+\left[\begin{array}{c}
+\dot{x}_c \\
+\ddot{x}_c \\
+\dot{\theta} \\
+\ddot{\theta}
+\end{array}\right]
+=
+\left[\begin{array}{cccc}
+0 & 1 & 0 & 0 \\
+0 & 0 & \frac{-gm^2l^2}{\sigma}&0\\
+0 & 0 & 0 & 1\\
+0 & 0 & \frac{2ml(M+m)}{\sigma} & 0
+\end{array}\right]
+
+\left[\begin{array}{c}
+x_c \\
+\dot{x}_c \\
+\theta \\
+\dot{\theta}
+\end{array}\right]
++
+\left[\begin{array}{c}
+\frac{4J}{\sigma}\\
+0\\
+\frac{-ml}{\sigma} \\
+0
+\end{array}\right]F
+\tag{1.15}</script><script type="math/tex; mode=display">
+\left[\begin{array}{c}
+x_c \\
+\theta \\
+\end{array}\right]
+=
+\left[\begin{array}{cccc}
+1&0&0&0\\
+0&0&1&0\\
+\end{array}\right]
+\left[\begin{array}{c}
+x_c \\
+\dot{x}_c \\
+\theta \\
+\dot{\theta}
+\end{array}\right]
+\tag{1.16}</script><hr>
+<h3 id="Force-analysis"><a href="#Force-analysis" class="headerlink" title="Force analysis"></a>Force analysis</h3><p>As there are some notation error in the reference document, I assume I shouold do the process once again to ensure this is the right thing. </p>
+<p>For the torque of pole with respect to one end:</p>
+<script type="math/tex; mode=display">
+J\ddot{\theta} = F_y\cdot\frac{1}{2}l\sin(\theta)-F_x\cdot\frac{1}{2}l\cos(\theta)
+\tag{2.1}</script><p>(note that the sign for couter-clockwise torque is negative, while the positive direction of $F_y$ is downward)</p>
+<p>Some process is eliminated to cut redundant part.</p>
+<p>Newton’s third law on the pole’s center of mass (refer to <em>Eq 1.5</em>):</p>
+<script type="math/tex; mode=display">
+F_x = m\frac{d^2}{d^2t}(x+\frac{1}{2}l\sin(\theta))
+\tag{2.2}</script><script type="math/tex; mode=display">
+F_y=mg-\frac{1}{2}ml\frac{d^2}{d^2t}(\cos(\theta))
+\tag{2.3}</script><p>And the motion of cart:</p>
+<script type="math/tex; mode=display">
+F-F_x=M(\frac{d^2 x}{d^2t})
+\tag{2.4}</script><p>Considering the formulas above Eq 2.1, 2, 3, 4, obtain the mathematical model:</p>
+<script type="math/tex; mode=display">
+\left\{\begin{array}{l}
+\ddot{x}=\frac{}{},\\
+\ddot{\theta}=\frac{}{}
+\end{array}\right.</script><p><strong>Currently, this part will be suspended until the main thesis is complete.</strong></p>
+<hr>
+<p><div id ="start"></div></p>
+<h1 id="II-Thesis-Topic"><a href="#II-Thesis-Topic" class="headerlink" title="II. Thesis Topic"></a>II. Thesis Topic</h1><h3 id="The-Design-of-Controllers-for-Two-wheeled-Self-balancing-Robot"><a href="#The-Design-of-Controllers-for-Two-wheeled-Self-balancing-Robot" class="headerlink" title="The Design of Controllers for Two-wheeled Self-balancing Robot"></a>The Design of Controllers for Two-wheeled Self-balancing Robot</h3><p><img src="https://i.imgur.com/FdfgmHT.png" alt="Structure"></p>
+<p>As the robot itself, the <strong>double-pendulum</strong> structure is selected.</p>
+<p>Notations for parameters of the robot are as follows:</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Parameter Name</th>
+<th style="text-align:center">Symbol</th>
+<th style="text-align:center">Unit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Mass of First pendulum</td>
+<td style="text-align:center">$M_1$</td>
+<td style="text-align:center">$kg$</td>
+</tr>
+<tr>
+<td style="text-align:center">Mass of Second Pendulum</td>
+<td style="text-align:center">$M_2$</td>
+<td style="text-align:center">$kg$</td>
+</tr>
+<tr>
+<td style="text-align:center">Length to the CoM the First pendulum</td>
+<td style="text-align:center">$L_1$</td>
+<td style="text-align:center">$m$</td>
+</tr>
+<tr>
+<td style="text-align:center">Length to the CoM the Second pendulum</td>
+<td style="text-align:center">$L_2$</td>
+<td style="text-align:center">$m$</td>
+</tr>
+<tr>
+<td style="text-align:center">Length between center of wheels</td>
+<td style="text-align:center">$D_m$</td>
+<td style="text-align:center">$m$</td>
+</tr>
+<tr>
+<td style="text-align:center">Radius of wheels</td>
+<td style="text-align:center">$R_w$</td>
+<td style="text-align:center">$m$</td>
+</tr>
+<tr>
+<td style="text-align:center">Mass of the wheels</td>
+<td style="text-align:center">$M_L=M_R=M_w$</td>
+<td style="text-align:center">$kg$</td>
+</tr>
+<tr>
+<td style="text-align:center">Inertia of the wheels</td>
+<td style="text-align:center">$J_L=J_R=J_w$</td>
+<td style="text-align:center">$N\cdot m/rad$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Notations for variables of the robot are as follows</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Parameter Name</th>
+<th style="text-align:center">Symbol</th>
+<th style="text-align:center">Unit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Pitch angle of lower pendulum</td>
+<td style="text-align:center">$\theta_1$</td>
+<td style="text-align:center">$rad$</td>
+</tr>
+<tr>
+<td style="text-align:center">Pitch angle of upper pendulum</td>
+<td style="text-align:center">$\theta_2$</td>
+<td style="text-align:center">$rad$</td>
+</tr>
+<tr>
+<td style="text-align:center">Yaw angle</td>
+<td style="text-align:center">$\psi$</td>
+<td style="text-align:center">$rad$</td>
+</tr>
+<tr>
+<td style="text-align:center">Angular Displacement of wheels</td>
+<td style="text-align:center">$\theta_L, \theta_R$</td>
+<td style="text-align:center">$rad/s$</td>
+</tr>
+<tr>
+<td style="text-align:center">Linear speed of the wheels</td>
+<td style="text-align:center">$x_L, x_R$</td>
+<td style="text-align:center">$m/s$</td>
+</tr>
+<tr>
+<td style="text-align:center">System forward speed</td>
+<td style="text-align:center">$x =(x_L+x_R)/2$</td>
+<td style="text-align:center">$m/s$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="1-Kinematics-Modelling"><a href="#1-Kinematics-Modelling" class="headerlink" title="1. Kinematics Modelling"></a>1. Kinematics Modelling</h2><p>Describing its relation without considering internal effects.</p>
+<h3 id="Velocity-Analysis"><a href="#Velocity-Analysis" class="headerlink" title="Velocity Analysis"></a>Velocity Analysis</h3><h4 id="1-1-The-velocity-of-the-CoM-Center-of-Mass-for-lower-body"><a href="#1-1-The-velocity-of-the-CoM-Center-of-Mass-for-lower-body" class="headerlink" title="1.1 The velocity of the CoM (Center of Mass) for lower body:"></a>1.1 The velocity of the CoM (Center of Mass) for lower body:</h4><p>Yaw angle is not considered in the reasearch.</p>
+<script type="math/tex; mode=display">
+V_{C1}=\left[
+\begin{array}{ccc}
+vX_{C1} & vY_{C1} & vZ_{C1}
+\end{array}
+\right]^\intercal = 
+\left[
+\begin{array}{c}
+\dot{x}+l_1\dot{\theta}_1\cos\theta_1\\
+0\\
+-l_1\dot\theta_1\sin\theta_1
+\end{array}
+\right]
+\tag{1-1}</script><h4 id="1-2-The-speed-of-the-CoM-for-Upper-rod"><a href="#1-2-The-speed-of-the-CoM-for-Upper-rod" class="headerlink" title="1.2 The speed of the CoM for Upper rod:"></a>1.2 The speed of the CoM for Upper rod:</h4><script type="math/tex; mode=display">
+V_{C2}=\left[
+\begin{array}{ccc}
+vX_{C2} & vY_{C2} & vZ_{C2}
+\end{array}
+\right]^\intercal = 
+\left[
+\begin{array}{c}
+\dot{x}+l_2\dot{\theta}_2\cos\theta_2+2l_1\dot\theta_1\cos\theta_1\\
+0\\
+-l_2\dot\theta_2\sin\theta_2-2l_1\dot\theta_1\sin\theta_1
+\end{array}
+\right]
+\tag{1-2}</script><h4 id="1-3-The-horizontal-linear-velocity-of-wheels-CoM"><a href="#1-3-The-horizontal-linear-velocity-of-wheels-CoM" class="headerlink" title="1.3 The horizontal linear velocity of wheels (CoM):"></a>1.3 The horizontal linear velocity of wheels (CoM):</h4><script type="math/tex; mode=display">
+\left\{
+\begin{array}{rcl}
+\dot x_L &=& R_w\dot\theta_L\\
+\dot x_R &=& R_w\dot\theta_R\\
+\dot x &=& \frac{1}{2}\cdot(\dot x_L + \dot x_R)
+\end{array}
+\right.</script><h4 id="1-4-The-velocity-for-B-1-B-2-in-angle-coordinates-deprecated"><a href="#1-4-The-velocity-for-B-1-B-2-in-angle-coordinates-deprecated" class="headerlink" title="1.4 The velocity for $B_1,\  B_2$ in angle coordinates. (deprecated)"></a>1.4 The velocity for $B_1,\  B_2$ in angle coordinates. (deprecated)</h4><script type="math/tex; mode=display">
+\Omega_i=\left[
+\begin{array}{ccc}
+\omega X_i & \omega Y_i & \omega Z_i
+\end{array}
+\right]^\intercal = 
+\left[
+\begin{array}{ccc}
+\dot\phi\sin\theta_i & \dot\theta_i & \dot\phi\cos\theta_i
+\end{array}
+\right]^\intercal, (i=1,2)
+\tag{1-4}</script><h4 id="1-5-The-velocity-for-wheels-in-angle-coordinates-deprecated"><a href="#1-5-The-velocity-for-wheels-in-angle-coordinates-deprecated" class="headerlink" title="1.5 The velocity for wheels in angle coordinates: (deprecated)"></a>1.5 The velocity for wheels in angle coordinates: (deprecated)</h4><script type="math/tex; mode=display">
+\Omega_{w_k}=\left[
+\begin{array}{ccc}
+\omega X_k & \omega Y_k & \omega Z_k
+\end{array}
+\right]^\intercal = 
+\left[
+\begin{array}{ccc}
+\dot\phi\sin\varphi_k & \dot\varphi_k & \dot\phi\cos\varphi_k
+\end{array}
+\right]^\intercal, (k=L, R)
+\tag{1-5}</script><h4 id="1-6-Plane-motion"><a href="#1-6-Plane-motion" class="headerlink" title="1.6 Plane motion"></a>1.6 Plane motion</h4><script type="math/tex; mode=display">
+\left\{
+\begin{array}{l}
+\dot x =\frac{R_w}{2}(\dot\theta_L+\dot\theta_R)\\
+\dot\psi= \frac{R_w}{D_m}(\dot\theta_R-\dot\theta_L)
+\end{array}
+\right.
+\tag{1-6}</script><script type="math/tex; mode=display">
+\left[
+\begin{array}{c}
+\dot\theta_L\\
+\dot\theta_R
+\end{array}
+\right]
+=
+\frac{1}{R_w}
+\left[
+\begin{array}{cc}
+-D_m/2 & 1\\
+D_m/2 & 1
+\end{array}
+\right]
+
+\left[
+\begin{array}{c}
+\dot x\\
+\dot\psi
+\end{array}
+\right]
+\tag{1-7}</script><hr>
+<h2 id="2-Dynamics-Modelling"><a href="#2-Dynamics-Modelling" class="headerlink" title="2. Dynamics Modelling"></a>2. Dynamics Modelling</h2><h4 id="2-1-Select-3-DoF-of-the-robots-as-general-coordinates"><a href="#2-1-Select-3-DoF-of-the-robots-as-general-coordinates" class="headerlink" title="2.1 Select 3 DoF of the robots as general coordinates."></a>2.1 Select 3 DoF of the robots as general coordinates.</h4><script type="math/tex; mode=display">
+q=\left[
+\begin{array}{cccc}
+x & \theta_1 & \theta_2
+\end{array}
+\right]
+\tag{2-1}</script><h4 id="2-2-The-kinematic-engergy-for-the-system"><a href="#2-2-The-kinematic-engergy-for-the-system" class="headerlink" title="2.2 The kinematic engergy for the system"></a>2.2 The kinematic engergy for the system</h4><h5 id="Wheel"><a href="#Wheel" class="headerlink" title="Wheel:"></a>Wheel:</h5><p>The kinetic engergy include the translational kinetic engergy  $T_L$ and $T_R$, and the rotational kinetic engergy when wheels rotates around the shaft.</p>
+<script type="math/tex; mode=display">
+T_L=\frac{1}{2}m_w\dot x_L^2=\frac{1}{2}m_wR_w^2\dot\theta_L^2</script><p>Similarly</p>
+<script type="math/tex; mode=display">
+T_R=\frac{1}{2}m_w\dot x_R^2=\frac{1}{2}m_wR_w^2\dot\theta_R^2</script><p>As for ratational kinetic engery:</p>
+<script type="math/tex; mode=display">
+\left\{
+\begin{array}{rcl}
+P_L &=& \frac{1}{2}J_w\dot\theta_L^2\\
+P_R &=& \frac{1}{2}J_w\dot\theta_R^2
+\end{array}
+\right.</script><script type="math/tex; mode=display">
+\begin{array}{rcl}
+T_1&=&T_L+T_R+P_L+P_R\\
+&=& \frac{1}{2}m_w(\dot x_L^2+\dot x_R^2)+\frac{1}{2}J_w(\dot\theta_L^2+\dot\theta_R^2)\\
+&=& \frac{1}{2}(m_wR_w^2+J_w)(\dot\theta_L^2+\dot\theta_R^2)
+\end{array}</script><p>As the turning is not considered, $\dot\theta_L=\dot\theta_R$</p>
+<script type="math/tex; mode=display">
+\begin{array}{rcl}
+T_1&=&\frac{1}{2}(m_wR_w^2+J_w)\frac{2\dot x^2}{R_w^2}\\
+&=&\frac{(mR^2+J_w)}{R^2}\dot x^2
+\end{array}</script><h5 id="Cart"><a href="#Cart" class="headerlink" title="Cart:"></a>Cart:</h5><p>Cart - Translational</p>
+<script type="math/tex; mode=display">
+\begin{array}{rcl}
+T_{c} &=& \frac{1}{2}m_1V_{C1}^\intercal V_{C1}\\
+&=& \frac{1}{2}m_1[(\dot{x}+l_1\dot{\theta}_1\cos\theta_1)^2+(-l_1\dot\theta_1\sin\theta_1)^2]\\
+&=&\frac{1}{2}m_1[l_1^2\dot\theta_1^2+2l_1\dot\theta_1\dot x\cos\theta_1+\dot x^2]
+\end{array}</script><p>Cart - Rotational</p>
+<script type="math/tex; mode=display">
+P_{Yc}=\frac{1}{2}J_{\theta_1} \dot\theta_1^2</script><p>Cart - whole</p>
+<script type="math/tex; mode=display">
+\begin{array}{rcl}
+T_2 &=& T_{c}+P_{Yc}\\
+&=& \frac{1}{2}m_1[l_1^2\dot\theta_1^2+2l_1\dot\theta_1\dot x\cos\theta_1+\dot x^2]+\frac{1}{2}J_{\theta_1} \dot\theta_1^2\\
+&=& \frac{1}{2}(m_1l_1^2+J_{\theta_1})\dot\theta_1^2
++ m_1l_1\dot x\dot\theta_1\cos\theta_1
++ \frac{1}{2}m_1\dot x^2
+\end{array}</script><h5 id="Pendulum"><a href="#Pendulum" class="headerlink" title="Pendulum:"></a>Pendulum:</h5><p>Pendulum - Translational</p>
+<script type="math/tex; mode=display">
+\begin{array}{rcl}
+
+T_{p} &=& \frac{1}{2}m_2V_{C2}^\intercal V_{C2}\\
+&=& \frac{1}{2}m_2
+[(\dot{x}+l_2\dot{\theta}_2\cos\theta_2+2l_1\dot\theta_1\cos\theta_1)^2
++ (-l_2\dot\theta_2\sin\theta_2-2l_1\dot\theta_1\sin\theta_1)^2]\\
+&=& \frac{1}{2}m_2[l_2^2\dot\theta_2^2+4l_1^2\dot\theta_1^2+(2l_2\dot\theta_2\cos\theta_2+4l_1\dot\theta_1\cos\theta_1)\dot x
++4l_1l_2\dot\theta_1\dot\theta_2(\sin\theta_1\sin\theta_2+\cos\theta_1\cos\theta_2)+\dot x^2]
+\end{array}</script><p>Pendulum - Rotational</p>
+<script type="math/tex; mode=display">
+P_{Yp}=\frac{1}{2}J_{\theta_2}\dot\theta_2^2</script><p>Pendulum - Whole</p>
+<script type="math/tex; mode=display">
+\begin{array}{rcl}
+T_3  &=& T_p+P_{Yp}\\
+&=& \frac{1}{2}m_2[l_2^2\dot\theta_2^2+4l_1^2\dot\theta_1^2+(2l_2\dot\theta_2\cos\theta_2+4l_1\dot\theta_1\cos\theta_1)\dot x
++4l_1l_2\dot\theta_1\dot\theta_2(\sin\theta_1\sin\theta_2+\cos\theta_1\cos\theta_2)+\dot x^2]+ \frac{1}{2}J_{\theta_2}\dot\theta_2^2
+\\&=& \frac{1}{2}(m_2l_2^2+J_{\theta_2})\dot\theta_2^2+2m_2l_1^2\dot\theta_1^2\\
+&&+m_2(l_2\dot\theta_2\cos\theta_2+2l_1\dot\theta_1\cos\theta_1)\dot x\\
+&&+2m_2l_1l_2\dot\theta_1\dot\theta_2(\sin\theta_1\sin\theta_2+\cos\theta_1\cos\theta_2)\\
+&&+\frac{1}{2}m_2\dot x^2
+\end{array}</script><p>Thus the whole kinetic engergy for the system:</p>
+<script type="math/tex; mode=display">
+\begin{array}{rcl}
+T &=& T_1+T_2+T_3\\
+&=& [\frac{1}{2}(m_1+m_2)+\frac{(mR^2+J_w)}{R^2}]\dot x^2\\
+&& +\frac{1}{2}(m_1l_1^2+J_{\theta_1}+4m_2l_1^2)\dot\theta_1^2+\frac{1}{2}(m_2l_2^2+J_{\theta_2})\dot\theta_2^2\\
+&& +((m_1l_1+2m_2l_1)\dot\theta_1\cos\theta_1+m_2l_2\dot\theta_2\cos\theta_2)\dot x\\
+&& +2m_2l_1l_2\dot\theta_1\dot\theta_2\cos(\theta_1-\theta_2)
+\end{array}</script><p><strong>Potential engergy:</strong><br>The potential engergy for the sysstem equals:</p>
+<script type="math/tex; mode=display">
+\begin{array}{rcl}
+V &=& m_1gl_1\cos\theta_1+m_2g(2l_1\cos\theta_1+l_2\cos\theta_2)\\
+&=& (m_1+2m_2)gl_1\cos\theta_1 + m_2gl_2\cos\theta_2
+\end{array}</script><h3 id="2-3-Lagrangian"><a href="#2-3-Lagrangian" class="headerlink" title="2.3 Lagrangian"></a>2.3 Lagrangian</h3><p>Now we have the <strong>Lagrangian</strong>:</p>
+<script type="math/tex; mode=display">
+\begin{array}{rcl}
+L &=& T-V\\
+&=& [\frac{1}{2}(m_1+m_2)+\frac{(mR^2+J_w)}{R^2}]\dot x^2\\
+&&+\frac{1}{2}(m_1l_1^2+J_{\theta_1}+4m_2l_1^2)\dot\theta_1^2+\frac{1}{2}(m_2l_2^2+J_{\theta_2})\dot\theta_2^2\\
+&&+((m_1l_1+2m_2l_1)\dot\theta_1\cos\theta_1+m_2l_2\dot\theta_2\cos\theta_2)\dot x\\
+&&+2m_2l_1l_2\dot\theta_1\dot\theta_2(\sin\theta_1\sin\theta_2+\cos\theta_1\cos\theta_2)\\
+&&- (m_1+2m_2)gl_1\cos\theta_1 - m_2gl_2\cos\theta_2
+\end{array}</script><p>To simplify the lagrangian, using $M_{ij}$ to replace constant coefficients:</p>
+<script type="math/tex; mode=display">
+\begin{array}{rcl}
+L&=& T-V\\
+&=& M_{11}\dot x^2\\
+&&+M_{21}\dot\theta_1^2+M_{22}\dot\theta_2^2\\
+&&+(M_{31}\dot\theta_1\cos\theta_1+M_{32}\dot\theta_2\cos\theta_2)\dot x\\
+&&+M_{41}\dot\theta_1\dot\theta_2(\sin\theta_1\sin\theta_2+\cos\theta_1\cos\theta_2)\\
+&&-M_{51}\cos\theta_1 - M_{52}\cos\theta_2
+\end{array}</script><p>where, </p>
+<script type="math/tex; mode=display">
+\left[
+\begin{array}{c}
+M_{11}\\
+M_{21}\\
+M_{22}\\
+M_{31}\\
+M_{32}\\
+M_{41}\\
+M_{51}\\
+M_{52}
+\end{array}
+\right]
+=
+\left[
+\begin{array}{c}
+\frac{1}{2}(m_1+m_2)+\frac{(mR^2+J_w)}{R^2}\\
+\frac{1}{2}(m_1l_1^2+J_{\theta_1}+4m_2l_1^2)\\
+\frac{1}{2}(m_2l_2^2+J_{\theta_2})\\
+m_1l_1+2m_2l_1\\
+m_2l_2\\
+2m_2l_1l_2\\
+(m_1+2m_2)gl_1\\
+m_2gl_2
+\end{array}
+\right]</script><p><strong>Lagrangian equation:</strong><br>Generalized coordinates: $[x\ \theta_1\ \theta_2]$</p>
+<script type="math/tex; mode=display">
+\left\{
+\begin{array}{rcl}
+\frac{d}{dt}(\frac{\partial L}{\partial\dot x})-\frac{\partial L}{\partial x}&=&\tau\\
+\frac{d}{dt}(\frac{\partial L}{\partial\dot \theta_1})-\frac{\partial L}{\partial \theta_1}&=&-2\tau\\
+\frac{d}{dt}(\frac{\partial L}{\partial\dot \theta_2})-\frac{\partial L}{\partial \theta_2}&=&0\\
+\end{array}
+\right.</script><p>Simplified equation:</p>
+<script type="math/tex; mode=display">
+\left\{
+\begin{array}{rcl}
+2M_{11}\ddot x - M_{31}\dot\theta_1^2\sin\theta_1 - M_{32}\dot\theta_2^2\sin\theta_2 + M_{31}\ddot\theta_1\cos\theta_1 + M_{32}\ddot\theta_2\cos\theta_2 &=& \tau
+\\
+2M_{21}\ddot\theta_1 - M_{51}\sin\theta_1 + M_{31}\ddot x\cos\theta_1 - M_{41}\dot\theta_2^2\cos\theta_1\sin\theta_2  + M_{41}\dot\theta_2^2\cos\theta_2\sin\theta_1 +
+M_{41}\ddot\theta_2\cos\theta_1\cos\theta_2 +
+M_{41}\ddot\theta_2\sin\theta_1\sin\theta_2 &=& -2\tau 
+\\
+2M_{22}\ddot\theta_2 - M_{52}\sin\theta_2 + M_{32}\ddot x\cos\theta_2 + M_{41}\dot\theta_1^2\cos\theta_1\sin\theta_2 - M_{41}\dot\theta_1^2\cos\theta_2\sin\theta_1 +
+M_{41}\ddot\theta_1\cos\theta_1\cos\theta_2 +
+M_{41}\ddot\theta_1\sin\theta_1\sin\theta_2 &=& 0
+\end{array}
+\right.</script><h3 id="2-4-Linearization"><a href="#2-4-Linearization" class="headerlink" title="2.4 Linearization"></a>2.4 Linearization</h3><p>Perform linearization around $[x, 0, 0]$, thus that $\cos\theta=1,\ \sin\theta=\theta,\ \dot\theta^2=0$,  so that:</p>
+<script type="math/tex; mode=display">
+\left\{
+\begin{array}{rcl}
+2M_{11}\ddot x + M_{31}\ddot\theta_1+ M_{32}\ddot\theta_2&=& \tau
+\\
+2M_{21}\ddot\theta_1 - M_{51}\theta_1 + M_{31}\ddot x+
+M_{41}\ddot\theta_2+
+M_{41}\ddot\theta_2\theta_1\theta_2 &=& -2\tau 
+\\
+2M_{22}\ddot\theta_2 - M_{52}\theta_2 + M_{32}\ddot x +
+M_{41}\ddot\theta_1+
+M_{41}\ddot\theta_1\theta_1\theta_2 &=& 0
+\end{array}
+\right.</script><p>Also treat $\theta_1\theta_2=0$, we have </p>
+<script type="math/tex; mode=display">
+\left\{
+\begin{array}{rcl}
+2M_{11}\ddot x + M_{31}\ddot\theta_1+ M_{32}\ddot\theta_2&=& \tau
+\\
+M_{31}\ddot x+2M_{21}\ddot\theta_1 + M_{41}\ddot\theta_2 - M_{51}\theta_1 &=& -2\tau 
+\\
+M_{32}\ddot x + M_{41}\ddot\theta_1+ 2M_{22}\ddot\theta_2 - M_{52}\theta_2 &=& 0
+\end{array}
+\right.</script><p>Transform into matrix form:</p>
+<script type="math/tex; mode=display">
+\left[
+\begin{array}{ccc}
+2M_{11} & M_{31} & M_{32}\\
+M_{31} & 2M_{21} & M_{41}\\
+M_{32}  & M_{41} & 2M_{22}
+\end{array}
+\right]
+\cdot
+\left[
+\begin{array}{c}
+\ddot x\\
+\ddot\theta_1\\
+\ddot\theta_2
+\end{array}
+\right]
++
+\left[
+\begin{array}{ccc}
+0 & 0 & 0\\
+0 & -M_{51} & 0\\
+0 & 0 & -M_{52}
+\end{array}
+\right]
+\cdot
+\left[
+\begin{array}{c}
+x\\
+\theta_1\\
+\theta_2
+\end{array}
+\right]
+=
+\left[
+\begin{array}{c}
+\tau\\
+-2\tau\\
+0
+\end{array}
+\right]</script><p>Set $M=\left[\begin{array}{ccc}2M_{11} &amp; M_{31} &amp; M_{32}\\M_{31} &amp; 2M_{21} &amp; M_{41}\\M_{32}  &amp; M_{41} &amp; 2M_{22}\end{array}\right],\ M_{aux}=\left[\begin{array}{ccc}0 &amp; 0 &amp; 0\\0 &amp; -M_{51} &amp; 0\\0 &amp; 0 &amp; -M_{52}\end{array}\right]$</p>
+<script type="math/tex; mode=display">
+M
+\cdot
+\left[
+\begin{array}{c}
+\ddot x\\
+\ddot\theta_1\\
+\ddot\theta_2
+\end{array}
+\right]
+=
+-M_{aux}
+\cdot
+\left[
+\begin{array}{c}
+x\\
+\theta_1\\
+\theta_2
+\end{array}
+\right]
++
+\left[
+\begin{array}{c}
+\tau\\
+-2\tau\\
+0
+\end{array}
+\right]</script><p>Then multiply its inverse on both side (if inverse exist)</p>
+<script type="math/tex; mode=display">
+\left[
+\begin{array}{c}
+\ddot x\\
+\ddot\theta_1\\
+\ddot\theta_2
+\end{array}
+\right]
+=M^{-1}\cdot
+(-M_{aux})
+\cdot
+\left[
+\begin{array}{c}
+x\\
+\theta_1\\
+\theta_2
+\end{array}
+\right]
++
+M^{-1}\cdot
+\left[
+\begin{array}{c}
+\tau\\
+-2\tau\\
+0
+\end{array}
+\right]</script><p>Regard $M_f=M^{-1}\cdot(-M_{aux}),\ \ M_b=M^{-1}\cdot[\begin{array}{ccc}1&amp; -2&amp; 0\end{array}]^\intercal$ </p>
+<script type="math/tex; mode=display">
+\left[
+\begin{array}{l}
+\dot x\\
+\dot \theta_1\\
+\dot \theta_2\\
+\ddot x\\
+\ddot\theta_1\\
+\ddot\theta_2
+\end{array}
+\right]
+=
+\left[
+\begin{array}{cc}
+0_{3\times3} & I_{3\times3}\\
+M_f & 0_{3\times 3}
+\end{array}
+\right]
+\cdot
+\left[
+\begin{array}{l}
+x\\
+\theta_1\\
+\theta_2\\
+\dot x\\
+\dot\theta_1\\
+\dot\theta_2
+\end{array}
+\right]
++
+\left[
+\begin{array}{c}
+0_{3\times 1}\\
+M_b
+\end{array}
+\right]
+\cdot
+\tau</script><p>Thus we have</p>
+<script type="math/tex; mode=display">
+\dot q = Aq+B\tau</script><p>where </p>
+<script type="math/tex; mode=display">
+A=\left[
+\begin{array}{cc}
+0_{3\times3} & eye(3)\\
+M_f & 0_{3\times 3}
+\end{array}
+\right],\ \ 
+B = \left[
+\begin{array}{c}
+0_{3\times 1}\\
+M_b
+\end{array}
+\right]</script><p>This is an implementation of the simplest expansion, other possible methods are: Tylor expansion (Maclaurin expansion), these two are more accurate, meanwhile it takes time to derive the corresponding  </p>
+<hr>
+<h3 id="2-5-Nonlinear-model"><a href="#2-5-Nonlinear-model" class="headerlink" title="2.5 Nonlinear model"></a>2.5 Nonlinear model</h3><p>For original relation:</p>
+<script type="math/tex; mode=display">
+\left\{
+\begin{array}{rcl}
+2M_{11}\ddot x - M_{31}\dot\theta_1^2\sin\theta_1 - M_{32}\dot\theta_2^2\sin\theta_2 + M_{31}\ddot\theta_1\cos\theta_1 + M_{32}\ddot\theta_2\cos\theta_2 &=& \tau
+\\
+2M_{21}\ddot\theta_1 - M_{51}\sin\theta_1 + M_{31}\ddot x\cos\theta_1 - M_{41}\dot\theta_2^2\cos\theta_1\sin\theta_2  + M_{41}\dot\theta_2^2\cos\theta_2\sin\theta_1 +
+M_{41}\ddot\theta_2\cos\theta_1\cos\theta_2 +
+M_{41}\ddot\theta_2\sin\theta_1\sin\theta_2 &=& -2\tau 
+\\
+2M_{22}\ddot\theta_2 - M_{52}\sin\theta_2 + M_{32}\ddot x\cos\theta_2 + M_{41}\dot\theta_1^2\cos\theta_1\sin\theta_2 - M_{41}\dot\theta_1^2\cos\theta_2\sin\theta_1 +
+M_{41}\ddot\theta_1\cos\theta_1\cos\theta_2 +
+M_{41}\ddot\theta_1\sin\theta_1\sin\theta_2 &=& 0
+\end{array}
+\right.</script><p>Apply transform:</p>
+<script type="math/tex; mode=display">
+\left[
+\begin{array}{ccc}
+2M_{11} & M_{31}\cos\theta_1 & M_{32}\cos\theta_2\\
+M_{31}\cos\theta_1 & 2M_{21}  & M_{41}\cdot(\cos\theta_1\cos\theta_2+\sin\theta_1\sin\theta_2)\\
+M_{32}\cos\theta_2  & M_{41}\cdot(\cos\theta_1\cos\theta_2+\sin\theta_1\sin\theta_2) & 2M_{22}
+\end{array}
+\right]
+\cdot
+\left[
+\begin{array}{c}
+\ddot x\\
+\ddot\theta_1\\
+\ddot\theta_2
+\end{array}
+\right]
++
+\left[
+\begin{array}{ccc}
+0 & -M_{31}\dot\theta_1\sin\theta_1 & -M_{32}\dot\theta_2\sin\theta_2\\
+0 & 0 & -M_{41}\dot\theta_2(\cos\theta_1\sin\theta_2-\cos\theta_2\sin\theta_1)\\
+0 & M_{41}\dot\theta_1(\cos\theta_1\sin\theta_2-\cos\theta_2\sin\theta_1) & 0
+\end{array}
+\right]
+\cdot
+\left[
+\begin{array}{c}
+\dot x\\
+\dot\theta_1\\
+\dot\theta_2
+\end{array}
+\right]
+=
+\left[
+\begin{array}{c}
+\tau\\
+-2\tau+M_{51}\sin\theta_1\\
+M_{52}\sin\theta_2
+\end{array}
+\right]</script><p>Using trigonometric function to simplify:</p>
+<script type="math/tex; mode=display">
+\left[
+\begin{array}{ccc}
+2M_{11} & M_{31}\cos\theta_1 & M_{32}\cos\theta_2\\
+M_{31}\cos\theta_1 & 2M_{21}  & M_{41}\cdot\cos(\theta_1-\theta_2)\\
+M_{32}\cos\theta_2  & M_{41}\cdot\cos(\theta_1-\theta_2) & 2M_{22}
+\end{array}
+\right]
+\cdot
+\left[
+\begin{array}{c}
+\ddot x\\
+\ddot\theta_1\\
+\ddot\theta_2
+\end{array}
+\right]
++
+\left[
+\begin{array}{ccc}
+0 & -M_{31}\dot\theta_1\sin\theta_1 & -M_{32}\dot\theta_2\sin\theta_2\\
+0 & 0 & -M_{41}\dot\theta_2\sin(\theta_1-\theta_2)\\
+0 & M_{41}\dot\theta_1\sin(\theta_1-\theta_2) & 0
+\end{array}
+\right]
+\cdot
+\left[
+\begin{array}{c}
+\dot x\\
+\dot\theta_1\\
+\dot\theta_2
+\end{array}
+\right]
++
+\left[
+\begin{array}{c}
+0\\
+-M_{51}\sin\theta_1\\
+-M_{52}\sin\theta_2
+\end{array}
+\right]
+=
+\left[
+\begin{array}{c}
+\tau\\
+-2\tau\\
+0
+\end{array}
+\right]</script><p>Correspondingly:</p>
+<script type="math/tex; mode=display">
+M_n
+\cdot
+\left[
+\begin{array}{c}
+\ddot x\\
+\ddot\theta_1\\
+\ddot\theta_2
+\end{array}
+\right]
++
+M_{naux1}
+\cdot
+\left[
+\begin{array}{c}
+\dot x\\
+\dot\theta_1\\
+\dot\theta_2
+\end{array}
+\right]
++
+M_{naux2}
+=
+\left[
+\begin{array}{c}
+\tau\\
+-2\tau\\
+0
+\end{array}
+\right]</script><p>where, </p>
+<script type="math/tex; mode=display">
+M_n=
+\left[
+\begin{array}{ccc}
+2M_{11} & M_{31}\cos\theta_1 & M_{32}\cos\theta_2\\
+M_{31}\cos\theta_1 & 2M_{21}  & M_{41}\cdot\cos(\theta_1-\theta_2)\\
+M_{32}\cos\theta_2  & M_{41}\cdot\cos(\theta_1-\theta_2) & 2M_{22}
+\end{array}
+\right]</script><script type="math/tex; mode=display">
+M_{naux1}=
+\left[
+\begin{array}{ccc}
+0 & -M_{31}\dot\theta_1\sin\theta_1 & -M_{32}\dot\theta_2\sin\theta_2\\
+0 & 0 & -M_{41}\dot\theta_2\sin(\theta_1-\theta_2)\\
+0 & M_{41}\dot\theta_1\sin(\theta_1-\theta_2) & 0
+\end{array}
+\right],\ \
+M_{naux2}=
+\left[
+\begin{array}{c}
+0\\
+-M_{51}\sin\theta_1\\
+-M_{52}\sin\theta_2
+\end{array}
+\right]</script><p>Transform</p>
+<script type="math/tex; mode=display">
+\left[
+\begin{array}{c}
+\ddot x\\
+\ddot\theta_1\\
+\ddot\theta_2
+\end{array}
+\right]
+=
+M_n^{-1}\cdot
+(-M_{naux1})
+\cdot
+\left[
+\begin{array}{c}
+\dot x\\
+\dot\theta_1\\
+\dot\theta_2
+\end{array}
+\right]
++
+M_n^{-1}\cdot(-M_{naux2})
++
+M_n^{-1}
+\left[
+\begin{array}{c}
+1\\
+-2\\
+0
+\end{array}
+\right]
+\cdot
+\tau</script><script type="math/tex; mode=display">
+\left[
+\begin{array}{c}
+\ddot x\\
+\ddot\theta_1\\
+\ddot\theta_2
+\end{array}
+\right]
+=f_q(q)
++b_q(q)
+\tau\\</script><p>where,</p>
+<script type="math/tex; mode=display">
+\begin{array}{rcl}
+f_q(q)
+&=&
+M_n^{-1}\cdot
+(-M_{naux1})
+\cdot
+\left[
+\begin{array}{c}
+\dot x\\
+\dot\theta_1\\
+\dot\theta_2
+\end{array}
+\right]
++
+M_n^{-1}\cdot(-M_{naux2})
+\end{array}</script><script type="math/tex; mode=display">
+\begin{array}{rcl}
+b_q(q) &=&
+M_n^{-1}
+\left[
+\begin{array}{c}
+1\\
+-2\\
+0
+\end{array}
+\right]
+\end{array}</script><hr>
+<h2 id="3-Algorithms"><a href="#3-Algorithms" class="headerlink" title="3. Algorithms"></a>3. Algorithms</h2><h3 id="SMC"><a href="#SMC" class="headerlink" title="SMC"></a>SMC</h3><script type="math/tex; mode=display">\left\{
+\begin{array}{rcl}
+x_1 &=& x\\
+\dot x_1 &=& x_2\\
+\dot x_2 &=& f_1(x)+b_1(x)u+d_1
+\end{array}
+\right.</script><script type="math/tex; mode=display">
+e = x-x_d</script><script type="math/tex; mode=display">
+s = ce+\dot e,\ c>0</script><p>target:</p>
+<script type="math/tex; mode=display">
+\left\{
+\begin{array}{c}
+s \rightarrow 0\\
+\dot s \rightarrow 0
+\end{array}
+\right.
+\Rightarrow
+c\dot{e}+\ddot{e}=0</script><script type="math/tex; mode=display">
+c(\dot x_1 - \dot x_d)+(\ddot x_1 - \ddot x_d)=0</script><p>When $x_d$ is constant</p>
+<script type="math/tex; mode=display">
+c\cdot x_2+f_1(x)+b_1(x)\cdot u+d_1=0</script><p>We have </p>
+<script type="math/tex; mode=display">
+u_{eq1}=-\frac{f_1(x)+cx_2+d_1}{b_1(x)}</script><p>Set</p>
+<script type="math/tex; mode=display">
+u = u_{eq}+u_{sw}</script><p>Select Lynapnov function</p>
+<script type="math/tex; mode=display">
+\left\{
+\begin{array}{rcl}
+V(t) &=& \frac{1}{2}s^2\\
+\dot V &=& s\cdot \dot s\le 0
+\end{array}
+\right.</script><script type="math/tex; mode=display">
+\begin{array}{rcl}
+\dot V &=& s(cx_2+\dot x_2)\\
+&=& s(cx_2+f_1+b_1(u_{eq}+u_{sw})+d_1)\\
+&=& s(cx_2+f_1+b_1u_{eq}+b_1u_{sw}+d_1)\\
+&=& s(b_1u_{sw}+d_1)
+\end{array}</script><p>and to do so, using exponential reaching law, let:</p>
+<script type="math/tex; mode=display">
+\begin{array}{c}
+b_1u_{sw} = -\eta\ sgn(s)-k\cdot s
+\end{array}</script><p>Then the equation becomes:</p>
+<script type="math/tex; mode=display">
+\begin{array}{rcl}
+\dot V &=& s(-\eta sgn(s)-ks+d_1)\\
+&=& -\eta|s|-ks^2+sd_1\\
+&\le & -\eta|s|-ks^2+|s|\cdot|d_1|
+\end{array}</script><p>As $d_1$ is bounded and $|d_1|\le d_M$</p>
+<script type="math/tex; mode=display">
+\begin{array}{rcl}
+\dot V &\le & -\eta|s|-ks^2+|s|\cdot d_M\\
+&\le & -ks^2 -|s|\cdot(\eta-d_M)
+\end{array}</script><p>Its easy to find that when $\eta&gt;d_M$</p>
+<script type="math/tex; mode=display">
+\dot V\le 0</script><p>The sliding surface is stable.</p>
+<hr>
+<h3 id="HSMC"><a href="#HSMC" class="headerlink" title="HSMC"></a>HSMC</h3><script type="math/tex; mode=display">\left\{
+\begin{array}{rcl}
+\dot x_{2n-1} &=& x_{2n}\\
+\dot x_{2n} &=& f_n(x)+b_n(x)u
+\end{array}
+\right.</script><p>Set Sliding Surface</p>
+<script type="math/tex; mode=display">
+s_n = c_n\cdot e_n + \dot e_n</script><p>Correspondingly we will have $n$ equivalent control</p>
+<script type="math/tex; mode=display">
+u_{eq_n}=-\frac{f_n(x)+c_n\cdot x_{2n}}{b_n(x)}</script><p>Set larger level of sliding surface:</p>
+<script type="math/tex; mode=display">
+S = \alpha s_1 + \beta s_2 + \gamma s_3+\dots</script><script type="math/tex; mode=display">
+u=\sum_1^n u_{eq_i}+u_{sw}</script><p>To satisfy the Lyapunov function</p>
+<script type="math/tex; mode=display">
+u_{sw}=-\frac{\alpha b_1(x)u_{eq_1}+\beta b_2(x)u_{eq_2}+\gamma b_3(x)u_{eq_3}+\dots+\eta\ sgn(S)+k(S)}{\alpha b_1(x)+\beta b_2(x)+\gamma b_3(x)+\dots}</script><p>Take 3-layer as an example</p>
+<script type="math/tex; mode=display">
+\begin{array}{rcl}
+\dot V &=& S \dot S\\
+&=& S(\alpha\dot s_1+\beta\dot s_2+\gamma\dot s_3)\\
+&=& S[\alpha(c_1x_2+\dot x_2)+\beta(c_2x_4+\dot x_4)+\gamma(c_3x_6+\dot x_6)]\\
+&=& S[\alpha(c_1x_2+f_1+b_1(u_{eq1}+u_{eq2}+u_{eq3}+u_{sw})+d_1)\\
+&&+\beta(c_2x_4+f_2+b_2(u_{eq1}+u_{eq2}+u_{eq3}+u_{sw})+d_2)\\
+&&+\gamma(c_3x_6+f_3+b_3(u_{eq1}+u_{eq2}+u_{eq3}+u_{sw})+d_3)]\\
+&=&S[\alpha b_1(u_{eq2}+u_{eq3}+u_{sw})+\beta b_2(u_{eq1}+u_{eq3}+u_{sw})
++\gamma b_3(u_{eq1}+u_{eq2}+u_{sw})+(\alpha d_1+\beta d_2+\gamma d_3)]\\
+&=& S[(\alpha b_1+\beta b_2+\gamma b_3)u_{sw}+(\alpha d_1+\beta d_2+\gamma d_3)\\
+&&+[(\beta b_2+\gamma b_3)u_{eq1}+(\alpha b_1+\gamma b_3)u_{eq2}+(\alpha b_1+\beta b_2)u_{eq3}]]
+\end{array}</script><p>Let $(\alpha b_1+\beta b_2+\gamma b_3)u_{sw}+[(\beta b_2+\gamma b_3)u_{eq1}+(\alpha b_1+\gamma b_3)u_{eq2}+(\alpha b_1+\beta b_2)u_{eq3}]=-\eta sgn(S)-kS$</p>
+<script type="math/tex; mode=display">
+\begin{array}{rcl}
+u_{sw} &=& (\alpha b_1+\beta b_2+\gamma b_3)^{-1}\{-[(\beta b_2+\gamma b_3)u_{eq1}+(\alpha b_1+\gamma b_3)u_{eq2}+(\alpha b_1+\beta b_2)u_{eq3}]-\eta\cdot sgn(S)-kS\}\\
+&=& -(\alpha b_1+\beta b_2+\gamma b_3)^{-1}[(\beta b_2+\gamma b_3)u_{eq1}+(\alpha b_1+\gamma b_3)u_{eq2}+(\alpha b_1+\beta b_2)u_{eq3}+\eta\cdot sgn(S)+kS]
+\end{array}</script><p>he remaining Lyapunov function proof is similar</p>
+<script type="math/tex; mode=display">
+\begin{array}{rcl}
+\dot V &=& S[-\eta\cdot sgn(S)-kS+(\alpha d_1+\beta d_2+\gamma d_3)]\\
+&=& -\eta|S|-kS^2+S(\alpha d_1+\beta d_2+\gamma d_3)\\
+&\le&  -\eta|S|-kS^2+|S|\cdot|(\alpha d_1+\beta d_2+\gamma d_3)|
+\end{array}</script><p>As $d_i$ is bounded, assume that $|(\alpha d_1+\beta d_2+\gamma d_3)|\le D_M$ so if $\eta &gt;D_M$</p>
+<script type="math/tex; mode=display">
+\begin{array}{rcl}
+\dot V &\le&  -\eta|S|-kS^2+|S|\cdot|(\alpha d_1+\beta d_2+\gamma d_3)|\\
+&\le& -kS^2-|S|\cdot(\eta-|(\alpha d_1+\beta d_2+\gamma d_3)|)\\
+&\le& -kS^2-(\eta-D_M)|S|\le0
+\end{array}</script><p>And hence,</p>
+<script type="math/tex; mode=display">
+\begin{array}{rcl}
+u &=& u_{eq1}+u_{eq2}+u_{eq3}+u_{sw}\\
+&=& (\alpha b_1+\beta b_2+\gamma b_3)^{-1}[\alpha b_1u_{eq1}+\beta b_2u_{eq2}+\gamma b_3 u_{eq3}-\eta\cdot sgn(S)-kS]
+\end{array}</script><hr>
+<h2 id="4-Controller-Design"><a href="#4-Controller-Design" class="headerlink" title="4. Controller Design"></a>4. Controller Design</h2><p>For linearized model:</p>
+<script type="math/tex; mode=display">
+\left\{
+\begin{array}{rcl}
+\ddot \theta_1 &=& M_f(2,2)\theta_1+M_f(2,3)\theta_2+B(2,1)\tau\\
+\ddot \theta_2 &=& M_f(3,2)\theta_1+M_f(3,3)\theta_2+B(3,1)\tau\\
+\ddot x &=& M_f(1,2)\theta_1+M_f(1,3)\theta_2+B(1,1)\tau
+\end{array}
+\right.</script><script type="math/tex; mode=display">
+\left\{
+\begin{array}{rcl}
+e_1 &=& \theta_1-\theta_{1d},\ \ \dot e_1=\dot\theta_1\\
+e_2 &=& \theta_2-\theta_{2d},\ \ \dot e_2=\dot\theta_2\\
+e_3 &=& x-x_d,\ \ \dot e_3=\dot x
+\end{array}
+\right.</script><p>Set first-level sliding surface:</p>
+<script type="math/tex; mode=display">
+\left\{
+\begin{array}{rcl}
+s_1 &=& c_1e_1+\dot e_1\\
+s_2 &=& c_2e_2+\dot e_2\\
+s_3 &=& c_3e_3+\dot e_3
+\end{array}
+\right.</script><p>Thus we have equivalent control law:</p>
+<script type="math/tex; mode=display">
+\left\{
+\begin{array}{rcl}
+u_{eq1} &=& -\frac{(M_f(2,2)\theta_1+M_f(2,3)\theta_2)+c_1\dot\theta_1}{B(2,1)}\\
+u_{eq2} &=& -\frac{(M_f(3,2)\theta_1+M_f(3,3)\theta_2)+c_2\dot\theta_2}{B(3,1)}\\
+u_{eq3} &=& -\frac{(M_f(1,2)\theta_1+M_f(1,3)\theta_2)+c_3\dot x}{B(1,1)}\\
+\end{array}
+\right.</script><p>Set second level sliding surface:</p>
+<script type="math/tex; mode=display">
+S=\alpha s_1+\beta s_2+\gamma s_3</script><p>We have switching control law:</p>
+<script type="math/tex; mode=display">
+u_{sw}=-(\alpha b_1+\beta b_2+\gamma b_3)^{-1}[\gamma b_1 u_{eq3}+\beta b_2 u_{eq2}+\alpha b_1u_{eq1}+\eta sgn(S)+kS]</script><p>Combining two terms:</p>
+<script type="math/tex; mode=display">
+u=u_{eq}+u_{sw}=(\alpha b_1+\beta b_2)^{-1}[\alpha b_1u_{eq1}+\beta b_2u_{eq2}-\eta sgn(S)-kS]</script><hr>
+<p><div id ="Exp"></div></p>
+<h1 id="Problems-encountered"><a href="#Problems-encountered" class="headerlink" title="Problems encountered"></a>Problems encountered</h1><h2 id="1-Modelling"><a href="#1-Modelling" class="headerlink" title="1. Modelling"></a>1. Modelling</h2><p>In system modeling, for the convenience of theoretical research, factors such as internal mechanical friction and external disturbances are ignored, and the changes in the z-axis position of the robot are not considered, making the model less accurate and affecting the design of the controller. Therefore, in subsequent research, these factors need to be taken into account.</p>
+<hr>
+<h2 id="2-Linearization"><a href="#2-Linearization" class="headerlink" title="2. Linearization"></a>2. Linearization</h2><p>In linearizing the model near the balance point, the method used is too crude. In subsequent research, the Maclaurin expansion method can be used and the high-order terms can be discarded to make the linearized model more accurate. Fortunately, MALTAB provides function for the Taylor series, see <a href = "https://www.mathworks.com/help/symbolic/sym.taylor.html">here</a></p>
+<hr>
+<h2 id="3-S-function"><a href="#3-S-function" class="headerlink" title="3. S-function"></a>3. S-function</h2><p>In Version 2023a, level-1 s-function template in MATLAB language (sfunctmpl.m) is removed, and existing template in the cooresponding files are for level-2. The description web pages are <a href = "https://www.mathworks.com/help/simulink/sfg/s-function-concepts.html">link1</a>, <a href = "https://www.mathworks.com/help/simulink/sfg/maintaining-level-1-matlab-s-functions.html?searchHighlight=maintaining%20level-1%20s%20function&s_tid=srchtitle_maintaining%20level-1%20s%20function_1">link2</a>. Gladly the function is maintained, so the previous template can be used, as long as you can find it. According to the documentation, the storage of variables are indeed much safer, inspite that it could take some time convert a level-1 code into level-2. It is said that level-1 s-function runs faster than level-2, I’m not sure. At first I intended to use template in C, and only discovered that I did not have any embedded  C coding experience of any sort. So lastly I stick to the matlab language for consistency. In future, I would like to try it.</p>
+<hr>
+<h2 id="4-Tuning"><a href="#4-Tuning" class="headerlink" title="4. Tuning"></a>4. Tuning</h2><p>In the HSMC controller, due to the large number of adjustable parameters, trial and error method is finally used to determine the parameters, resulting in the performance of LQR and HSMC controllers not being optimized. Therefore, in future research, methods such as genetic algorithms can be considered to determine the parameters.</p>
+<hr>
+<h2 id="5-Switching-Law-Controller-Order"><a href="#5-Switching-Law-Controller-Order" class="headerlink" title="5. Switching Law, Controller Order"></a>5. Switching Law, Controller Order</h2><p>In the HSMC controller used in this paper, only the most basic exponential reaching law is used, which involves the sign function $sgn()$, leading to the emergence of chattering phenomenon, and it is impossible to achieve such a high switching frequency in reality. Therefore, in subsequent research, the saturation function can be considered, or higher-order sliding mode can be applied.</p>
+<hr>
+<h2 id="6-Intelligent-Control"><a href="#6-Intelligent-Control" class="headerlink" title="6. Intelligent Control"></a>6. Intelligent Control</h2><p>From the simulation results of controllers designed based on linear and nonlinear models, the HSMC controller based on nonlinear models cannot stabilize the system, which is due to the lack of handling coupling problems in the nonlinear model. The decoupling method in this paper only involves linearization, but this makes the model less accurate. Therefore, in subsequent research, more complex controllers can be considered, such as recursive LQR controllers, PSO optimized LQR controllers or fuzzy controllers, etc.</p>
+
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Control/" rel="tag">Control</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/MATLAB/" rel="tag">MATLAB</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Paper/" rel="tag">Paper</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2023/06/28/beginAgain/"
+                    data-tooltip="Begin, again"
+                    aria-label="PREVIOUS: Begin, again"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2023/04/21/LaTexTechnique/"
+                    data-tooltip="Experience with LaTex"
+                    aria-label="NEXT: Experience with LaTex"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="Table of Contents">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2023 Estus. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2023/06/28/beginAgain/"
+                    data-tooltip="Begin, again"
+                    aria-label="PREVIOUS: Begin, again"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2023/04/21/LaTexTechnique/"
+                    data-tooltip="Experience with LaTex"
+                    aria-label="NEXT: Experience with LaTex"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="Table of Contents">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Estus</h4>
+        
+            <div id="about-card-bio"><p>Fun things <del>never</del> always stops.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Student</p>
+
+            </div>
+        
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/Ess/0_t.png');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-yb3zostooymjozqpjlvijhvzw0bdaljwvcvx0fhqdpyvq6aviyzwgfjkfjkw.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

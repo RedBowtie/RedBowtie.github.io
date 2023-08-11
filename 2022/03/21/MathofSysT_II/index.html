@@ -1,0 +1,790 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Amaurot Ch.">
+    <title>Mathematical Basics of the System Theory PART II - Amaurot Ch.</title>
+    <meta name="author" content="Estus">
+    
+    
+        <link rel="icon" href="https://upload.cc/i1/2021/05/18/lSCp1v.png">
+    
+    
+        
+            <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png"},"articleBody":"Pace is weird.\nLec 7. Linear and quadratic formsRecall the following concepts:\n1) Scalar function of a vector2) Linear and quadratic forms,3) positive and negative definiteness of a quadratic form,4) The rules for differentiating of matrices with respect to scalar variables, scalar and vector function of a vector argument with respect to vector variables\n\nPrac 6.  Properties of matrix functionsI. Main properties\nThe matrix function of the matrix $f(A)$ preserves the block-diagonal form of the matrix A if A is diagonal matrix $A=diag\\{a_i\\}$, i.e.\nf(A)=diag\\{f(a_i)\\}if $\\sigma\\{A\\}=\\sigma\\{\\lambda_1,\\lambda_2,…,\\lambda_n\\}$ Then $\\sigma\\{f(A)\\}=\\{f(\\lambda_1),f(\\lambda_2),…\\}$\n\n2. Examples\n\n$e^A =I+A+\\frac{1}{2!}A^2+…=\\Sigma\\frac{1}{i!}A^i$\n$cos A = 1-\\frac{1}{2!}A^2 +1\\frac{1}{4!}A^4 -\\frac{1}{6!}+…$\n$sin A = A-\\frac{1}{3!}A^3 +\\frac{1}{5!}A^5 +…$\n\n\n3. Some facats\n$cos(2A)=2cos^2(A)-I$\n$sin(2A)=sin(A)cos(A)$\n$cos^2(A)+sin^2(A)=I$\n$sin(A\\pm B)=sin(A)cos(B)\\pm cos(A)sin(B)$ IF $AB=BA$\n$cos(A\\pm B)=cos(A)cos(B)\\mp sin(A)sin(B)$ IF $AB=BA$\n\n4. Methods\nApproximate method\nF(A)=\\sum_{i=0}^m a_iA^i\nThe exact method based on eigenvalues$\\Lambda=M^{-1}AM$\nWhere $\\Lambda=\\left[\\begin{array}{ccc}\\lambda_1&amp;0&amp;0\\\\0&amp;…&amp;0\\\\0&amp;0&amp;\\lambda_n\\end{array}\\right],M=[\\xi_1,…,\\xi_n]$\n$F(A)=M^{-1} F(\\Lambda)$\n\n\n5. Matrix exponent\n$e^{At}=I+At+\\frac{1}{2!}A^2 t^2+\\frac{1}{3!}A^3 t^3+\\ldots=\\sum_0^\\infty\\frac{1}{i!}A^it^i$\n\n\nProperties:\n\nif $A=0$ or $t=0$ Then $e^{At}=I$\nif $AB=BA$ Then $e^{At}e^{Bt}=e^{(A+B)t}$\nIn general case $AB\\ne BA$ And $e^{At}e^{Bt}\\ne e^{(A+B)t}$\n$e^{At}e^{A\\tau}=e^{A(t+\\tau)}$\n$\\frac{d}{dt}e^{At}=Ae^{At}=e^{At}\\cdot A$\n\n\n\nFor matrices of simple structure ($\\lambda_i:\\lambda_i\\ne\\lambda_j,i\\ne j,Im(\\lambda_i)=0,i=1\\ldots n$) matrix exponent is calculated as \ne^{At}=Me^{\\Lambda t}M^{-1}=M\\left[\\begin{array}{cccc}e^{-\\lambda_1 t}&0&\\ldots&0\\\\0&e^{-\\lambda_2t}&\\ldots&0\\\\\\ldots&\\ldots&\\ddots&\\ldots\\\\0&0&\\ldots&e^{-\\lambda_n t}\\end{array}\\right]M^{-1},Where $\\Lambda=\\left[\\begin{array}{ccc}\\lambda_1&amp;0&amp;0\\\\0&amp;…&amp;0\\\\0&amp;0&amp;\\lambda_n\\end{array}\\right],M=[\\xi_1,…,\\xi_n]$\n\n\nLec 8. Matrix functions. Matrix ExponentDefinitions:Considering a square matrix A, $dim(A)=n\\times n$;\n\nA scalar function (SFM) of a square matrix A is a function $f(A)$ That imlements the mapping.\n\nf(A):R^{n\\times n}\\Rightarrow R,where $R$ is the set of real numbers.\nExamples: determinant, trace, norm and condition number of the matrix.\n\nA vector function of a square matrix A is a function $f(A)$ that implements the mapping\n\nf(A):R^{n \\times n}\\Rightarrow R^n,where $R^n$ is n-dimension real space.\nExamples: vectors which consist of elements of algebraic spectra of eigenvalues and signular values.\n\n\nMatrix series and matrix functions of matricesThe matrix function of a matrix (MFM) implements the mapping\n\nf(A):R^{n\\times n}\\Rightarrow R^{n\\times n}\nLet $f(\\alpha)$ be a scalar power series (polynomial) with respect to a scalar variable $\\alpha$\nf(A)=a_0+a_1\\alpha+a_2\\alpha^2+\\ldots+a_p\\alpha^p.\\tag{1}Then the scalar series $f(\\alpha)$ generates a matrix function $f(A)$ Of the matrix A in the form of a matrix series, if in the representation $(1)$ For $f(\\alpha)$ the scalar variable is replaced by the matrix $A$\nf(A)=a_0I+a_1A+a_2A^2+\\ldots+a_pA^p.\\tag{2}\n\nHamilton-Cayley theorem.Square matrix $A$ with characteristic polynomial\n\nD(\\lambda)=det(\\lambda I-A)=\\lambda^n+a_1\\lambda^{n-1}+\\ldots+a_{n-1}\\lambda+a_nsets its characteristic polynomial to zero so that the matrix realtion is satisfied\n\nD(A)=A^n+a_1A^{n-1}+\\ldots+a_n I=0\\tag{3}\\\\where $0-(n\\times n)$ null matrix\nUsing the Hamilton-Cayley theorem, we introduce the following definitions:\n\nA polynomial (power series) $\\varphi(A)=0$ with respect to a scalar variable $\\alpha$ is called an annihilating polynomial of a square matrix A if the condition\n\n\n\\varphi(A)=0\\tag{4}The annigilating polynomial of the matrix A, by virtue of the Hamilton-Cayley theorem, is primarily its characteristic polynomial.\n\nThe annihilating polynomial $\\psi(\\alpha)$ of the lest degree m with the highest coefficient at $\\alpha^m$ Equal to one is called the minimal polynomial of the matrix A.\nConstruct expansion of the polynomial $f(a)(1)$ , which defines the matrix function of the matrix $f(A)$ in the form (2), modulo the minimal polynomial $\\psi(\\alpha)$ of the matrix A,\n\nf(a)=\\varphi(\\alpha)\\psi(\\alpha)+r(\\alpha)\\tag{5}Where the polynomial $r(\\alpha)$ has degree $deg(r(\\alpha))$ Less than the degree $deg(\\psi(\\alpha))$ Of the minimal polynomial $\\psi(a)$ of matrix A.\n\nLet the polynomial $f(a)$ with respect to the scalar variable a be represented in the form (5), then the matrix function $f(A)$ can be written in the minial form\n\nf(A)=r(A)\\tag{6}\nr(\\alpha)=rest\\frac{f(\\alpha)}{\\psi(\\alpha)}\\tag{7}\n\nProperties of a matrix function of a matrix\nThe matrix function of the matrix $f(A)$ preserves the spectrum of eigenvalues of the matrix\n\nf(A)\\xi_i=f(\\lambda_i)\\xi_i\\tag{8}\nThe matrix function of the matrix $f(A)$ preserves the matrix similarity relation, i.e. if A is similar to $B(B=T^{-1}AT)$, then\n\nf(B)=T^{-1}f(A)T\\tag{9}\nThe matrix function of the matrix $f(A)$ preserves the block-diagonal form of the matrix A if A is diagonal matrix $A=diag\\{a_i\\}$, i.e\n\nf(A)=diag\\{f(a_i)\\}\\tag{10}\n\nMain ways to calculate matrix exponent\nNumerical wayBased on the transition from continuous time t to discrete time k, expressed by the number of discrete intervals of duration $\\triangle t, t=k(\\triangle t)$\n\ne^{At}=e^{A\\triangle tk}=(e^{A\\triangle t})^k=(\\bar{A})^k\n\\bar{A}=I+A\\triangle t+\\frac{1}{2!}(A\\triangle t)^2+\\frac{1}{3!}(A\\triangle t)^3+\\ldots+\\frac{1}{p!}(A\\triangle t)^p\nDiagonalization method (eigenvalue method)It is applied to matrices of simple struture\n\n\\sigma(A)=\\{\\lambda_i;\\lambda_i\\ne \\lambda_j,im(\\lambda_i)=0,i=1,\\ldots,n\\}for which the relation\n\nM\\Lambda=AMHolds, $\\Lambda=diag\\{\\lambda_i,i=1,\\ldots,n\\}$\n\ne^{At}=Me^{\\Lambda t}M^{-1}=M diag\\{e^{\\lambda_i t,i=1},\\ldots,n\\}\\tag{13}\nM=row\\{M_i=\\xi_i,i=1,\\ldots,n\\}M is matrix of eigenvectors A\n\nMethod based on reduction to normal Jordan formApplies to matrices whose eigenvalue spectrum contains r multiple eigenvalues $\\lambda_i$ of multiplicity $m_i$ each. Then the matrix similarity relation holds\n\nTJ=AT\nJ=diag\\{\\left[\\begin{array}{ccccc}\n\\lambda_i&1&0&\\ldots&0\\\\\n0&\\lambda_i&1&\\ldots&0\\\\\n.&.&.&\\ldots&.\\\\\n.&.&.&\\ldots&.\\\\\n0&0&0&\\ldots&1\\\\\n0&0&0&\\ldots&\\lambda_i\n\\end{array}\\right];\\sum_{i=1}^r m_i=n\\}for the matrix exponent, \n\ne^{At}=Te^{Jt}T^{-1}\\tag{14}\ne^{Jt}=diag\\{e^{J_i t}=\\left[\\begin{array}{ccccc}\ne^{\\lambda_i t}&\\frac{te^{\\lambda_i t}}{1!}&\\frac{t^2e^{\\lambda_i t}}{2!}&\\ldots&\\frac{t^{n-1}e^{\\lambda_i t}}{(m_i-1)!}\\\\\n\n0&e^{\\lambda_i t}&\\frac{te^{\\lambda_i t}}{1!}&\\ldots&\\frac{t^{n-2}e^{\\lambda_i t}}{(m_i-2)!}\\\\\n\n.&.&.&\\ldots&.\\\\\n\n.&.&.&\\ldots&.\\\\\n\n0&0&0&\\ldots&\\frac{te^{\\lambda_i t}}{1!}\\\\\n\n0&0&0&\\ldots&e^{\\lambda_i t}\n\\end{array}\\right];\\sum_{i=1}^r m_i=n\\}\nLaplace transform methodCalculation of the inverse Laplace transform from the resovent $(sI-A)^{-1}$ in the form\n\ne^{At}=\\mathcal{L}^{-1}\\{(sI-A)^{-1}\\}\\tag{15}To expand without inverting, the Faddeev-Leverrier algorithm is used based on the representation\n\n(sI-A)^{-1}=\\frac{1}{det(sI-A)}[\\triangle(sI-A)]^T=\\frac{s^{n-1}H_0+s^{n-2}H_1+\\ldots+H_{n-1}}{s^n+a_1s^{n-1}+\\ldots+a_{n-1}s+a_n}\\tag{16}$(n\\times n)-matrices\\ H_i(i=0,\\ldots,n-1)$ and coefficients of the characteristic equation are calculated using the recurrent procedure \n\nH_0=I,\\ a_1=-tr(AH_0)\\\\\nH_1=AH_0+a_1I,\\ a_2=-tr(AH_1)/2\\\\\n\\ldots\\\\\nH_k=AH_{k-1}+a_kI,\\ a_{k+1}=-tr(AH_k)/k\\tag{17}Now resolvent can be rewritten as\n\n(sI-A)^{-1}=\\frac{s^{n-1}}{D(s)}H_0+\\frac{s^{n-2}}{D(s)}H_1+\\ldots+\\frac{s}{D(s)}H_{n-2}+\\frac{1}{D(s)}H_{n-1}\\tag{18}And matrix exponent takes the view\n\ne^{At}=L^{-1}\\{\\frac{s^{n-1}}{D(s)}\\}H_0+L^{-1}\\{\\frac{s^{n-2}}{D(s)}\\}H_1+\\ldots+L^{-1}\\{\\frac{s}{D(s)}\\}H_{n-2}+L^{-1}\\{\\frac{1}{D(s)}\\}H_{n-1}\\tag{19}\n\n\nMatrix Inversion using the Hamilton-Cayley theoremMatrix relation (3)\n$D(A)=A^n+a_1A^{n-1}+\\ldots+a_{n-1}A+a_nI=0$\nwhich is the analytical content of the Hamilton-Cayley theorem, in the form\n\nA_n+a_1A^{n-1}+\\ldots+a_{n-1}A+a_nI=0\\tag{20}Multiply (20) on the right by $A^{-1}$\n\na_nA^{-1}+a_{n-1}I+a_{n-2}A+\\ldots+a_1A^{n-2}+A^{n-1}=0\\tag{21}Solve (18) with respect to the inverse matrix\n\nA^{-1}=-(a_n)^{-1}(a_{n-1}I+a_{n-2}A+\\ldots+a_1A^{n-2}+A^{n-1})\\\\\n=-(a_n)^{-1}(A^{n-1}+\\sum_{i=1}^{n-1}a_iA^{n-1-i})\\tag{22}We obtained an algorithmic matrix inversion base. Matrix relation (22) has the positive property: itis insensitive to the conditionality of the inverted matrix.\nThe disadvantage of inverting matrices using expression (22) is the need to know the coefficients of the characteristic polynomial. Therefore, the proposed inversion procedure will not cause noticeable difficulties for the case of sparse matrices, and it is especially convenient to use it when inverting matrices given in the Frobenius form, as the coefficients of the characteristic polynomial are explicitly present in it.\n\nPrac 7. Hamilton-Caylery theorem.ConsequencesAny square matrix $A(n\\times n)$ with characteristic polynomial\n\nD(\\lambda)=det(\\lambda I-A)=\\lambda^n+a_{n-1}\\lambda^{n-1}+\\ldots+a_0Satisfies its own characteristic equation, i.e.\n\nD(A)=A^n+a_{n-1}A^{n-1}+\\ldots+a_0 I=0The proof of the theorem\n\nD(A)=det(AI-A)=det(A-A)=det(0)=0\\\\\nA^{-1}=-\\frac{1}{a_0}(A^{n-1}+a_{n-1}A^{n-2}+\\ldots+a_2A+a_1I)\\\\\nf(\\lambda_k)=\\lambda_k^{n-1}a_{n-1}+\\ldots+a_1\\lambda_k+a_01,\\ k=1\\ldots n\\\\calculations of the matrix function can be represented as a finite sum\n\nf(A)=e^{At}=a_{n-1}(t)A^{n-1}+\\ldots+a_0(t)IInterpolationThe Lagrange interpolation polynomial\n\nP(x)=\\sum_{i=1}^n P_{n-1}(a_i)\\frac{\\prod_{s=1}^n(x-a_s)}{\\prod_{s=1}^n(a_i-a_s)}, s\\ne iconsider the polynomial matrix\n\nP(A)=\\sum_{i=1}^n P_{n-1}(a_i)\\frac{\\prod_{s=1}^n(A-a_sI)}{\\prod_{s=1}^n(a_i-a_s)}, s\\ne iSuccessive multiplications of these equalities by $\\lambda^p$ and $A^p$ will give\n\n\\lambda^{n+p}=A_1\\lambda^{n+p-1}-A_2\\lambda^{n+p-2}+\\ldots+(-1)^{n-2}A_{n-1}\\lambda^{p+1}+(-1)^{n-1}A_n\\lambda_p;\\\\\nA^{n+p}=A_1A^{n+p-1}-A_2A^{n+p-2}+\\ldots+(-1)^{n-2}A_{n-1}A^{p+1}+(-1)^{n-1}A_nA_p;Sylvester theorem for $\\lambda_i\\ne \\lambda_j$, $i\\ne j,\\ i=1,\\ldots,n,\\ j=1,\\ldots, n$,\n\nf(A)=\\sum_{i=1}^n f(\\lambda_i)Z_i,\\ Z_i=\\frac{\\prod_{s=1}^n(A-\\lambda_sE)}{\\prod_{s=1}^n(\\lambda_i-\\lambda_s)}\\tag{1}The Becker Formula\nf(A)=\\frac{D_{n-1}}{D}A^{n-1}+\\frac{D_{n-2}}{D}A^{n-2}+\\ldots+\\frac{D_0}{D}E,Where D is the Vandermonde determinant\n$D_{n-1}$ - is determinant D with (n-1) - row replaced with a row\n\n(f(\\lambda_1),f(\\lambda_2),\\ldots,f(\\lambda_n)),\\ i=1,\\ldots,nHigh degree matricesLet us use the Sylvester formula to calculate $A^p$, as given in formula $(1)$\n$Z_i$ Does not depoend on the p\n\n\\abs{\\lambda_1}>\\abs{\\lambda_2}>\\ldots>\\abs{\\lambda_n}if p is very large, then we can neglect $\\lambda_2^p,\\ldots,\\lambda_n^p$, compared to $\\lambda_1^p$\n\nA^p\\approx\\lambda_1^pZ_1=\\prod_{s=1}^n\\frac{A-\\lambda_sE}{\\lambda_1-\\lambda_s}Fadeev-LeVerrier algorithmAny square matrix $A(n\\times n)$ With characteristic polynomial\n\np(\\lambda)=det(\\lambda I-A)=c_n\\lambda^n+c_{n-1}\\lambda^{n-1}+\\dots+c_0The Fadeev-LeVerrier algorithm is based on thje following recursion rule for matrices $B_0,\\dots, B_n$ and coefficients $c_0,\\dots,c_n$\n\nk=0:B_0=0,c_n=1\\\\\nk=1,\\dots,n:B_k=AB_{k-1}+c_{n-k+1}I,c_{n-k}=-\\frac{1}{k}tr(AB_k)consequences\n\nc_0=p(0)=det(-A)=(-1)^ndet(A)\\\\\nc_0\\ne0:A^{-1}=-\\frac{1}{c_0}B_n\nLec 9. SISO Models of Continuous and Discrete-Time SystemsDefinitionsMathematical model of a dynamic system is the mathemetical description of the relation ship between the variables of the system, characterizing its behaviour\nMathematical model allows us to study the behaviour of the system when it is exposed to physical signals (independent variables: reference and control influences and disturbances).\nA control system is an interconnection of elements forming a system configuration to provide a desired response.\nSystem theory provides basis for analysis of a system.\nThe input-output relationship represents cause-and-effect relationship of the process, which in turn, represents a processing of the input signal to provide an output signal variable. \nThe mathematical description depends on the type of converted signals.\nTransformationContinuous-time signal transformation:dynamic systems are called continuous, and differential equations are used to describe them.\nDiscrete time signal transformationDiscrete interval ∆𝑡 at time points 𝑡=𝑘(∆𝑡), where 𝑘 is discrete time expressed in the number of discrete intervals: dynamic systems are called discrete, recurrent (difference) equations are used to describe them.\nSISOConsider a non linear continuous dynamic system with one input and one output, described by a nonlinear ordinary differential equation of the n-th order\n\nF(y^{(n)},y^{(n-1)},\\dots,y,u^{(m)},u^{(m-1)},\\dots,u,t)=0\\tag{1}If we carry out linearization of (1) and leave the dependent variables on the left side, and the independent variables on the right side, then we obtain a linear (linearized) differential equation\n\na_0(t)y^{(n)}(t)+a_1(t)y^{(n-1)}(t)+\\dots+a_n(t)y(t)=b(t)u^{(m)}(t)+\\dots+b_m(t)u(t)\\tag{2}Dynamic systems, mathematical models of which can be represented in the form of equation (2) are continuous linear systems. \nWhen all the coefficients of equation (2) are constant the system is called stationary\nLinearization of a system in the input-output form (SISO)Consider a system in form (1) and in a steady state (equilibrium position)\n\ny=y^*=const,\\ u=u^*=const,It means that \n\nF(0,0,\\dots,y^*,0,0,\\dots,u^*,t)=0It is required to obtain a linearized model in the neighborhood of the equilibrium position\n\ny=y^*,\\ u=u^*,\\ \\dot{y}=\\dots=y^{(n)}=0,\\ \\dot{u}=\\dots=u^{(m)}=0Introduce new coordinates - deviations from the equilibrium state. Check slides for more detail.\nSISO mathematical models of discrete control systemsIn the control system, the functions of the controller can be performed by a digital (discrete) device. Such devices are implemented in the form of microcomputers, microcontrollers, microprocessors, interfaced with digital-to-analog converters.\nThe input of information into a discrete device is carried out at certain time intervals, therefore, for a mathematical description and analysis of the quality of discrete systems, it is necessary to develop a special method. A discrete system operates on data obtained from a continuous signal by sampling its values at equally spaced time intervals. The result is a time sequence of data called a discrete signal. The transition from continuous time 𝑡 to discrete moments of time is carried out according to the formula 𝑡=𝑘∆𝑡, 𝑘 is an integer that takes the values 𝑘=0, 1, 2,…\n\nLec 10. MIMO Models of Continuous and Discrete-Time SystemsQuestionsWhat are the disadvantages of Input-Output models? Why was there a request for the Input-State-Output (MIMO, State Space) model?\nThe class of models Input-Output historically appeared from the theory of electrical circuits. Up to a certain point, it fully satisfied the needs of developers of dynamic systems.\nLet us write the Input-Output model in an explicit form:\n\ny(\\nu)=\\delta(u(\\nu))\\tag{0}Where, $u(\\nu)$ is the input funciton, $\\nu$ Is continuous time t in the case of continuous objects or systems, and discrete time k in the case of discrete ones.\nAs the control problems become more complicated the description of systems in the Input-Output form, it was found that when using State Space models, it is much more convenient to take into account the existing physical ideas about the mechanisms of the system.\nThis problem was solved by parametrizing the ratio of form (0)\n\ny(\\nu)=\\delta(x(\\nu),u(\\nu))where the parameter vector $x(\\nu)$ is called the state vector (or simply the state) of the dynamic system.\nDefinition\nThe minimum set of parameters that completely removes the uncertainty of the input-output relationship of a dynamic object 𝑦(𝜈)=𝛿(𝑢(𝜈)) is called a state vector (or simply a state).\nif the state of a dynamic system 𝑥(𝜈𝑠) at some moment 𝜈 = 𝜈𝑠 is known, then the response of the system at 𝜈 ≥ 𝜈𝑠 will be uniquely determined only by the state 𝑥(𝜈𝑠) and the control signal 𝑢(𝜈) at 𝜈 ≥ 𝜈𝑠.\n\nLet us call an eight-component macrovector a dynamic system\n\n\\Sigma=\\{U,X,Y,\\Omega,\\Gamma,T,\\lambda,\\delta\\}\\tag{1}where 𝑈 is set of instantaneous values of 𝑟 − dimensional input (control) signals 𝑈 ∈ 𝑅𝑟;\n𝑋 is set 𝑛 −dimensiona states 𝑋 ∈ 𝑅𝑛;𝑌 is set of instantaneous values 𝑚 − dimensional outputs;Τ i set of time points forming the interval of control and observation; Ω is the set of admissible input signals;Γ – set of output values;\n𝜆 – system transition function from some previous state 𝑥 at the time moment\n𝜏 ∈ 𝑇 to the next state 𝑥 at the time moment 𝑡 under input signal 𝑈;\n𝛿 – system output function, which defines the rule for obtaining the instantaneous value of the output 𝑌 at the time moment 𝑡 ∈ 𝑇 under transition of the system from some previous state 𝑥 at the time moment 𝜏 ∈ 𝑇 under input signal 𝑈.\nWe will use the reduced definition of a dynamic system, omitting the description of the sets Ω and Γ , i.e. define a dynamic system as a six-component macrovector\n\n\\Sigma=\\{U,X,Y,T,\\lambda,\\delta\\}\\tag{2}\n\n\nMIMO-Models of continuous control systems.Unforced and forced response of the system. Fundamental and transition matrices. Construction of MIMO-Models of continuous systems by transfer functions.\nThe transition functions 𝜆 and 𝛿 in continuous systems are given in the following form:\n\n\\lambda:\\dot{x}(t)=\\lambda\\{x(t),u(t)\\}\\tag{3}\n\\delta:y(t)=\\delta\\{x(t),u(t)\\}\\tag{4}Where $x\\in R^n,\\ y\\in R^m, u\\in R^r,\\ \\dot{x}(t)=\\frac{d}{dt}x(t).$\nIf the rules 𝜆 and 𝛿 in the description of continuous systems can be represented as a composition of linear operations of addition and multiplication of matrices by a vector, then such systems s are linear. MIMO means multi input – multi output\n For linear continuous dynamic systems, the description of the functions 𝜆 and 𝛿 takes the form\n\n\\lambda:\\dot{x}(t)=Ax(t)+Bu(t)\\tag{5}\n\\delta:y(t)=Cx(t)+Du(t)\\tag{6}where 𝐴 − (𝑛 × 𝑛) is state matrix, 𝐵 − (𝑛 × 𝑟) is control matrix, 𝐶 − (𝑚 × 𝑛)  matrix, 𝐷 − (𝑚 × 𝑟) is input-output matrix. In our further investigation we suppose that 𝐷 = 0.\nTransfer matrix (function)Let us apply the Laplace transform to equations (5), (6):\n\nsX(s)-x(0)=AX(s)+BU(s)\\\\\nY(s)=CX(s)+DU(s)Where $x(0)=x(t)\\vert_{t=0},U(s),X(s),Y(s)$ are Laplace transform of u(t), x(t), y(t).\nResovle the resulting expressions with respect to U(s) and Y(s)\n\nY(s)=\\{C(sI-A)^{-1}B+D\\}U(s)+C(sI-A)^{-1}x(0)\\tag{7}with the initial state of the control systems is zero, (7) is\n\nY(s)=\\{C(sI-A)^{-1}B+D\\}U(s)=\\Phi(s)U(s)Unforced and forced components of stateLet us consider a linear continuous system described by equations (5), (6), which defined by the MIMO-model in differential form with a zero matrix 𝐷\n\n\\dot{x}=Ax(t)+Bu(t),x(0)\\\\\ny(t)=Cx(t)\\tag{8}Integral form\n\nx(t)=x\\{x(0),u(t),t\\};\\\\y(t)=Cx(t)If we use the principle of superposition, which is valid for linear systems, then we can write\n\nx(t)=x_{uf}(t)+x_f(t)unforced and forced components, respectively, and caused by $x(0)\\ne 0$, or movement generated by $u(t)\\ne 0$\nThe general view of the integral model state space model (MIMO) of a linear continuous system takes the form eq(13), see more on slides,\n$\\Phi(t)$– fundamental matrix of the system$\\Phi(t,\\tau)=\\Phi(t)\\Phi^{-1}(\\tau)$ – transition matrix of the system$w(t)=C\\Phi(t,0)=C\\Phi(t)B$ – weight matrix of the system\nDiscrete-time MIMO-modelsA discrete system is a system in which, at least in one element, with a continuous change in the input value, the output value does not change continuously, but has the form of separate pulses that appear at certain intervals.\nThe functions of transition 𝜆 and of exit 𝛿 in discrete systems are given in the following form\n\n\\lambda:x(k+1)=\\lambda[x(k),u(k)]\\\\\n\\delta:y(k)=\\delta[x(k),u(k)]\\tag{14}In linear discrete system, are written in the form\n\n\\left\\{ \\begin{array}{c}x(k+1)=\\bar{A}x(k)+\\bar{B}u(k)\\\\y(k)=\\bar{C}x(k)+\\bar{D}u(k)\\end{array}\\right.\\tag{16}A discrete system makes sampling with an interval of duration ∆𝑡 from the state and output variables of a continuous dynamic process. State variables between sampling moments change in accordance with the integral state model of a continuous system, output variables change according to the same law, and input (control) variables between sampling moments are fixed at the level of values at the previous sampling moment.\n","dateCreated":"2022-03-21T19:32:00+08:00","dateModified":"2022-04-19T15:08:57+08:00","datePublished":"2022-03-21T19:32:00+08:00","description":"Pace is weird.","headline":"Mathematical Basics of the System Theory PART II","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://redbowtie.github.io/2022/03/21/MathofSysT_II/"},"publisher":{"@type":"Organization","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png","logo":{"@type":"ImageObject","url":"/Ess/lh.png"}},"url":"https://redbowtie.github.io/2022/03/21/MathofSysT_II/","keywords":"System Theory, Math"}</script>
+    <meta name="description" content="Pace is weird.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Mathematical Basics of the System Theory PART II">
+<meta property="og:url" content="https://redbowtie.github.io/2022/03/21/MathofSysT_II/index.html">
+<meta property="og:site_name" content="Amaurot Ch.">
+<meta property="og:description" content="Pace is weird.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-03-21T11:32:00.000Z">
+<meta property="article:modified_time" content="2022-04-19T07:08:57.625Z">
+<meta property="article:author" content="Estus">
+<meta property="article:tag" content="System Theory">
+<meta property="article:tag" content="Math">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://redbowtie.github.io/assets/images/Ess/lh.png"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-4a47lwukh8khnoqxgkjhofoety2rdykli5sq4vv9v7xmmtg07euhkbfahoe5.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/"
+            aria-label=""
+        >
+            Amaurot Ch.
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+            <img class="header-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a
+                    href="/#about"
+                    aria-label="Read more about the author"
+                >
+                    <img class="sidebar-profile-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Estus</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>Fun things <del>never</del> always stops.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/RedBowtie"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/atom.xml"
+                            
+                            rel="noopener"
+                            title="RSS"
+                        >
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/links"
+                            
+                            rel="noopener"
+                            title="Links"
+                        >
+                        <i class="sidebar-button-icon fa fa-sign" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Links</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            Mathematical Basics of the System Theory PART II
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2022-03-21T19:32:00+08:00">
+	
+		    Mar 21, 2022
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Term6/">Term6</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>Pace is weird.<span id="more"></span></p>
+<h2 id="Lec-7-Linear-and-quadratic-forms"><a href="#Lec-7-Linear-and-quadratic-forms" class="headerlink" title="Lec 7. Linear and quadratic forms"></a>Lec 7. Linear and quadratic forms</h2><p>Recall the following concepts:</p>
+<p>1) Scalar function of a vector<br>2) Linear and quadratic forms,<br>3) positive and negative definiteness of a quadratic form,<br>4) The rules for differentiating of matrices with respect to scalar variables, scalar and vector function of a vector argument with respect to vector variables</p>
+<hr>
+<h2 id="Prac-6-Properties-of-matrix-functions"><a href="#Prac-6-Properties-of-matrix-functions" class="headerlink" title="Prac 6.  Properties of matrix functions"></a>Prac 6.  Properties of matrix functions</h2><h3 id="I-Main-properties"><a href="#I-Main-properties" class="headerlink" title="I. Main properties"></a>I. Main properties</h3><ol>
+<li>The matrix function of the matrix $f(A)$ preserves the block-diagonal form of the matrix A if A is diagonal matrix $A=diag\{a_i\}$, i.e.<script type="math/tex; mode=display">
+f(A)=diag\{f(a_i)\}</script>if $\sigma\{A\}=\sigma\{\lambda_1,\lambda_2,…,\lambda_n\}$ Then $\sigma\{f(A)\}=\{f(\lambda_1),f(\lambda_2),…\}$</li>
+</ol>
+<h3 id="2-Examples"><a href="#2-Examples" class="headerlink" title="2. Examples"></a>2. Examples</h3><blockquote>
+<ol>
+<li>$e^A =I+A+\frac{1}{2!}A^2+…=\Sigma\frac{1}{i!}A^i$</li>
+<li>$cos A = 1-\frac{1}{2!}A^2 +1\frac{1}{4!}A^4 -\frac{1}{6!}+…$</li>
+<li>$sin A = A-\frac{1}{3!}A^3 +\frac{1}{5!}A^5 +…$</li>
+</ol>
+</blockquote>
+<h3 id="3-Some-facats"><a href="#3-Some-facats" class="headerlink" title="3. Some facats"></a>3. Some facats</h3><blockquote>
+<p>$cos(2A)=2cos^2(A)-I$</p>
+<p>$sin(2A)=sin(A)cos(A)$</p>
+<p>$cos^2(A)+sin^2(A)=I$</p>
+<p>$sin(A\pm B)=sin(A)cos(B)\pm cos(A)sin(B)$ IF $AB=BA$</p>
+<p>$cos(A\pm B)=cos(A)cos(B)\mp sin(A)sin(B)$ IF $AB=BA$</p>
+</blockquote>
+<h3 id="4-Methods"><a href="#4-Methods" class="headerlink" title="4. Methods"></a>4. Methods</h3><ol>
+<li><h5 id="Approximate-method"><a href="#Approximate-method" class="headerlink" title="Approximate method"></a>Approximate method</h5><script type="math/tex; mode=display">
+F(A)=\sum_{i=0}^m a_iA^i</script></li>
+<li><h5 id="The-exact-method-based-on-eigenvalues"><a href="#The-exact-method-based-on-eigenvalues" class="headerlink" title="The exact method based on eigenvalues"></a>The exact method based on eigenvalues</h5><p>$\Lambda=M^{-1}AM$</p>
+<p>Where $\Lambda=\left[\begin{array}{ccc}\lambda_1&amp;0&amp;0\\0&amp;…&amp;0\\0&amp;0&amp;\lambda_n\end{array}\right],M=[\xi_1,…,\xi_n]$</p>
+<p>$F(A)=M^{-1} F(\Lambda)$</p>
+</li>
+</ol>
+<h3 id="5-Matrix-exponent"><a href="#5-Matrix-exponent" class="headerlink" title="5. Matrix exponent"></a>5. Matrix exponent</h3><ol>
+<li>$e^{At}=I+At+\frac{1}{2!}A^2 t^2+\frac{1}{3!}A^3 t^3+\ldots=\sum_0^\infty\frac{1}{i!}A^it^i$</li>
+</ol>
+<blockquote>
+<p>Properties:</p>
+<ol>
+<li>if $A=0$ or $t=0$ Then $e^{At}=I$</li>
+<li>if $AB=BA$ Then $e^{At}e^{Bt}=e^{(A+B<br>)t}$</li>
+<li>In general case $AB\ne BA$ And $e^{At}e^{Bt}\ne e^{(A+B<br>)t}$</li>
+<li>$e^{At}e^{A\tau}=e^{A(t+\tau)}$</li>
+<li>$\frac{d}{dt}e^{At}=Ae^{At}=e^{At}\cdot A$</li>
+</ol>
+</blockquote>
+<ol>
+<li>For matrices of simple structure ($\lambda_i:\lambda_i\ne\lambda_j,i\ne j,Im(\lambda_i)=0,i=1\ldots n$) matrix exponent is calculated as <script type="math/tex; mode=display">
+e^{At}=Me^{\Lambda t}M^{-1}=M\left[\begin{array}{cccc}e^{-\lambda_1 t}&0&\ldots&0\\0&e^{-\lambda_2t}&\ldots&0\\\ldots&\ldots&\ddots&\ldots\\0&0&\ldots&e^{-\lambda_n t}\end{array}\right]M^{-1},</script>Where $\Lambda=\left[\begin{array}{ccc}\lambda_1&amp;0&amp;0\\0&amp;…&amp;0\\0&amp;0&amp;\lambda_n\end{array}\right],M=[\xi_1,…,\xi_n]$</li>
+</ol>
+<hr>
+<h2 id="Lec-8-Matrix-functions-Matrix-Exponent"><a href="#Lec-8-Matrix-functions-Matrix-Exponent" class="headerlink" title="Lec 8. Matrix functions. Matrix Exponent"></a>Lec 8. Matrix functions. Matrix Exponent</h2><h3 id="Definitions"><a href="#Definitions" class="headerlink" title="Definitions:"></a>Definitions:</h3><p>Considering a square matrix A, $dim(A)=n\times n$;</p>
+<ol>
+<li><p>A scalar function (SFM) of a square matrix A is a function $f(A)$ That imlements the mapping.</p>
+<script type="math/tex; mode=display">
+f(A):R^{n\times n}\Rightarrow R,</script><p>where $R$ is the set of real numbers.</p>
+<p><strong>Examples:</strong> determinant, trace, norm and condition number of the matrix.</p>
+</li>
+<li><p>A vector function of a square matrix A is a function $f(A)$ that implements the mapping</p>
+<script type="math/tex; mode=display">
+f(A):R^{n \times n}\Rightarrow R^n,</script><p>where $R^n$ is n-dimension real space.</p>
+<p><strong>Examples:</strong> vectors which consist of elements of algebraic spectra of eigenvalues and signular values.</p>
+</li>
+</ol>
+<h3 id="Matrix-series-and-matrix-functions-of-matrices"><a href="#Matrix-series-and-matrix-functions-of-matrices" class="headerlink" title="Matrix series and matrix functions of matrices"></a>Matrix series and matrix functions of matrices</h3><p>The matrix function of a matrix (MFM) implements the mapping</p>
+<script type="math/tex; mode=display">
+f(A):R^{n\times n}\Rightarrow R^{n\times n}</script><ol>
+<li>Let $f(\alpha)$ be a scalar power series (polynomial) with respect to a scalar variable $\alpha$<script type="math/tex; mode=display">
+f(A)=a_0+a_1\alpha+a_2\alpha^2+\ldots+a_p\alpha^p.\tag{1}</script>Then the scalar series $f(\alpha)$ generates a matrix function $f(A)$ Of the matrix A in the form of a matrix series, if in the representation $(1)$ For $f(\alpha)$ the scalar variable is replaced by the matrix $A$<script type="math/tex; mode=display">
+f(A)=a_0I+a_1A+a_2A^2+\ldots+a_pA^p.\tag{2}</script></li>
+</ol>
+<h3 id="Hamilton-Cayley-theorem"><a href="#Hamilton-Cayley-theorem" class="headerlink" title="Hamilton-Cayley theorem."></a>Hamilton-Cayley theorem.</h3><p>Square matrix $A$ with characteristic polynomial</p>
+<script type="math/tex; mode=display">
+D(\lambda)=det(\lambda I-A)=\lambda^n+a_1\lambda^{n-1}+\ldots+a_{n-1}\lambda+a_n</script><p>sets its characteristic polynomial to zero so that the matrix realtion is satisfied</p>
+<script type="math/tex; mode=display">
+D(A)=A^n+a_1A^{n-1}+\ldots+a_n I=0\tag{3}\\</script><p>where $0-(n\times n)$ null matrix</p>
+<p>Using the Hamilton-Cayley theorem, we introduce the following definitions:</p>
+<ol>
+<li>A polynomial (power series) $\varphi(A)=0$ with respect to a scalar variable $\alpha$ is called an <strong>annihilating polynomial</strong> of a square matrix A if the condition</li>
+</ol>
+<script type="math/tex; mode=display">
+\varphi(A)=0\tag{4}</script><p>The annigilating polynomial of the matrix A, by virtue of the Hamilton-Cayley theorem, is primarily its <strong><em>characteristic polynomial.</em></strong></p>
+<ol>
+<li><p>The annihilating polynomial $\psi(\alpha)$ of the lest degree m with the highest coefficient at $\alpha^m$ Equal to one is called the minimal polynomial of the matrix A.</p>
+<p>Construct expansion of the polynomial $f(a)(1)$ , which defines the matrix function of the matrix $f(A)$ in the form (2), modulo the minimal polynomial $\psi(\alpha)$ of the matrix A,</p>
+<script type="math/tex; mode=display">
+f(a)=\varphi(\alpha)\psi(\alpha)+r(\alpha)\tag{5}</script><p>Where the polynomial $r(\alpha)$ has degree $deg(r(\alpha))$ Less than the degree $deg(\psi(\alpha))$ Of the minimal polynomial $\psi(a)$ of matrix A.</p>
+</li>
+<li><p>Let the polynomial $f(a)$ with respect to the scalar variable a be represented in the form (5), then the matrix function $f(A)$ can be written in the minial form</p>
+<script type="math/tex; mode=display">
+f(A)=r(A)\tag{6}</script><script type="math/tex; mode=display">
+r(\alpha)=rest\frac{f(\alpha)}{\psi(\alpha)}\tag{7}</script></li>
+</ol>
+<h3 id="Properties-of-a-matrix-function-of-a-matrix"><a href="#Properties-of-a-matrix-function-of-a-matrix" class="headerlink" title="Properties of a matrix function of a matrix"></a>Properties of a matrix function of a matrix</h3><ol>
+<li><p>The matrix function of the matrix $f(A)$ preserves the spectrum of eigenvalues of the matrix</p>
+<script type="math/tex; mode=display">
+f(A)\xi_i=f(\lambda_i)\xi_i\tag{8}</script></li>
+<li><p>The matrix function of the matrix $f(A)$ preserves the matrix similarity relation, i.e. if A is similar to $B(B=T^{-1}AT)$, then</p>
+<script type="math/tex; mode=display">
+f(B)=T^{-1}f(A)T\tag{9}</script></li>
+<li><p>The matrix function of the matrix $f(A)$ preserves the block-diagonal form of the matrix A if A is diagonal matrix $A=diag\{a_i\}$, i.e</p>
+<script type="math/tex; mode=display">
+f(A)=diag\{f(a_i)\}\tag{10}</script></li>
+</ol>
+<h3 id="Main-ways-to-calculate-matrix-exponent"><a href="#Main-ways-to-calculate-matrix-exponent" class="headerlink" title="Main ways to calculate matrix exponent"></a>Main ways to calculate matrix exponent</h3><ol>
+<li><h4 id="Numerical-way"><a href="#Numerical-way" class="headerlink" title="Numerical way"></a>Numerical way</h4><p>Based on the transition from continuous time t to discrete time k, expressed by the number of discrete intervals of duration $\triangle t, t=k(\triangle t)$</p>
+<script type="math/tex; mode=display">
+e^{At}=e^{A\triangle tk}=(e^{A\triangle t})^k=(\bar{A})^k</script><script type="math/tex; mode=display">
+\bar{A}=I+A\triangle t+\frac{1}{2!}(A\triangle t)^2+\frac{1}{3!}(A\triangle t)^3+\ldots+\frac{1}{p!}(A\triangle t)^p</script></li>
+<li><h4 id="Diagonalization-method-eigenvalue-method"><a href="#Diagonalization-method-eigenvalue-method" class="headerlink" title="Diagonalization method (eigenvalue method)"></a>Diagonalization method (eigenvalue method)</h4><p>It is applied to matrices of simple struture</p>
+<script type="math/tex; mode=display">
+\sigma(A)=\{\lambda_i;\lambda_i\ne \lambda_j,im(\lambda_i)=0,i=1,\ldots,n\}</script><p>for which the relation</p>
+<script type="math/tex; mode=display">
+M\Lambda=AM</script><p>Holds, $\Lambda=diag\{\lambda_i,i=1,\ldots,n\}$</p>
+<script type="math/tex; mode=display">
+e^{At}=Me^{\Lambda t}M^{-1}=M diag\{e^{\lambda_i t,i=1},\ldots,n\}\tag{13}</script><script type="math/tex; mode=display">
+M=row\{M_i=\xi_i,i=1,\ldots,n\}</script><p>M is matrix of eigenvectors A</p>
+</li>
+<li><h4 id="Method-based-on-reduction-to-normal-Jordan-form"><a href="#Method-based-on-reduction-to-normal-Jordan-form" class="headerlink" title="Method based on reduction to normal Jordan form"></a>Method based on reduction to normal Jordan form</h4><p>Applies to matrices whose eigenvalue spectrum contains r multiple eigenvalues $\lambda_i$ of multiplicity $m_i$ each. Then the matrix similarity relation holds</p>
+<script type="math/tex; mode=display">
+TJ=AT</script><script type="math/tex; mode=display">
+J=diag\{\left[\begin{array}{ccccc}
+\lambda_i&1&0&\ldots&0\\
+0&\lambda_i&1&\ldots&0\\
+.&.&.&\ldots&.\\
+.&.&.&\ldots&.\\
+0&0&0&\ldots&1\\
+0&0&0&\ldots&\lambda_i
+\end{array}\right];\sum_{i=1}^r m_i=n\}</script><p>for the matrix exponent, </p>
+<script type="math/tex; mode=display">
+e^{At}=Te^{Jt}T^{-1}\tag{14}</script><script type="math/tex; mode=display">
+e^{Jt}=diag\{e^{J_i t}=\left[\begin{array}{ccccc}
+e^{\lambda_i t}&\frac{te^{\lambda_i t}}{1!}&\frac{t^2e^{\lambda_i t}}{2!}&\ldots&\frac{t^{n-1}e^{\lambda_i t}}{(m_i-1)!}\\
+
+0&e^{\lambda_i t}&\frac{te^{\lambda_i t}}{1!}&\ldots&\frac{t^{n-2}e^{\lambda_i t}}{(m_i-2)!}\\
+
+.&.&.&\ldots&.\\
+
+.&.&.&\ldots&.\\
+
+0&0&0&\ldots&\frac{te^{\lambda_i t}}{1!}\\
+
+0&0&0&\ldots&e^{\lambda_i t}
+\end{array}\right];\sum_{i=1}^r m_i=n\}</script></li>
+<li><h4 id="Laplace-transform-method"><a href="#Laplace-transform-method" class="headerlink" title="Laplace transform method"></a>Laplace transform method</h4><p>Calculation of the inverse Laplace transform from the resovent $(sI-A)^{-1}$ in the form</p>
+<script type="math/tex; mode=display">
+e^{At}=\mathcal{L}^{-1}\{(sI-A)^{-1}\}\tag{15}</script><p>To expand without inverting, the Faddeev-Leverrier algorithm is used based on the representation</p>
+<script type="math/tex; mode=display">
+(sI-A)^{-1}=\frac{1}{det(sI-A)}[\triangle(sI-A)]^T=\frac{s^{n-1}H_0+s^{n-2}H_1+\ldots+H_{n-1}}{s^n+a_1s^{n-1}+\ldots+a_{n-1}s+a_n}\tag{16}</script><p>$(n\times n)-matrices\ H_i(i=0,\ldots,n-1)$ and coefficients of the characteristic equation are calculated using the recurrent procedure </p>
+<script type="math/tex; mode=display">
+H_0=I,\ a_1=-tr(AH_0)\\
+H_1=AH_0+a_1I,\ a_2=-tr(AH_1)/2\\
+\ldots\\
+H_k=AH_{k-1}+a_kI,\ a_{k+1}=-tr(AH_k)/k\tag{17}</script><p>Now resolvent can be rewritten as</p>
+<script type="math/tex; mode=display">
+(sI-A)^{-1}=\frac{s^{n-1}}{D(s)}H_0+\frac{s^{n-2}}{D(s)}H_1+\ldots+\frac{s}{D(s)}H_{n-2}+\frac{1}{D(s)}H_{n-1}\tag{18}</script><p>And matrix exponent takes the view</p>
+<script type="math/tex; mode=display">
+e^{At}=L^{-1}\{\frac{s^{n-1}}{D(s)}\}H_0+L^{-1}\{\frac{s^{n-2}}{D(s)}\}H_1+\ldots+L^{-1}\{\frac{s}{D(s)}\}H_{n-2}+L^{-1}\{\frac{1}{D(s)}\}H_{n-1}\tag{19}</script></li>
+<li></li>
+</ol>
+<h3 id="Matrix-Inversion-using-the-Hamilton-Cayley-theorem"><a href="#Matrix-Inversion-using-the-Hamilton-Cayley-theorem" class="headerlink" title="Matrix Inversion using the Hamilton-Cayley theorem"></a><strong>Matrix Inversion using the Hamilton-Cayley theorem</strong></h3><p>Matrix relation (3)</p>
+<p>$D(A)=A^n+a_1A^{n-1}+\ldots+a_{n-1}A+a_nI=0$</p>
+<p>which is the analytical content of the Hamilton-Cayley theorem, in the form</p>
+<script type="math/tex; mode=display">
+A_n+a_1A^{n-1}+\ldots+a_{n-1}A+a_nI=0\tag{20}</script><p>Multiply (20) on the right by $A^{-1}$</p>
+<script type="math/tex; mode=display">
+a_nA^{-1}+a_{n-1}I+a_{n-2}A+\ldots+a_1A^{n-2}+A^{n-1}=0\tag{21}</script><p>Solve (18) with respect to the inverse matrix</p>
+<script type="math/tex; mode=display">
+A^{-1}=-(a_n)^{-1}(a_{n-1}I+a_{n-2}A+\ldots+a_1A^{n-2}+A^{n-1})\\
+=-(a_n)^{-1}(A^{n-1}+\sum_{i=1}^{n-1}a_iA^{n-1-i})\tag{22}</script><p>We obtained an algorithmic matrix inversion base. Matrix relation (22) has the positive property: itis insensitive to the conditionality of the inverted matrix.</p>
+<p>The disadvantage of inverting matrices using expression (22) is the need to know the coefficients of the characteristic polynomial. Therefore, the proposed inversion procedure will not cause noticeable difficulties for the case of sparse matrices, and it is especially convenient to use it when inverting matrices given in the Frobenius form, as the coefficients of the characteristic polynomial are explicitly present in it.</p>
+<hr>
+<h2 id="Prac-7-Hamilton-Caylery-theorem"><a href="#Prac-7-Hamilton-Caylery-theorem" class="headerlink" title="Prac 7. Hamilton-Caylery theorem."></a>Prac 7. Hamilton-Caylery theorem.</h2><h3 id="Consequences"><a href="#Consequences" class="headerlink" title="Consequences"></a>Consequences</h3><p>Any square matrix $A(n\times n)$ with characteristic polynomial</p>
+<script type="math/tex; mode=display">
+D(\lambda)=det(\lambda I-A)=\lambda^n+a_{n-1}\lambda^{n-1}+\ldots+a_0</script><p>Satisfies its own characteristic equation, i.e.</p>
+<script type="math/tex; mode=display">
+D(A)=A^n+a_{n-1}A^{n-1}+\ldots+a_0 I=0</script><p>The proof of the theorem</p>
+<script type="math/tex; mode=display">
+D(A)=det(AI-A)=det(A-A)=det(0)=0\\
+A^{-1}=-\frac{1}{a_0}(A^{n-1}+a_{n-1}A^{n-2}+\ldots+a_2A+a_1I)\\
+f(\lambda_k)=\lambda_k^{n-1}a_{n-1}+\ldots+a_1\lambda_k+a_01,\ k=1\ldots n\\</script><p>calculations of the matrix function can be represented as a finite sum</p>
+<script type="math/tex; mode=display">
+f(A)=e^{At}=a_{n-1}(t)A^{n-1}+\ldots+a_0(t)I</script><h3 id="Interpolation"><a href="#Interpolation" class="headerlink" title="Interpolation"></a>Interpolation</h3><p>The Lagrange interpolation polynomial</p>
+<script type="math/tex; mode=display">
+P(x)=\sum_{i=1}^n P_{n-1}(a_i)\frac{\prod_{s=1}^n(x-a_s)}{\prod_{s=1}^n(a_i-a_s)}, s\ne i</script><p>consider the polynomial matrix</p>
+<script type="math/tex; mode=display">
+P(A)=\sum_{i=1}^n P_{n-1}(a_i)\frac{\prod_{s=1}^n(A-a_sI)}{\prod_{s=1}^n(a_i-a_s)}, s\ne i</script><p>Successive multiplications of these equalities by $\lambda^p$ and $A^p$ will give</p>
+<script type="math/tex; mode=display">
+\lambda^{n+p}=A_1\lambda^{n+p-1}-A_2\lambda^{n+p-2}+\ldots+(-1)^{n-2}A_{n-1}\lambda^{p+1}+(-1)^{n-1}A_n\lambda_p;\\
+A^{n+p}=A_1A^{n+p-1}-A_2A^{n+p-2}+\ldots+(-1)^{n-2}A_{n-1}A^{p+1}+(-1)^{n-1}A_nA_p;</script><p>Sylvester theorem for $\lambda_i\ne \lambda_j$, $i\ne j,\ i=1,\ldots,n,\ j=1,\ldots, n$,</p>
+<script type="math/tex; mode=display">
+f(A)=\sum_{i=1}^n f(\lambda_i)Z_i,\ Z_i=\frac{\prod_{s=1}^n(A-\lambda_sE)}{\prod_{s=1}^n(\lambda_i-\lambda_s)}\tag{1}</script><h3 id="The-Becker-Formula"><a href="#The-Becker-Formula" class="headerlink" title="The Becker Formula"></a>The Becker Formula</h3><script type="math/tex; mode=display">
+f(A)=\frac{D_{n-1}}{D}A^{n-1}+\frac{D_{n-2}}{D}A^{n-2}+\ldots+\frac{D_0}{D}E,</script><p>Where D is the Vandermonde determinant</p>
+<p>$D_{n-1}$ - is determinant D with (n-1) - row replaced with a row</p>
+<script type="math/tex; mode=display">
+(f(\lambda_1),f(\lambda_2),\ldots,f(\lambda_n)),\ i=1,\ldots,n</script><h3 id="High-degree-matrices"><a href="#High-degree-matrices" class="headerlink" title="High degree matrices"></a>High degree matrices</h3><p>Let us use the Sylvester formula to calculate $A^p$, as given in formula $(1)$</p>
+<p>$Z_i$ Does not depoend on the p</p>
+<script type="math/tex; mode=display">
+\abs{\lambda_1}>\abs{\lambda_2}>\ldots>\abs{\lambda_n}</script><p>if p is very large, then we can neglect $\lambda_2^p,\ldots,\lambda_n^p$, compared to $\lambda_1^p$</p>
+<script type="math/tex; mode=display">
+A^p\approx\lambda_1^pZ_1=\prod_{s=1}^n\frac{A-\lambda_sE}{\lambda_1-\lambda_s}</script><h3 id="Fadeev-LeVerrier-algorithm"><a href="#Fadeev-LeVerrier-algorithm" class="headerlink" title="Fadeev-LeVerrier algorithm"></a>Fadeev-LeVerrier algorithm</h3><p>Any square matrix $A(n\times n)$ With characteristic polynomial</p>
+<script type="math/tex; mode=display">
+p(\lambda)=det(\lambda I-A)=c_n\lambda^n+c_{n-1}\lambda^{n-1}+\dots+c_0</script><p>The <strong>Fadeev-LeVerrier</strong> algorithm is based on thje following recursion rule for matrices $B_0,\dots, B_n$ and coefficients $c_0,\dots,c_n$</p>
+<script type="math/tex; mode=display">
+k=0:B_0=0,c_n=1\\
+k=1,\dots,n:B_k=AB_{k-1}+c_{n-k+1}I,c_{n-k}=-\frac{1}{k}tr(AB_k)</script><p>consequences</p>
+<script type="math/tex; mode=display">
+c_0=p(0)=det(-A)=(-1)^ndet(A)\\
+c_0\ne0:A^{-1}=-\frac{1}{c_0}B_n</script><hr>
+<h2 id="Lec-9-SISO-Models-of-Continuous-and-Discrete-Time-Systems"><a href="#Lec-9-SISO-Models-of-Continuous-and-Discrete-Time-Systems" class="headerlink" title="Lec 9. SISO Models of Continuous and Discrete-Time Systems"></a>Lec 9. SISO Models of Continuous and Discrete-Time Systems</h2><h3 id="Definitions-1"><a href="#Definitions-1" class="headerlink" title="Definitions"></a>Definitions</h3><p><strong>Mathematical model of a dynamic system</strong> is the mathemetical description of the relation ship between the variables of the system, characterizing its behaviour</p>
+<p><strong>Mathematical model</strong> allows us to study the behaviour of the system when it is exposed to physical signals (independent variables: reference and control influences and disturbances).</p>
+<p>A control system is an interconnection of elements forming a system configuration to provide a desired response.</p>
+<p>System theory provides basis for analysis of a system.</p>
+<p>The input-output relationship represents cause-and-effect relationship of the process, which in turn, represents a processing of the input signal to provide an output signal variable. </p>
+<p>The mathematical description depends on the type of converted signals.</p>
+<h3 id="Transformation"><a href="#Transformation" class="headerlink" title="Transformation"></a>Transformation</h3><h4 id="Continuous-time-signal-transformation"><a href="#Continuous-time-signal-transformation" class="headerlink" title="Continuous-time signal transformation:"></a>Continuous-time signal transformation:</h4><p>dynamic systems are called continuous, and differential equations are used to describe them.</p>
+<h4 id="Discrete-time-signal-transformation"><a href="#Discrete-time-signal-transformation" class="headerlink" title="Discrete time signal transformation"></a>Discrete time signal transformation</h4><p>Discrete interval ∆𝑡 at time points 𝑡=𝑘(∆𝑡), where 𝑘 is discrete time expressed in the number of discrete intervals: dynamic systems are called discrete, recurrent (difference) equations are used to describe them.</p>
+<h3 id="SISO"><a href="#SISO" class="headerlink" title="SISO"></a>SISO</h3><p>Consider a non linear continuous dynamic system with one input and one output, described by a nonlinear ordinary differential equation of the n-th order</p>
+<script type="math/tex; mode=display">
+F(y^{(n)},y^{(n-1)},\dots,y,u^{(m)},u^{(m-1)},\dots,u,t)=0\tag{1}</script><p>If we carry out linearization of (1) and leave the dependent variables on the left side, and the independent variables on the right side, then we obtain a linear (linearized) differential equation</p>
+<script type="math/tex; mode=display">
+a_0(t)y^{(n)}(t)+a_1(t)y^{(n-1)}(t)+\dots+a_n(t)y(t)=b(t)u^{(m)}(t)+\dots+b_m(t)u(t)\tag{2}</script><p><strong>Dynamic</strong> systems, mathematical models of which can be represented in the form of equation (2) are continuous linear systems. </p>
+<p>When all the <strong>coefficients</strong> of equation (2) are constant the system is <strong>called stationary</strong></p>
+<h3 id="Linearization-of-a-system-in-the-input-output-form-SISO"><a href="#Linearization-of-a-system-in-the-input-output-form-SISO" class="headerlink" title="Linearization of a system in the input-output form (SISO)"></a>Linearization of a system in the input-output form (SISO)</h3><p>Consider a system in form (1) and in a steady state (equilibrium position)</p>
+<script type="math/tex; mode=display">
+y=y^*=const,\ u=u^*=const,</script><p>It means that </p>
+<script type="math/tex; mode=display">
+F(0,0,\dots,y^*,0,0,\dots,u^*,t)=0</script><p>It is required to obtain a linearized model in the neighborhood of the equilibrium position</p>
+<script type="math/tex; mode=display">
+y=y^*,\ u=u^*,\ \dot{y}=\dots=y^{(n)}=0,\ \dot{u}=\dots=u^{(m)}=0</script><p>Introduce new coordinates - deviations from the equilibrium state. Check slides for more detail.</p>
+<h3 id="SISO-mathematical-models-of-discrete-control-systems"><a href="#SISO-mathematical-models-of-discrete-control-systems" class="headerlink" title="SISO mathematical models of discrete control systems"></a><strong>SISO mathematical models of discrete control systems</strong></h3><p>In the control system, the functions of the controller can be performed by a digital (discrete) device. Such devices are implemented in the form of microcomputers, microcontrollers, microprocessors, interfaced with digital-to-analog converters.</p>
+<p>The input of information into a discrete device is carried out at certain time intervals, therefore, for a mathematical description and analysis of the quality of discrete systems, it is necessary to develop a special method. A discrete system operates on data obtained from a continuous signal by sampling its values at equally spaced time intervals. The result is a time sequence of data called a discrete signal. The transition from continuous time 𝑡 to discrete moments of time is carried out according to the formula 𝑡=𝑘∆𝑡, 𝑘 is an integer that takes the values 𝑘=0, 1, 2,…</p>
+<hr>
+<h2 id="Lec-10-MIMO-Models-of-Continuous-and-Discrete-Time-Systems"><a href="#Lec-10-MIMO-Models-of-Continuous-and-Discrete-Time-Systems" class="headerlink" title="Lec 10. MIMO Models of Continuous and Discrete-Time Systems"></a>Lec 10. MIMO Models of Continuous and Discrete-Time Systems</h2><h3 id="Questions"><a href="#Questions" class="headerlink" title="Questions"></a>Questions</h3><p>What are the disadvantages of Input-Output models? Why was there a request for the Input-State-Output (MIMO, State Space) model?</p>
+<p>The class of models Input-Output historically appeared from the theory of electrical circuits. Up to a certain point, it fully satisfied the needs of developers of dynamic systems.</p>
+<p>Let us write the Input-Output model in an explicit form:</p>
+<script type="math/tex; mode=display">
+y(\nu)=\delta(u(\nu))\tag{0}</script><p>Where, $u(\nu)$ is the input funciton, $\nu$ Is continuous time t in the case of continuous objects or systems, and discrete time k in the case of discrete ones.</p>
+<p>As the control problems become more complicated the description of systems in the Input-Output form, it was found that when using State Space models, it is much more convenient to take into account the existing physical ideas about the mechanisms of the system.</p>
+<p>This problem was solved by parametrizing the ratio of form (0)</p>
+<script type="math/tex; mode=display">
+y(\nu)=\delta(x(\nu),u(\nu))</script><p>where the parameter vector $x(\nu)$ is called the state vector (or simply the state) of the dynamic system.</p>
+<h3 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h3><ol>
+<li><p>The minimum set of parameters that completely removes the uncertainty of the input-output relationship of a dynamic object 𝑦(𝜈)=𝛿(𝑢(𝜈)) is called a state vector (or simply a state).</p>
+<p>if the state of a dynamic system 𝑥(𝜈𝑠) at some moment 𝜈 = 𝜈𝑠 is known, then the response of the system at 𝜈 ≥ 𝜈𝑠 will be uniquely determined only by the state 𝑥(𝜈𝑠) and the control signal 𝑢(𝜈) at 𝜈 ≥ 𝜈𝑠.</p>
+</li>
+<li><p>Let us call an eight-component macrovector a dynamic system</p>
+<script type="math/tex; mode=display">
+\Sigma=\{U,X,Y,\Omega,\Gamma,T,\lambda,\delta\}\tag{1}</script><p>where 𝑈 is set of instantaneous values of 𝑟 − dimensional input (control) signals 𝑈 ∈ 𝑅𝑟;</p>
+<p>𝑋 is set 𝑛 −dimensiona states 𝑋 ∈ 𝑅𝑛;<br>𝑌 is set of instantaneous values 𝑚 − dimensional outputs;<br>Τ i set of time points forming the interval of control and observation; Ω is the set of admissible input signals;<br>Γ – set of output values;</p>
+<p>𝜆 – system transition function from some previous state 𝑥 at the time moment</p>
+<p>𝜏 ∈ 𝑇 to the next state 𝑥 at the time moment 𝑡 under input signal 𝑈;</p>
+<p>𝛿 – system output function, which defines the rule for obtaining the instantaneous value of the output 𝑌 at the time moment 𝑡 ∈ 𝑇 under transition of the system from some previous state 𝑥 at the time moment 𝜏 ∈ 𝑇 under input signal 𝑈.</p>
+<p>We will use the reduced definition of a dynamic system, omitting the description of the sets Ω and Γ , i.e. define a dynamic system as a six-component macrovector</p>
+<script type="math/tex; mode=display">
+\Sigma=\{U,X,Y,T,\lambda,\delta\}\tag{2}</script></li>
+<li></li>
+</ol>
+<h3 id="MIMO-Models-of-continuous-control-systems"><a href="#MIMO-Models-of-continuous-control-systems" class="headerlink" title="MIMO-Models of continuous control systems."></a><strong>MIMO-Models of continuous control systems.</strong></h3><p>Unforced and forced response of the system. Fundamental and transition matrices. Construction of MIMO-Models of continuous systems by transfer functions.</p>
+<p>The transition functions 𝜆 and 𝛿 in continuous systems are given in the following form:</p>
+<script type="math/tex; mode=display">
+\lambda:\dot{x}(t)=\lambda\{x(t),u(t)\}\tag{3}</script><script type="math/tex; mode=display">
+\delta:y(t)=\delta\{x(t),u(t)\}\tag{4}</script><p>Where $x\in R^n,\ y\in R^m, u\in R^r,\ \dot{x}(t)=\frac{d}{dt}x(t).$</p>
+<p>If the rules 𝜆 and 𝛿 in the description of continuous systems can be represented as a composition of linear operations of addition and multiplication of matrices by a vector, then such systems s are linear. MIMO means multi input – multi output</p>
+<p> For linear continuous dynamic systems, the description of the functions 𝜆 and 𝛿 takes the form</p>
+<script type="math/tex; mode=display">
+\lambda:\dot{x}(t)=Ax(t)+Bu(t)\tag{5}</script><script type="math/tex; mode=display">
+\delta:y(t)=Cx(t)+Du(t)\tag{6}</script><p>where 𝐴 − (𝑛 × 𝑛) is state matrix, 𝐵 − (𝑛 × 𝑟) is control matrix, 𝐶 − (𝑚 × 𝑛)  matrix, 𝐷 − (𝑚 × 𝑟) is input-output matrix. In our further investigation we suppose that 𝐷 = 0.</p>
+<h3 id="Transfer-matrix-function"><a href="#Transfer-matrix-function" class="headerlink" title="Transfer matrix (function)"></a>Transfer matrix (function)</h3><p>Let us apply the Laplace transform to equations (5), (6):</p>
+<script type="math/tex; mode=display">
+sX(s)-x(0)=AX(s)+BU(s)\\
+Y(s)=CX(s)+DU(s)</script><p>Where $x(0)=x(t)\vert_{t=0},U(s),X(s),Y(s)$ are Laplace transform of u(t), x(t), y(t).</p>
+<p>Resovle the resulting expressions with respect to U(s) and Y(s)</p>
+<script type="math/tex; mode=display">
+Y(s)=\{C(sI-A)^{-1}B+D\}U(s)+C(sI-A)^{-1}x(0)\tag{7}</script><p>with the initial state of the control systems is zero, (7) is</p>
+<script type="math/tex; mode=display">
+Y(s)=\{C(sI-A)^{-1}B+D\}U(s)=\Phi(s)U(s)</script><h3 id="Unforced-and-forced-components-of-state"><a href="#Unforced-and-forced-components-of-state" class="headerlink" title="Unforced and forced components of state"></a>Unforced and forced components of state</h3><p>Let us consider a linear continuous system described by equations (5), (6), which defined by the MIMO-model in differential form with a zero matrix 𝐷</p>
+<script type="math/tex; mode=display">
+\dot{x}=Ax(t)+Bu(t),x(0)\\
+y(t)=Cx(t)\tag{8}</script><p>Integral form</p>
+<script type="math/tex; mode=display">
+x(t)=x\{x(0),u(t),t\};\\y(t)=Cx(t)</script><p>If we use the principle of superposition, which is valid for linear systems, then we can write</p>
+<script type="math/tex; mode=display">
+x(t)=x_{uf}(t)+x_f(t)</script><p>unforced and forced components, respectively, and caused by $x(0)\ne 0$, or movement generated by $u(t)\ne 0$</p>
+<p>The general view of the integral model state space model (MIMO) of a linear continuous system takes the form eq(13), see more on slides,</p>
+<p>$\Phi(t)$– fundamental matrix of the system<br>$\Phi(t,\tau)=\Phi(t)\Phi^{-1}(\tau)$ – transition matrix of the system<br>$w(t)=C\Phi(t,0)=C\Phi(t)B$ – weight matrix of the system</p>
+<h3 id="Discrete-time-MIMO-models"><a href="#Discrete-time-MIMO-models" class="headerlink" title="Discrete-time MIMO-models"></a>Discrete-time MIMO-models</h3><p>A discrete system is a system in which, at least in one element, with a continuous change in the input value, the output value does not change continuously, but has the form of separate pulses that appear at certain intervals.</p>
+<p>The functions of transition 𝜆 and of exit 𝛿 in discrete systems are given in the following form</p>
+<script type="math/tex; mode=display">
+\lambda:x(k+1)=\lambda[x(k),u(k)]\\
+\delta:y(k)=\delta[x(k),u(k)]\tag{14}</script><p>In linear discrete system, are written in the form</p>
+<script type="math/tex; mode=display">
+\left\{ \begin{array}{c}x(k+1)=\bar{A}x(k)+\bar{B}u(k)\\y(k)=\bar{C}x(k)+\bar{D}u(k)\end{array}\right.\tag{16}</script><p>A discrete system makes sampling with an interval of duration ∆𝑡 from the state and output variables of a continuous dynamic process. State variables between sampling moments change in accordance with the integral state model of a continuous system, output variables change according to the same law, and input (control) variables between sampling moments are fixed at the level of values at the previous sampling moment.</p>
+
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Math/" rel="tag">Math</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/System-Theory/" rel="tag">System Theory</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/03/23/SystemSoftware_I/"
+                    data-tooltip="System Software PART I"
+                    aria-label="PREVIOUS: System Software PART I"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/03/21/Ballkid/"
+                    data-tooltip="Ballkid Vol.1"
+                    aria-label="NEXT: Ballkid Vol.1"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2023 Estus. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/03/23/SystemSoftware_I/"
+                    data-tooltip="System Software PART I"
+                    aria-label="PREVIOUS: System Software PART I"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/03/21/Ballkid/"
+                    data-tooltip="Ballkid Vol.1"
+                    aria-label="NEXT: Ballkid Vol.1"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Estus</h4>
+        
+            <div id="about-card-bio"><p>Fun things <del>never</del> always stops.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Student</p>
+
+            </div>
+        
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/Ess/0_t.png');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-yb3zostooymjozqpjlvijhvzw0bdaljwvcvx0fhqdpyvq6aviyzwgfjkfjkw.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

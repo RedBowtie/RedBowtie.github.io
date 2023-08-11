@@ -1,0 +1,528 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Amaurot Ch.">
+    <title>Create Personal Network with Tailscale - Amaurot Ch.</title>
+    <meta name="author" content="Estus">
+    
+    
+        <link rel="icon" href="https://upload.cc/i1/2021/05/18/lSCp1v.png">
+    
+    
+        
+            <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png"},"articleBody":"\n\nWhy I do thisCannot sure since when have I had this idea of connecting all my personal computers together. Maybe it’s because I wanna remote my comupter, or pass through resources on my NAS, etc. The demand is there, but not quite strong.\nIn the past the most stable way was to ask for a public IP from ISP, or, some solution as zerotier, then rent a server as bridge to . However, these two method have some security issues, or potential ones. I had limited attention on this and I don’t wanna change some settings then jsut got hacked. That would be bad.\nAnd one day I asked two of my friends who are acquainted with networks, they suggested innernet, tailscale, netmaker and wireguard. Among them, tailscale is the most convenient solution and works fine even without bridge server.\nAnd, official guides are very helpful, which can be seen here\nInstallationAs tailscale based on open source WireGuard protocal, and even has GUI, supports variety of environment, installation may be simple as you want, download packages or using command line. both are OK.\nlinks are here \n\nBinding MachinesTake GUI as example. When you login, the next step would be asking you if you need to add it into your network. And for CLI version, it needs to set keys, but no loigin required.\nBy default, the authorization cycle of each machine is set to 180 days, which can be changed in the settings device management, also, you can turn on device approval for futher protection.\n\n\nMaybe you would think that 180 is still to short, then for any individual machine, you can disable expiry in Machines tab. Then you can see Expiry disabled\nTestAs all similar services do, any joined machine would be assigned with a unique IP address (not only v4, but also v6). That’s how you could access other devices in your personal network. Considering my experience, using v6 when available is the best choice.\nThe simplest way to test is to use ping\nAs exposing  IP add. is not safe, so jump to the conclusion.\nUnder exact same LAN, the average latency would be 30ms. The numbers increase and then reverse to small ones like 2ms. Which looks really strange, this could be my router behavior.\nOnto a more practical approach, two of the devices are ipad/Mac using China Unicom cell data, and one is my NAS using wired network from the same ISP.  Ipad used Microsoft RDP to control my NAS, when connection stablized, the lag was incredibly acceptable. On the Mac side, avg. ping requires 200ms. \nAstonishing!\nSubnet RoutersTBC..\nPotential ProblemsGUI version of Tailscale uses VPN approach and which, surely conflicts with my regular proxy.\n","dateCreated":"2023-08-03T20:10:00+08:00","dateModified":"2023-08-03T21:37:17+08:00","datePublished":"2023-08-03T20:10:00+08:00","description":"Emm, simple but enough.","headline":"Create Personal Network with Tailscale","image":["1.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://redbowtie.github.io/2023/08/03/tailscale/"},"publisher":{"@type":"Organization","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png","logo":{"@type":"ImageObject","url":"/Ess/lh.png"}},"url":"https://redbowtie.github.io/2023/08/03/tailscale/","keywords":"Networks","thumbnailUrl":"1.png"}</script>
+    <meta name="description" content="Emm, simple but enough.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Create Personal Network with Tailscale">
+<meta property="og:url" content="https://redbowtie.github.io/2023/08/03/tailscale/index.html">
+<meta property="og:site_name" content="Amaurot Ch.">
+<meta property="og:description" content="Emm, simple but enough.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://redbowtie.github.io/2023/08/03/tailscale/2.png">
+<meta property="og:image" content="https://redbowtie.github.io/2023/08/03/tailscale/3.png">
+<meta property="og:image" content="https://redbowtie.github.io/2023/08/03/tailscale/4.png">
+<meta property="article:published_time" content="2023-08-03T12:10:00.000Z">
+<meta property="article:modified_time" content="2023-08-03T13:37:17.983Z">
+<meta property="article:author" content="Estus">
+<meta property="article:tag" content="Networks">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://redbowtie.github.io/2023/08/03/tailscale/2.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://redbowtie.github.io/assets/images/Ess/lh.png"/>
+    
+    
+        <meta property="og:image" content="https://redbowtie.github.io/2023/08/03/tailscale/1.png"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://redbowtie.github.io/2023/08/03/tailscale/1.png"/>
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-4a47lwukh8khnoqxgkjhofoety2rdykli5sq4vv9v7xmmtg07euhkbfahoe5.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/"
+            aria-label=""
+        >
+            Amaurot Ch.
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+            <img class="header-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a
+                    href="/#about"
+                    aria-label="Read more about the author"
+                >
+                    <img class="sidebar-profile-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Estus</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>Fun things <del>never</del> always stops.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/RedBowtie"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/atom.xml"
+                            
+                            rel="noopener"
+                            title="RSS"
+                        >
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/links"
+                            
+                            rel="noopener"
+                            title="Links"
+                        >
+                        <i class="sidebar-button-icon fa fa-sign" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Links</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            Create Personal Network with Tailscale
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2023-08-03T20:10:00+08:00">
+	
+		    Aug 03, 2023
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Tweak/">Tweak</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <!--excerpt--></p>
+<h1 id="table-of-contents">Table of Contents</h1><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Why-I-do-this"><span class="toc-text">Why I do this</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Installation"><span class="toc-text">Installation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Binding-Machines"><span class="toc-text">Binding Machines</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Test"><span class="toc-text">Test</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Subnet-Routers"><span class="toc-text">Subnet Routers</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Potential-Problems"><span class="toc-text">Potential Problems</span></a></li></ol>
+<h2 id="Why-I-do-this"><a href="#Why-I-do-this" class="headerlink" title="Why I do this"></a>Why I do this</h2><p>Cannot sure since when have I had this idea of connecting all my personal computers together. Maybe it’s because I wanna remote my comupter, or pass through resources on my NAS, etc. The demand is there, but not quite strong.</p>
+<p>In the past the most stable way was to ask for a public IP from ISP, or, some solution as <code>zerotier</code>, then rent a server as bridge to . However, these two method have some security issues, or potential ones. I had limited attention on this and I don’t wanna change some settings then jsut got hacked. That would be bad.</p>
+<p>And one day I asked two of my friends who are acquainted with networks, they suggested <code>innernet</code>, <code>tailscale</code>, <code>netmaker</code> and <code>wireguard</code>. Among them, <code>tailscale</code> is the most convenient solution and works fine even without bridge server.</p>
+<p>And, official guides are very helpful, which can be seen <a target="_blank" rel="noopener" href="https://tailscale.com/kb/start/">here</a></p>
+<h2 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h2><p>As <code>tailscale</code> based on open source <code>WireGuard</code> protocal, and even has GUI, supports variety of environment, installation may be simple as you want, download packages or using command line. both are OK.</p>
+<p>links are <a target="_blank" rel="noopener" href="https://tailscale.com/download/">here</a> </p>
+<p><img src="2.png" alt="LINKS"></p>
+<h2 id="Binding-Machines"><a href="#Binding-Machines" class="headerlink" title="Binding Machines"></a>Binding Machines</h2><p>Take GUI as example. When you login, the next step would be asking you if you need to add it into your network. And for CLI version, it needs to set keys, but no loigin required.</p>
+<div class="alert success no-icon"><p>By default, the authorization cycle of each machine is set to 180 days, which can be changed in the settings device management, also, you can turn on device approval for futher protection.</p>
+</div>
+<p><img src="3.png" alt="demo"></p>
+<p>Maybe you would think that 180 is still to short, then for any individual machine, you can disable expiry in <code>Machines</code> tab. Then you can see <code>Expiry disabled</code><br><img src="4.png" alt="show"></p>
+<h2 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h2><p>As all similar services do, any joined machine would be assigned with a unique IP address (not only v4, but also v6). That’s how you could access other devices in your personal network. Considering my experience, using v6 when available is the best choice.</p>
+<p>The simplest way to test is to use <code>ping</code></p>
+<p>As exposing  IP add. is not safe, so jump to the conclusion.</p>
+<p>Under exact same LAN, the average latency would be <code>30ms</code>. The numbers increase and then reverse to small ones like 2ms. Which looks really strange, this could be my router behavior.</p>
+<p>Onto a more practical approach, two of the devices are ipad/Mac using China Unicom cell data, and one is my NAS using wired network from the same ISP.  Ipad used Microsoft RDP to control my NAS, when connection stablized, the lag was incredibly acceptable. On the Mac side, avg. ping requires <code>200ms</code>. </p>
+<p><strong>Astonishing!</strong></p>
+<h2 id="Subnet-Routers"><a href="#Subnet-Routers" class="headerlink" title="Subnet Routers"></a>Subnet Routers</h2><p>TBC..</p>
+<h2 id="Potential-Problems"><a href="#Potential-Problems" class="headerlink" title="Potential Problems"></a>Potential Problems</h2><div class="alert success no-icon"><p>GUI version of Tailscale uses VPN approach and which, surely conflicts with my regular proxy.</p>
+</div>
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Networks/" rel="tag">Networks</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2023/08/03/Log/"
+                    data-tooltip="Blog update logs"
+                    aria-label="PREVIOUS: Blog update logs"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2023/06/28/beginAgain/"
+                    data-tooltip="Begin, again"
+                    aria-label="NEXT: Begin, again"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="Table of Contents">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2023 Estus. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2023/08/03/Log/"
+                    data-tooltip="Blog update logs"
+                    aria-label="PREVIOUS: Blog update logs"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2023/06/28/beginAgain/"
+                    data-tooltip="Begin, again"
+                    aria-label="NEXT: Begin, again"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="Table of Contents">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Estus</h4>
+        
+            <div id="about-card-bio"><p>Fun things <del>never</del> always stops.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Student</p>
+
+            </div>
+        
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/Ess/0_t.png');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-yb3zostooymjozqpjlvijhvzw0bdaljwvcvx0fhqdpyvq6aviyzwgfjkfjkw.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

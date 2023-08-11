@@ -1,0 +1,908 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Amaurot Ch.">
+    <title>Computer Vision PART I - Amaurot Ch.</title>
+    <meta name="author" content="Estus">
+    
+    
+        <link rel="icon" href="https://upload.cc/i1/2021/05/18/lSCp1v.png">
+    
+    
+        
+            <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png"},"articleBody":"I have complicated feelings about CV \nOnly because that the previous courses are more detailed on the general view, hope this part may change a aspect. I wish to know more about real implementation, rather than well-packaged MATLAB function.\nLec 1. IntroMore topic than ever.\nThe part for segmentation is earlier while in practice, it seems regular.\nAnd again with many detailed requirements on report.\nDistance measurementDisparity map: for each pixel in the left picture with coordinates $(x_0,y_0)$, a pixel is searched for in the right picture with coordinates $(x_0-d,y_0)$ .\n\nZ  - distance\n\nf - focal length\n\nL - base length\n\nD - disparity\n\nx’ and x’’ - coordinates of the object in the image plane in the right and left pictures of the stereo pair, respectively.\n\nZ=\\frac{f\\cdot L}{x'-x''}=\\frac{f\\cdot L}{d}\n\n\nSome packages and notationsNo need to recite I suppose, nothing particular.\n\nLec 2. SegmentationScoping\nSelection of connected areas on binary images\nNeighbourhood:\nCoss : 4-connectivity\nSquare: 8-connectivity\n\n\n\n\n\nThe connected area of the image is the area (a set of points):\n\nall points of which have the same value;\nbetween any two points from the given area there is a continuous path consisting of points that also belong to the given area and are “neighbors” at the same time.\n\nAvailable algo for selecting\nForest fire (Y&amp;U collision forms possible).\nTwo pass algo (avoid collision)\n\nSegmentationDividing an image into non-overlapping areas, each of which is represented by a color or texture of the same type.\nR – is the entire area of the frame. Segmentation is the process of partitioning R into such a setofconnectedregions 𝑅! ,𝑖=1,…,𝑛,thatthefollowingbasicconditionsaremetfor them:\n\n$R=\\cup R_{i=1,\\dots,n}$ – splitting areas completely cover the frame;\n$R_i\\cap R_j=\\phi,\\forall i\\ne j$ – the partitioning areas do not intersect in pairs;\n$Pred(𝑅_i) = 𝑇𝑅𝑈𝐸, 𝑖 = 1, … , 𝑛$, where Pred(𝑅) is the Boolean homogeneity predicate of the area;\n$Pred(𝑅_i\\cup R_j)=FALSE,\\forall i\\ne j $ – the pairwise union of any two regions of the given partition does not satisfy the same homogeneity condition.\n\nMerging areas:\n\nPerform presegmentation of the image into “starting” areas using a non- iterative (single) method.\n\nDetermine the criterion for the merging of two neighboring regions.\n\nIteratively find and merge all pairs of neighboring regions that satisfy the\nmerge criterion.\n\nIf no pair of candidates for union is found, stop and exit the algorithm.\n\n\nSplitting of regions\n\nThe partitioning begins with the representation of the entire image as a simple area, which does not always meet the uniformity condition.\n\nDuring the segmentation process, the current areas of the image are sequentially split in accordance with the specified uniformity conditions.\nThe methods of merging and splitting areas do not always lead to the same segmentation results, even if they use the same homogeneity criterion.\n\n\nBasic Image Segmentation Methods\nThreshold image segmentation by brightness levelsThe main issue is the definition of the segmentation threshold.\n\nRange Threshold SegmentationInstead of threshold, we use a range to discriminate.\n\nMultithreshold segmentationInstead of single range, we use multiple ones.\n\nk-means segmentation algorithm\n1. Specify the number of classes k into which the image should be divided. All pixels are considered as a set of vectors $x_i,\\ i=1,\\dots,p$.\n2. Determine k-vectors 𝑚”,𝑗=1,…,𝑘, which are declared as initial centers of clusters. Choose the values 𝑚” , 𝑗 = 1, … , 𝑘 (for example, randomly).\n3. Update the values of the mean vectors 𝑚”,𝑗=1,…,𝑘,(clustercenters).For this:\n* calculate the distance from each $x_i,\\ i=1,\\dots,p$ to each $m_j,\\ j=1,\\dots,k$\n* assign each $x_i$ to the cluster j*, the distance to the center of which mj* is minimal\n* recalculate the average values mj for all clusters\n4. Repeat 2,3 until the cluster centers stop changing.\n\n\nWeber segmentation algoSee page 17/39\nWeber principle: a person does not distinguish between gray levels between [𝐼(𝑛),𝐼(𝑛) +𝑊(𝐼(𝑛))].\n\nIterative algo of VezhnevetsSee page 19/39\n\nSegmentation by skin colorAdvantages: skin color is independent of face orientation; pixel color analysis is computationally efficient.\nTask: finding a criterion for evaluating the proximity of the color of each pixel to the skin tone.\nDevelopment of skin color model:\n\nAccumulation of training data using images that indicate “skin” and “non-skin” areas.\nBased on this data, statistics of skin tones are accumulated.\n\nProcessing of the obtained statistics and selection of skin color model parameters for subsequent use; selection of criteria for evaluating whether pixels belong to the “skin” area;\n\nImage processing using the obtained criteria.\n\n\n\n\nTexture SegmentationApproaches to texture segmentation:\nStatistical - allows you to characterize the texture of the area as smooth, rough and grainy.\nStructural - define and describe the relative position of the simplest repeating image elements, for example, segments of parallel lines passing at a constant step, cells on a chessboard.\n\nSpectral.\n\n\nSegmentation by the morphological watershed methodA grayscale image is a digital terrain model, where the brightness values are heights relative to a certain level, i.e. image is a matrix of heights.\n\nIf it rains on such an area, many pools are formed. Water fills small pools, then overflows from overflowing pools and the pools combine into larger pools according to the heights of the water level.\nThe places where pools merge are marked as watershed lines. As a result, the entire area may be flooded.\nThe result of segmentation depends on the moment when the water supply stops. If the process is stopped early, the image will be segmented into small areas, if it is stopped late, into very large ones.\n\nArea DetectorsIBR detector (Intensity-extrema based regions)It is necessary to go from the points of the local brightness extremum 𝐼$ along the rays, calculating some value 𝑓.\nAs soon as the peak of the value 𝑓 is found, it is necessary to stop. This point will be the boundary of the region.\n\nf(t)=\\frac{|I(t)-I_0|}{\\frac{1}{t}\\int_0^t|I(t)-I_0|dt}The areas on a pair of similar images may differ, so we describe ellipses around them. If the ellipses are turned into circles, then we get complete similarity up to rotation.\nMSER detector (Maximally Stable Extreme Regions)Solves the problem of invariance of keypoints when scaling.\nMSER detector algorithm:\n\nSort the set of all image pixels in ascending/descending order of intensity.\n\nConstruction of a pyramid of connected components. For each pixel of the sorted set, perform the following sequence of actions:\n\nupdating the list of points included in the component;\n\nupdating the areas of the next components, as a result of which the pixels of the\nprevious level will be a subset of the pixels of the next level.\n\n\n\nFor all components, search for local minima (we find pixels that are present in this component, but are not part of the previous ones). The set of local level minima corresponds to the extreme region in the image.\n\n\nLec 3.  Hough Transform1.  Voting points methodIdea: finding locus of points satisfying the given criteria, then find the intersection of locus\nLocus is a set of points whose location satisfies the specified conditions\n\n\nGeneralization of the method:\n\nPoints of each circle “voted” in favor of the possible position of the vertex\n\nThere are two “votes” at the intersection of the circles; in this case, this\npoint “won”, since it gained the maximum number of “votes”\n\nThe rest of the points of the plane received zero or one “ vote ”\n\nThe shape of the “voting curve” is determined by a priori knowledge about the voting object (in the example, the sides of the triangle are given)\n\n\n\nvertex is located in the circles intersection area)\n\n\n\n• Task: detection of a circle of known radius in a binary set of points\n• Solution:\n\nThe set of centers of all circl es of radius 𝑅 passing through each point forms a circle of radius 𝑅 around that point\n\n\nThe locus of the points is a circle of the same size with the center at\nthe voting point\n\nThe best solution for finding the position of the center of a circle\nwith given radius is the intersection point of the maximum number of voting circles\n\n\n2. Hough transform for stright linesThe classic Hough Transform (HT) was proposed in 1962 for finding lines in a binary\nimage.\nIdea: convert the set of points to a parameter space\n\nLet a straight line can be defined as\n𝑌 = 𝑘𝑋 + 𝑏 \n𝑋cosθ + 𝑌sinθ = ρ\n\nSince a straight line on a plane is characterized by two parameters, the parameter space has the dimension 𝑛 = 2\n\nThe classical Hough transform uses parameters (𝜌, 𝜃)\n\nLet the contour image be the set of points (𝑥, 𝑦) in the original space 𝐸 = (𝑋, 𝑌)\n\nThe set of lines passing through each point (𝑥, 𝑦) can be depicted as a set of points\n(𝜌, 𝜃) in the space {𝜌, 𝜃}\n\nThe function of mapping a point in Hough space is called a “response function”\n\n\n\n\nGenera idea of the method\nFor each point of the parameter space, the number of votes given for it is summed up (the number of points in the source image space that generate response in the parameter space that passes through a given point (𝜌, 𝜃))\nEach point of the source space generates a sinusoidal response function in the parameter space\nAny two sinusoids in the parameter space intersect at the point (𝜌, 𝜃) only if the point of the source image space which generated them lie on a straight line\n\n\nProperties of the Hough transform\nThe Hough transform is invariant to translation, scaling, and rotation\nSince straight lines under any projective transformations of three-dimensional space always pass only into straight lines (in the degenerate case, into points), so the Hough transform makes it possible to detect lines invariantly not only to planar affine transformations, but also to the group of projective transformations in 3D space\n\nTransformation efficiency\nUnder projective transformations, the straight line always turns into a straight line; therefore, the parameters space of low dimension (𝑛 = 2) is formed\nEach pixel of the source image is processed only once, and further calculations are performed only for pixels that carry useful information (i.e., outline). The fewer the number of pixels that have the useful information, the higher is the computational efficiency\n\nDisadvantages of Hough transform:\nManual selection of phase space sampling\nNoise leads to blurring of maxima\nEvenly spaced points can lead to random peaks in the parameters space\nMissing parts of source image data results in blurry values in the accumulator\n\nOptimization of the Hough transform\nFilter the unnecessary features: for lines it is worth taking points at the\nedges only with a large gradient\n\nChoose the correct grid resolution (sampling step): Too rough: several close lines will vote for same cell Too shallow: can skip lines because noisy points will vote for different cells\n\nTo beter find the maxima, you can smooth the values in the accumulator\n\nIt is necessary to mark the votes: which point corresponds to which line\n\n\nIn order not to enumerate all possible angles, the effect of the gradient can be taken into an account. Since when detecting the contour, the value of the gradient has already been calculated\nMethods for parametrizing the straight linesAs is known, images in digital systems are defined on a discrete rectangular grid, which allows only some appropriate discrete parameterization of the family of straight lines.\nConsider the natural set of straight lines generated by an integer grid 𝑁×𝑁 of points containing     $𝑁^2$ elements.\nAny two different points of the lattice define a line, so the size of the set will be$𝑁^2(𝑁^2−1)$ lines.\nMany lines will be defined multiple times by their different line segments if they contain more than two points of the original grid.\nWays to parameterize the Hough transform1. Perimeter points (𝒎, 𝒏)\n\nLines are described by a pair of end points lying on the perimeter of the 𝑁×𝑁 grid.\n\nObviously, the number of points will be equal to 4𝑁 or (taking into account\nsymmetry) 1/2 Q 4𝑁×4𝑁 = 8𝑁$ lines\n\nSince a quarter of these points lie on the same straight line (side of the square), the\nfinal size of the parameter array will be 6𝑁$ Advantage: Application in the case of an image divided into smaller areas makes it easy to connect lines passing through several such areas, since they close to each other along the perimeter Disadvantage: information about the angular position of straight lines is not explicitly stored\n\n\n2. Perimeter point and angle 𝒂, 𝒏\n\nOne point of intersection of the straight line with the grid perimeter 𝑛(0 ≤ 𝑛 &lt; 𝑁) is used\nandanangledefinedbytheperimeterpoint𝑎 (–𝑁+1≤𝑎≤𝑁−1) sothat straight line passing through the grid center and point 𝑎 is parallel to a given one\nThe accumulator array contains 4$𝑁^2$ elements\n\n3. Tilt and offset 𝒂, 𝒅\n\nThe angle 𝑎 is defined by the direction of a line from the grid center to a perimeter point\n\nThe displacement of the line vertically or horizontally from the center is fixed using the distance from the center to the intersection of the straight line with the 𝑂у or 𝑂х axes\n\nGenerates 3$𝑁^2$ or 4$𝑁^2$ accumulator cells\n\nThe 𝑎, 𝑑 -parametrization is closely related to the (ρ, θ) - parametrization and with\nthe parameters of the equation 𝑦 = 𝑎𝑥 + 𝑏, where 𝑎 is interpreted as the slope of a straight line\n\n\n3. Hough transform for circles\nThe described algorithm can work in exactly the same way when to detect any curve that can be described on the plane by a finite number of parameters: 𝐹 =$(𝑎_1,𝑎_2,…,𝑎_n,𝑥,𝑦)$\n\nIn the previously considered problem of finding circles of a given radius 𝑅, there was\na family of curves defined by a two-parameter equation $(𝑥 − 𝑥_0)^2+(𝑦 − 𝑦_0)^2 = 𝑅^2$\n\nIt is necessary to search for the maximum of the accumulator function 𝐴(𝑥, 𝑦) in the\nparameter space (𝑥, 𝑦)\n\nIn this case, the parameter space practically coincides with the source image one\n(𝑥, 𝑦)\n\n\n4. Hough transform for an arbitrary shapeAlgorithm for finding circles of a given radius on halftone images\nDetect edge pixels that surround the perimeter of an object. A gradient operator can be used, such as the Sobel operator\n\n\nVoting contour points are ones with a high gradient\n\nFor each detected edge pixel, an estimate of the position and\norientation of the contour is used to estimate the center of a circle of radius 𝑅 by moving a distance 𝑅 from the edge pixel in the direction of the normal to the contour (in the direction of the gradient vector).\n\nRepeating this operation for each edge pixel will find a set of positions of the possible center points, which can be averaged to determine the exact location of the center\n\nIf the radius of the circle is unknown or is varying, it is necessary to include 𝑅 as an additional parameter in the parametric accumulator space\n\nThe local maxima search procedure should determine the radius as well as the position of the center by considering changes along the third dimension of the parametric space\n\nIf the size of the detected circle is out of interest and you only want to find its center, then you may not increase the dimension of the parameter space\n\nFor every possible direction to the “center”, the contour point votes with a ray in that direction.\n\nAs a result, all possible positions of the “center” will be involved at any scale of the object, which will allow searching for circles regardless of their radius\n\n\n\nAfter finding the potential centers of the circles, it is necessary to find the radius of the circles with the centers at the found points\n\nAnalyzing the accumulator function when searching for geometric primitives\nDirect search for a fixed number of local maxima (one global maximum) in the parameter space. There are various ways to find such maxima\n\nThreshold segmentation of the accumulator function and subsequent analysis of connected regions of the parameter space\n\n\n\nIf we chose the threshold equal to be equal to the value of the minimum of local maxima, then the second method will give the same result with the first one\n\nThe problem of the optimal choice of the threshold for a particular image remains\n\n\nShort lines (curve segments) will give relatively low peaks in accumulator function if compared to long ones. They will only be detected if it is known to be present in the image prior to setting the threshold\nHow to avoid thresholding?\n\nAt each stage of the analysis, we search for single global maximum of the accumulator function\nAfter finding the global maximum we subtract the income of all source image points that resulted in this line from the parameter space\nThen start searching for the next global maximum The result: a greater sensitivity to short lines and robustness to noise\n\nSummary\nHough transform modifications provide invariant detection of geometric primitives and objects in the image with a high degree of noise immunity and significant accuracy in determining the location and orientation parameters\nThe described algorithms do not detect grayscale objects themselves, but their outlines. Objects that do not have a well-defined outline cannot be detected using locus\n\nLec 4. Image FeaturesMarr Paradigm.Image analysis goes from «iconic» data representation to «symbolic» representation\nSteps of image processing:\nImage preprocessing\nPrimary image segmentation\nDetecting the geometric structure\nDetecting of the relative structure and semantics of the scene\n\nTypes of possible featuresPoint, edge, erea, line, corner\nI. Feature pointsA feature point 𝑝 of an image 𝐼 is a point with a characteristic (special) neighborhood. This point different from all other points in a certain neighborhood\nII. Feature point detectorsCorner DetectorsCorners are well repeatable and distinguishable. The main property of a corner: the image gradient has two dominant directions in the area around the corner.\nMoravec DetectorMeasure the change in pixel intensity 𝐼 𝑥, 𝑦 by shifting a square window centered in 𝑥, 𝑦 to one pixel in each of eight principal directions (2 horizontal, 2 vertical and 4 diagonal).\nSigma Filter\nh(x,y) = H*f(x,y)where f - source image\nH - operator of feature detection\n$*$ - operation of applying the operator\nFAST DetectorFeatures from Accelerated Segment TestFor each pixel 𝑃 of the image a neighbouring Bresenham circle around this pixel is considered. In case if 7x7 kernel is used, then it would contain 16 pixels.\nA pixel is considered to be a corner point if it has 𝑁 adjacent pixels on the circle whose intensities satisfy the state condition 𝑑 or 𝑏.\nHarris DetectorLet the variation in image intensities depend on the shift (𝑢, 𝑣). It can be evaluated according to the formula:\n\nE(u,v)=\\sum w(x,y)(I(x+u,y+v)-I(x,y))^2where 𝐼 𝑥,𝑦 – intensity in a point 𝑥,𝑦 , 𝑤(𝑥, 𝑦) – window function, 𝐼(𝑥+𝑢,𝑦+𝑣) – shift of intensity.\n\nThe window function 𝑤 (𝑥, 𝑦) can be defined either in a binary form or in the form of a Gaussian function.\n\nBy expanding the difference in intensities squared into a second-order Taylor series at the point (𝑥, 𝑦) (bilinear interpolation) for small shifts, we obtain the following approximation\n\n\nAlgorithm:\nCalculate the gradient of the image in each pixel.\n\nCalculate the matrix 𝐌 from the window around each pixel.\n\nCalculate the response of the corner 𝐑.\n\nCut off weak corners at threshold 𝐑.\n\nFind the local maxima of the response function in a neighborhood\nof a given radius.\n\nChoose 𝑵 the strongest local maxima.\n\n\nForstner Detector\nR=\\frac{det(M)}{tr(M)}Detector Invariance• Invariance Property – If apply a geometric (affine) or photometric (affine intensity change 𝐼 → 𝑎𝐼 + 𝑏) transformation to the image, then the detector must find the same set of points.\n\nLight invariance:\n\n\nTo light shifting (𝐼 → 𝐼 + 𝑏);\nTo light scaling (𝐼 → 𝑎𝐼).\n\n\nRotation Invariance\nScaling Invariance\n\nIII. Blob detectorsLoG (Laplacian of Gaussian) Detector\nBlobs are blob-shaped groups of connected pixels that share a common property and are different from surrounding regions\nBlob centers are feature points\nBlobs are described by 4 parameters\ncenter coordinates (x, y) \nscale\ndirection\n\n\n\nGaussian is a Gauss function which are used to blur images.\n$f$ - edge\n$\\frac{d}{dx}g$ - Derivative of Gaussian\n$f*\\frac{d}{dx}g$ - Edge = maximum of derivative\n$f*\\frac{d^2}{dx^2}g$ - Edge = zero transition of the second derivative\n\n«Edge» is a burst of function\n\n«Blob» is a combination of two bursts\n\nThe magnitude of the Laplacian of Gaussian response reaches a\nmaximum in the center of the blob if the size of the Laplacian “corresponds” to the size of the blob\n\nSearch for blob characteristic size: convolution with Laplacian at several scales and search for maximum response\n\nThe response of the Laplacian fades if zooming scale\n\nMultiscale blob detector: convolution of a blurry image using the normalized Laplace filter at several scales and the choice of scale with the maximum Laplacian response.\n\n\nDoG (Difference of Gaussians)Method for the approximate calculation of the Laplacian of a Gaussian: the search for the difference of two Gaussians with different scales:\n\nDoG=G(x,y,k\\sigma)-G(x,y,\\sigma)Harris-Laplace DetectorSelecting the corners in the image, considering the characteristic size: looking for points that maximize the response of the Harris corner in the image and the Laplacian response in scale.\nIV. Scale-invariant feature point detector","dateCreated":"2022-03-23T18:32:00+08:00","dateModified":"2022-03-27T17:18:24+08:00","datePublished":"2022-03-23T18:32:00+08:00","description":"I have complicated feelings about CV","headline":"Computer Vision PART I","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://redbowtie.github.io/2022/03/23/ComputerVision_I/"},"publisher":{"@type":"Organization","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png","logo":{"@type":"ImageObject","url":"/Ess/lh.png"}},"url":"https://redbowtie.github.io/2022/03/23/ComputerVision_I/","keywords":"CV, MATLAB"}</script>
+    <meta name="description" content="I have complicated feelings about CV">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Computer Vision PART I">
+<meta property="og:url" content="https://redbowtie.github.io/2022/03/23/ComputerVision_I/index.html">
+<meta property="og:site_name" content="Amaurot Ch.">
+<meta property="og:description" content="I have complicated feelings about CV">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-03-23T10:32:00.000Z">
+<meta property="article:modified_time" content="2022-03-27T09:18:24.906Z">
+<meta property="article:author" content="Estus">
+<meta property="article:tag" content="CV">
+<meta property="article:tag" content="MATLAB">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://redbowtie.github.io/assets/images/Ess/lh.png"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-4a47lwukh8khnoqxgkjhofoety2rdykli5sq4vv9v7xmmtg07euhkbfahoe5.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/"
+            aria-label=""
+        >
+            Amaurot Ch.
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+            <img class="header-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a
+                    href="/#about"
+                    aria-label="Read more about the author"
+                >
+                    <img class="sidebar-profile-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Estus</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>Fun things <del>never</del> always stops.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/RedBowtie"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/atom.xml"
+                            
+                            rel="noopener"
+                            title="RSS"
+                        >
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/links"
+                            
+                            rel="noopener"
+                            title="Links"
+                        >
+                        <i class="sidebar-button-icon fa fa-sign" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Links</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            Computer Vision PART I
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2022-03-23T18:32:00+08:00">
+	
+		    Mar 23, 2022
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Term6/">Term6</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>I have complicated feelings about CV <span id="more"></span></p>
+<p>Only because that the previous courses are more detailed on the general view, hope this part may change a aspect. I wish to know more about real implementation, rather than well-packaged MATLAB function.</p>
+<h2 id="Lec-1-Intro"><a href="#Lec-1-Intro" class="headerlink" title="Lec 1. Intro"></a>Lec 1. Intro</h2><p>More topic than ever.</p>
+<p>The part for segmentation is earlier while in practice, it seems regular.</p>
+<p>And again with many detailed requirements on report.</p>
+<h2 id="Distance-measurement"><a href="#Distance-measurement" class="headerlink" title="Distance measurement"></a>Distance measurement</h2><h3 id="Disparity-map"><a href="#Disparity-map" class="headerlink" title="Disparity map:"></a><strong>Disparity map:</strong></h3><p> for each pixel in the <em>left picture</em> with coordinates $(x_0,y_0)$,<br> a pixel is searched for in the right picture with coordinates $(x_0-d,y_0)$ .</p>
+<ul>
+<li><p>Z  - distance</p>
+</li>
+<li><p>f - focal length</p>
+</li>
+<li><p>L - base length</p>
+</li>
+<li><p>D - disparity</p>
+</li>
+<li><p>x’ and x’’ - coordinates of the object in the image plane in the right and left pictures of the stereo pair, respectively.</p>
+<script type="math/tex; mode=display">
+Z=\frac{f\cdot L}{x'-x''}=\frac{f\cdot L}{d}</script></li>
+<li></li>
+</ul>
+<h2 id="Some-packages-and-notations"><a href="#Some-packages-and-notations" class="headerlink" title="Some packages and notations"></a>Some packages and notations</h2><p>No need to recite I suppose, nothing particular.</p>
+<hr>
+<h2 id="Lec-2-Segmentation"><a href="#Lec-2-Segmentation" class="headerlink" title="Lec 2. Segmentation"></a>Lec 2. Segmentation</h2><h3 id="Scoping"><a href="#Scoping" class="headerlink" title="Scoping"></a>Scoping</h3><ul>
+<li>Selection of connected areas on binary images<ul>
+<li>Neighbourhood:<ul>
+<li>Coss : 4-connectivity</li>
+<li>Square: 8-connectivity</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>The connected area of the image is the area (a set of points):</p>
+<ul>
+<li>all points of which have the same value;</li>
+<li>between any two points from the given area there is a continuous path consisting of points that also belong to the given area and are “neighbors” at the same time.</li>
+</ul>
+<h4 id="Available-algo-for-selecting"><a href="#Available-algo-for-selecting" class="headerlink" title="Available algo for selecting"></a>Available algo for selecting</h4><ol>
+<li>Forest fire (Y&amp;U collision forms possible).</li>
+<li>Two pass algo (avoid collision)</li>
+</ol>
+<h4 id="Segmentation"><a href="#Segmentation" class="headerlink" title="Segmentation"></a><strong>Segmentation</strong></h4><p>Dividing an image into non-overlapping areas, each of which is represented by a color or texture of the same type.</p>
+<p><em>R</em> – is the entire area of the frame. Segmentation is the process of partitioning <em>R</em> into such a setofconnectedregions 𝑅! ,𝑖=1,…,𝑛,thatthefollowingbasicconditionsaremetfor them:</p>
+<ul>
+<li>$R=\cup R_{i=1,\dots,n}$ – splitting areas completely cover the frame;</li>
+<li>$R_i\cap R_j=\phi,\forall i\ne j$ – the partitioning areas do not intersect in pairs;</li>
+<li>$Pred(𝑅_i) = 𝑇𝑅𝑈𝐸, 𝑖 = 1, … , 𝑛$, where Pred(𝑅) is the Boolean homogeneity predicate of the area;</li>
+<li>$Pred(𝑅_i\cup R_j)=FALSE,\forall i\ne j $ – the pairwise union of any two regions of the given partition does not satisfy the same homogeneity condition.</li>
+</ul>
+<p><strong>Merging areas:</strong></p>
+<ul>
+<li><p>Perform presegmentation of the image into “starting” areas using a non- iterative (single) method.</p>
+</li>
+<li><p>Determine the criterion for the merging of two neighboring regions.</p>
+</li>
+<li><p>Iteratively find and merge all pairs of neighboring regions that satisfy the</p>
+<p>merge criterion.</p>
+</li>
+<li><p>If no pair of candidates for union is found, stop and exit the algorithm.</p>
+</li>
+</ul>
+<p><strong>Splitting of regions</strong></p>
+<ul>
+<li><p>The partitioning begins with the representation of the entire image as a simple area, which does not always meet the uniformity condition.</p>
+</li>
+<li><p>During the segmentation process, the current areas of the image are sequentially split in accordance with the specified uniformity conditions.</p>
+<p>The methods of merging and splitting areas do not always lead to the same segmentation results, even if they use the same homogeneity criterion.</p>
+</li>
+</ul>
+<h3 id="Basic-Image-Segmentation-Methods"><a href="#Basic-Image-Segmentation-Methods" class="headerlink" title="Basic Image Segmentation Methods"></a>Basic Image Segmentation Methods</h3><ol>
+<li><h4 id="Threshold-image-segmentation-by-brightness-levels"><a href="#Threshold-image-segmentation-by-brightness-levels" class="headerlink" title="Threshold image segmentation by brightness levels"></a>Threshold image segmentation by brightness levels</h4><p><strong>The main issue</strong> is the definition of the segmentation threshold.</p>
+</li>
+<li><h4 id="Range-Threshold-Segmentation"><a href="#Range-Threshold-Segmentation" class="headerlink" title="Range Threshold Segmentation"></a>Range Threshold Segmentation</h4><p>Instead of threshold, we use a range to discriminate.</p>
+</li>
+<li><h4 id="Multithreshold-segmentation"><a href="#Multithreshold-segmentation" class="headerlink" title="Multithreshold segmentation"></a>Multithreshold segmentation</h4><p>Instead of single range, we use multiple ones.</p>
+</li>
+<li><h4 id="k-means-segmentation-algorithm"><a href="#k-means-segmentation-algorithm" class="headerlink" title="k-means segmentation algorithm"></a>k-means segmentation algorithm</h4><blockquote>
+<p><strong>1. Specify the number of classes</strong> <em>k</em> into which the image should be divided. All pixels are considered as a set of vectors $x_i,\ i=1,\dots,p$.</p>
+<p><strong>2. Determine </strong>k<strong>-vectors </strong>𝑚”,𝑗=1,…,𝑘, which are declared as initial centers of clusters. Choose the values 𝑚” , 𝑗 = 1, … , 𝑘 (for example, randomly).</p>
+<p><strong>3. Update the values</strong> of the mean vectors 𝑚”,𝑗=1,…,𝑘,(clustercenters).For this:</p>
+<pre><code>* calculate the distance from each $x_i,\ i=1,\dots,p$ to each $m_j,\ j=1,\dots,k$
+* assign each $x_i$ to the cluster j*, the distance to the center of which mj* is minimal
+* recalculate the average values mj for all clusters
+</code></pre><p><strong>4.</strong> <strong>Repeat 2,3</strong> until the cluster centers stop changing.</p>
+</blockquote>
+</li>
+<li><h4 id="Weber-segmentation-algo"><a href="#Weber-segmentation-algo" class="headerlink" title="Weber segmentation algo"></a>Weber segmentation algo</h4><p>See page 17/39</p>
+<p><strong>Weber principle:</strong> a person does not distinguish between gray levels between [𝐼(𝑛),𝐼(𝑛) +𝑊(𝐼(𝑛))].</p>
+</li>
+<li><h4 id="Iterative-algo-of-Vezhnevets"><a href="#Iterative-algo-of-Vezhnevets" class="headerlink" title="Iterative algo of Vezhnevets"></a>Iterative algo of Vezhnevets</h4><p>See page 19/39</p>
+</li>
+<li><h4 id="Segmentation-by-skin-color"><a href="#Segmentation-by-skin-color" class="headerlink" title="Segmentation by skin color"></a>Segmentation by skin color</h4><p><strong>Advantages:</strong> skin color is independent of face orientation; pixel color analysis is computationally efficient.</p>
+<p><strong>Task:</strong> finding a criterion for evaluating the proximity of the color of each pixel to the skin tone.</p>
+<p><strong>Development of skin color model</strong>:</p>
+<ol>
+<li><p>Accumulation of training data using images that indicate “skin” and “non-skin” areas.</p>
+<p>Based on this data, statistics of skin tones are accumulated.</p>
+</li>
+<li><p>Processing of the obtained statistics and selection of skin color model parameters for subsequent use; selection of criteria for evaluating whether pixels belong to the “skin” area;</p>
+</li>
+<li><p>Image processing using the obtained criteria.</p>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="Texture-Segmentation"><a href="#Texture-Segmentation" class="headerlink" title="Texture Segmentation"></a>Texture Segmentation</h3><h4 id="Approaches-to-texture-segmentation"><a href="#Approaches-to-texture-segmentation" class="headerlink" title="Approaches to texture segmentation:"></a><strong>Approaches to texture segmentation:</strong></h4><ol>
+<li><strong>Statistical</strong> - allows you to characterize the texture of the area as smooth, rough and grainy.</li>
+<li><p><strong>Structural</strong> - define and describe the relative position of the simplest repeating image elements, for example, segments of parallel lines passing at a constant step, cells on a chessboard.</p>
+</li>
+<li><p><strong>Spectral.</strong></p>
+</li>
+</ol>
+<h4 id="Segmentation-by-the-morphological-watershed-method"><a href="#Segmentation-by-the-morphological-watershed-method" class="headerlink" title="Segmentation by the morphological watershed method"></a>Segmentation by the morphological watershed method</h4><p>A grayscale image is a digital terrain model, where the brightness values are heights relative to a certain level, i.e. image is a matrix of heights.</p>
+<ul>
+<li>If it rains on such an area, many pools are formed. Water fills small pools, then overflows from overflowing pools and the pools combine into larger pools according to the heights of the water level.</li>
+<li>The places where pools merge are marked as watershed lines. As a result, the entire area may be flooded.</li>
+<li>The result of segmentation depends on the moment when the water supply stops. If the process is stopped early, the image will be segmented into small areas, if it is stopped late, into very large ones.</li>
+</ul>
+<h3 id="Area-Detectors"><a href="#Area-Detectors" class="headerlink" title="Area Detectors"></a>Area Detectors</h3><h4 id="IBR-detector-Intensity-extrema-based-regions"><a href="#IBR-detector-Intensity-extrema-based-regions" class="headerlink" title="IBR detector (Intensity-extrema based regions)"></a>IBR detector (Intensity-extrema based regions)</h4><p>It is necessary to go from the points of the local brightness extremum 𝐼$ along the rays, calculating some value 𝑓.</p>
+<p>As soon as the peak of the value 𝑓 is found, it is necessary to stop. This point will be the boundary of the region.</p>
+<script type="math/tex; mode=display">
+f(t)=\frac{|I(t)-I_0|}{\frac{1}{t}\int_0^t|I(t)-I_0|dt}</script><p>The areas on a pair of similar images may differ, so we describe ellipses around them. If the ellipses are turned into circles, then we get complete similarity up to rotation.</p>
+<h4 id="MSER-detector-Maximally-Stable-Extreme-Regions"><a href="#MSER-detector-Maximally-Stable-Extreme-Regions" class="headerlink" title="MSER detector (Maximally Stable Extreme Regions)"></a>MSER detector (Maximally Stable Extreme Regions)</h4><p>Solves the problem of invariance of keypoints when scaling.</p>
+<p><strong>MSER detector algorithm</strong>:</p>
+<ol>
+<li><p>Sort the set of all image pixels in ascending/descending order of intensity.</p>
+</li>
+<li><p>Construction of a pyramid of connected components. For each pixel of the sorted set, perform the following sequence of actions:</p>
+<ul>
+<li><p>updating the list of points included in the component;</p>
+</li>
+<li><p>updating the areas of the next components, as a result of which the pixels of the</p>
+<p>previous level will be a subset of the pixels of the next level.</p>
+</li>
+</ul>
+</li>
+<li><p>For all components, search for local minima (we find pixels that are present in this component, but are not part of the previous ones). The set of local level minima corresponds to the extreme region in the image.</p>
+</li>
+</ol>
+<h2 id="Lec-3-Hough-Transform"><a href="#Lec-3-Hough-Transform" class="headerlink" title="Lec 3.  Hough Transform"></a>Lec 3.  Hough Transform</h2><h3 id="1-Voting-points-method"><a href="#1-Voting-points-method" class="headerlink" title="1.  Voting points method"></a>1.  Voting points method</h3><p><strong>Idea:</strong> finding locus of points satisfying the given criteria, then find the intersection of locus</p>
+<p><em>Locus is a set of points</em> <em>whose location satisfies the specified conditions</em></p>
+<blockquote>
+<ol>
+<li><p><strong>Generalization of the method:</strong></p>
+<ul>
+<li><p>Points of each circle “voted” in favor of the possible position of the vertex</p>
+</li>
+<li><p>There are two “votes” at the intersection of the circles; in this case, this</p>
+<p>point “won”, since it gained the maximum number of “votes”</p>
+</li>
+<li><p>The rest of the points of the plane received zero or one “ vote ”</p>
+</li>
+<li><p>The shape of the “voting curve” is determined by a priori knowledge about the voting object (in the example, the sides of the triangle are given)</p>
+</li>
+</ul>
+</li>
+<li><p>vertex is located in the circles intersection area)</p>
+</li>
+</ol>
+</blockquote>
+<p>• <strong>Task:</strong> detection of a circle of known radius in a binary set of points</p>
+<p>• <strong>Solution</strong>:</p>
+<ul>
+<li>The set of centers of all circl es of radius 𝑅 passing through each point forms a circle of radius 𝑅 around that point</li>
+</ul>
+<ul>
+<li><p>The locus of the points is a circle of the same size with the center at</p>
+<p>the voting point</p>
+</li>
+<li><p>The best solution for finding the position of the center of a circle</p>
+<p>with given radius is the intersection point of the maximum number of voting circles</p>
+</li>
+</ul>
+<h3 id="2-Hough-transform-for-stright-lines"><a href="#2-Hough-transform-for-stright-lines" class="headerlink" title="2. Hough transform for stright lines"></a>2. Hough transform for stright lines</h3><p><strong>The classic Hough Transform</strong> (HT) was proposed in 1962 for finding lines in a binary</p>
+<p>image.</p>
+<p><strong>Idea:</strong> convert the set of points to a parameter space</p>
+<ul>
+<li><p>Let a straight line can be defined as</p>
+<p>𝑌 = 𝑘𝑋 + 𝑏 </p>
+<p>𝑋cosθ + 𝑌sinθ = ρ</p>
+</li>
+<li><p>Since a straight line on a plane is characterized by two parameters, the parameter space has the dimension 𝑛 = 2</p>
+</li>
+<li><p>The classical Hough transform uses parameters (𝜌, 𝜃)</p>
+</li>
+<li><p>Let the contour image be the set of points (𝑥, 𝑦) in the original space 𝐸 = (𝑋, 𝑌)</p>
+</li>
+<li><p>The set of lines passing through each point (𝑥, 𝑦) can be depicted as a set of points</p>
+<p>(𝜌, 𝜃) in the space {𝜌, 𝜃}</p>
+</li>
+<li><p>The function of mapping a point in Hough space is called a “<em>response function</em>”</p>
+</li>
+</ul>
+<blockquote>
+<ul>
+<li><strong>Genera idea of the method</strong></li>
+<li>For each point of the parameter space, the number of votes given for it is summed up (<em>the number of points in the source image space that generate response in the parameter space that passes through a given point</em> (𝜌, 𝜃))</li>
+<li>Each point of the source space generates a sinusoidal response function in the parameter space</li>
+<li>Any two sinusoids in the parameter space intersect at the point <em>(</em>𝜌, 𝜃<em>)</em> only if the point of the source image space which generated them lie on a straight line</li>
+</ul>
+</blockquote>
+<h4 id="Properties-of-the-Hough-transform"><a href="#Properties-of-the-Hough-transform" class="headerlink" title="Properties of the Hough transform"></a><strong>Properties of the Hough transform</strong></h4><ul>
+<li>The Hough transform is i<strong>nvariant to translation, scaling, and rotation</strong></li>
+<li>Since straight lines under any projective transformations of three-dimensional space always pass only into straight lines (in the degenerate case, into points), so the Hough transform makes it possible to detect lines invariantly not only to planar affine transformations, but also to the group of projective transformations in 3D space</li>
+</ul>
+<h4 id="Transformation-efficiency"><a href="#Transformation-efficiency" class="headerlink" title="Transformation efficiency"></a><strong>Transformation efficiency</strong></h4><ol>
+<li>Under projective transformations, the straight line always turns into a straight line; therefore, the parameters space of low dimension (𝑛 = 2) is formed</li>
+<li>Each pixel of the source image is processed only once, and further calculations are performed only for pixels that carry useful information (i.e., outline). The fewer the number of pixels that have the useful information, the higher is the computational efficiency</li>
+</ol>
+<h4 id="Disadvantages-of-Hough-transform"><a href="#Disadvantages-of-Hough-transform" class="headerlink" title="Disadvantages of Hough transform:"></a><strong>Disadvantages of Hough transform:</strong></h4><ol>
+<li>Manual selection of phase space sampling</li>
+<li>Noise leads to blurring of maxima</li>
+<li>Evenly spaced points can lead to random peaks in the parameters space</li>
+<li>Missing parts of source image data results in blurry values in the accumulator</li>
+</ol>
+<h4 id="Optimization-of-the-Hough-transform"><a href="#Optimization-of-the-Hough-transform" class="headerlink" title="Optimization of the Hough transform"></a><strong>Optimization of the Hough transform</strong></h4><ol>
+<li><p><strong>Filter the unnecessary features:</strong> for lines it is worth taking points at the</p>
+<p>edges only with a large gradient</p>
+</li>
+<li><p><strong>Choose the correct grid resolution</strong> (sampling step):<br> <strong>Too rough:</strong> several close lines will vote for same cell<br> <strong>Too shallow:</strong> can skip lines because noisy points will vote for different cells</p>
+</li>
+<li><p>To beter find the maxima, you can smooth the values in the accumulator</p>
+</li>
+<li><p><strong>It is necessary to mark the votes:</strong> which point corresponds to which line</p>
+</li>
+</ol>
+<p>In order not to enumerate all possible angles, the effect of the gradient can be taken into an account. Since when detecting the contour, the value of the gradient has already been calculated</p>
+<h4 id="Methods-for-parametrizing-the-straight-lines"><a href="#Methods-for-parametrizing-the-straight-lines" class="headerlink" title="Methods for parametrizing the straight lines"></a><strong>Methods for parametrizing the straight lines</strong></h4><p>As is known, images in digital systems are defined on a discrete rectangular grid, which allows only some appropriate discrete parameterization of the family of straight lines.</p>
+<p>Consider the natural set of straight lines generated by an integer grid 𝑁×𝑁 of points containing     $𝑁^2$ elements.</p>
+<p>Any two different points of the lattice define a line, so the size of the set will be$𝑁^2(𝑁^2−1)$ lines.</p>
+<p>Many lines will be defined multiple times by their different line segments if they contain more than two points of the original grid.</p>
+<h4 id="Ways-to-parameterize-the-Hough-transform"><a href="#Ways-to-parameterize-the-Hough-transform" class="headerlink" title="Ways to parameterize the Hough transform"></a><strong>Ways to parameterize the Hough transform</strong></h4><p><strong>1. Perimeter points (</strong>𝒎<strong>,</strong> 𝒏<strong>)</strong></p>
+<ul>
+<li><p>Lines are described by a pair of end points lying on the perimeter of the 𝑁×𝑁 grid.</p>
+</li>
+<li><p>Obviously, the number of points will be equal to 4𝑁 or (taking into account</p>
+<p>symmetry) 1/2 Q 4𝑁×4𝑁 = 8𝑁$ lines</p>
+</li>
+<li><p>Since a quarter of these points lie on the same straight line (side of the square), the</p>
+<p>final size of the parameter array will be 6𝑁$<br> <strong>Advantage:</strong> Application in the case of an image divided into smaller areas makes it easy to connect lines passing through several such areas, since they close to each other along the perimeter<br> <strong>Disadvantage:</strong> information about the angular position of straight lines is not explicitly stored</p>
+</li>
+</ul>
+<p><strong>2. Perimeter point and angle</strong> 𝒂, 𝒏</p>
+<ul>
+<li>One point of intersection of the straight line with the grid perimeter 𝑛(0 ≤ 𝑛 &lt; 𝑁) is used</li>
+<li>andanangledefinedbytheperimeterpoint𝑎 (–𝑁+1≤𝑎≤𝑁−1) sothat straight line passing through the grid center and point 𝑎 is parallel to a given one</li>
+<li>The accumulator array contains 4$𝑁^2$ elements</li>
+</ul>
+<p><strong>3. Tilt and offset</strong> 𝒂, 𝒅</p>
+<ul>
+<li><p>The angle 𝑎 is defined by the direction of a line from the grid center to a perimeter point</p>
+</li>
+<li><p>The displacement of the line vertically or horizontally from the center is fixed using the distance from the center to the intersection of the straight line with the 𝑂у or 𝑂х axes</p>
+</li>
+<li><p>Generates 3$𝑁^2$ or 4$𝑁^2$ accumulator cells</p>
+</li>
+<li><p>The 𝑎, 𝑑 -parametrization is closely related to the (ρ, θ) - parametrization and with</p>
+<p>the parameters of the equation 𝑦 = 𝑎𝑥 + 𝑏, where 𝑎 is interpreted as the slope of a straight line</p>
+</li>
+</ul>
+<h3 id="3-Hough-transform-for-circles"><a href="#3-Hough-transform-for-circles" class="headerlink" title="3. Hough transform for circles"></a>3. Hough transform for circles</h3><ul>
+<li><p>The described algorithm can work in exactly the same way when to detect any curve that can be described on the plane by a finite number of parameters: 𝐹 =$(𝑎_1,𝑎_2,…,𝑎_n,𝑥,𝑦)$</p>
+</li>
+<li><p>In the previously considered problem of finding circles of a given radius 𝑅, there was</p>
+<p>a family of curves defined by a two-parameter equation $(𝑥 − 𝑥_0)^2+(𝑦 − 𝑦_0)^2 = 𝑅^2$</p>
+</li>
+<li><p>It is necessary to search for the maximum of the accumulator function 𝐴(𝑥, 𝑦) in the</p>
+<p>parameter space (𝑥, 𝑦)</p>
+</li>
+<li><p>In this case, the parameter space practically coincides with the source image one</p>
+<p>(𝑥, 𝑦)</p>
+</li>
+</ul>
+<h3 id="4-Hough-transform-for-an-arbitrary-shape"><a href="#4-Hough-transform-for-an-arbitrary-shape" class="headerlink" title="4. Hough transform for an arbitrary shape"></a>4. Hough transform for an arbitrary shape</h3><h4 id="Algorithm-for-finding-circles-of-a-given-radius-on-halftone-images"><a href="#Algorithm-for-finding-circles-of-a-given-radius-on-halftone-images" class="headerlink" title="Algorithm for finding circles of a given radius on halftone images"></a><strong>Algorithm for finding circles of a given radius on halftone images</strong></h4><ol>
+<li>Detect edge pixels that surround the perimeter of an object. A gradient operator can be used, such as the Sobel operator</li>
+</ol>
+<ul>
+<li><p>Voting contour points are ones with a high gradient</p>
+</li>
+<li><p>For each detected edge pixel, an estimate of the position and</p>
+<p>orientation of the contour is used to estimate the center of a circle of radius 𝑅 by moving a distance 𝑅 from the edge pixel in the direction of the normal to the contour (in the direction of the gradient vector).</p>
+</li>
+<li><p>Repeating this operation for each edge pixel will find a set of positions of the possible center points, which can be averaged to determine the exact location of the center</p>
+</li>
+<li><p>If the radius of the circle is unknown or is varying, it is necessary to include 𝑅 as an additional parameter in the parametric accumulator space</p>
+</li>
+<li><p>The local maxima search procedure should determine the radius as well as the position of the center by considering changes along the third dimension of the parametric space</p>
+</li>
+<li><p>If the size of the detected circle is out of interest and you only want to find its center, then you may not increase the dimension of the parameter space</p>
+</li>
+<li><p>For every possible direction to the “center”, the contour point votes with a ray in that direction.</p>
+</li>
+<li><p>As a result, all possible positions of the “center” will be involved at any scale of the object, which will allow searching for circles regardless of their radius</p>
+</li>
+</ul>
+<ol>
+<li>After finding the potential centers of the circles, it is necessary to find the radius of the circles with the centers at the found points</li>
+</ol>
+<h4 id="Analyzing-the-accumulator-function-when-searching-for-geometric-primitives"><a href="#Analyzing-the-accumulator-function-when-searching-for-geometric-primitives" class="headerlink" title="Analyzing the accumulator function when searching for geometric primitives"></a><strong>Analyzing the accumulator function when searching for geometric primitives</strong></h4><ol>
+<li><p>Direct search for a fixed number of local maxima (one global maximum) in the parameter space. There are various ways to find such maxima</p>
+</li>
+<li><p>Threshold segmentation of the accumulator function and subsequent analysis of connected regions of the parameter space</p>
+</li>
+</ol>
+<ul>
+<li><p>If we chose the threshold equal to be equal to the value of the minimum of local maxima, then the second method will give the same result with the first one</p>
+</li>
+<li><p>The problem of the optimal choice of the threshold for a particular image remains</p>
+</li>
+</ul>
+<p>Short lines (curve segments) will give relatively low peaks in accumulator function if compared to long ones. They will only be detected if it is known to be present in the image prior to setting the threshold</p>
+<p><strong>How to avoid thresholding?</strong></p>
+<ul>
+<li>At each stage of the analysis, we search for single global maximum of the accumulator function</li>
+<li>After finding the global maximum we subtract the income of all source image points that resulted in this line from the parameter space</li>
+<li>Then start searching for the next global maximum<br> <strong>The result: a</strong> greater sensitivity to short lines and robustness to noise</li>
+</ul>
+<h4 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a><strong>Summary</strong></h4><ul>
+<li>Hough transform modifications provide invariant detection of geometric primitives and objects in the image with a high degree of noise immunity and significant accuracy in determining the location and orientation parameters</li>
+<li>The described algorithms do not detect grayscale objects themselves, but their outlines. Objects that do not have a well-defined outline cannot be detected using locus</li>
+</ul>
+<h2 id="Lec-4-Image-Features"><a href="#Lec-4-Image-Features" class="headerlink" title="Lec 4. Image Features"></a>Lec 4. Image Features</h2><h4 id="Marr-Paradigm"><a href="#Marr-Paradigm" class="headerlink" title="Marr Paradigm."></a><strong>Marr Paradigm</strong>.</h4><p>Image analysis goes from «iconic» data representation to «symbolic» representation</p>
+<h4 id="Steps-of-image-processing"><a href="#Steps-of-image-processing" class="headerlink" title="Steps of image processing:"></a><strong>Steps of image processing:</strong></h4><ul>
+<li>Image preprocessing</li>
+<li>Primary image segmentation</li>
+<li>Detecting the geometric structure</li>
+<li>Detecting of the relative structure and semantics of the scene</li>
+</ul>
+<h4 id="Types-of-possible-features"><a href="#Types-of-possible-features" class="headerlink" title="Types of possible features"></a>Types of possible features</h4><p>Point, edge, erea, line, corner</p>
+<h3 id="I-Feature-points"><a href="#I-Feature-points" class="headerlink" title="I. Feature points"></a>I. Feature points</h3><p>A feature point 𝑝 of an image 𝐼 is a point with a <strong>characteristic</strong> (special) neighborhood. This point different from all other points in a certain neighborhood</p>
+<h3 id="II-Feature-point-detectors"><a href="#II-Feature-point-detectors" class="headerlink" title="II. Feature point detectors"></a>II. Feature point detectors</h3><h4 id="Corner-Detectors"><a href="#Corner-Detectors" class="headerlink" title="Corner Detectors"></a>Corner Detectors</h4><p><strong>Corners</strong> are well <strong>repeatable</strong> and <strong>distinguishable</strong>.<br> The main property of a corner: the image <strong>gradient</strong> has <strong>two dominant directions</strong> in the area around the corner.</p>
+<h5 id="Moravec-Detector"><a href="#Moravec-Detector" class="headerlink" title="Moravec Detector"></a>Moravec Detector</h5><p>Measure the <strong>change in pixel intensity</strong> 𝐼 𝑥, 𝑦 by shifting a square window centered in 𝑥, 𝑦 to one pixel in each of <strong>eight principal directions</strong> (2 horizontal, 2 vertical and 4 diagonal).</p>
+<h5 id="Sigma-Filter"><a href="#Sigma-Filter" class="headerlink" title="Sigma Filter"></a>Sigma Filter</h5><script type="math/tex; mode=display">
+h(x,y) = H*f(x,y)</script><p>where f - source image</p>
+<p>H - operator of feature detection</p>
+<p>$*$ - operation of applying the operator</p>
+<h5 id="FAST-Detector"><a href="#FAST-Detector" class="headerlink" title="FAST Detector"></a>FAST Detector</h5><p>Features from Accelerated Segment Test<br>For each pixel 𝑃 of the image a neighbouring Bresenham circle around this pixel is considered. In case if 7x7 kernel is used, then it would contain 16 pixels.</p>
+<p>A pixel is considered to be a corner point if it has 𝑁 adjacent pixels on the circle whose intensities satisfy the state condition 𝑑 or 𝑏.</p>
+<h5 id="Harris-Detector"><a href="#Harris-Detector" class="headerlink" title="Harris Detector"></a>Harris Detector</h5><p>Let the variation in image intensities depend on the shift (𝑢, 𝑣). It can be evaluated according to the formula:</p>
+<script type="math/tex; mode=display">
+E(u,v)=\sum w(x,y)(I(x+u,y+v)-I(x,y))^2</script><p>where 𝐼 𝑥,𝑦 – intensity in a point 𝑥,𝑦 ,<br> 𝑤(𝑥, 𝑦) – window function,<br> 𝐼(𝑥+𝑢,𝑦+𝑣) – shift of intensity.</p>
+<ul>
+<li><p>The window function 𝑤 (𝑥, 𝑦) can be defined either in a binary form or in the form of a Gaussian function.</p>
+</li>
+<li><p>By expanding the difference in intensities squared into a second-order Taylor series at the point (𝑥, 𝑦) (bilinear interpolation) for small shifts, we obtain the following approximation</p>
+</li>
+</ul>
+<h6 id="Algorithm"><a href="#Algorithm" class="headerlink" title="Algorithm:"></a><strong>Algorithm:</strong></h6><ol>
+<li><p>Calculate the gradient of the image in each pixel.</p>
+</li>
+<li><p>Calculate the matrix 𝐌 from the window around each pixel.</p>
+</li>
+<li><p>Calculate the response of the corner 𝐑.</p>
+</li>
+<li><p>Cut off weak corners at threshold 𝐑.</p>
+</li>
+<li><p>Find the local maxima of the response function in a neighborhood</p>
+<p>of a given radius.</p>
+</li>
+<li><p>Choose 𝑵 the strongest local maxima.</p>
+</li>
+</ol>
+<h4 id="Forstner-Detector"><a href="#Forstner-Detector" class="headerlink" title="Forstner Detector"></a>Forstner Detector</h4><script type="math/tex; mode=display">
+R=\frac{det(M)}{tr(M)}</script><h4 id="Detector-Invariance"><a href="#Detector-Invariance" class="headerlink" title="Detector Invariance"></a>Detector Invariance</h4><p>• <strong>Invariance Property</strong> – If apply a geometric (affine) or photometric (affine intensity change 𝐼 → 𝑎𝐼 + 𝑏) transformation to the image, then the detector must find the same set of points.</p>
+<ol>
+<li>Light invariance:</li>
+</ol>
+<ul>
+<li>To light shifting (𝐼 → 𝐼 + 𝑏);</li>
+<li>To light scaling (𝐼 → 𝑎𝐼).</li>
+</ul>
+<ol>
+<li>Rotation Invariance</li>
+<li>Scaling Invariance</li>
+</ol>
+<h3 id="III-Blob-detectors"><a href="#III-Blob-detectors" class="headerlink" title="III. Blob detectors"></a>III. Blob detectors</h3><h4 id="LoG-Laplacian-of-Gaussian-Detector"><a href="#LoG-Laplacian-of-Gaussian-Detector" class="headerlink" title="LoG (Laplacian of Gaussian) Detector"></a><strong>LoG</strong> (Laplacian of Gaussian) Detector</h4><ul>
+<li>Blobs are blob-shaped groups of connected pixels that share a common property and are different from surrounding regions</li>
+<li>Blob centers are feature points</li>
+<li>Blobs are described by 4 parameters<ul>
+<li>center coordinates (x, y) </li>
+<li>scale</li>
+<li>direction</li>
+</ul>
+</li>
+</ul>
+<p><strong>Gaussian</strong> is a Gauss function which are used to blur images.</p>
+<p>$f$ - edge</p>
+<p>$\frac{d}{dx}g$ - Derivative of Gaussian</p>
+<p>$f*\frac{d}{dx}g$ - Edge = maximum of derivative</p>
+<p>$f*\frac{d^2}{dx^2}g$ - Edge = zero transition of the second derivative</p>
+<ul>
+<li><p>«Edge» is a burst of function</p>
+</li>
+<li><p>«Blob» is a combination of two bursts</p>
+</li>
+<li><p>The magnitude of the Laplacian of Gaussian response reaches a</p>
+<p>maximum in the center of the blob <strong>if the size</strong> of the Laplacian “<strong>corresponds”</strong> to the size of the blob</p>
+</li>
+<li><p>Search for blob characteristic size: convolution with Laplacian at several scales and search for maximum response</p>
+</li>
+<li><p>The response of the Laplacian fades if zooming scale</p>
+</li>
+<li><p>Multiscale blob detector: convolution of a blurry image using the normalized Laplace filter at several scales and the choice of scale with the maximum Laplacian response.</p>
+</li>
+</ul>
+<h4 id="DoG-Difference-of-Gaussians"><a href="#DoG-Difference-of-Gaussians" class="headerlink" title="DoG (Difference of Gaussians)"></a>DoG (Difference of Gaussians)</h4><p>Method for the approximate calculation of the Laplacian of a Gaussian: the search for the difference of two Gaussians with different scales:</p>
+<script type="math/tex; mode=display">
+DoG=G(x,y,k\sigma)-G(x,y,\sigma)</script><h4 id="Harris-Laplace-Detector"><a href="#Harris-Laplace-Detector" class="headerlink" title="Harris-Laplace Detector"></a>Harris-Laplace Detector</h4><p>Selecting the corners in the image, considering the characteristic size: looking for points that maximize the response of the Harris corner in the image and the Laplacian response in scale.</p>
+<h3 id="IV-Scale-invariant-feature-point-detector"><a href="#IV-Scale-invariant-feature-point-detector" class="headerlink" title="IV. Scale-invariant feature point detector"></a>IV. Scale-invariant feature point detector</h3>
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/CV/" rel="tag">CV</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/MATLAB/" rel="tag">MATLAB</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/03/23/MathofSysT_III/"
+                    data-tooltip="Mathematical Basics of the System Theory PART III"
+                    aria-label="PREVIOUS: Mathematical Basics of the System Theory PART III"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/03/23/SystemSoftware_I/"
+                    data-tooltip="System Software PART I"
+                    aria-label="NEXT: System Software PART I"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2023 Estus. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/03/23/MathofSysT_III/"
+                    data-tooltip="Mathematical Basics of the System Theory PART III"
+                    aria-label="PREVIOUS: Mathematical Basics of the System Theory PART III"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/03/23/SystemSoftware_I/"
+                    data-tooltip="System Software PART I"
+                    aria-label="NEXT: System Software PART I"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Estus</h4>
+        
+            <div id="about-card-bio"><p>Fun things <del>never</del> always stops.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Student</p>
+
+            </div>
+        
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/Ess/0_t.png');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-yb3zostooymjozqpjlvijhvzw0bdaljwvcvx0fhqdpyvq6aviyzwgfjkfjkw.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

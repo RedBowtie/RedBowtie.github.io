@@ -1,0 +1,581 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Amaurot Ch.">
+    <title>Automatic Control Linear Systems PART VII - Amaurot Ch.</title>
+    <meta name="author" content="Estus">
+    
+    
+        <link rel="icon" href="https://upload.cc/i1/2021/05/18/lSCp1v.png">
+    
+    
+        
+            <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png"},"articleBody":"Should be the last one\n\n\nLec 8 Linear feedback controllers, s.s. observers\nI.    Lyapunov methoda.    PropertiesLet us consider Lyapunov functions for investigation stability of linear systems. Lyapunov functions have the next properties:\n\nLyapunov function V (𝑥) must be positive definite: for any 𝑥 ∈ 𝑅𝑛\nLyapunov function V (𝑥) is positive definite and V (𝑥) = 0 in case 𝑥 is null-vector (zero).\nLyapunov functions must increases (decreases) uniformly with uniform increasing (decreasing) of 𝑥-vector norm.\n\nThat is, $\\lim_{x\\to 0}V(x)=0$ and $\\lim_{x\\to \\infty}V(x)=\\infty$\nb.    Lyapunov Theorem The equilibrium 𝑥 = 0 is asymptotic stable if exists Lyapunov function V (𝑥)  such that for any motion trajectories 𝑥(𝑡) starting from the arbitrary initial conditions for any time ∀𝑡 ≥ 0 the derivative of the function is negative: $\\frac{dV(x(t))}{dt} &lt; 0$. \n\nc.    Example\n\n\nP is symmetrical positive definite matrix. Its dimension is the same with A.\nIn linear algebra, a symmetric nxn real matrix) Mis said to be positive-definite\n\n\nII.    State Feedback designa.    Scenary\n\n\nnote that the original inequality doesn’t have LMI.\n\nb.    Example\n\nIn u(t) there should be a minus sign.\n\nc.    MATLAB realization\nd.    Modal Control\n\nita and gamma in capital.\n\n\n\ne.    Example\n\n\n\n\n-BKM=-BH\n\n\n\nf.    Observer Design\n\nIn former lectures, we assumed that we obtain all states from output, but in practice, all states requries more moeny for sensors.\nObserver helps to see state that can’t be obtained directly.\n\n\n\n\ng.    Example\nh.    MATLAB realization\nIII.    Combinition\n","dateCreated":"2020-12-23T20:32:00+08:00","dateModified":"2023-06-28T22:02:55+08:00","datePublished":"2020-12-23T20:32:00+08:00","description":"Should be the last one","headline":"Automatic Control Linear Systems PART VII","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://redbowtie.github.io/2020/12/23/AutoCtrlLS_VII/"},"publisher":{"@type":"Organization","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png","logo":{"@type":"ImageObject","url":"/Ess/lh.png"}},"url":"https://redbowtie.github.io/2020/12/23/AutoCtrlLS_VII/","keywords":"Control, Linear System"}</script>
+    <meta name="description" content="Should be the last one">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Automatic Control Linear Systems PART VII">
+<meta property="og:url" content="https://redbowtie.github.io/2020/12/23/AutoCtrlLS_VII/index.html">
+<meta property="og:site_name" content="Amaurot Ch.">
+<meta property="og:description" content="Should be the last one">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/8/lt0.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/8/eg0.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/8/eg1.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/8/eg2.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/8/sfd1.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/8/sfd0.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/8/eg3.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/8/ML0.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/8/mc0.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/8/mc1.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/8/mc2.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/8/eg4.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/8/eg5.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/8/eg6.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/8/eg7.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/8/eg8.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/8/eg9.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/8/ob0.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/8/ob1.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/8/ob2.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/8/ob3.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/8/eg10.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/8/ml1.png">
+<meta property="og:image" content="https://redbowtie.github.io/images/ALCS/8/cb0.png">
+<meta property="article:published_time" content="2020-12-23T12:32:00.000Z">
+<meta property="article:modified_time" content="2023-06-28T14:02:55.358Z">
+<meta property="article:author" content="Estus">
+<meta property="article:tag" content="Control">
+<meta property="article:tag" content="Linear System">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://redbowtie.github.io/images/ALCS/8/lt0.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://redbowtie.github.io/assets/images/Ess/lh.png"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-4a47lwukh8khnoqxgkjhofoety2rdykli5sq4vv9v7xmmtg07euhkbfahoe5.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/"
+            aria-label=""
+        >
+            Amaurot Ch.
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+            <img class="header-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a
+                    href="/#about"
+                    aria-label="Read more about the author"
+                >
+                    <img class="sidebar-profile-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Estus</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>Fun things <del>never</del> always stops.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/RedBowtie"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/atom.xml"
+                            
+                            rel="noopener"
+                            title="RSS"
+                        >
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/links"
+                            
+                            rel="noopener"
+                            title="Links"
+                        >
+                        <i class="sidebar-button-icon fa fa-sign" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Links</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            Automatic Control Linear Systems PART VII
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-12-23T20:32:00+08:00">
+	
+		    Dec 23, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Term3/">Term3</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>Should be the last one<span id="more"></span></p>
+<h1 id="table-of-contents">Table of Contents</h1><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Lec-8-Linear-feedback-controllers-s-s-observers"><span class="toc-text">Lec 8 Linear feedback controllers, s.s. observers</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#I-Lyapunov-method"><span class="toc-text">I.    Lyapunov method</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#a-Properties"><span class="toc-text">a.    Properties</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#b-Lyapunov-Theorem"><span class="toc-text">b.    Lyapunov Theorem</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#c-Example"><span class="toc-text">c.    Example</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#II-State-Feedback-design"><span class="toc-text">II.    State Feedback design</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#a-Scenary"><span class="toc-text">a.    Scenary</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#b-Example"><span class="toc-text">b.    Example</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#c-MATLAB-realization"><span class="toc-text">c.    MATLAB realization</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#d-Modal-Control"><span class="toc-text">d.    Modal Control</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#e-Example"><span class="toc-text">e.    Example</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#f-Observer-Design"><span class="toc-text">f.    Observer Design</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#g-Example"><span class="toc-text">g.    Example</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#h-MATLAB-realization"><span class="toc-text">h.    MATLAB realization</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#III-Combinition"><span class="toc-text">III.    Combinition</span></a></li></ol></li></ol>
+<hr>
+<h2 id="Lec-8-Linear-feedback-controllers-s-s-observers"><a href="#Lec-8-Linear-feedback-controllers-s-s-observers" class="headerlink" title="Lec 8 Linear feedback controllers, s.s. observers"></a>Lec 8 Linear feedback controllers, s.s. observers</h2><hr>
+<h3 id="I-Lyapunov-method"><a href="#I-Lyapunov-method" class="headerlink" title="I.    Lyapunov method"></a>I.    Lyapunov method</h3><h4 id="a-Properties"><a href="#a-Properties" class="headerlink" title="a.    Properties"></a>a.    Properties</h4><p>Let us consider Lyapunov functions for investigation stability of linear systems. Lyapunov functions have the next properties:</p>
+<ul>
+<li>Lyapunov function V (𝑥) must be positive definite: for any 𝑥 ∈ 𝑅𝑛</li>
+<li>Lyapunov function V (𝑥) is positive definite and V (𝑥) = 0 in case 𝑥 is null-vector (zero).</li>
+<li>Lyapunov functions must increases (decreases) uniformly with uniform increasing (decreasing) of 𝑥-vector norm.</li>
+</ul>
+<p>That is, $\lim_{x\to 0}V(x)=0$ and $\lim_{x\to \infty}V(x)=\infty$</p>
+<h4 id="b-Lyapunov-Theorem"><a href="#b-Lyapunov-Theorem" class="headerlink" title="b.    Lyapunov Theorem"></a>b.    Lyapunov Theorem</h4><p> The equilibrium 𝑥 = 0 is asymptotic stable if exists Lyapunov function V (𝑥)  such that for any motion trajectories 𝑥(𝑡) starting from the arbitrary initial conditions for any time ∀𝑡 ≥ 0 the derivative of the function is negative: $\frac{dV(x(t))}{dt} &lt; 0$. </p>
+<p><img src="/images/ALCS/8/lt0.png" alt="lt0"></p>
+<h4 id="c-Example"><a href="#c-Example" class="headerlink" title="c.    Example"></a>c.    Example</h4><p><img src="/images/ALCS/8/eg0.png" alt="eg0"></p>
+<p><img src="/images/ALCS/8/eg1.png" alt="eg1"></p>
+<ul>
+<li>P is symmetrical positive definite matrix. Its dimension is the same with A.</li>
+<li>In <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Linear_algebra">linear algebra</a>, a <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Symmetric_matrix">symmetric</a> nxn <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Real_number">real</a> <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Matrix_(mathematics">matrix</a>) Mis said to be <strong>positive-definite</strong></li>
+</ul>
+<p><img src="/images/ALCS/8/eg2.png" alt="eg2"></p>
+<h3 id="II-State-Feedback-design"><a href="#II-State-Feedback-design" class="headerlink" title="II.    State Feedback design"></a>II.    State Feedback design</h3><h4 id="a-Scenary"><a href="#a-Scenary" class="headerlink" title="a.    Scenary"></a>a.    Scenary</h4><p><img src="/images/ALCS/8/sfd1.png" alt="sfd1"></p>
+<p><img src="/images/ALCS/8/sfd0.png" alt="sfd0"></p>
+<ul>
+<li><strong>note that the original inequality doesn’t have LMI.</strong></li>
+</ul>
+<h4 id="b-Example"><a href="#b-Example" class="headerlink" title="b.    Example"></a>b.    Example</h4><p><img src="/images/ALCS/8/eg3.png" alt="eg3"></p>
+<ul>
+<li>In u(t) there should be a minus sign.</li>
+</ul>
+<h4 id="c-MATLAB-realization"><a href="#c-MATLAB-realization" class="headerlink" title="c.    MATLAB realization"></a>c.    MATLAB realization</h4><p><img src="/images/ALCS/8/ML0.png" alt="ML0"></p>
+<h4 id="d-Modal-Control"><a href="#d-Modal-Control" class="headerlink" title="d.    Modal Control"></a>d.    Modal Control</h4><p><img src="/images/ALCS/8/mc0.png" alt="mc0"></p>
+<ul>
+<li>ita and gamma in capital.</li>
+</ul>
+<p><img src="/images/ALCS/8/mc1.png" alt="mc1"></p>
+<p><img src="/images/ALCS/8/mc2.png" alt="mc2"></p>
+<h4 id="e-Example"><a href="#e-Example" class="headerlink" title="e.    Example"></a>e.    Example</h4><p><img src="/images/ALCS/8/eg4.png" alt="eg4"></p>
+<p><img src="/images/ALCS/8/eg5.png" alt="eg5"></p>
+<p><img src="/images/ALCS/8/eg6.png" alt="eg6"></p>
+<p><img src="/images/ALCS/8/eg7.png" alt="eg7"></p>
+<ul>
+<li>-BKM=-BH</li>
+</ul>
+<p><img src="/images/ALCS/8/eg8.png" alt="eg8"></p>
+<p><img src="/images/ALCS/8/eg9.png" alt="eg8"></p>
+<h4 id="f-Observer-Design"><a href="#f-Observer-Design" class="headerlink" title="f.    Observer Design"></a>f.    Observer Design</h4><p><img src="/images/ALCS/8/ob0.png" alt="ob0"></p>
+<ul>
+<li>In former lectures, we assumed that we obtain all states from output, but in practice, all states requries more moeny for sensors.</li>
+<li>Observer helps to see state that can’t be obtained directly.</li>
+</ul>
+<p><img src="/images/ALCS/8/ob1.png" alt="ob1"></p>
+<p><img src="/images/ALCS/8/ob2.png" alt="ob2"></p>
+<p><img src="/images/ALCS/8/ob3.png" alt="ob3"></p>
+<h4 id="g-Example"><a href="#g-Example" class="headerlink" title="g.    Example"></a>g.    Example</h4><p><img src="/images/ALCS/8/eg10.png" alt="eg10"></p>
+<h4 id="h-MATLAB-realization"><a href="#h-MATLAB-realization" class="headerlink" title="h.    MATLAB realization"></a>h.    MATLAB realization</h4><p><img src="/images/ALCS/8/ml1.png" alt="ml1"></p>
+<h3 id="III-Combinition"><a href="#III-Combinition" class="headerlink" title="III.    Combinition"></a>III.    Combinition</h3><p><img src="/images/ALCS/8/cb0.png" alt="cb0"></p>
+
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Control/" rel="tag">Control</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Linear-System/" rel="tag">Linear System</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2021/01/01/Info/"
+                    data-tooltip="This is about."
+                    aria-label="PREVIOUS: This is about."
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/12/23/Javascript/"
+                    data-tooltip="Bad Introduction to Javascript"
+                    aria-label="NEXT: Bad Introduction to Javascript"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="Table of Contents">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2023 Estus. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2021/01/01/Info/"
+                    data-tooltip="This is about."
+                    aria-label="PREVIOUS: This is about."
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/12/23/Javascript/"
+                    data-tooltip="Bad Introduction to Javascript"
+                    aria-label="NEXT: Bad Introduction to Javascript"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="Table of Contents">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Estus</h4>
+        
+            <div id="about-card-bio"><p>Fun things <del>never</del> always stops.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Student</p>
+
+            </div>
+        
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/Ess/0_t.png');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-yb3zostooymjozqpjlvijhvzw0bdaljwvcvx0fhqdpyvq6aviyzwgfjkfjkw.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

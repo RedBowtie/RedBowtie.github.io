@@ -1,0 +1,581 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Amaurot Ch.">
+    <title>Dynamics Review and Simscape Multibody - Amaurot Ch.</title>
+    <meta name="author" content="Estus">
+    
+    
+        <link rel="icon" href="https://upload.cc/i1/2021/05/18/lSCp1v.png">
+    
+    
+        
+            <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png"},"articleBody":"\n\n\nWhere it started\nAt the start I was assigned with an mission to, eventually, realise a inverted-pendulum-ish object (after many simplification with certain constraints). It was a good chance that to get more familiar with SIMSCAPE. At least, the idea sounds good.\nIn the past simscape simulations, robots were fixed onto a axis (prismatic joint), which prevent from dropping. As by default, if you directly put something in it, then run. Things just falls. For many ideal objects, this method suits fine. It is suitable for investigating 2D movement, and no need to care for the wheels, and easy to damping coefficients.\n\nSpatial Contact Force and Rectangular Joint\nHowever, in a more realistic sense, things could get off from the ground. Or, it could fall from certain height, and it could have friction force. I had a little research on this, and for the ground, it can be regular solid blocks, if surface with different height is required, then use Grid surface suits best. But how to make objects interactive with each other? Answer is on the title. Thanks to a project that I recently discovered, it is the very example I need. And rectangular joint also suits for bi-directional movement. If the torque suits, training for jump is also possible\n\nModelling Problems\nSeeing two different object collide in simscape is satisfying, as it is what I wanted to do. The object after simplification looks just like a RoboMaster Robot, but obviously I didn’t take this article as an example. Just like Regular Lagrange method, I calculate Kinematics and Dynamics for the robot, get Lagrangian, and then solve the equation. Everything was good before that I saw my object took off in simscape simulation. That was hilarious, but also terrible.\n\nAn idea came to me that, did I just messed up in modelling process? Indeed, because I’m not quite good at theoretical mechanics. It always confuse me that how to calculate the rotational energy of a object with aggregate translational and rotational velocities, especially the moment of inertia, the axis for analysis etc. Or maybe it’s the introduction of friction force would change the model greatly, which differs from my intuitive sense.\nLagrange Method\nAnyway, I have to find a way to find out the exact problems. So starting from the simplest model I cold think of, a two-wheel self-balance vehicle, which also could use the spatial contact block. \n\nAnalyse the systems by parts, but before that, list the positions for centers of mass, it helps to write derivatives.\nCenters of MassWheel:\n\n[x_w,\\, y_w]= [x,\\,0]Pendulum:\n\n[x_p,\\, y_p]=[x+l\\,\\sin\\theta,\\, l\\,\\cos\\theta]Translational Velocity and EnergyWheel:\n\n\\mathrm{V_w}=\n\\left[\\begin{array}{cc}\n\\dot x&0\n\\end{array}\\right]^\\intercal\nT_w = \\frac{1}{2}m_w\\dot x^2Pendulum:\n\n\\mathrm{V_p}=\n\\left[\\begin{array}{cc}\n\\dot x+\\dot\\theta\\,l\\,\\cos\\theta & -\\dot\\theta\\,l\\,\\sin\\theta\n\\end{array}\\right]^\\intercal\nT_p = \\frac{1}{2}m_p[(\\dot x+\\dot\\theta\\,l\\,\\cos\\theta)^2+(-\\dot\\theta\\,l\\,\\sin\\theta)^2]Rotational Velocity, Moment of inertia and EnergyWheel\n\n\\omega_w=\\frac{\\dot x}{R},\\,\\,I_w=\\frac{1}{2}m_wR^2\nP_w = \\frac{1}{2}I_w\\cdot\\frac{\\dot x^2}{R^2}Pendulum\nNote that, according to the König’s theorem, the following moment of inertia is with respect to the original center of mass. Do not apply Parallel axis theorem unless you’re sure it’s the case. I used to use the latter so the calculations always went wrong.\n\n\n\\omega_p = \\dot\\theta,\\,\\,I_p = \\frac{1}{12}(4\\,l^2+b^2)\nP_p=\\frac{1}{2}I_p\\cdot\\dot\\theta^2LagrangianAs for the potential energy, the zero-potential surface crosses the center of the wheel, so only counts pendulum’s potential energy.\n\n\\begin{array}{rcl}\nL&=&T\\,-\\,V\\\\\n&=&T_w\\,+\\,T_p\\,+\\,P_w\\,+\\,P_p-m_p\\,g\\,l\\,\\cos\\theta\n\\end{array}Then list the generalized force to the corresponding generalized coordinate, list the equation.\n\n\\left\\{\n\\begin{array}{rcl}\n\\frac{d}{d\\,t}\\frac{\\partial\\,L}{\\partial\\,\\dot x}-\\frac{\\partial\\,L}{\\partial\\, x} &=& \\frac{1}{R}\\tau\\\\\n\\frac{d}{d\\,t}\\frac{\\partial\\,L}{\\partial\\,\\dot\\theta} - \\frac{\\partial\\,L}{\\partial\\,\\theta} &=& -\\tau\n\\end{array}\n\\right.Note that, generalized force is not limited to force, but all sort of input, however, the properties of the input and the coordinate should be aligned, e.g., force corresponds to the linear displacement, and torque corresponds to the angular one.\n\nThe rest is to use matrix product to get a nonlinear equation, after simple linearization, the model is obtained.\nNewton’s method\nIf getting used to it,  the pre-calculation part is quite simple. The analysis is also conducted in parts.\nFor the actuation wheel:\n\n\\begin{array}{rcl}\nm_w\\ddot x&=& N_f - N'\\\\\nI_w\\frac{\\ddot x}{R} &=& \\tau - N_f\\cdot R\\\\\n\\\\\n\\textrm{where}\\\\\nN_f&&\\textrm{Static friction applied on wheel}\\\\\nN,\\,N'&& \\textrm{Force applied from wheel to pendulum, and its reaction force}\\\\\nx&& \\textrm{Linear displacement of the wheel}\n\\end{array}For the pendulum, we have:\n\n\\begin{array}{rcl}\nN &=& m_p \\frac{\\partial^2}{\\partial t^2}(x\\,+\\,L\\,\\sin\\theta)\\\\\nP\\,-\\,m_p\\,g &=& m_p \\frac{\\partial^2}{\\partial t^2}(L\\,\\cos\\theta)\\\\\nI_p\\,\\ddot\\theta &=& P\\,L\\,\\sin\\theta\\, -\\,N\\,L,\\cos\\theta\\,-\\tau\n\\end{array}When I completely figured it out, its quite straightforward.\nHowever, the following solve systems of equations is way more complicated than the prior method. It is recommended to use MATLAB solve the equation and obtain its Jacobian at the equilibrium position.\nSummary\nTwo methods should give the identical numerical result, otherwise maybe check somewhere that could go wrong. However, I’m not sure if I could figure out the solutions when some constraint is applied. At least in the simplified model, it worked, which encouraged me.","dateCreated":"2023-09-14T17:32:00+08:00","dateModified":"2023-09-17T10:54:41+08:00","datePublished":"2023-09-14T17:32:00+08:00","description":"It regularly makes me headache.","headline":"Dynamics Review and Simscape Multibody","image":["https://i.imgur.com/14VDQza.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://redbowtie.github.io/2023/09/14/Dynamics/"},"publisher":{"@type":"Organization","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png","logo":{"@type":"ImageObject","url":"/Ess/lh.png"}},"url":"https://redbowtie.github.io/2023/09/14/Dynamics/","keywords":"Control, MATLAB, Dynamics","thumbnailUrl":"https://i.imgur.com/14VDQza.png"}</script>
+    <meta name="description" content="It regularly makes me headache.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Dynamics Review and Simscape Multibody">
+<meta property="og:url" content="https://redbowtie.github.io/2023/09/14/Dynamics/index.html">
+<meta property="og:site_name" content="Amaurot Ch.">
+<meta property="og:description" content="It regularly makes me headache.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://redbowtie.github.io/2023/09/14/Dynamics/DYN_1.png">
+<meta property="og:image" content="https://redbowtie.github.io/2023/09/14/Dynamics/DYN_2.png">
+<meta property="og:image" content="https://redbowtie.github.io/2023/09/14/Dynamics/DYN_3.png">
+<meta property="og:image" content="https://redbowtie.github.io/2023/09/14/Dynamics/DYN_4.png">
+<meta property="article:published_time" content="2023-09-14T09:32:00.000Z">
+<meta property="article:modified_time" content="2023-09-17T02:54:41.143Z">
+<meta property="article:author" content="Estus">
+<meta property="article:tag" content="Control">
+<meta property="article:tag" content="MATLAB">
+<meta property="article:tag" content="Dynamics">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://redbowtie.github.io/2023/09/14/Dynamics/DYN_1.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://redbowtie.github.io/assets/images/Ess/lh.png"/>
+    
+    
+        <meta property="og:image" content="https://i.imgur.com/14VDQza.png"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://i.imgur.com/14VDQza.png"/>
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-4a47lwukh8khnoqxgkjhofoety2rdykli5sq4vv9v7xmmtg07euhkbfahoe5.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/"
+            aria-label=""
+        >
+            Amaurot Ch.
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+            <img class="header-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a
+                    href="/#about"
+                    aria-label="Read more about the author"
+                >
+                    <img class="sidebar-profile-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Estus</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>Fun things <del>never</del> always stops.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/RedBowtie"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/atom.xml"
+                            
+                            rel="noopener"
+                            title="RSS"
+                        >
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/links"
+                            
+                            rel="noopener"
+                            title="Links"
+                        >
+                        <i class="sidebar-button-icon fa fa-sign" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Links</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            Dynamics Review and Simscape Multibody
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2023-09-14T17:32:00+08:00">
+	
+		    Sep 14, 2023
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Robotics/">Robotics</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <!--excerpt--></p>
+<h1 id="table-of-contents">Table of Contents</h1><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Where-it-started"><span class="toc-text">Where it started</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spatial-Contact-Force-and-Rectangular-Joint"><span class="toc-text">Spatial Contact Force and Rectangular Joint</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Modelling-Problems"><span class="toc-text">Modelling Problems</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lagrange-Method"><span class="toc-text">Lagrange Method</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Centers-of-Mass"><span class="toc-text">Centers of Mass</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Translational-Velocity-and-Energy"><span class="toc-text">Translational Velocity and Energy</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Rotational-Velocity-Moment-of-inertia-and-Energy"><span class="toc-text">Rotational Velocity, Moment of inertia and Energy</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lagrangian"><span class="toc-text">Lagrangian</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Newton%E2%80%99s-method"><span class="toc-text">Newton’s method</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Summary"><span class="toc-text">Summary</span></a></li></ol>
+<p><br></p>
+<h2 id="Where-it-started"><a href="#Where-it-started" class="headerlink" title="Where it started"></a>Where it started</h2><hr>
+<p>At the start I was assigned with an mission to, eventually, realise a inverted-pendulum-ish object (after many simplification with certain constraints). It was a good chance that to get more familiar with SIMSCAPE. At least, the idea sounds good.</p>
+<p>In the past simscape simulations, robots were fixed onto a axis (prismatic joint), which prevent from dropping. As by default, if you directly put something in it, then run. Things just falls. For many ideal objects, this method suits fine. It is suitable for investigating 2D movement, and no need to care for the wheels, and easy to damping coefficients.</p>
+<p><img src="DYN_1.png" alt="Properties of prismatic joint"></p>
+<h2 id="Spatial-Contact-Force-and-Rectangular-Joint"><a href="#Spatial-Contact-Force-and-Rectangular-Joint" class="headerlink" title="Spatial Contact Force and Rectangular Joint"></a>Spatial Contact Force and Rectangular Joint</h2><hr>
+<p>However, in a more realistic sense, things could get off from the ground. Or, it could fall from certain height, and it could have friction force. I had a little research on this, and for the ground, it can be regular solid blocks, if surface with different height is required, then use <code>Grid surface</code> suits best. But how to make objects interactive with each other? Answer is on the title. Thanks to a project that I recently discovered, it is the very example I need. And rectangular joint also suits for bi-directional movement. If the torque suits, training for jump is also possible</p>
+<p><img src="DYN_2.png" alt="SCF Block"></p>
+<h2 id="Modelling-Problems"><a href="#Modelling-Problems" class="headerlink" title="Modelling Problems"></a>Modelling Problems</h2><hr>
+<p>Seeing two different object collide in simscape is satisfying, as it is what I wanted to do. The object after simplification looks just like a RoboMaster <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/563048952">Robot</a>, but obviously I didn’t take this article as an example. Just like Regular Lagrange method, I calculate <strong>Kinematics and Dynamics</strong> for the robot, get <strong>Lagrangian</strong>, and then solve the equation. Everything was good before that I saw my object took off in simscape simulation. That was hilarious, but also terrible.</p>
+<p><img src="DYN_3.png" alt="Not this one, but similar results"></p>
+<p>An idea came to me that, did I just messed up in modelling process? Indeed, because I’m not quite good at theoretical mechanics. It always confuse me that how to calculate the rotational energy of a object with aggregate translational and rotational velocities, especially the moment of inertia, the axis for analysis etc. Or maybe it’s the introduction of friction force would change the model greatly, which differs from my intuitive sense.</p>
+<h2 id="Lagrange-Method"><a href="#Lagrange-Method" class="headerlink" title="Lagrange Method"></a>Lagrange Method</h2><hr>
+<p>Anyway, I have to find a way to find out the exact problems. So starting from the simplest model I cold think of, a two-wheel self-balance vehicle, which also could use the <code>spatial contact block</code>. </p>
+<p><img src="DYN_4.png" alt="Coordinates"></p>
+<p>Analyse the systems by parts, but before that, list the positions for centers of mass, it helps to write derivatives.</p>
+<h3 id="Centers-of-Mass"><a href="#Centers-of-Mass" class="headerlink" title="Centers of Mass"></a>Centers of Mass</h3><p>Wheel:</p>
+<script type="math/tex; mode=display">
+[x_w,\, y_w]= [x,\,0]</script><p>Pendulum:</p>
+<script type="math/tex; mode=display">
+[x_p,\, y_p]=[x+l\,\sin\theta,\, l\,\cos\theta]</script><h3 id="Translational-Velocity-and-Energy"><a href="#Translational-Velocity-and-Energy" class="headerlink" title="Translational Velocity and Energy"></a>Translational Velocity and Energy</h3><p>Wheel:</p>
+<script type="math/tex; mode=display">
+\mathrm{V_w}=
+\left[\begin{array}{cc}
+\dot x&0
+\end{array}\right]^\intercal</script><script type="math/tex; mode=display">
+T_w = \frac{1}{2}m_w\dot x^2</script><p>Pendulum:</p>
+<script type="math/tex; mode=display">
+\mathrm{V_p}=
+\left[\begin{array}{cc}
+\dot x+\dot\theta\,l\,\cos\theta & -\dot\theta\,l\,\sin\theta
+\end{array}\right]^\intercal</script><script type="math/tex; mode=display">
+T_p = \frac{1}{2}m_p[(\dot x+\dot\theta\,l\,\cos\theta)^2+(-\dot\theta\,l\,\sin\theta)^2]</script><h3 id="Rotational-Velocity-Moment-of-inertia-and-Energy"><a href="#Rotational-Velocity-Moment-of-inertia-and-Energy" class="headerlink" title="Rotational Velocity, Moment of inertia and Energy"></a>Rotational Velocity, Moment of inertia and Energy</h3><p>Wheel</p>
+<script type="math/tex; mode=display">
+\omega_w=\frac{\dot x}{R},\,\,I_w=\frac{1}{2}m_wR^2</script><script type="math/tex; mode=display">
+P_w = \frac{1}{2}I_w\cdot\frac{\dot x^2}{R^2}</script><p>Pendulum</p>
+<div class="alert success no-icon"><p>Note that, according to the <strong>König’s theorem</strong>, the following moment of inertia is with respect to the original center of mass. <strong>Do not</strong> apply <strong>Parallel axis theorem</strong> unless you’re sure it’s the case. I used to use the latter so the calculations always went wrong.</p>
+</div>
+<script type="math/tex; mode=display">
+\omega_p = \dot\theta,\,\,I_p = \frac{1}{12}(4\,l^2+b^2)</script><script type="math/tex; mode=display">
+P_p=\frac{1}{2}I_p\cdot\dot\theta^2</script><h3 id="Lagrangian"><a href="#Lagrangian" class="headerlink" title="Lagrangian"></a>Lagrangian</h3><p>As for the potential energy, the zero-potential surface crosses the center of the wheel, so only counts pendulum’s potential energy.</p>
+<script type="math/tex; mode=display">
+\begin{array}{rcl}
+L&=&T\,-\,V\\
+&=&T_w\,+\,T_p\,+\,P_w\,+\,P_p-m_p\,g\,l\,\cos\theta
+\end{array}</script><p>Then list the generalized force to the corresponding generalized coordinate, list the equation.</p>
+<script type="math/tex; mode=display">
+\left\{
+\begin{array}{rcl}
+\frac{d}{d\,t}\frac{\partial\,L}{\partial\,\dot x}-\frac{\partial\,L}{\partial\, x} &=& \frac{1}{R}\tau\\
+\frac{d}{d\,t}\frac{\partial\,L}{\partial\,\dot\theta} - \frac{\partial\,L}{\partial\,\theta} &=& -\tau
+\end{array}
+\right.</script><div class="alert danger no-icon"><p>Note that, <strong>generalized force</strong> is not limited to force, but all sort of input, however, <strong>the properties</strong> of the input and the coordinate <strong>should be aligned</strong>, e.g., force corresponds to the linear displacement, and torque corresponds to the angular one.</p>
+</div>
+<p>The rest is to use matrix product to get a nonlinear equation, after simple linearization, the model is obtained.</p>
+<h2 id="Newton’s-method"><a href="#Newton’s-method" class="headerlink" title="Newton’s method"></a>Newton’s method</h2><hr>
+<p>If getting used to it,  the pre-calculation part is quite simple. The analysis is also conducted in parts.</p>
+<p>For the actuation wheel:</p>
+<script type="math/tex; mode=display">
+\begin{array}{rcl}
+m_w\ddot x&=& N_f - N'\\
+I_w\frac{\ddot x}{R} &=& \tau - N_f\cdot R\\
+\\
+\textrm{where}\\
+N_f&&\textrm{Static friction applied on wheel}\\
+N,\,N'&& \textrm{Force applied from wheel to pendulum, and its reaction force}\\
+x&& \textrm{Linear displacement of the wheel}
+\end{array}</script><p>For the pendulum, we have:</p>
+<script type="math/tex; mode=display">
+\begin{array}{rcl}
+N &=& m_p \frac{\partial^2}{\partial t^2}(x\,+\,L\,\sin\theta)\\
+P\,-\,m_p\,g &=& m_p \frac{\partial^2}{\partial t^2}(L\,\cos\theta)\\
+I_p\,\ddot\theta &=& P\,L\,\sin\theta\, -\,N\,L,\cos\theta\,-\tau
+\end{array}</script><p>When I completely figured it out, its quite straightforward.</p>
+<p>However, the following solve systems of equations is way more complicated than the prior method. It is recommended to use MATLAB solve the equation and obtain its <code>Jacobian</code> at the equilibrium position.</p>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><hr>
+<p>Two methods should give the identical numerical result, otherwise maybe check somewhere that could go wrong. However, I’m not sure if I could figure out the solutions when some constraint is applied. At least in the simplified model, it worked, which encouraged me.</p>
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Control/" rel="tag">Control</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Dynamics/" rel="tag">Dynamics</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/MATLAB/" rel="tag">MATLAB</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a
+                        class="post-action-btn btn btn--disabled"
+                        aria-hidden="true"
+                    >
+                        
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2023/08/10/Raid15/"
+                    data-tooltip="Storage Goes Boom"
+                    aria-label="NEXT: Storage Goes Boom"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="Table of Contents">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2023 Estus. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a
+                        class="post-action-btn btn btn--disabled"
+                        aria-hidden="true"
+                    >
+                        
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2023/08/10/Raid15/"
+                    data-tooltip="Storage Goes Boom"
+                    aria-label="NEXT: Storage Goes Boom"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="Table of Contents">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Estus</h4>
+        
+            <div id="about-card-bio"><p>Fun things <del>never</del> always stops.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Student</p>
+
+            </div>
+        
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/Ess/0_t.png');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-yb3zostooymjozqpjlvijhvzw0bdaljwvcvx0fhqdpyvq6aviyzwgfjkfjkw.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

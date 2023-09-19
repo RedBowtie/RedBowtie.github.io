@@ -6,7 +6,7 @@
   <link href="https://redbowtie.github.io/atom.xml" rel="self"/>
   
   <link href="https://redbowtie.github.io/"/>
-  <updated>2023-09-17T02:54:41.143Z</updated>
+  <updated>2023-09-19T06:12:25.227Z</updated>
   <id>https://redbowtie.github.io/</id>
   
   <author>
@@ -17,11 +17,38 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>RecurDyn Co-simulation with SIMULINK</title>
+    <link href="https://redbowtie.github.io/2023/09/19/RecurDyn/"/>
+    <id>https://redbowtie.github.io/2023/09/19/RecurDyn/</id>
+    <published>2023-09-19T05:32:00.000Z</published>
+    <updated>2023-09-19T06:12:25.227Z</updated>
+    
+    <content type="html"><![CDATA[<p>Latest things always(?) brings compatibility issues. <span id="more"></span></p><!--toc--><p>I can’t remember what problem I ran into concerning the compatibility. Maybe it’s the OpenOCD debugging, but that’s the opposite case. </p><p>Since that I cannot get access to a copy of solidworks file, and my teammate used RecurDyn, so I’ll do the same. The other attempts seems meaningless without accurate simulations. If I cannot get this done this week, I think I’ll obtain a proper reason to give up.</p><h2 id="Start-with-existing-examples"><a href="#Start-with-existing-examples" class="headerlink" title="Start with existing examples"></a>Start with existing examples</h2><hr><p>At the first glance,  this is quite new to me. I have seen ANSYS when viewing thesis, glad that this software looks a little more modern.</p><p>So the official examples (Of R9V5) are located in <code>[RedurDyn main directory]/Help/Examples/Simulink_CoSim/</code>. It is suggested to copy the file to your workspace </p><h2 id="Version-Changes"><a href="#Version-Changes" class="headerlink" title="Version Changes"></a>Version Changes</h2><hr><p>In the past few major releases, MATLAB will change its secondary version number, i.e. from <code>9.12.xxx(2022a)</code> to <code>9.14.xxx(2023a)</code>. Since it has been in this way, cannot say that it’s strange not update the major version number. However, I did noticed that the major number become <code>23</code> in <code>2023b</code>. These changes can also be validated through online documentation <a href="https://www.mathworks.com/help/releases/R2023a/matlab/ref/version.html?searchHighlight=version&amp;s_tid=doc_srchtitle">2023a</a> and <a href="https://www.mathworks.com/help/releases/R2023b/matlab/ref/version.html?searchHighlight=version&amp;s_tid=doc_srchtitle">2023b</a>.</p>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;Latest things always(?) brings compatibility issues.</summary>
+    
+    
+    
+    <category term="Dynamcis" scheme="https://redbowtie.github.io/categories/Dynamcis/"/>
+    
+    
+    <category term="Simulation" scheme="https://redbowtie.github.io/tags/Simulation/"/>
+    
+    <category term="Dynamics" scheme="https://redbowtie.github.io/tags/Dynamics/"/>
+    
+    <category term="RecurDyn" scheme="https://redbowtie.github.io/tags/RecurDyn/"/>
+    
+    <category term="SIMULINK" scheme="https://redbowtie.github.io/tags/SIMULINK/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Dynamics Review and Simscape Multibody</title>
     <link href="https://redbowtie.github.io/2023/09/14/Dynamics/"/>
     <id>https://redbowtie.github.io/2023/09/14/Dynamics/</id>
     <published>2023-09-14T09:32:00.000Z</published>
-    <updated>2023-09-17T02:54:41.143Z</updated>
+    <updated>2023-09-19T05:37:32.459Z</updated>
     
     <content type="html"><![CDATA[<!--excerpt--></p><!--toc--><p><br></p><h2 id="Where-it-started"><a href="#Where-it-started" class="headerlink" title="Where it started"></a>Where it started</h2><hr><p>At the start I was assigned with an mission to, eventually, realise a inverted-pendulum-ish object (after many simplification with certain constraints). It was a good chance that to get more familiar with SIMSCAPE. At least, the idea sounds good.</p><p>In the past simscape simulations, robots were fixed onto a axis (prismatic joint), which prevent from dropping. As by default, if you directly put something in it, then run. Things just falls. For many ideal objects, this method suits fine. It is suitable for investigating 2D movement, and no need to care for the wheels, and easy to damping coefficients.</p><p><img src="DYN_1.png" alt="Properties of prismatic joint"></p><h2 id="Spatial-Contact-Force-and-Rectangular-Joint"><a href="#Spatial-Contact-Force-and-Rectangular-Joint" class="headerlink" title="Spatial Contact Force and Rectangular Joint"></a>Spatial Contact Force and Rectangular Joint</h2><hr><p>However, in a more realistic sense, things could get off from the ground. Or, it could fall from certain height, and it could have friction force. I had a little research on this, and for the ground, it can be regular solid blocks, if surface with different height is required, then use <code>Grid surface</code> suits best. But how to make objects interactive with each other? Answer is on the title. Thanks to a project that I recently discovered, it is the very example I need. And rectangular joint also suits for bi-directional movement. If the torque suits, training for jump is also possible</p><p><img src="DYN_2.png" alt="SCF Block"></p><h2 id="Modelling-Problems"><a href="#Modelling-Problems" class="headerlink" title="Modelling Problems"></a>Modelling Problems</h2><hr><p>Seeing two different object collide in simscape is satisfying, as it is what I wanted to do. The object after simplification looks just like a RoboMaster <a href="https://zhuanlan.zhihu.com/p/563048952">Robot</a>, but obviously I didn’t take this article as an example. Just like Regular Lagrange method, I calculate <strong>Kinematics and Dynamics</strong> for the robot, get <strong>Lagrangian</strong>, and then solve the equation. Everything was good before that I saw my object took off in simscape simulation. That was hilarious, but also terrible.</p><p><img src="DYN_3.png" alt="Not this one, but similar results"></p><p>An idea came to me that, did I just messed up in modelling process? Indeed, because I’m not quite good at theoretical mechanics. It always confuse me that how to calculate the rotational energy of a object with aggregate translational and rotational velocities, especially the moment of inertia, the axis for analysis etc. Or maybe it’s the introduction of friction force would change the model greatly, which differs from my intuitive sense.</p><h2 id="Lagrange-Method"><a href="#Lagrange-Method" class="headerlink" title="Lagrange Method"></a>Lagrange Method</h2><hr><p>Anyway, I have to find a way to find out the exact problems. So starting from the simplest model I cold think of, a two-wheel self-balance vehicle, which also could use the <code>spatial contact block</code>. </p><p><img src="DYN_4.png" alt="Coordinates"></p><p>Analyse the systems by parts, but before that, list the positions for centers of mass, it helps to write derivatives.</p><h3 id="Centers-of-Mass"><a href="#Centers-of-Mass" class="headerlink" title="Centers of Mass"></a>Centers of Mass</h3><p>Wheel:</p><script type="math/tex; mode=display">[x_w,\, y_w]= [x,\,0]</script><p>Pendulum:</p><script type="math/tex; mode=display">[x_p,\, y_p]=[x+l\,\sin\theta,\, l\,\cos\theta]</script><h3 id="Translational-Velocity-and-Energy"><a href="#Translational-Velocity-and-Energy" class="headerlink" title="Translational Velocity and Energy"></a>Translational Velocity and Energy</h3><p>Wheel:</p><script type="math/tex; mode=display">\mathrm{V_w}=\left[\begin{array}{cc}\dot x&0\end{array}\right]^\intercal</script><script type="math/tex; mode=display">T_w = \frac{1}{2}m_w\dot x^2</script><p>Pendulum:</p><script type="math/tex; mode=display">\mathrm{V_p}=\left[\begin{array}{cc}\dot x+\dot\theta\,l\,\cos\theta & -\dot\theta\,l\,\sin\theta\end{array}\right]^\intercal</script><script type="math/tex; mode=display">T_p = \frac{1}{2}m_p[(\dot x+\dot\theta\,l\,\cos\theta)^2+(-\dot\theta\,l\,\sin\theta)^2]</script><h3 id="Rotational-Velocity-Moment-of-inertia-and-Energy"><a href="#Rotational-Velocity-Moment-of-inertia-and-Energy" class="headerlink" title="Rotational Velocity, Moment of inertia and Energy"></a>Rotational Velocity, Moment of inertia and Energy</h3><p>Wheel</p><script type="math/tex; mode=display">\omega_w=\frac{\dot x}{R},\,\,I_w=\frac{1}{2}m_wR^2</script><script type="math/tex; mode=display">P_w = \frac{1}{2}I_w\cdot\frac{\dot x^2}{R^2}</script><p>Pendulum</p><div class="alert success no-icon"><p>Note that, according to the <strong>König’s theorem</strong>, the following moment of inertia is with respect to the original center of mass. <strong>Do not</strong> apply <strong>Parallel axis theorem</strong> unless you’re sure it’s the case. I used to use the latter so the calculations always went wrong.</p></div><script type="math/tex; mode=display">\omega_p = \dot\theta,\,\,I_p = \frac{1}{12}(4\,l^2+b^2)</script><script type="math/tex; mode=display">P_p=\frac{1}{2}I_p\cdot\dot\theta^2</script><h3 id="Lagrangian"><a href="#Lagrangian" class="headerlink" title="Lagrangian"></a>Lagrangian</h3><p>As for the potential energy, the zero-potential surface crosses the center of the wheel, so only counts pendulum’s potential energy.</p><script type="math/tex; mode=display">\begin{array}{rcl}L&=&T\,-\,V\\&=&T_w\,+\,T_p\,+\,P_w\,+\,P_p-m_p\,g\,l\,\cos\theta\end{array}</script><p>Then list the generalized force to the corresponding generalized coordinate, list the equation.</p><script type="math/tex; mode=display">\left\{\begin{array}{rcl}\frac{d}{d\,t}\frac{\partial\,L}{\partial\,\dot x}-\frac{\partial\,L}{\partial\, x} &=& \frac{1}{R}\tau\\\frac{d}{d\,t}\frac{\partial\,L}{\partial\,\dot\theta} - \frac{\partial\,L}{\partial\,\theta} &=& -\tau\end{array}\right.</script><div class="alert danger no-icon"><p>Note that, <strong>generalized force</strong> is not limited to force, but all sort of input, however, <strong>the properties</strong> of the input and the coordinate <strong>should be aligned</strong>, e.g., force corresponds to the linear displacement, and torque corresponds to the angular one.</p></div><p>The rest is to use matrix product to get a nonlinear equation, after simple linearization, the model is obtained.</p><h2 id="Newton’s-method"><a href="#Newton’s-method" class="headerlink" title="Newton’s method"></a>Newton’s method</h2><hr><p>If getting used to it,  the pre-calculation part is quite simple. The analysis is also conducted in parts.</p><p>For the actuation wheel:</p><script type="math/tex; mode=display">\begin{array}{rcl}m_w\ddot x&=& N_f - N'\\I_w\frac{\ddot x}{R} &=& \tau - N_f\cdot R\\\\\textrm{where}\\N_f&&\textrm{Static friction applied on wheel}\\N,\,N'&& \textrm{Force applied from wheel to pendulum, and its reaction force}\\x&& \textrm{Linear displacement of the wheel}\end{array}</script><p>For the pendulum, we have:</p><script type="math/tex; mode=display">\begin{array}{rcl}N &=& m_p \frac{\partial^2}{\partial t^2}(x\,+\,L\,\sin\theta)\\P\,-\,m_p\,g &=& m_p \frac{\partial^2}{\partial t^2}(L\,\cos\theta)\\I_p\,\ddot\theta &=& P\,L\,\sin\theta\, -\,N\,L,\cos\theta\,-\tau\end{array}</script><p>When I completely figured it out, its quite straightforward.</p><p>However, the following solve systems of equations is way more complicated than the prior method. It is recommended to use MATLAB solve the equation and obtain its <code>Jacobian</code> at the equilibrium position.</p><h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><hr><p>Two methods should give the identical numerical result, otherwise maybe check somewhere that could go wrong. However, I’m not sure if I could figure out the solutions when some constraint is applied. At least in the simplified model, it worked, which encouraged me.</p>]]></content>
     
@@ -30,7 +57,7 @@
     
     
     
-    <category term="Robotics" scheme="https://redbowtie.github.io/categories/Robotics/"/>
+    <category term="Dynamics" scheme="https://redbowtie.github.io/categories/Dynamics/"/>
     
     
     <category term="Control" scheme="https://redbowtie.github.io/tags/Control/"/>
@@ -434,27 +461,6 @@
     <category term="System" scheme="https://redbowtie.github.io/tags/System/"/>
     
     <category term="Simulation" scheme="https://redbowtie.github.io/tags/Simulation/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>GRE ess</title>
-    <link href="https://redbowtie.github.io/2022/03/21/GRE/"/>
-    <id>https://redbowtie.github.io/2022/03/21/GRE/</id>
-    <published>2022-03-21T10:32:00.000Z</published>
-    <updated>2022-03-25T06:12:02.357Z</updated>
-    
-    <content type="html"><![CDATA[<p>Just record without think too much. Some novel aspects, at least to me.<span id="more"></span></p><p>I never imagined that, the first attempt to take GRE test was interrupted and I even didn’t type a single word. Only because a fucking remote desktop software called ToDesk, which is developed in China.</p><p>Yeah, at first I am grateful that this weird remote desktop implementation can bypass school’s limitation, speaking of which, damn supporters only know how to make themselves free from work, and blocked many common communication tunnels. But it just never occur to me that this shit leaves a process in the backend.</p><p>Well but it’s over now, I can say nothing more about it, because it’s just useless.</p><p>What a pity.</p>]]></content>
-    
-    
-    <summary type="html">&lt;p&gt;Just record without think too much. Some novel aspects, at least to me.</summary>
-    
-    
-    
-    <category term="GRE" scheme="https://redbowtie.github.io/categories/GRE/"/>
-    
-    
-    <category term="English" scheme="https://redbowtie.github.io/tags/English/"/>
     
   </entry>
   

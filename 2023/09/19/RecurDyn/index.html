@@ -1,0 +1,505 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Amaurot Ch.">
+    <title>RecurDyn Co-simulation with SIMULINK - Amaurot Ch.</title>
+    <meta name="author" content="Estus">
+    
+    
+        <link rel="icon" href="https://upload.cc/i1/2021/05/18/lSCp1v.png">
+    
+    
+        
+            <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png"},"articleBody":"Latest things always(?) brings compatibility issues. \n\nI can’t remember what problem I ran into concerning the compatibility. Maybe it’s the OpenOCD debugging, but that’s the opposite case. \nSince that I cannot get access to a copy of solidworks file, and my teammate used RecurDyn, so I’ll do the same. The other attempts seems meaningless without accurate simulations. If I cannot get this done this week, I think I’ll obtain a proper reason to give up.\nStart with existing examples\nAt the first glance,  this is quite new to me. I have seen ANSYS when viewing thesis, glad that this software looks a little more modern.\nSo the official examples (Of R9V5) are located in [RedurDyn main directory]/Help/Examples/Simulink_CoSim/. It is suggested to copy the file to your workspace \nVersion Changes\nIn the past few major releases, MATLAB will change its secondary version number, i.e. from 9.12.xxx(2022a) to 9.14.xxx(2023a). Since it has been in this way, cannot say that it’s strange not update the major version number. However, I did noticed that the major number become 23 in 2023b. These changes can also be validated through online documentation 2023a and 2023b.\n","dateCreated":"2023-09-19T13:32:00+08:00","dateModified":"2023-09-19T14:12:25+08:00","datePublished":"2023-09-19T13:32:00+08:00","description":"Latest things always(?) brings compatibility issues.","headline":"RecurDyn Co-simulation with SIMULINK","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://redbowtie.github.io/2023/09/19/RecurDyn/"},"publisher":{"@type":"Organization","name":"Estus","sameAs":["https://github.com/RedBowtie","/atom.xml","#about","/links"],"image":"/Ess/lh.png","logo":{"@type":"ImageObject","url":"/Ess/lh.png"}},"url":"https://redbowtie.github.io/2023/09/19/RecurDyn/","keywords":"Simulation, Dynamics, RecurDyn, SIMULINK"}</script>
+    <meta name="description" content="Latest things always(?) brings compatibility issues.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="RecurDyn Co-simulation with SIMULINK">
+<meta property="og:url" content="https://redbowtie.github.io/2023/09/19/RecurDyn/index.html">
+<meta property="og:site_name" content="Amaurot Ch.">
+<meta property="og:description" content="Latest things always(?) brings compatibility issues.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-09-19T05:32:00.000Z">
+<meta property="article:modified_time" content="2023-09-19T06:12:25.227Z">
+<meta property="article:author" content="Estus">
+<meta property="article:tag" content="Simulation">
+<meta property="article:tag" content="Dynamics">
+<meta property="article:tag" content="RecurDyn">
+<meta property="article:tag" content="SIMULINK">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://redbowtie.github.io/assets/images/Ess/lh.png"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-4a47lwukh8khnoqxgkjhofoety2rdykli5sq4vv9v7xmmtg07euhkbfahoe5.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/"
+            aria-label=""
+        >
+            Amaurot Ch.
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+            <img class="header-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a
+                    href="/#about"
+                    aria-label="Read more about the author"
+                >
+                    <img class="sidebar-profile-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Estus</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>Fun things <del>never</del> always stops.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/RedBowtie"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/atom.xml"
+                            
+                            rel="noopener"
+                            title="RSS"
+                        >
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/links"
+                            
+                            rel="noopener"
+                            title="Links"
+                        >
+                        <i class="sidebar-button-icon fa fa-sign" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Links</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            RecurDyn Co-simulation with SIMULINK
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2023-09-19T13:32:00+08:00">
+	
+		    Sep 19, 2023
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Dynamcis/">Dynamcis</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>Latest things always(?) brings compatibility issues. <span id="more"></span></p>
+<h1 id="table-of-contents">Table of Contents</h1><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Start-with-existing-examples"><span class="toc-text">Start with existing examples</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Version-Changes"><span class="toc-text">Version Changes</span></a></li></ol>
+<p>I can’t remember what problem I ran into concerning the compatibility. Maybe it’s the OpenOCD debugging, but that’s the opposite case. </p>
+<p>Since that I cannot get access to a copy of solidworks file, and my teammate used RecurDyn, so I’ll do the same. The other attempts seems meaningless without accurate simulations. If I cannot get this done this week, I think I’ll obtain a proper reason to give up.</p>
+<h2 id="Start-with-existing-examples"><a href="#Start-with-existing-examples" class="headerlink" title="Start with existing examples"></a>Start with existing examples</h2><hr>
+<p>At the first glance,  this is quite new to me. I have seen ANSYS when viewing thesis, glad that this software looks a little more modern.</p>
+<p>So the official examples (Of R9V5) are located in <code>[RedurDyn main directory]/Help/Examples/Simulink_CoSim/</code>. It is suggested to copy the file to your workspace </p>
+<h2 id="Version-Changes"><a href="#Version-Changes" class="headerlink" title="Version Changes"></a>Version Changes</h2><hr>
+<p>In the past few major releases, MATLAB will change its secondary version number, i.e. from <code>9.12.xxx(2022a)</code> to <code>9.14.xxx(2023a)</code>. Since it has been in this way, cannot say that it’s strange not update the major version number. However, I did noticed that the major number become <code>23</code> in <code>2023b</code>. These changes can also be validated through online documentation <a target="_blank" rel="noopener" href="https://www.mathworks.com/help/releases/R2023a/matlab/ref/version.html?searchHighlight=version&amp;s_tid=doc_srchtitle">2023a</a> and <a target="_blank" rel="noopener" href="https://www.mathworks.com/help/releases/R2023b/matlab/ref/version.html?searchHighlight=version&amp;s_tid=doc_srchtitle">2023b</a>.</p>
+
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Dynamics/" rel="tag">Dynamics</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/RecurDyn/" rel="tag">RecurDyn</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/SIMULINK/" rel="tag">SIMULINK</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Simulation/" rel="tag">Simulation</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a
+                        class="post-action-btn btn btn--disabled"
+                        aria-hidden="true"
+                    >
+                        
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2023/09/14/Dynamics/"
+                    data-tooltip="Dynamics Review and Simscape Multibody"
+                    aria-label="NEXT: Dynamics Review and Simscape Multibody"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="Table of Contents">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2023 Estus. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a
+                        class="post-action-btn btn btn--disabled"
+                        aria-hidden="true"
+                    >
+                        
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2023/09/14/Dynamics/"
+                    data-tooltip="Dynamics Review and Simscape Multibody"
+                    aria-label="NEXT: Dynamics Review and Simscape Multibody"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="Table of Contents">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/Ess/lh.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Estus</h4>
+        
+            <div id="about-card-bio"><p>Fun things <del>never</del> always stops.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Student</p>
+
+            </div>
+        
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/Ess/0_t.png');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-yb3zostooymjozqpjlvijhvzw0bdaljwvcvx0fhqdpyvq6aviyzwgfjkfjkw.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

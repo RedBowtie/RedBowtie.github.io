@@ -531,10 +531,19 @@
             <div id="Control-list" class="archive box" data-tag="control">
                 <h4 class="archive-title">
                     <a class="link-unstyled" href="/tags/Control">
-                        Control (11)
+                        Control (12)
                     </a>
                 </h4>
                 <ul class="archive-posts">
+                    
+                        <li class="archive-post">
+                            <a class="archive-post-title" href="/2024/01/31/Tracking/">
+                                Implementations of Tracking Problems
+                            </a>
+                            <span class="archive-post-date">
+                                 - jan 31, 2024
+                            </span>
+                        </li>
                     
                         <li class="archive-post">
                             <a class="archive-post-title" href="/2023/09/14/Dynamics/">
@@ -1557,5 +1566,20 @@
 
 
 
-    </body>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
 </html>

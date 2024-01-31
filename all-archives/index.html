@@ -270,6 +270,15 @@
                     </h5>
                 
             
+            <li class="archive-post archive-day" data-date="20240131">
+                <a class="archive-post-title" href="/2024/01/31/Tracking/">Implementations of Tracking Problems</a>
+                <span class="archive-post-date"> - jan 31, 2024</span>
+            </li>
+        
+            
+            
+            
+            
             <li class="archive-post archive-day" data-date="20240110">
                 <a class="archive-post-title" href="/2024/01/10/WSLnCUDA/">WSL, Cuda and Isaac Sim.</a>
                 <span class="archive-post-date"> - jan 10, 2024</span>
@@ -850,5 +859,20 @@
 
 
 
-    </body>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
 </html>
